@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="欢迎 - 华谷" />
+    <Head title="华谷" />
 
     <div class="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
         <el-card class="w-full max-w-md text-center shadow-lg">
@@ -17,7 +17,7 @@ defineProps({
             </template>
 
             <div class="py-8">
-                <p class="text-gray-600 mb-6">高效、智能的全球解决方案</p>
+                <p class="text-gray-600 mb-6">测试提交</p>
 
                 <div v-if="canLogin" class="space-y-4">
                     <div v-if="$page.props.auth.user">
