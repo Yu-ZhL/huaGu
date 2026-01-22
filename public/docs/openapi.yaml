@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: 'Laravel API Documentation'
-  description: ''
+  title: 'Laravel API 文档'
+  description: '已经实现了标准化的搜同款(以图搜图)接口系统，支持多平台商品搜索功能。当前已完成 1688 平台的接口实现，并为其他 24 个平台预留了标准化的接口框架。'
   version: 1.0.0
 servers:
   -

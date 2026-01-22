@@ -9,17 +9,16 @@ use function Knuckles\Scribe\Config\{removeStrategies, configureStrategy};
 
 return [
     // The HTML <title> for the generated documentation.
-    'title' => config('app.name') . ' API Documentation',
+    'title' => config('app.name') . ' API 文档',
 
     // A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
-    'description' => '',
+    'description' => '已经实现了标准化的搜同款(以图搜图)接口系统，支持多平台商品搜索功能。当前已完成 1688 平台的接口实现，并为其他 24 个平台预留了标准化的接口框架。',
 
     // Text to place in the "Introduction" section, right after the `description`. Markdown and HTML are supported.
     'intro_text' => <<<INTRO
-        This documentation aims to provide all the information you need to work with our API.
+        api文档
 
-        <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
-        You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
+        <aside>在页面滚动时，您可以在右侧的黑色区域（手机端则在正文中）看到不同编程语言的 API 调用示例。 您可以点击右上角的标签页来切换语言（手机端请通过左上角的菜单栏进行切换）。</aside>
     INTRO,
 
     // The base URL displayed in the docs.
