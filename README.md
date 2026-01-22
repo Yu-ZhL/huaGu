@@ -61,7 +61,7 @@ php artisan key:generate
 
 3. **安装前端依赖**
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 4. **配置数据库**
