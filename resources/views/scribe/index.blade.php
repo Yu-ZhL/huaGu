@@ -45,12 +45,12 @@
     </span>
 </a>
 <div class="tocify-wrapper">
-    
+
             <div class="lang-selector">
                                             <button type="button" class="lang-button" data-language-name="bash">bash</button>
                                             <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
                     </div>
-    
+
     <div class="search">
         <input type="text" class="search" id="input-search" placeholder="Search">
     </div>
@@ -225,7 +225,7 @@
     <ul class="toc-footer" id="toc-footer">
                     <li style="padding-bottom: 5px;"><a href="{{ route("scribe.postman") }}">View Postman collection</a></li>
                             <li style="padding-bottom: 5px;"><a href="{{ route("scribe.openapi") }}">View OpenAPI spec</a></li>
-                <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+                <li><a href="http://github.com/knuckleswtf/scribe">由 Scribe 提供支持的文档 ✍</a></li>
     </ul>
 
     <ul class="toc-footer" id="last-updated">
@@ -250,7 +250,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
         <h1 id="endpoints">Endpoints</h1>
 
-    
+
 
                                 <h2 id="endpoints-POSTapi-image-search-1688-url">1688 URL 搜图</h2>
 
@@ -5723,9 +5723,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-            
 
-        
+
+
     </div>
     <div class="dark-box">
                     <div class="lang-selector">

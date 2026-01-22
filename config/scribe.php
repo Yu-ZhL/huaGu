@@ -194,7 +194,7 @@ return [
     // The format you pass to `date` will be passed to PHP's `date()` function.
     // The format you pass to `git` can be either "short" or "long".
     // Note: does not work for `external` docs types
-    'last_updated' => 'Last updated: {date:F j, Y}',
+    'last_updated' => '最后更新时间: {date:F j, Y}',
 
     'examples' => [
         // Set this to any number to generate the same example values for parameters on each run,
