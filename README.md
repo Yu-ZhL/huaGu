@@ -1,59 +1,142 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <a href="https://laravel.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
+  </a>
 </p>
 
-## About Laravel
+<p align="center">
+  <a href="https://vuejs.org" target="_blank">
+    <img src="https://img.shields.io/badge/Vue.js-3.x-green" alt="Vue.js">
+  </a>
+  <a href="https://element-plus.org" target="_blank">
+    <img src="https://img.shields.io/badge/Element%20Plus-2.x-blue" alt="Element Plus">
+  </a>
+  <a href="https://tailwindcss.com" target="_blank">
+    <img src="https://img.shields.io/badge/Tailwind%20CSS-3.x-38B2AC" alt="Tailwind CSS">
+  </a>
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Laravel + Vue 3 全栈应用
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+这是一个使用 Laravel + Vue 3 + Vite 构建的现代化全栈 Web 应用项目。
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 技术栈
 
-## Learning Laravel
+### 后端
+- **Laravel** - PHP Web 框架
+- **MySQL/PostgreSQL** - 数据库
+- **Eloquent ORM** - 数据库操作
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 前端
+- **Vue 3** - 使用组合式 API
+- **Vite** - 构建工具
+- **Element Plus** - UI 组件库
+- **Tailwind CSS** - CSS 框架
+- **Pinia** - 状态管理
+- **Axios** - HTTP 客户端
+- **Inertia.js** - 前后端路由
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 快速开始
 
-## Laravel Sponsors
+### 环境要求
+- PHP >= 8.1
+- Node.js >= 18
+- Composer
+- MySQL/PostgreSQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 安装步骤
 
-### Premium Partners
+1. **克隆项目**
+```bash
+git clone <repository-url>
+cd project-name
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+2. **安装后端依赖**
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+3. **安装前端依赖**
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **配置数据库**
+编辑 `.env` 文件中的数据库配置
 
-## Code of Conduct
+5. **运行数据库迁移**
+```bash
+php artisan migrate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. **启动开发服务器**
+```bash
+# 启动后端服务器
+php artisan serve
 
-## Security Vulnerabilities
+# 启动前端开发服务器（新终端）
+npm run dev
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 可用脚本
 
-## License
+### 开发
+```bash
+npm run dev      # 启动开发服务器
+npm run build    # 构建生产版本
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 后端
+```bash
+php artisan serve           # 启动 Laravel 开发服务器
+php artisan migrate         # 运行数据库迁移
+php artisan tinker          # Laravel REPL
+php artisan queue:work      # 启动队列处理器
+```
+
+## 项目结构
+
+```
+├── app/                     # Laravel 应用核心
+├── database/                # 数据库文件
+├── resources/
+│   ├── js/                 # Vue.js 应用
+│   │   ├── Components/     # Vue 组件
+│   │   ├── Pages/          # 页面组件
+│   │   ├── Layouts/        # 布局组件
+│   │   └── app.js          # 应用入口
+│   ├── css/                # 样式文件
+│   └── views/              # Blade 模板
+├── routes/                 # 路由定义
+├── storage/                # 存储文件
+└── public/                 # 公共资源
+```
+
+## 开发规范
+
+请参考 `AGENTS.md` 文件了解详细的代码风格和开发规范。
+
+## 主要特性
+
+- 🚀 **现代化技术栈**: Vue 3 + Vite + Laravel
+- 🎨 **美观界面**: Element Plus + Tailwind CSS
+- 📱 **响应式设计**: 支持移动端和桌面端
+- ⚡ **快速开发**: 热重载和快速构建
+- 🔒 **安全认证**: Laravel 内置认证系统
+- 📊 **状态管理**: Pinia 状态管理
+- 🌐 **单页应用**: Inertia.js 无缝集成
+
+## 贡献指南
+
+1. Fork 项目
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
+
+## 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
