@@ -9,7 +9,7 @@ import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
 </script>
-
+ 
 <template>
     <div>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
