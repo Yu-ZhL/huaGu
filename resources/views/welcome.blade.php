@@ -4,8 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>飞猫选品</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+    <!-- Scripts -->
+    @routes
+    @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
+    @inertiaHead</head>
 <body>
 <div id="app"></div>
 </body>
