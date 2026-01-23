@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware(['image-search-auth'])->group(function () {
 
 // 1688 平台
-Route::prefix('api/image-search/1688')->name('api.image-search.1688.')->group(function () {
+Route::prefix('api/image-search/1688')->name('api.image-search.1688.')->middleware('auth:sanctum')->group(function () {
     Route::post('/image', [Platform1688Controller::class, 'searchByImage'])->name('image');
     Route::post('/url', [Platform1688Controller::class, 'searchByUrl'])->name('url');
 });

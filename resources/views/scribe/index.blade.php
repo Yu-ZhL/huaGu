@@ -45,12 +45,12 @@
     </span>
 </a>
 <div class="tocify-wrapper">
-    
+
             <div class="lang-selector">
                                             <button type="button" class="lang-button" data-language-name="bash">bash</button>
                                             <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
                     </div>
-    
+
     <div class="search">
         <input type="text" class="search" id="input-search" placeholder="搜索">
     </div>
@@ -235,7 +235,7 @@
     <ul class="toc-footer" id="toc-footer">
                     <li style="padding-bottom: 5px;"><a href="{{ route("scribe.postman") }}">查看 Postman 集合</a></li>
                             <li style="padding-bottom: 5px;"><a href="{{ route("scribe.openapi") }}">查看 OpenAPI 规范</a></li>
-                <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+                <li><a href="http://github.com/knuckleswtf/scribe">由 Scribe 提供支持的文档 ✍</a></li>
     </ul>
 
     <ul class="toc-footer" id="last-updated">
@@ -260,7 +260,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
         <h1 id="1688">1688 搜同款</h1>
 
-    
+
 
                                 <h2 id="1688-POSTapi-image-search-1688-image">1688 以图搜图</h2>
 
@@ -656,7 +656,7 @@ fetch(url, {
 
                 <h1 id="endpoints">Endpoints</h1>
 
-    
+
 
                                 <h2 id="endpoints-POSTapi-image-search-1688-cross-border-image">以图搜图（待实现）</h2>
 
@@ -5938,9 +5938,9 @@ fetch(url, {
             </div>
                         </form>
 
-            
 
-        
+
+
     </div>
     <div class="dark-box">
                     <div class="lang-selector">

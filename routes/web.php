@@ -31,3 +31,4 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/image_search.php';
+require __DIR__ . '/auth_api.php';
