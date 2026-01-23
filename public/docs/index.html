@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://localhost";
+        var tryItOutBaseUrl = "http://103.214.173.247:3019/";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -230,6 +230,31 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="">
+                    <a href="#">用户认证</a>
+                </li>
+                                    <ul id="tocify-subheader-" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="-POSTapi-auth-send-code">
+                                <a href="#-POSTapi-auth-send-code">发送短信验证码</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-register">
+                                <a href="#-POSTapi-auth-register">用户注册</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-login">
+                                <a href="#-POSTapi-auth-login">用户登录</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-reset-password">
+                                <a href="#-POSTapi-auth-reset-password">重置密码</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="-GETapi-auth-me">
+                                <a href="#-GETapi-auth-me">获取当前用户信息</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-logout">
+                                <a href="#-POSTapi-auth-logout">退出登录</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
             </div>
 
     <ul class="toc-footer" id="toc-footer">
@@ -249,7 +274,7 @@
         <h1 id="">简介</h1>
 <p>已经实现了标准化的搜同款(以图搜图)接口系统，支持多平台商品搜索功能。当前已完成 1688 平台的接口实现，并为其他 24 个平台预留了标准化的接口框架。</p>
 <aside>
-    <strong>基础 URL</strong>: <code>http://localhost</code>
+    <strong>基础 URL</strong>: <code>http://103.214.173.247:3019/</code>
 </aside>
 <pre><code>API 文档
 
@@ -275,7 +300,7 @@
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/1688/image"
+    "http://103.214.173.247:3019/api/image-search/1688/image"
 );
 
 const headers = {
@@ -298,7 +323,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/1688/image';
+$url = 'http://103.214.173.247:3019/api/image-search/1688/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -321,7 +346,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpC87D.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpF547.tmp', 'r')
             ],
         ],
     ]
@@ -446,7 +471,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpC87D.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpF547.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -499,7 +524,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/1688/url"
+    "http://103.214.173.247:3019/api/image-search/1688/url"
 );
 
 const headers = {
@@ -522,7 +547,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/1688/url';
+$url = 'http://103.214.173.247:3019/api/image-search/1688/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -702,7 +727,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/1688-cross-border/image"
+    "http://103.214.173.247:3019/api/image-search/1688-cross-border/image"
 );
 
 const headers = {
@@ -718,7 +743,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/1688-cross-border/image';
+$url = 'http://103.214.173.247:3019/api/image-search/1688-cross-border/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -821,7 +846,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/1688-cross-border/url"
+    "http://103.214.173.247:3019/api/image-search/1688-cross-border/url"
 );
 
 const headers = {
@@ -837,7 +862,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/1688-cross-border/url';
+$url = 'http://103.214.173.247:3019/api/image-search/1688-cross-border/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -940,7 +965,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/1688-pro/image"
+    "http://103.214.173.247:3019/api/image-search/1688-pro/image"
 );
 
 const headers = {
@@ -956,7 +981,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/1688-pro/image';
+$url = 'http://103.214.173.247:3019/api/image-search/1688-pro/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -1059,7 +1084,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/1688-pro/url"
+    "http://103.214.173.247:3019/api/image-search/1688-pro/url"
 );
 
 const headers = {
@@ -1075,7 +1100,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/1688-pro/url';
+$url = 'http://103.214.173.247:3019/api/image-search/1688-pro/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -1178,7 +1203,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/taobao/image"
+    "http://103.214.173.247:3019/api/image-search/taobao/image"
 );
 
 const headers = {
@@ -1194,7 +1219,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/taobao/image';
+$url = 'http://103.214.173.247:3019/api/image-search/taobao/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -1297,7 +1322,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/taobao/url"
+    "http://103.214.173.247:3019/api/image-search/taobao/url"
 );
 
 const headers = {
@@ -1313,7 +1338,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/taobao/url';
+$url = 'http://103.214.173.247:3019/api/image-search/taobao/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -1416,7 +1441,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/taobao-lite/image"
+    "http://103.214.173.247:3019/api/image-search/taobao-lite/image"
 );
 
 const headers = {
@@ -1432,7 +1457,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/taobao-lite/image';
+$url = 'http://103.214.173.247:3019/api/image-search/taobao-lite/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -1535,7 +1560,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/taobao-lite/url"
+    "http://103.214.173.247:3019/api/image-search/taobao-lite/url"
 );
 
 const headers = {
@@ -1551,7 +1576,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/taobao-lite/url';
+$url = 'http://103.214.173.247:3019/api/image-search/taobao-lite/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -1654,7 +1679,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/alibaba/image"
+    "http://103.214.173.247:3019/api/image-search/alibaba/image"
 );
 
 const headers = {
@@ -1670,7 +1695,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/alibaba/image';
+$url = 'http://103.214.173.247:3019/api/image-search/alibaba/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -1773,7 +1798,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/alibaba/url"
+    "http://103.214.173.247:3019/api/image-search/alibaba/url"
 );
 
 const headers = {
@@ -1789,7 +1814,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/alibaba/url';
+$url = 'http://103.214.173.247:3019/api/image-search/alibaba/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -1892,7 +1917,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/amazon/image"
+    "http://103.214.173.247:3019/api/image-search/amazon/image"
 );
 
 const headers = {
@@ -1908,7 +1933,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/amazon/image';
+$url = 'http://103.214.173.247:3019/api/image-search/amazon/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -2011,7 +2036,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/amazon/url"
+    "http://103.214.173.247:3019/api/image-search/amazon/url"
 );
 
 const headers = {
@@ -2027,7 +2052,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/amazon/url';
+$url = 'http://103.214.173.247:3019/api/image-search/amazon/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -2130,7 +2155,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/amazon-lite/image"
+    "http://103.214.173.247:3019/api/image-search/amazon-lite/image"
 );
 
 const headers = {
@@ -2146,7 +2171,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/amazon-lite/image';
+$url = 'http://103.214.173.247:3019/api/image-search/amazon-lite/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -2249,7 +2274,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/amazon-lite/url"
+    "http://103.214.173.247:3019/api/image-search/amazon-lite/url"
 );
 
 const headers = {
@@ -2265,7 +2290,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/amazon-lite/url';
+$url = 'http://103.214.173.247:3019/api/image-search/amazon-lite/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -2368,7 +2393,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/aliexpress/image"
+    "http://103.214.173.247:3019/api/image-search/aliexpress/image"
 );
 
 const headers = {
@@ -2384,7 +2409,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/aliexpress/image';
+$url = 'http://103.214.173.247:3019/api/image-search/aliexpress/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -2487,7 +2512,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/aliexpress/url"
+    "http://103.214.173.247:3019/api/image-search/aliexpress/url"
 );
 
 const headers = {
@@ -2503,7 +2528,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/aliexpress/url';
+$url = 'http://103.214.173.247:3019/api/image-search/aliexpress/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -2606,7 +2631,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/aliexpress-pro/image"
+    "http://103.214.173.247:3019/api/image-search/aliexpress-pro/image"
 );
 
 const headers = {
@@ -2622,7 +2647,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/aliexpress-pro/image';
+$url = 'http://103.214.173.247:3019/api/image-search/aliexpress-pro/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -2725,7 +2750,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/aliexpress-pro/url"
+    "http://103.214.173.247:3019/api/image-search/aliexpress-pro/url"
 );
 
 const headers = {
@@ -2741,7 +2766,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/aliexpress-pro/url';
+$url = 'http://103.214.173.247:3019/api/image-search/aliexpress-pro/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -2844,7 +2869,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/shein/image"
+    "http://103.214.173.247:3019/api/image-search/shein/image"
 );
 
 const headers = {
@@ -2860,7 +2885,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/shein/image';
+$url = 'http://103.214.173.247:3019/api/image-search/shein/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -2963,7 +2988,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/shein/url"
+    "http://103.214.173.247:3019/api/image-search/shein/url"
 );
 
 const headers = {
@@ -2979,7 +3004,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/shein/url';
+$url = 'http://103.214.173.247:3019/api/image-search/shein/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -3082,7 +3107,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/ozon/image"
+    "http://103.214.173.247:3019/api/image-search/ozon/image"
 );
 
 const headers = {
@@ -3098,7 +3123,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/ozon/image';
+$url = 'http://103.214.173.247:3019/api/image-search/ozon/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -3201,7 +3226,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/ozon/url"
+    "http://103.214.173.247:3019/api/image-search/ozon/url"
 );
 
 const headers = {
@@ -3217,7 +3242,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/ozon/url';
+$url = 'http://103.214.173.247:3019/api/image-search/ozon/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -3320,7 +3345,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/naver-shopping/image"
+    "http://103.214.173.247:3019/api/image-search/naver-shopping/image"
 );
 
 const headers = {
@@ -3336,7 +3361,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/naver-shopping/image';
+$url = 'http://103.214.173.247:3019/api/image-search/naver-shopping/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -3439,7 +3464,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/naver-shopping/url"
+    "http://103.214.173.247:3019/api/image-search/naver-shopping/url"
 );
 
 const headers = {
@@ -3455,7 +3480,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/naver-shopping/url';
+$url = 'http://103.214.173.247:3019/api/image-search/naver-shopping/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -3558,7 +3583,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/ebay/image"
+    "http://103.214.173.247:3019/api/image-search/ebay/image"
 );
 
 const headers = {
@@ -3574,7 +3599,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/ebay/image';
+$url = 'http://103.214.173.247:3019/api/image-search/ebay/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -3677,7 +3702,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/ebay/url"
+    "http://103.214.173.247:3019/api/image-search/ebay/url"
 );
 
 const headers = {
@@ -3693,7 +3718,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/ebay/url';
+$url = 'http://103.214.173.247:3019/api/image-search/ebay/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -3796,7 +3821,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/google-lens/image"
+    "http://103.214.173.247:3019/api/image-search/google-lens/image"
 );
 
 const headers = {
@@ -3812,7 +3837,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/google-lens/image';
+$url = 'http://103.214.173.247:3019/api/image-search/google-lens/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -3915,7 +3940,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/google-lens/url"
+    "http://103.214.173.247:3019/api/image-search/google-lens/url"
 );
 
 const headers = {
@@ -3931,7 +3956,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/google-lens/url';
+$url = 'http://103.214.173.247:3019/api/image-search/google-lens/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -4034,7 +4059,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/bing/image"
+    "http://103.214.173.247:3019/api/image-search/bing/image"
 );
 
 const headers = {
@@ -4050,7 +4075,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/bing/image';
+$url = 'http://103.214.173.247:3019/api/image-search/bing/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -4153,7 +4178,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/bing/url"
+    "http://103.214.173.247:3019/api/image-search/bing/url"
 );
 
 const headers = {
@@ -4169,7 +4194,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/bing/url';
+$url = 'http://103.214.173.247:3019/api/image-search/bing/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -4272,7 +4297,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/baidu/image"
+    "http://103.214.173.247:3019/api/image-search/baidu/image"
 );
 
 const headers = {
@@ -4288,7 +4313,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/baidu/image';
+$url = 'http://103.214.173.247:3019/api/image-search/baidu/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -4391,7 +4416,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/baidu/url"
+    "http://103.214.173.247:3019/api/image-search/baidu/url"
 );
 
 const headers = {
@@ -4407,7 +4432,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/baidu/url';
+$url = 'http://103.214.173.247:3019/api/image-search/baidu/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -4510,7 +4535,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/yandex/image"
+    "http://103.214.173.247:3019/api/image-search/yandex/image"
 );
 
 const headers = {
@@ -4526,7 +4551,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/yandex/image';
+$url = 'http://103.214.173.247:3019/api/image-search/yandex/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -4629,7 +4654,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/yandex/url"
+    "http://103.214.173.247:3019/api/image-search/yandex/url"
 );
 
 const headers = {
@@ -4645,7 +4670,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/yandex/url';
+$url = 'http://103.214.173.247:3019/api/image-search/yandex/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -4748,7 +4773,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/wildberries/image"
+    "http://103.214.173.247:3019/api/image-search/wildberries/image"
 );
 
 const headers = {
@@ -4764,7 +4789,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/wildberries/image';
+$url = 'http://103.214.173.247:3019/api/image-search/wildberries/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -4867,7 +4892,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/wildberries/url"
+    "http://103.214.173.247:3019/api/image-search/wildberries/url"
 );
 
 const headers = {
@@ -4883,7 +4908,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/wildberries/url';
+$url = 'http://103.214.173.247:3019/api/image-search/wildberries/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -4986,7 +5011,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/domeggook/image"
+    "http://103.214.173.247:3019/api/image-search/domeggook/image"
 );
 
 const headers = {
@@ -5002,7 +5027,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/domeggook/image';
+$url = 'http://103.214.173.247:3019/api/image-search/domeggook/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -5105,7 +5130,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/domeggook/url"
+    "http://103.214.173.247:3019/api/image-search/domeggook/url"
 );
 
 const headers = {
@@ -5121,7 +5146,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/domeggook/url';
+$url = 'http://103.214.173.247:3019/api/image-search/domeggook/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -5224,7 +5249,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/coupang/image"
+    "http://103.214.173.247:3019/api/image-search/coupang/image"
 );
 
 const headers = {
@@ -5240,7 +5265,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/coupang/image';
+$url = 'http://103.214.173.247:3019/api/image-search/coupang/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -5343,7 +5368,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/coupang/url"
+    "http://103.214.173.247:3019/api/image-search/coupang/url"
 );
 
 const headers = {
@@ -5359,7 +5384,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/coupang/url';
+$url = 'http://103.214.173.247:3019/api/image-search/coupang/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -5462,7 +5487,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/netsea/image"
+    "http://103.214.173.247:3019/api/image-search/netsea/image"
 );
 
 const headers = {
@@ -5478,7 +5503,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/netsea/image';
+$url = 'http://103.214.173.247:3019/api/image-search/netsea/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -5581,7 +5606,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/netsea/url"
+    "http://103.214.173.247:3019/api/image-search/netsea/url"
 );
 
 const headers = {
@@ -5597,7 +5622,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/netsea/url';
+$url = 'http://103.214.173.247:3019/api/image-search/netsea/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -5700,7 +5725,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/ownerclan/image"
+    "http://103.214.173.247:3019/api/image-search/ownerclan/image"
 );
 
 const headers = {
@@ -5716,7 +5741,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/ownerclan/image';
+$url = 'http://103.214.173.247:3019/api/image-search/ownerclan/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -5819,7 +5844,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/ownerclan/url"
+    "http://103.214.173.247:3019/api/image-search/ownerclan/url"
 );
 
 const headers = {
@@ -5835,7 +5860,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/ownerclan/url';
+$url = 'http://103.214.173.247:3019/api/image-search/ownerclan/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -5938,7 +5963,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/onch3/image"
+    "http://103.214.173.247:3019/api/image-search/onch3/image"
 );
 
 const headers = {
@@ -5954,7 +5979,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/onch3/image';
+$url = 'http://103.214.173.247:3019/api/image-search/onch3/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -6057,7 +6082,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/onch3/url"
+    "http://103.214.173.247:3019/api/image-search/onch3/url"
 );
 
 const headers = {
@@ -6073,7 +6098,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/onch3/url';
+$url = 'http://103.214.173.247:3019/api/image-search/onch3/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -6176,7 +6201,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/mercari/image"
+    "http://103.214.173.247:3019/api/image-search/mercari/image"
 );
 
 const headers = {
@@ -6192,7 +6217,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/mercari/image';
+$url = 'http://103.214.173.247:3019/api/image-search/mercari/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -6295,7 +6320,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/image-search/mercari/url"
+    "http://103.214.173.247:3019/api/image-search/mercari/url"
 );
 
 const headers = {
@@ -6311,7 +6336,7 @@ fetch(url, {
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://localhost/api/image-search/mercari/url';
+$url = 'http://103.214.173.247:3019/api/image-search/mercari/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -6394,6 +6419,1093 @@ print_r(json_decode((string) $body));</code></pre></div>
  &nbsp;
                 <input type="text" style="display: none"
                               name="Accept"                data-endpoint="POSTapi-image-search-mercari-url"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                <h1 id="">用户认证</h1>
+
+    
+
+                                <h2 id="-POSTapi-auth-send-code">发送短信验证码</h2>
+
+<p>
+</p>
+
+<p>向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送</p>
+
+<span id="example-requests-POSTapi-auth-send-code">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/auth/send-code"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "phone_area_code": "86",
+    "phone": "13800138000"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/auth/send-code';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'phone_area_code' =&gt; '86',
+            'phone' =&gt; '13800138000',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-auth-send-code">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;验证码已发送，请注意查收&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 400,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;请等待60秒后再试&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-auth-send-code" hidden>
+    <blockquote>收到响应<span
+                id="execution-response-status-POSTapi-auth-send-code"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-send-code"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-auth-send-code" hidden>
+    <blockquote>请求失败，错误信息:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-send-code">
+
+提示：请检查您的网络连接是否正常。
+如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
+您可以查看开发者工具控制台获取调试信息。</code></pre>
+</span>
+<form id="form-POSTapi-auth-send-code" data-method="POST"
+      data-path="api/auth/send-code"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-send-code', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-auth-send-code"
+                    onclick="tryItOut('POSTapi-auth-send-code');">试一试 ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-auth-send-code"
+                    onclick="cancelTryOut('POSTapi-auth-send-code');" hidden>取消 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-auth-send-code"
+                    data-initial-text="发送请求 💥"
+                    data-loading-text="⏱ 发送中..."
+                    hidden>发送请求 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/auth/send-code</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-auth-send-code"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-auth-send-code"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone_area_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone_area_code"                data-endpoint="POSTapi-auth-send-code"
+               value="86"
+               data-component="body">
+    <br>
+<p>国际区号，默认86 Example: <code>86</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-auth-send-code"
+               value="13800138000"
+               data-component="body">
+    <br>
+<p>手机号 Example: <code>13800138000</code></p>
+        </div>
+        </form>
+
+                    <h2 id="-POSTapi-auth-register">用户注册</h2>
+
+<p>
+</p>
+
+<p>通过手机号和短信验证码注册新用户，注册成功后自动登录</p>
+
+<span id="example-requests-POSTapi-auth-register">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/auth/register"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "phone_area_code": "86",
+    "phone": "13800138000",
+    "sms_code": "123456",
+    "password": "password123"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/auth/register';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'phone_area_code' =&gt; '86',
+            'phone' =&gt; '13800138000',
+            'sms_code' =&gt; '123456',
+            'password' =&gt; 'password123',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-auth-register">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;user&quot;: {
+            &quot;id&quot;: 1,
+            &quot;phone&quot;: &quot;13800138000&quot;,
+            &quot;phone_area_code&quot;: &quot;86&quot;,
+            &quot;name&quot;: null,
+            &quot;vip_level_id&quot;: 0
+        },
+        &quot;token&quot;: &quot;1|abc...xyz&quot;
+    },
+    &quot;message&quot;: &quot;注册成功&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 400,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;该手机号已注册&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-auth-register" hidden>
+    <blockquote>收到响应<span
+                id="execution-response-status-POSTapi-auth-register"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-register"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-auth-register" hidden>
+    <blockquote>请求失败，错误信息:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-register">
+
+提示：请检查您的网络连接是否正常。
+如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
+您可以查看开发者工具控制台获取调试信息。</code></pre>
+</span>
+<form id="form-POSTapi-auth-register" data-method="POST"
+      data-path="api/auth/register"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-register', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-auth-register"
+                    onclick="tryItOut('POSTapi-auth-register');">试一试 ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-auth-register"
+                    onclick="cancelTryOut('POSTapi-auth-register');" hidden>取消 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-auth-register"
+                    data-initial-text="发送请求 💥"
+                    data-loading-text="⏱ 发送中..."
+                    hidden>发送请求 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/auth/register</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-auth-register"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-auth-register"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone_area_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone_area_code"                data-endpoint="POSTapi-auth-register"
+               value="86"
+               data-component="body">
+    <br>
+<p>国际区号，默认86 Example: <code>86</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-auth-register"
+               value="13800138000"
+               data-component="body">
+    <br>
+<p>手机号 Example: <code>13800138000</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sms_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sms_code"                data-endpoint="POSTapi-auth-register"
+               value="123456"
+               data-component="body">
+    <br>
+<p>短信验证码 Example: <code>123456</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="POSTapi-auth-register"
+               value="password123"
+               data-component="body">
+    <br>
+<p>密码，至少6位 Example: <code>password123</code></p>
+        </div>
+        </form>
+
+                    <h2 id="-POSTapi-auth-login">用户登录</h2>
+
+<p>
+</p>
+
+<p>通过手机号和密码登录，返回访问令牌</p>
+
+<span id="example-requests-POSTapi-auth-login">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/auth/login"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "phone_area_code": "86",
+    "phone": "13800138000",
+    "password": "password123"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/auth/login';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'phone_area_code' =&gt; '86',
+            'phone' =&gt; '13800138000',
+            'password' =&gt; 'password123',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-auth-login">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;user&quot;: {
+            &quot;id&quot;: 1,
+            &quot;phone&quot;: &quot;13800138000&quot;,
+            &quot;phone_area_code&quot;: &quot;86&quot;,
+            &quot;name&quot;: null,
+            &quot;vip_level_id&quot;: 0
+        },
+        &quot;token&quot;: &quot;2|xyz...abc&quot;
+    },
+    &quot;message&quot;: &quot;登录成功&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 401,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;手机号或密码错误&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-auth-login" hidden>
+    <blockquote>收到响应<span
+                id="execution-response-status-POSTapi-auth-login"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-login"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-auth-login" hidden>
+    <blockquote>请求失败，错误信息:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-login">
+
+提示：请检查您的网络连接是否正常。
+如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
+您可以查看开发者工具控制台获取调试信息。</code></pre>
+</span>
+<form id="form-POSTapi-auth-login" data-method="POST"
+      data-path="api/auth/login"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-login', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-auth-login"
+                    onclick="tryItOut('POSTapi-auth-login');">试一试 ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-auth-login"
+                    onclick="cancelTryOut('POSTapi-auth-login');" hidden>取消 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-auth-login"
+                    data-initial-text="发送请求 💥"
+                    data-loading-text="⏱ 发送中..."
+                    hidden>发送请求 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/auth/login</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-auth-login"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-auth-login"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone_area_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone_area_code"                data-endpoint="POSTapi-auth-login"
+               value="86"
+               data-component="body">
+    <br>
+<p>国际区号，默认86 Example: <code>86</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-auth-login"
+               value="13800138000"
+               data-component="body">
+    <br>
+<p>手机号 Example: <code>13800138000</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="POSTapi-auth-login"
+               value="password123"
+               data-component="body">
+    <br>
+<p>密码 Example: <code>password123</code></p>
+        </div>
+        </form>
+
+                    <h2 id="-POSTapi-auth-reset-password">重置密码</h2>
+
+<p>
+</p>
+
+<p>通过短信验证码重置密码</p>
+
+<span id="example-requests-POSTapi-auth-reset-password">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/auth/reset-password"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "phone_area_code": "86",
+    "phone": "13800138000",
+    "sms_code": "123456",
+    "password": "newpassword123"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/auth/reset-password';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'phone_area_code' =&gt; '86',
+            'phone' =&gt; '13800138000',
+            'sms_code' =&gt; '123456',
+            'password' =&gt; 'newpassword123',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-auth-reset-password">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;密码重置成功，请重新登录&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 404,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;该手机号未注册&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-auth-reset-password" hidden>
+    <blockquote>收到响应<span
+                id="execution-response-status-POSTapi-auth-reset-password"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-reset-password"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-auth-reset-password" hidden>
+    <blockquote>请求失败，错误信息:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-reset-password">
+
+提示：请检查您的网络连接是否正常。
+如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
+您可以查看开发者工具控制台获取调试信息。</code></pre>
+</span>
+<form id="form-POSTapi-auth-reset-password" data-method="POST"
+      data-path="api/auth/reset-password"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-reset-password', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-auth-reset-password"
+                    onclick="tryItOut('POSTapi-auth-reset-password');">试一试 ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-auth-reset-password"
+                    onclick="cancelTryOut('POSTapi-auth-reset-password');" hidden>取消 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-auth-reset-password"
+                    data-initial-text="发送请求 💥"
+                    data-loading-text="⏱ 发送中..."
+                    hidden>发送请求 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/auth/reset-password</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-auth-reset-password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-auth-reset-password"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone_area_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone_area_code"                data-endpoint="POSTapi-auth-reset-password"
+               value="86"
+               data-component="body">
+    <br>
+<p>国际区号，默认86 Example: <code>86</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-auth-reset-password"
+               value="13800138000"
+               data-component="body">
+    <br>
+<p>手机号 Example: <code>13800138000</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sms_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sms_code"                data-endpoint="POSTapi-auth-reset-password"
+               value="123456"
+               data-component="body">
+    <br>
+<p>短信验证码 Example: <code>123456</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="POSTapi-auth-reset-password"
+               value="newpassword123"
+               data-component="body">
+    <br>
+<p>新密码，至少6位 Example: <code>newpassword123</code></p>
+        </div>
+        </form>
+
+                    <h2 id="-GETapi-auth-me">获取当前用户信息</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>获取已登录用户的详细信息</p>
+
+<span id="example-requests-GETapi-auth-me">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/auth/me"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/auth/me';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-auth-me">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;phone&quot;: &quot;13800138000&quot;,
+        &quot;phone_area_code&quot;: &quot;86&quot;,
+        &quot;name&quot;: null,
+        &quot;email&quot;: null,
+        &quot;vip_level_id&quot;: 0,
+        &quot;vip_expired_at&quot;: null,
+        &quot;last_login_at&quot;: &quot;2026-01-23 15:30:00&quot;,
+        &quot;last_login_location&quot;: &quot;中国 广东省 深圳市&quot;
+    },
+    &quot;message&quot;: &quot;获取成功&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-auth-me" hidden>
+    <blockquote>收到响应<span
+                id="execution-response-status-GETapi-auth-me"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-auth-me"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-auth-me" hidden>
+    <blockquote>请求失败，错误信息:</blockquote>
+    <pre><code id="execution-error-message-GETapi-auth-me">
+
+提示：请检查您的网络连接是否正常。
+如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
+您可以查看开发者工具控制台获取调试信息。</code></pre>
+</span>
+<form id="form-GETapi-auth-me" data-method="GET"
+      data-path="api/auth/me"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-auth-me', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-auth-me"
+                    onclick="tryItOut('GETapi-auth-me');">试一试 ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-auth-me"
+                    onclick="cancelTryOut('GETapi-auth-me');" hidden>取消 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-auth-me"
+                    data-initial-text="发送请求 💥"
+                    data-loading-text="⏱ 发送中..."
+                    hidden>发送请求 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/auth/me</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-auth-me"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-auth-me"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="-POSTapi-auth-logout">退出登录</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>删除当前访问令牌</p>
+
+<span id="example-requests-POSTapi-auth-logout">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/auth/logout"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/auth/logout';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-auth-logout">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;退出成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-auth-logout" hidden>
+    <blockquote>收到响应<span
+                id="execution-response-status-POSTapi-auth-logout"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-logout"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-auth-logout" hidden>
+    <blockquote>请求失败，错误信息:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-logout">
+
+提示：请检查您的网络连接是否正常。
+如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
+您可以查看开发者工具控制台获取调试信息。</code></pre>
+</span>
+<form id="form-POSTapi-auth-logout" data-method="POST"
+      data-path="api/auth/logout"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-logout', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-auth-logout"
+                    onclick="tryItOut('POSTapi-auth-logout');">试一试 ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-auth-logout"
+                    onclick="cancelTryOut('POSTapi-auth-logout');" hidden>取消 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-auth-logout"
+                    data-initial-text="发送请求 💥"
+                    data-loading-text="⏱ 发送中..."
+                    hidden>发送请求 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/auth/logout</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-auth-logout"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-auth-logout"
                value="application/json"
                data-component="header">
     <br>

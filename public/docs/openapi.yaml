@@ -5,13 +5,16 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://localhost'
+    url: 'http://103.214.173.247:3019'
 tags:
   -
     name: '1688 搜同款'
     description: ''
   -
     name: 其他接口
+    description: ''
+  -
+    name: 用户认证
     description: ''
 paths:
   /api/image-search/1688/image:
@@ -704,3 +707,498 @@ paths:
       tags:
         - 其他接口
       security: []
+  /api/auth/send-code:
+    post:
+      summary: 发送短信验证码
+      operationId: ''
+      description: 向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data: null
+                  message: 验证码已发送，请注意查收
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 验证码已发送，请注意查收
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  code: 400
+                  data: null
+                  message: 请等待60秒后再试
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 请等待60秒后再试
+      tags:
+        - 用户认证
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_area_code:
+                  type: string
+                  description: 国际区号，默认86
+                  example: '86'
+                phone:
+                  type: string
+                  description: 手机号
+                  example: '13800138000'
+              required:
+                - phone
+      security: []
+  /api/auth/register:
+    post:
+      summary: 用户注册
+      operationId: ''
+      description: 通过手机号和短信验证码注册新用户，注册成功后自动登录
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    user:
+                      id: 1
+                      phone: '13800138000'
+                      phone_area_code: '86'
+                      name: null
+                      vip_level_id: 0
+                    token: 1|abc...xyz
+                  message: 注册成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          phone:
+                            type: string
+                            example: '13800138000'
+                          phone_area_code:
+                            type: string
+                            example: '86'
+                          name:
+                            type: string
+                            example: null
+                          vip_level_id:
+                            type: integer
+                            example: 0
+                      token:
+                        type: string
+                        example: 1|abc...xyz
+                  message:
+                    type: string
+                    example: 注册成功
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  code: 400
+                  data: null
+                  message: 该手机号已注册
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 该手机号已注册
+      tags:
+        - 用户认证
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_area_code:
+                  type: string
+                  description: 国际区号，默认86
+                  example: '86'
+                phone:
+                  type: string
+                  description: 手机号
+                  example: '13800138000'
+                sms_code:
+                  type: string
+                  description: 短信验证码
+                  example: '123456'
+                password:
+                  type: string
+                  description: 密码，至少6位
+                  example: password123
+              required:
+                - phone
+                - sms_code
+                - password
+      security: []
+  /api/auth/login:
+    post:
+      summary: 用户登录
+      operationId: ''
+      description: 通过手机号和密码登录，返回访问令牌
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    user:
+                      id: 1
+                      phone: '13800138000'
+                      phone_area_code: '86'
+                      name: null
+                      vip_level_id: 0
+                    token: 2|xyz...abc
+                  message: 登录成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          phone:
+                            type: string
+                            example: '13800138000'
+                          phone_area_code:
+                            type: string
+                            example: '86'
+                          name:
+                            type: string
+                            example: null
+                          vip_level_id:
+                            type: integer
+                            example: 0
+                      token:
+                        type: string
+                        example: 2|xyz...abc
+                  message:
+                    type: string
+                    example: 登录成功
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  code: 401
+                  data: null
+                  message: 手机号或密码错误
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 401
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 手机号或密码错误
+      tags:
+        - 用户认证
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_area_code:
+                  type: string
+                  description: 国际区号，默认86
+                  example: '86'
+                phone:
+                  type: string
+                  description: 手机号
+                  example: '13800138000'
+                password:
+                  type: string
+                  description: 密码
+                  example: password123
+              required:
+                - phone
+                - password
+      security: []
+  /api/auth/reset-password:
+    post:
+      summary: 重置密码
+      operationId: ''
+      description: 通过短信验证码重置密码
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data: null
+                  message: 密码重置成功，请重新登录
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 密码重置成功，请重新登录
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  code: 404
+                  data: null
+                  message: 该手机号未注册
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 该手机号未注册
+      tags:
+        - 用户认证
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_area_code:
+                  type: string
+                  description: 国际区号，默认86
+                  example: '86'
+                phone:
+                  type: string
+                  description: 手机号
+                  example: '13800138000'
+                sms_code:
+                  type: string
+                  description: 短信验证码
+                  example: '123456'
+                password:
+                  type: string
+                  description: 新密码，至少6位
+                  example: newpassword123
+              required:
+                - phone
+                - sms_code
+                - password
+      security: []
+  /api/auth/me:
+    get:
+      summary: 获取当前用户信息
+      operationId: ''
+      description: 获取已登录用户的详细信息
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    id: 1
+                    phone: '13800138000'
+                    phone_area_code: '86'
+                    name: null
+                    email: null
+                    vip_level_id: 0
+                    vip_expired_at: null
+                    last_login_at: '2026-01-23 15:30:00'
+                    last_login_location: '中国 广东省 深圳市'
+                  message: 获取成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      phone:
+                        type: string
+                        example: '13800138000'
+                      phone_area_code:
+                        type: string
+                        example: '86'
+                      name:
+                        type: string
+                        example: null
+                      email:
+                        type: string
+                        example: null
+                      vip_level_id:
+                        type: integer
+                        example: 0
+                      vip_expired_at:
+                        type: string
+                        example: null
+                      last_login_at:
+                        type: string
+                        example: '2026-01-23 15:30:00'
+                      last_login_location:
+                        type: string
+                        example: '中国 广东省 深圳市'
+                  message:
+                    type: string
+                    example: 获取成功
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - 用户认证
+  /api/auth/logout:
+    post:
+      summary: 退出登录
+      operationId: ''
+      description: 删除当前访问令牌
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data: null
+                  message: 退出成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 退出成功
+      tags:
+        - 用户认证
