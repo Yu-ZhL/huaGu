@@ -10,6 +10,8 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * 1688 平台搜同款控制器
+ * 
+ * @group 1688搜同款 (1688)
  */
 class Platform1688Controller extends Controller
 {
@@ -25,8 +27,6 @@ class Platform1688Controller extends Controller
      * 
      * 上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品
      *
-     * @group 1688搜同款 (1688)
-     * 
      * @authenticated
      *
      * @param  Request  $request
@@ -130,8 +130,6 @@ class Platform1688Controller extends Controller
      * 
      * 提供图片 URL 地址，在 1688 平台搜索相似商品
      *
-     * @group 1688 搜同款
-     * 
      * @authenticated
      *
      * @param  Request  $request

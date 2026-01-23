@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * 用户认证接口
+ * 
+ * @group 用户认证 (User Auth)
  */
 class AuthController extends Controller
 {
@@ -28,8 +30,6 @@ class AuthController extends Controller
      * 发送短信验证码
      * 
      * 向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送
-     * 
-     * @group 用户认证 (User Auth)
      * 
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000
@@ -92,8 +92,6 @@ class AuthController extends Controller
      * 用户注册
      * 
      * 通过手机号和短信验证码注册新用户，注册成功后自动登录
-     * 
-     * @group User Authentication
      * 
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000
@@ -204,8 +202,6 @@ class AuthController extends Controller
      * 
      * 通过手机号和密码登录，返回访问令牌
      * 
-     * @group 用户认证
-     * 
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000
      * @bodyParam password string required 密码 Example: password123
@@ -292,8 +288,6 @@ class AuthController extends Controller
      * 
      * 通过短信验证码重置密码
      * 
-     * @group 用户认证
-     * 
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000
      * @bodyParam sms_code string required 短信验证码 Example: 123456
@@ -375,8 +369,6 @@ class AuthController extends Controller
      * 
      * 获取已登录用户的详细信息
      * 
-     * @group 用户认证
-     * 
      * @authenticated
      * 
      * @response 200 {
@@ -421,8 +413,6 @@ class AuthController extends Controller
      * 退出登录
      * 
      * 删除当前访问令牌
-     * 
-     * @group 用户认证
      * 
      * @authenticated
      * 
