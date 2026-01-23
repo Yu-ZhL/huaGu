@@ -29,7 +29,7 @@ class AuthController extends Controller
      * 
      * 向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送
      * 
-     * @group User Authentication
+     * @group 用户认证 (User Auth)
      * 
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000

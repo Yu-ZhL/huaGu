@@ -25,7 +25,7 @@ class Platform1688Controller extends Controller
      * 
      * 上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品
      *
-     * @group 1688 Image Search
+     * @group 1688搜同款 (1688)
      * 
      * @authenticated
      *

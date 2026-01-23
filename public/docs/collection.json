@@ -10,13 +10,66 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "ed5614dc-89d1-4f41-8e70-7321d39720d4",
+        "_postman_id": "0864aa22-746f-4f3d-b428-408a954c8ca5",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
         {
-            "name": "1688 Image Search",
+            "name": "1688 \u641c\u540c\u6b3e",
+            "description": "",
+            "item": [
+                {
+                    "name": "1688 URL \u641c\u56fe",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/image-search\/1688\/url",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/image-search\/1688\/url"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"url\":\"https:\\\/\\\/img.kwcdn.com\\\/product\\\/fancy\\\/605bead6-9775-4ddf-a732-09f369e697b5.jpg\",\"page\":1,\"size\":20}"
+                        },
+                        "description": "\u63d0\u4f9b\u56fe\u7247 URL \u5730\u5740\uff0c\u5728 1688 \u5e73\u53f0\u641c\u7d22\u76f8\u4f3c\u5546\u54c1"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": [\n    {\n      \"title\": \"2024\u65b0\u6b3e\u73b0\u8d27\u61d2\u4eba\u795e\u5668\",\n      \"price\": \"29.90\",\n      \"image\": \"https:\/\/cbu01.alicdn.com\/img\/ibank\/xxx.jpg\",\n      \"url\": \"https:\/\/detail.1688.com\/offer\/12345.html\"\n    }\n  ],\n  \"message\": \"\u641c\u56fe\u6210\u529f\uff0c\u627e\u5230 20 \u6761\u7ed3\u679c\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n  \"success\": false,\n  \"code\": 400,\n  \"data\": null,\n  \"message\": \"\u8bf7\u63d0\u4f9b\u56fe\u7247 URL\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "1688\u641c\u540c\u6b3e (1688)",
             "description": "",
             "item": [
                 {
@@ -93,106 +146,9 @@
             ]
         },
         {
-            "name": "1688 \u641c\u540c\u6b3e",
-            "description": "",
-            "item": [
-                {
-                    "name": "1688 URL \u641c\u56fe",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/image-search\/1688\/url",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/image-search\/1688\/url"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"url\":\"https:\\\/\\\/img.kwcdn.com\\\/product\\\/fancy\\\/605bead6-9775-4ddf-a732-09f369e697b5.jpg\",\"page\":1,\"size\":20}"
-                        },
-                        "description": "\u63d0\u4f9b\u56fe\u7247 URL \u5730\u5740\uff0c\u5728 1688 \u5e73\u53f0\u641c\u7d22\u76f8\u4f3c\u5546\u54c1"
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 200,
-                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": [\n    {\n      \"title\": \"2024\u65b0\u6b3e\u73b0\u8d27\u61d2\u4eba\u795e\u5668\",\n      \"price\": \"29.90\",\n      \"image\": \"https:\/\/cbu01.alicdn.com\/img\/ibank\/xxx.jpg\",\n      \"url\": \"https:\/\/detail.1688.com\/offer\/12345.html\"\n    }\n  ],\n  \"message\": \"\u641c\u56fe\u6210\u529f\uff0c\u627e\u5230 20 \u6761\u7ed3\u679c\"\n}",
-                            "name": ""
-                        },
-                        {
-                            "header": [],
-                            "code": 400,
-                            "body": "{\n  \"success\": false,\n  \"code\": 400,\n  \"data\": null,\n  \"message\": \"\u8bf7\u63d0\u4f9b\u56fe\u7247 URL\"\n}",
-                            "name": ""
-                        },
-                        {
-                            "header": [],
-                            "code": 401,
-                            "body": "{\n  \"message\": \"Unauthenticated.\"\n}",
-                            "name": ""
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "User Authentication",
             "description": "",
             "item": [
-                {
-                    "name": "\u53d1\u9001\u77ed\u4fe1\u9a8c\u8bc1\u7801",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/auth\/send-code",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/send-code"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"phone_area_code\":\"86\",\"phone\":\"13800138000\"}"
-                        },
-                        "description": "\u5411\u6307\u5b9a\u624b\u673a\u53f7\u53d1\u9001\u9a8c\u8bc1\u7801\uff0c\u9a8c\u8bc1\u7801\u6709\u6548\u671f5\u5206\u949f\uff0c60\u79d2\u5185\u4e0d\u53ef\u91cd\u590d\u53d1\u9001",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 200,
-                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": null,\n  \"message\": \"\u9a8c\u8bc1\u7801\u5df2\u53d1\u9001\uff0c\u8bf7\u6ce8\u610f\u67e5\u6536\"\n}",
-                            "name": ""
-                        },
-                        {
-                            "header": [],
-                            "code": 400,
-                            "body": "{\n  \"success\": false,\n  \"code\": 400,\n  \"data\": null,\n  \"message\": \"\u8bf7\u7b49\u5f8560\u79d2\u540e\u518d\u8bd5\"\n}",
-                            "name": ""
-                        }
-                    ]
-                },
                 {
                     "name": "\u7528\u6237\u6ce8\u518c",
                     "request": {
@@ -240,7 +196,7 @@
             ]
         },
         {
-            "name": "\u5176\u4ed6\u63a5\u53e3",
+            "name": "\u5176\u4ed6\u63a5\u53e3 (Others)",
             "description": "",
             "item": [
                 {
@@ -1747,6 +1703,56 @@
                             "header": [],
                             "code": 200,
                             "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": null,\n  \"message\": \"\u9000\u51fa\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\u7528\u6237\u8ba4\u8bc1 (User Auth)",
+            "description": "",
+            "item": [
+                {
+                    "name": "\u53d1\u9001\u77ed\u4fe1\u9a8c\u8bc1\u7801",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/send-code",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/send-code"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"phone_area_code\":\"86\",\"phone\":\"13800138000\"}"
+                        },
+                        "description": "\u5411\u6307\u5b9a\u624b\u673a\u53f7\u53d1\u9001\u9a8c\u8bc1\u7801\uff0c\u9a8c\u8bc1\u7801\u6709\u6548\u671f5\u5206\u949f\uff0c60\u79d2\u5185\u4e0d\u53ef\u91cd\u590d\u53d1\u9001",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": null,\n  \"message\": \"\u9a8c\u8bc1\u7801\u5df2\u53d1\u9001\uff0c\u8bf7\u6ce8\u610f\u67e5\u6536\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n  \"success\": false,\n  \"code\": 400,\n  \"data\": null,\n  \"message\": \"\u8bf7\u7b49\u5f8560\u79d2\u540e\u518d\u8bd5\"\n}",
                             "name": ""
                         }
                     ]
