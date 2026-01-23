@@ -95,7 +95,7 @@ return [
         'enabled' => true,
 
         // 在 API 测试器中使用的基础 URL。留空将与显示的 URL 相同（`scribe.base_url`）。
-        'base_url' => null,
+        'base_url' => 'http://103.214.173.247:3019',
 
         // [Laravel Sanctum] 在每个请求之前获取 CSRF 令牌，并将其添加为 X-XSRF-TOKEN 标头。
         'use_csrf' => false,
@@ -125,7 +125,7 @@ return [
 
         // 用户将在示例请求中看到的身份验证参数的占位符。
         // 如果您希望 Scribe 使用随机值作为占位符，请将其设置为 null。
-        'placeholder' => '{YOUR_TOKEN}',
+        'placeholder' => '1|development_test_token_for_verification',
 
         // 为用户提供的任何额外身份验证相关信息。支持 Markdown 和 HTML。
         'extra_info' => '您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。',
