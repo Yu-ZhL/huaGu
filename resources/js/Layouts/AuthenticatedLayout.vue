@@ -17,7 +17,7 @@ onMounted(() => {
     <div class="flex h-screen bg-gray-100">
         <!-- 侧边栏 -->
         <Sidebar :is-open="isSidebarOpen" />
- 
+
         <!-- 主内容区 -->
         <div class="flex flex-col flex-1 overflow-hidden">
             <!-- 顶部导航 -->
