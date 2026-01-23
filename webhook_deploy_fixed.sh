@@ -37,9 +37,8 @@ fi
 
 # 更新后端依赖 (Composer) - 【修改这里：包含 dev 依赖】
 echo ' 更新 PHP 依赖...'
-export COMPOSER_ALLOW_SUPERUSER=1
-# 改为安装所有依赖（包含 Scribe）
-/usr/bin/composer install --optimize-autoload --ignore-platform-reqs
+# 改为安装所有依赖（包含 Scribe），强制使用 PHP 8.2 执行 Composer，避免环境冲突
+$PHP_BIN /usr/bin/composer install --optimize-autoload --ignore-platform-reqs
 
 # 6. 更新数据库
 echo '  执行数据库迁移...'
@@ -56,6 +55,10 @@ $PHP_BIN artisan optimize:clear
 $PHP_BIN artisan config:cache
 $PHP_BIN artisan route:cache
 $PHP_BIN artisan view:cache
+
+# 发布 Filament 静态资源 (修复后台无样式问题)
+echo ' 发布 Filament 资源...'
+$PHP_BIN artisan vendor:publish --tag=laravel-assets --force
 
 # 最终权限修正
 echo ' 最终权限修正...'

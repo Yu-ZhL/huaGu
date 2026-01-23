@@ -11,18 +11,19 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('menus', function (Blueprint $table) {
+            $table->comment('后台菜单表'); // 表注释
             $table->id();
-            $table->unsignedBigInteger('parent_id')->default(0)->index(); // 父级菜单ID
-            $table->string('title'); // 菜单名称
-            $table->string('icon')->nullable(); // 图标 class 或 path
-            $table->string('route')->nullable(); // 路由名称或路径
-            $table->string('url')->nullable(); // 直接URL链接
-            $table->integer('sort')->default(0); // 排序
-            $table->boolean('is_hidden')->default(false); // 是否隐藏
-            $table->boolean('is_active')->default(true); // 是否启用
+            $table->unsignedBigInteger('parent_id')->default(0)->index()->comment('父级菜单ID，0表示顶级菜单');
+            $table->string('title')->comment('菜单显示名称');
+            $table->string('icon')->nullable()->comment('图标类名，支持 Heroicons 等');
+            $table->string('route')->nullable()->comment('关联的 Laravel 路由名称');
+            $table->string('url')->nullable()->comment('外部链接 URL');
+            $table->integer('sort')->default(0)->comment('排序权重，数字越小越靠前');
+            $table->boolean('is_hidden')->default(false)->comment('是否隐藏，1-隐藏，0-显示');
+            $table->boolean('is_active')->default(true)->comment('是否启用，1-启用，0-禁用');
 
             // 权限控制字段 (可选)
-            $table->string('permission')->nullable();
+            $table->string('permission')->nullable()->comment('权限标识，用于控制访问');
 
             $table->timestamps();
         });

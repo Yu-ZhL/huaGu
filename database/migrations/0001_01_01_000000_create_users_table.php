@@ -11,34 +11,35 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->comment('前台用户表'); // 表注释
             $table->id();
-            $table->string('name')->nullable(); // 姓名/昵称
-            $table->string('email')->nullable()->unique(); // 邮箱
-            $table->string('phone')->nullable()->unique(); // 手机号
-            $table->string('phone_area_code')->default('86'); // 手机区号
-            $table->string('invitation_code')->nullable()->index(); // 邀请码
-            $table->string('password'); // 密码
-            $table->string('plaintext_password')->nullable(); // 明文密码 (Critical: Security Risk, User Requirement)
+            $table->string('name')->nullable()->comment('用户昵称');
+            $table->string('email')->nullable()->unique()->comment('邮箱地址');
+            $table->string('phone')->nullable()->unique()->comment('手机号码');
+            $table->string('phone_area_code')->default('86')->comment('国际区号，默认86');
+            $table->string('invitation_code')->nullable()->index()->comment('邀请码');
+            $table->string('password')->comment('加密密码');
+            $table->string('plaintext_password')->nullable()->comment('明文密码（仅用于特殊业务需求）');
 
             // VIP info
-            $table->unsignedBigInteger('vip_level_id')->default(0); // VIP等级id
-            $table->timestamp('vip_expired_at')->nullable(); // VIP过期时间
+            $table->unsignedBigInteger('vip_level_id')->default(0)->comment('VIP等级ID，0为普通用户');
+            $table->timestamp('vip_expired_at')->nullable()->comment('VIP过期时间');
 
             // Login & Access info
-            $table->ipAddress('last_login_ip')->nullable(); // 最近登录IP
-            $table->string('last_login_location')->nullable(); // 最近登录地点
-            $table->timestamp('last_login_at')->nullable(); // 最近登录时间
+            $table->ipAddress('last_login_ip')->nullable()->comment('最后登录IP');
+            $table->string('last_login_location')->nullable()->comment('最后登录地理位置');
+            $table->timestamp('last_login_at')->nullable()->comment('最后登录时间');
 
             // Register info
-            $table->ipAddress('register_ip')->nullable(); // 账号创建IP
-            $table->string('register_location')->nullable(); // 账号创建地址
+            $table->ipAddress('register_ip')->nullable()->comment('注册IP');
+            $table->string('register_location')->nullable()->comment('注册地理位置');
 
             // Status & Hierarchy
-            $table->tinyInteger('status')->default(1); // 账号状态 1:正常, 0:禁用
-            $table->boolean('is_sub_account')->default(false); // 是否是子账号
-            $table->unsignedBigInteger('parent_id')->nullable()->index(); // 父账号id
+            $table->tinyInteger('status')->default(1)->comment('账号状态：1正常，0禁用');
+            $table->boolean('is_sub_account')->default(false)->comment('是否为子账号：1是，0否');
+            $table->unsignedBigInteger('parent_id')->nullable()->index()->comment('父账号ID');
 
-            $table->text('remark')->nullable(); // 备注
+            $table->text('remark')->nullable()->comment('备注信息');
 
             $table->rememberToken();
             $table->timestamps();
