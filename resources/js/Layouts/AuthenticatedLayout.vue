@@ -6,7 +6,6 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
-import Dashboard from "@/Pages/Dashboard.vue";
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -114,7 +113,7 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            dashboard
+                            Dashboard
                         </ResponsiveNavLink>
                     </div>
 
