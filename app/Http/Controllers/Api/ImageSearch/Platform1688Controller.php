@@ -26,6 +26,8 @@ class Platform1688Controller extends Controller
      * 上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品
      *
      * @group 1688 搜同款
+     * 
+     * @authenticated
      *
      * @param  Request  $request
      * @return JsonResponse
@@ -54,6 +56,10 @@ class Platform1688Controller extends Controller
      *   "code": 400,
      *   "data": null,
      *   "message": "请提供图片文件或 Base64 数据"
+     * }
+     * 
+     * @response 401 {
+     *   "message": "Unauthenticated."
      * }
      */
     public function searchByImage(Request $request): JsonResponse
@@ -125,6 +131,8 @@ class Platform1688Controller extends Controller
      * 提供图片 URL 地址，在 1688 平台搜索相似商品
      *
      * @group 1688 搜同款
+     * 
+     * @authenticated
      *
      * @param  Request  $request
      * @return JsonResponse
@@ -152,6 +160,10 @@ class Platform1688Controller extends Controller
      *   "code": 400,
      *   "data": null,
      *   "message": "请提供图片 URL"
+     * }
+     * 
+     * @response 401 {
+     *   "message": "Unauthenticated."
      * }
      */
     public function searchByUrl(Request $request): JsonResponse

@@ -281,7 +281,9 @@
 &lt;aside&gt;在页面滚动时，您可以在右侧的黑色区域（手机端则在正文中）看到不同编程语言的 API 调用示例。 您可以点击右上角的标签页来切换语言（手机端请通过左上角的菜单栏进行切换）。&lt;/aside&gt;</code></pre>
 
         <h1 id="">验证请求</h1>
-<p>此 API 无需认证。</p>
+<p>要进行请求验证，请包含一个 <strong><code>Authorization</code></strong> 头，其值为 <strong><code>"Bearer {YOUR_TOKEN}"</code></strong>。</p>
+<p>所有经过身份验证的端点都在下面的文档中标记了 <code>requires authentication</code> 徽章。</p>
+<p>您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。</p>
 
         <h1 id="1688">1688 搜同款</h1>
 
@@ -290,6 +292,7 @@
                                 <h2 id="1688-POSTapi-image-search-1688-image">1688 以图搜图</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品</p>
@@ -304,6 +307,7 @@
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_TOKEN}",
     "Content-Type": "multipart/form-data",
     "Accept": "application/json",
 };
@@ -328,6 +332,7 @@ $response = $client-&gt;post(
     $url,
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_TOKEN}',
             'Content-Type' =&gt; 'multipart/form-data',
             'Accept' =&gt; 'application/json',
         ],
@@ -346,7 +351,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpF547.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php3E7D.tmp', 'r')
             ],
         ],
     ]
@@ -388,6 +393,15 @@ print_r(json_decode((string) $body));</code></pre></div>
     &quot;message&quot;: &quot;请提供图片文件或 Base64 数据&quot;
 }</code>
  </pre>
+            <blockquote>
+            <p>响应示例 (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
     </span>
 <span id="execution-results-POSTapi-image-search-1688-image" hidden>
     <blockquote>收到响应<span
@@ -406,7 +420,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 <form id="form-POSTapi-image-search-1688-image" data-method="POST"
       data-path="api/image-search/1688/image"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="1"
       data-isarraybody="0"
       autocomplete="off"
@@ -436,6 +450,18 @@ print_r(json_decode((string) $body));</code></pre></div>
             <b><code>api/image-search/1688/image</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-image-search-1688-image"
+               value="Bearer {YOUR_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_TOKEN}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -471,7 +497,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpF547.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php3E7D.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -514,6 +540,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                     <h2 id="1688-POSTapi-image-search-1688-url">1688 URL 搜图</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>提供图片 URL 地址，在 1688 平台搜索相似商品</p>
@@ -528,6 +555,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_TOKEN}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -552,6 +580,7 @@ $response = $client-&gt;post(
     $url,
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_TOKEN}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -599,6 +628,15 @@ print_r(json_decode((string) $body));</code></pre></div>
     &quot;message&quot;: &quot;请提供图片 URL&quot;
 }</code>
  </pre>
+            <blockquote>
+            <p>响应示例 (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
     </span>
 <span id="execution-results-POSTapi-image-search-1688-url" hidden>
     <blockquote>收到响应<span
@@ -617,7 +655,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 </span>
 <form id="form-POSTapi-image-search-1688-url" data-method="POST"
       data-path="api/image-search/1688/url"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
@@ -647,6 +685,18 @@ print_r(json_decode((string) $body));</code></pre></div>
             <b><code>api/image-search/1688/url</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-image-search-1688-url"
+               value="Bearer {YOUR_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_TOKEN}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -7248,6 +7298,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_TOKEN}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -7265,6 +7316,7 @@ $response = $client-&gt;get(
     $url,
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_TOKEN}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -7356,6 +7408,18 @@ print_r(json_decode((string) $body));</code></pre></div>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-auth-me"
+               value="Bearer {YOUR_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_TOKEN}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
  &nbsp;
@@ -7399,6 +7463,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_TOKEN}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -7416,6 +7481,7 @@ $response = $client-&gt;post(
     $url,
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_TOKEN}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -7487,6 +7553,18 @@ print_r(json_decode((string) $body));</code></pre></div>
             <b><code>api/auth/logout</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-auth-logout"
+               value="Bearer {YOUR_TOKEN}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_TOKEN}</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
