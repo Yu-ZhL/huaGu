@@ -21,7 +21,7 @@ onMounted(() => {
         <!-- 主内容区 -->
         <div class="flex flex-col flex-1 overflow-hidden">
             <!-- 顶部导航 -->
-            <HeaderBar @toggle-sidebar="isSidebarOpen = !isSidebarOpen" />
+            <HeaderBar @toggle-sidebar="isSidearpen = !isSidebarOpen" />
 
             <!-- 平台标签 -->
             <PlatformTabs />
