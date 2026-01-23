@@ -107,7 +107,7 @@ return [
     // API 如何进行身份验证？此信息将用于显示的文档、生成的示例和响应调用中。
     'auth' => [
         // 如果 API 中的任何端点使用身份验证，请将其设置为 true。
-        'enabled' => false,
+        'enabled' => true,
 
         // 如果您的 API 默认应进行身份验证，请将其设置为 true。如果是，您还必须将 `enabled`（上面）设置为 true。
         // 然后，您可以在单个端点上使用 @unauthenticated 或 @authenticated 来更改其默认状态。
@@ -117,7 +117,7 @@ return [
         'in' => 'bearer',
 
         // 身份验证参数（例如 token、key、apiKey）或标头（例如 Authorization、Api-Key）的名称。
-        'name' => 'key',
+        'name' => 'token',
 
         // Scribe 用于验证响应调用的参数值。
         // 这不会包含在生成的文档中。如果为空，Scribe 将使用随机值。
@@ -125,10 +125,10 @@ return [
 
         // 用户将在示例请求中看到的身份验证参数的占位符。
         // 如果您希望 Scribe 使用随机值作为占位符，请将其设置为 null。
-        'placeholder' => '{YOUR_AUTH_KEY}',
+        'placeholder' => '{YOUR_TOKEN}',
 
         // 为用户提供的任何额外身份验证相关信息。支持 Markdown 和 HTML。
-        'extra_info' => '您可以通过访问仪表板并点击 <b>生成 API 令牌</b> 来获取您的令牌。',
+        'extra_info' => '您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。',
     ],
 
     // 每个端点的示例请求将以这些语言显示。

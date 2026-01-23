@@ -16,6 +16,15 @@ tags:
   -
     name: 用户认证
     description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: '您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。'
+security:
+  -
+    default: []
 paths:
   /api/image-search/1688/image:
     post:
@@ -97,6 +106,18 @@ paths:
                   message:
                     type: string
                     example: '请提供图片文件或 Base64 数据'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
       tags:
         - '1688 搜同款'
       requestBody:
@@ -122,7 +143,6 @@ paths:
                   type: integer
                   description: '每页数量，默认 20'
                   example: 20
-      security: []
   /api/image-search/1688/url:
     post:
       summary: '1688 URL 搜图'
@@ -203,6 +223,18 @@ paths:
                   message:
                     type: string
                     example: '请提供图片 URL'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
       tags:
         - '1688 搜同款'
       requestBody:
@@ -226,7 +258,6 @@ paths:
                   example: 20
               required:
                 - url
-      security: []
   /api/image-search/1688-cross-border/image:
     post:
       summary: 以图搜图（待实现）
