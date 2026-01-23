@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->nullable()->comment('用户昵称');
             $table->string('email')->nullable()->unique()->comment('邮箱地址');
+            $table->timestamp('email_verified_at')->nullable()->comment('邮箱验证时间'); // Standard Laravel field
             $table->string('phone')->nullable()->unique()->comment('手机号码');
             $table->string('phone_area_code')->default('86')->comment('国际区号，默认86');
             $table->string('invitation_code')->nullable()->index()->comment('邀请码');
