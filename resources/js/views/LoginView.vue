@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth.js'
 import { ArrowLeftOnRectangleIcon } from '@heroicons/vue/24/outline'
 
 const router = useRouter()
@@ -39,7 +39,7 @@ const handleDemoLogin = async () => {
         <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
             <div>
                 <div class="flex justify-center">
-                    <img class="h-12 w-auto" src="/images/logo.png" alt="飞猫选品" />
+                    <img class="h-12 w-auto" src="https://feimaoxuanpin.com/assets/png/logo-Cd_XzqJj.png" alt="飞猫选品" />
                 </div>
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">飞猫选品</h2>
                 <p class="mt-2 text-center text-sm text-gray-600">跨境选品工具</p>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth.js'
 import { ArrowPathIcon } from '@heroicons/vue/24/outline'
 
 const authStore = useAuthStore()
@@ -21,7 +21,7 @@ const loadProducts = async () => {
 
         if (!authStore.isAuthenticated) {
             // 未登录时不加载数据
-            return
+            return'';
         }
 
         // 实际项目中这里会调用API
@@ -73,7 +73,7 @@ onMounted(() => {
             <div class="text-gray-400 mb-6">登录后可查看列表、导出、估量、1688匹配等功能</div>
             <button
                 class="px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition flex items-center mx-auto"
-                @click=" $ router.push('/login')"
+                @click=" $router.push('/login')"
             >
                 <ArrowPathIcon class="h-4 w-4 mr-2" />
                 去登录
@@ -89,7 +89,7 @@ onMounted(() => {
                             <input
                                 type="checkbox"
                                 class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                @change="toggleSelectAll( $ event.target.checked)"
+                                @change="toggleSelectAll( $event.target.checked)"
                             />
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">商品信息</th>
@@ -108,7 +108,7 @@ onMounted(() => {
                                 type="checkbox"
                                 class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                                 :checked="selectedProducts.includes(product.id)"
-                                @change=" $ event.target.checked ? selectedProducts.push(product.id) : selectedProducts = selectedProducts.filter(id => id !== product.id)"
+                                @change=" $event.target.checked ? selectedProducts.push(product.id) : selectedProducts = selectedProducts.filter(id => id !== product.id)"
                             />
                         </td>
                         <td class="px-6 py-4">
