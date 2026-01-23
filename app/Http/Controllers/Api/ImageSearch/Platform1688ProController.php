@@ -10,6 +10,8 @@ use Illuminate\Http\JsonResponse;
  * 1688 PRO 平台搜同款控制器
  * 
  * 预留接口，待后续实现
+ * 
+ * @group 1688搜同款 (1688)
  */
 class Platform1688ProController extends Controller
 {

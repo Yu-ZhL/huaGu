@@ -84,6 +84,18 @@
                                                     <li class="tocify-item level-2" data-unique="1688-1688-POSTapi-image-search-1688-image">
                                 <a href="#1688-1688-POSTapi-image-search-1688-image">1688 以图搜图</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="1688-1688-POSTapi-image-search-1688-cross-border-image">
+                                <a href="#1688-1688-POSTapi-image-search-1688-cross-border-image">以图搜图（待实现）</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="1688-1688-POSTapi-image-search-1688-cross-border-url">
+                                <a href="#1688-1688-POSTapi-image-search-1688-cross-border-url">URL 搜图（待实现）</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="1688-1688-POSTapi-image-search-1688-pro-image">
+                                <a href="#1688-1688-POSTapi-image-search-1688-pro-image">POST api/image-search/1688-pro/image</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="1688-1688-POSTapi-image-search-1688-pro-url">
+                                <a href="#1688-1688-POSTapi-image-search-1688-pro-url">POST api/image-search/1688-pro/url</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-user-authentication" class="tocify-header">
@@ -101,19 +113,7 @@
                     <a href="#others">其他接口 (Others)</a>
                 </li>
                                     <ul id="tocify-subheader-others" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="others-POSTapi-image-search-1688-cross-border-image">
-                                <a href="#others-POSTapi-image-search-1688-cross-border-image">以图搜图（待实现）</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="others-POSTapi-image-search-1688-cross-border-url">
-                                <a href="#others-POSTapi-image-search-1688-cross-border-url">URL 搜图（待实现）</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="others-POSTapi-image-search-1688-pro-image">
-                                <a href="#others-POSTapi-image-search-1688-pro-image">POST api/image-search/1688-pro/image</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="others-POSTapi-image-search-1688-pro-url">
-                                <a href="#others-POSTapi-image-search-1688-pro-url">POST api/image-search/1688-pro/url</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="others-POSTapi-image-search-taobao-image">
+                                                    <li class="tocify-item level-2" data-unique="others-POSTapi-image-search-taobao-image">
                                 <a href="#others-POSTapi-image-search-taobao-image">POST api/image-search/taobao/image</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="others-POSTapi-image-search-taobao-url">
@@ -313,7 +313,7 @@
                                 <h2 id="1688-POSTapi-image-search-1688-url">1688 URL 搜图</h2>
 
 <p>
-<small class="badge badge-darkred">requires authentication</small>
+<small class="badge badge-darkred">需要认证</small>
 </p>
 
 <p>提供图片 URL 地址，在 1688 平台搜索相似商品</p>
@@ -540,7 +540,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                                 <h2 id="1688-1688-POSTapi-image-search-1688-image">1688 以图搜图</h2>
 
 <p>
-<small class="badge badge-darkred">requires authentication</small>
+<small class="badge badge-darkred">需要认证</small>
 </p>
 
 <p>上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品</p>
@@ -599,7 +599,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpD36F.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpD69D.tmp', 'r')
             ],
         ],
     ]
@@ -745,7 +745,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpD36F.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpD69D.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -784,6 +784,482 @@ print_r(json_decode((string) $body));</code></pre></div>
 <p>每页数量，默认 20 Example: <code>20</code></p>
         </div>
         </form>
+
+                    <h2 id="1688-1688-POSTapi-image-search-1688-cross-border-image">以图搜图（待实现）</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-image-search-1688-cross-border-image">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/image-search/1688-cross-border/image"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/image-search/1688-cross-border/image';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-image-search-1688-cross-border-image">
+</span>
+<span id="execution-results-POSTapi-image-search-1688-cross-border-image" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-image-search-1688-cross-border-image"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-cross-border-image"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-image-search-1688-cross-border-image" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-image-search-1688-cross-border-image">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-image-search-1688-cross-border-image" data-method="POST"
+      data-path="api/image-search/1688-cross-border/image"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-cross-border-image', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-image-search-1688-cross-border-image"
+                    onclick="tryItOut('POSTapi-image-search-1688-cross-border-image');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-image-search-1688-cross-border-image"
+                    onclick="cancelTryOut('POSTapi-image-search-1688-cross-border-image');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-image-search-1688-cross-border-image"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/image-search/1688-cross-border/image</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-cross-border-image"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-image-search-1688-cross-border-image"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="1688-1688-POSTapi-image-search-1688-cross-border-url">URL 搜图（待实现）</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-image-search-1688-cross-border-url">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/image-search/1688-cross-border/url"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/image-search/1688-cross-border/url';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-image-search-1688-cross-border-url">
+</span>
+<span id="execution-results-POSTapi-image-search-1688-cross-border-url" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-image-search-1688-cross-border-url"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-cross-border-url"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-image-search-1688-cross-border-url" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-image-search-1688-cross-border-url">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-image-search-1688-cross-border-url" data-method="POST"
+      data-path="api/image-search/1688-cross-border/url"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-cross-border-url', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-image-search-1688-cross-border-url"
+                    onclick="tryItOut('POSTapi-image-search-1688-cross-border-url');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-image-search-1688-cross-border-url"
+                    onclick="cancelTryOut('POSTapi-image-search-1688-cross-border-url');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-image-search-1688-cross-border-url"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/image-search/1688-cross-border/url</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-cross-border-url"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-image-search-1688-cross-border-url"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="1688-1688-POSTapi-image-search-1688-pro-image">POST api/image-search/1688-pro/image</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-image-search-1688-pro-image">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/image-search/1688-pro/image"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/image-search/1688-pro/image';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-image-search-1688-pro-image">
+</span>
+<span id="execution-results-POSTapi-image-search-1688-pro-image" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-image-search-1688-pro-image"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-pro-image"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-image-search-1688-pro-image" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-image-search-1688-pro-image">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-image-search-1688-pro-image" data-method="POST"
+      data-path="api/image-search/1688-pro/image"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-pro-image', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-image-search-1688-pro-image"
+                    onclick="tryItOut('POSTapi-image-search-1688-pro-image');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-image-search-1688-pro-image"
+                    onclick="cancelTryOut('POSTapi-image-search-1688-pro-image');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-image-search-1688-pro-image"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/image-search/1688-pro/image</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-pro-image"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-image-search-1688-pro-image"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="1688-1688-POSTapi-image-search-1688-pro-url">POST api/image-search/1688-pro/url</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-image-search-1688-pro-url">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/image-search/1688-pro/url"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/image-search/1688-pro/url';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-image-search-1688-pro-url">
+</span>
+<span id="execution-results-POSTapi-image-search-1688-pro-url" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-image-search-1688-pro-url"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-pro-url"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-image-search-1688-pro-url" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-image-search-1688-pro-url">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-image-search-1688-pro-url" data-method="POST"
+      data-path="api/image-search/1688-pro/url"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-pro-url', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-image-search-1688-pro-url"
+                    onclick="tryItOut('POSTapi-image-search-1688-pro-url');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-image-search-1688-pro-url"
+                    onclick="cancelTryOut('POSTapi-image-search-1688-pro-url');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-image-search-1688-pro-url"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/image-search/1688-pro/url</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-pro-url"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-image-search-1688-pro-url"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
 
                 <h1 id="user-authentication">User Authentication</h1>
 
@@ -1008,483 +1484,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
     
 
-                                <h2 id="others-POSTapi-image-search-1688-cross-border-image">以图搜图（待实现）</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-image-search-1688-cross-border-image">
-<blockquote>请求示例:</blockquote>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://103.214.173.247:3019/api/image-search/1688-cross-border/image"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://103.214.173.247:3019/api/image-search/1688-cross-border/image';
-$response = $client-&gt;post(
-    $url,
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-image-search-1688-cross-border-image">
-</span>
-<span id="execution-results-POSTapi-image-search-1688-cross-border-image" hidden>
-    <blockquote>接口返回数据<span
-                id="execution-response-status-POSTapi-image-search-1688-cross-border-image"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-cross-border-image"
-      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-image-search-1688-cross-border-image" hidden>
-    <blockquote>请求发生错误:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-image-search-1688-cross-border-image">
-
-调试提示：如果请求失败，请检查网络连接是否正常。
-对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
-更多错误详情请查看浏览器控制台。</code></pre>
-</span>
-<form id="form-POSTapi-image-search-1688-cross-border-image" data-method="POST"
-      data-path="api/image-search/1688-cross-border/image"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-cross-border-image', this);">
-    <h3>
-        请求&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-image-search-1688-cross-border-image"
-                    onclick="tryItOut('POSTapi-image-search-1688-cross-border-image');">在线调试
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-image-search-1688-cross-border-image"
-                    onclick="cancelTryOut('POSTapi-image-search-1688-cross-border-image');" hidden>取消调试
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-image-search-1688-cross-border-image"
-                    data-initial-text="发送请求"
-                    data-loading-text="请求处理中..."
-                    hidden>发送请求
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/image-search/1688-cross-border/image</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-cross-border-image"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-image-search-1688-cross-border-image"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="others-POSTapi-image-search-1688-cross-border-url">URL 搜图（待实现）</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-image-search-1688-cross-border-url">
-<blockquote>请求示例:</blockquote>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://103.214.173.247:3019/api/image-search/1688-cross-border/url"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://103.214.173.247:3019/api/image-search/1688-cross-border/url';
-$response = $client-&gt;post(
-    $url,
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-image-search-1688-cross-border-url">
-</span>
-<span id="execution-results-POSTapi-image-search-1688-cross-border-url" hidden>
-    <blockquote>接口返回数据<span
-                id="execution-response-status-POSTapi-image-search-1688-cross-border-url"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-cross-border-url"
-      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-image-search-1688-cross-border-url" hidden>
-    <blockquote>请求发生错误:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-image-search-1688-cross-border-url">
-
-调试提示：如果请求失败，请检查网络连接是否正常。
-对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
-更多错误详情请查看浏览器控制台。</code></pre>
-</span>
-<form id="form-POSTapi-image-search-1688-cross-border-url" data-method="POST"
-      data-path="api/image-search/1688-cross-border/url"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-cross-border-url', this);">
-    <h3>
-        请求&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-image-search-1688-cross-border-url"
-                    onclick="tryItOut('POSTapi-image-search-1688-cross-border-url');">在线调试
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-image-search-1688-cross-border-url"
-                    onclick="cancelTryOut('POSTapi-image-search-1688-cross-border-url');" hidden>取消调试
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-image-search-1688-cross-border-url"
-                    data-initial-text="发送请求"
-                    data-loading-text="请求处理中..."
-                    hidden>发送请求
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/image-search/1688-cross-border/url</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-cross-border-url"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-image-search-1688-cross-border-url"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="others-POSTapi-image-search-1688-pro-image">POST api/image-search/1688-pro/image</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-image-search-1688-pro-image">
-<blockquote>请求示例:</blockquote>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://103.214.173.247:3019/api/image-search/1688-pro/image"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://103.214.173.247:3019/api/image-search/1688-pro/image';
-$response = $client-&gt;post(
-    $url,
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-image-search-1688-pro-image">
-</span>
-<span id="execution-results-POSTapi-image-search-1688-pro-image" hidden>
-    <blockquote>接口返回数据<span
-                id="execution-response-status-POSTapi-image-search-1688-pro-image"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-pro-image"
-      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-image-search-1688-pro-image" hidden>
-    <blockquote>请求发生错误:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-image-search-1688-pro-image">
-
-调试提示：如果请求失败，请检查网络连接是否正常。
-对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
-更多错误详情请查看浏览器控制台。</code></pre>
-</span>
-<form id="form-POSTapi-image-search-1688-pro-image" data-method="POST"
-      data-path="api/image-search/1688-pro/image"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-pro-image', this);">
-    <h3>
-        请求&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-image-search-1688-pro-image"
-                    onclick="tryItOut('POSTapi-image-search-1688-pro-image');">在线调试
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-image-search-1688-pro-image"
-                    onclick="cancelTryOut('POSTapi-image-search-1688-pro-image');" hidden>取消调试
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-image-search-1688-pro-image"
-                    data-initial-text="发送请求"
-                    data-loading-text="请求处理中..."
-                    hidden>发送请求
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/image-search/1688-pro/image</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-pro-image"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-image-search-1688-pro-image"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="others-POSTapi-image-search-1688-pro-url">POST api/image-search/1688-pro/url</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-POSTapi-image-search-1688-pro-url">
-<blockquote>请求示例:</blockquote>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://103.214.173.247:3019/api/image-search/1688-pro/url"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://103.214.173.247:3019/api/image-search/1688-pro/url';
-$response = $client-&gt;post(
-    $url,
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-image-search-1688-pro-url">
-</span>
-<span id="execution-results-POSTapi-image-search-1688-pro-url" hidden>
-    <blockquote>接口返回数据<span
-                id="execution-response-status-POSTapi-image-search-1688-pro-url"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-pro-url"
-      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-image-search-1688-pro-url" hidden>
-    <blockquote>请求发生错误:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-image-search-1688-pro-url">
-
-调试提示：如果请求失败，请检查网络连接是否正常。
-对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
-更多错误详情请查看浏览器控制台。</code></pre>
-</span>
-<form id="form-POSTapi-image-search-1688-pro-url" data-method="POST"
-      data-path="api/image-search/1688-pro/url"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-pro-url', this);">
-    <h3>
-        请求&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-image-search-1688-pro-url"
-                    onclick="tryItOut('POSTapi-image-search-1688-pro-url');">在线调试
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-image-search-1688-pro-url"
-                    onclick="cancelTryOut('POSTapi-image-search-1688-pro-url');" hidden>取消调试
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-image-search-1688-pro-url"
-                    data-initial-text="发送请求"
-                    data-loading-text="请求处理中..."
-                    hidden>发送请求
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/image-search/1688-pro/url</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-pro-url"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-image-search-1688-pro-url"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                        </form>
-
-                    <h2 id="others-POSTapi-image-search-taobao-image">POST api/image-search/taobao/image</h2>
+                                <h2 id="others-POSTapi-image-search-taobao-image">POST api/image-search/taobao/image</h2>
 
 <p>
 </p>
@@ -7134,7 +7134,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                     <h2 id="-GETapi-auth-me">获取当前用户信息</h2>
 
 <p>
-<small class="badge badge-darkred">requires authentication</small>
+<small class="badge badge-darkred">需要认证</small>
 </p>
 
 <p>获取已登录用户的详细信息</p>
@@ -7299,7 +7299,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                     <h2 id="-POSTapi-auth-logout">退出登录</h2>
 
 <p>
-<small class="badge badge-darkred">requires authentication</small>
+<small class="badge badge-darkred">需要认证</small>
 </p>
 
 <p>删除当前访问令牌</p>

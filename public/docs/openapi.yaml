@@ -267,6 +267,46 @@ paths:
                   type: integer
                   description: '每页数量，默认 20'
                   example: 20
+  /api/image-search/1688-cross-border/image:
+    post:
+      summary: 以图搜图（待实现）
+      operationId: ''
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '1688搜同款 (1688)'
+      security: []
+  /api/image-search/1688-cross-border/url:
+    post:
+      summary: 'URL 搜图（待实现）'
+      operationId: uRL
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '1688搜同款 (1688)'
+      security: []
+  /api/image-search/1688-pro/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearch1688ProImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '1688搜同款 (1688)'
+      security: []
+  /api/image-search/1688-pro/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearch1688ProUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '1688搜同款 (1688)'
+      security: []
   /api/auth/register:
     post:
       summary: 用户注册
@@ -379,46 +419,6 @@ paths:
                 - phone
                 - sms_code
                 - password
-      security: []
-  /api/image-search/1688-cross-border/image:
-    post:
-      summary: 以图搜图（待实现）
-      operationId: ''
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - '其他接口 (Others)'
-      security: []
-  /api/image-search/1688-cross-border/url:
-    post:
-      summary: 'URL 搜图（待实现）'
-      operationId: uRL
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - '其他接口 (Others)'
-      security: []
-  /api/image-search/1688-pro/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearch1688ProImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - '其他接口 (Others)'
-      security: []
-  /api/image-search/1688-pro/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearch1688ProUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - '其他接口 (Others)'
       security: []
   /api/image-search/taobao/image:
     post:
