@@ -2,3 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* NProgress 进度条 */
+#nprogress .bar {
+    background: #2563EB !important;
+    height: 3px !important;
+    z-index: 999999 !important;
+}
+
+/* 加载圈颜色 */
+#nprogress .spinner-icon {
+    border-top-color: #2563EB !important;
+    border-left-color: #2563EB !important;
+}
