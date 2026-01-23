@@ -2,7 +2,6 @@
 
 use Knuckles\Scribe\Extracting\Strategies;
 use Knuckles\Scribe\Config\Defaults;
-use Knuckles\Scribe\Config\AuthIn;
 use function Knuckles\Scribe\Config\{removeStrategies, configureStrategy};
 
 // 仅显示最常用的配置。查看 https://scribe.knuckles.wtf/laravel/reference/config 了解所有配置项。
@@ -109,7 +108,7 @@ return [
         'default' => false,
 
         // 身份验证值应该在请求中的哪里发送？
-        'in' => AuthIn::BEARER->value,
+        'in' => 'bearer',
 
         // 身份验证参数（例如 token、key、apiKey）或标头（例如 Authorization、Api-Key）的名称。
         'name' => 'key',
