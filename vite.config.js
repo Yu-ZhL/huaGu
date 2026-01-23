@@ -17,7 +17,21 @@ export default defineConfig({
             },
         }),
     ],
-
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './resources/js'),
+        },
+    },
+    build: {
+        outDir: 'public/build',
+        assetsDir: 'assets',
+        manifest: true,
+        rollupOptions: {
+            input: {
+                app: './resources/js/app.js'
+            }
+        }
+    },
     server: {
         host: '0.0.0.0', // 允许外部访问
         hmr: {
