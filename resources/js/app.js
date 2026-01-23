@@ -12,7 +12,7 @@ import router from './router'
 const app = createApp(App)
 const pinia = createPinia()
 
-console.log(13123213)
+
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
