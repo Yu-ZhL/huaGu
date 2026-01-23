@@ -7,7 +7,6 @@
     <title>飞猫选品</title>
     @routess
     @vite(['resources/js/app.js'])
-    @inertiaHead
 </head>
 <body>
 <div id="app"></div>
