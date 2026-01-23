@@ -35,13 +35,13 @@ return [
     ],
 
     "headings" => [
-        "introduction" => "简介",
-        "auth" => "验证请求",
+        "introduction" => "系统简介",
+        "auth" => "用户认证指南",
     ],
 
     "endpoint" => [
         "request" => "请求",
-        "headers" => "Headers",
+        "headers" => "请求头 (Headers)",
         "url_parameters" => "URL 参数",
         "body_parameters" => "Body 参数",
         "query_parameters" => "Query 参数",

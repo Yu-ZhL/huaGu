@@ -11,10 +11,19 @@ tags:
     name: '1688 搜同款'
     description: ''
   -
-    name: 其他接口
+    name: '1688搜同款 (1688)'
+    description: ''
+  -
+    name: 'User Authentication'
+    description: ''
+  -
+    name: '其他接口 (Others)'
     description: ''
   -
     name: 用户认证
+    description: ''
+  -
+    name: '用户认证 (User Auth)'
     description: ''
 components:
   securitySchemes:
@@ -26,123 +35,6 @@ security:
   -
     default: []
 paths:
-  /api/image-search/1688/image:
-    post:
-      summary: '1688 以图搜图'
-      operationId: '1688'
-      description: '上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品'
-      parameters: []
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  success: true
-                  code: 200
-                  data:
-                    -
-                      title: 2024新款现货懒人神器
-                      price: '29.90'
-                      image: 'https://cbu01.alicdn.com/img/ibank/xxx.jpg'
-                      url: 'https://detail.1688.com/offer/12345.html'
-                  message: '搜图成功，找到 20 条结果'
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  code:
-                    type: integer
-                    example: 200
-                  data:
-                    type: array
-                    example:
-                      -
-                        title: 2024新款现货懒人神器
-                        price: '29.90'
-                        image: 'https://cbu01.alicdn.com/img/ibank/xxx.jpg'
-                        url: 'https://detail.1688.com/offer/12345.html'
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                          example: 2024新款现货懒人神器
-                        price:
-                          type: string
-                          example: '29.90'
-                        image:
-                          type: string
-                          example: 'https://cbu01.alicdn.com/img/ibank/xxx.jpg'
-                        url:
-                          type: string
-                          example: 'https://detail.1688.com/offer/12345.html'
-                  message:
-                    type: string
-                    example: '搜图成功，找到 20 条结果'
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  success: false
-                  code: 400
-                  data: null
-                  message: '请提供图片文件或 Base64 数据'
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  code:
-                    type: integer
-                    example: 400
-                  data:
-                    type: string
-                    example: null
-                  message:
-                    type: string
-                    example: '请提供图片文件或 Base64 数据'
-        401:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  message: Unauthenticated.
-                properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
-      tags:
-        - '1688 搜同款'
-      requestBody:
-        required: false
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                image:
-                  type: string
-                  format: binary
-                  description: '图片文件（与 image_base64 二选一）'
-                image_base64:
-                  type: string
-                  description: '图片的 Base64 编码（与 image 二选一）'
-                  example: /9j/4AAQSkZJRg...
-                page:
-                  type: integer
-                  description: '页码，默认 1'
-                  example: 1
-                size:
-                  type: integer
-                  description: '每页数量，默认 20'
-                  example: 20
   /api/image-search/1688/url:
     post:
       summary: '1688 URL 搜图'
@@ -258,491 +150,11 @@ paths:
                   example: 20
               required:
                 - url
-  /api/image-search/1688-cross-border/image:
+  /api/image-search/1688/image:
     post:
-      summary: 以图搜图（待实现）
-      operationId: ''
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/1688-cross-border/url:
-    post:
-      summary: 'URL 搜图（待实现）'
-      operationId: uRL
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/1688-pro/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearch1688ProImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/1688-pro/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearch1688ProUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/taobao/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchTaobaoImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/taobao/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchTaobaoUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/taobao-lite/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchTaobaoLiteImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/taobao-lite/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchTaobaoLiteUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/alibaba/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAlibabaImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/alibaba/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAlibabaUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/amazon/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAmazonImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/amazon/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAmazonUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/amazon-lite/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAmazonLiteImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/amazon-lite/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAmazonLiteUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/aliexpress/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAliexpressImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/aliexpress/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAliexpressUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/aliexpress-pro/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAliexpressProImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/aliexpress-pro/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchAliexpressProUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/shein/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchSheinImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/shein/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchSheinUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/ozon/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchOzonImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/ozon/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchOzonUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/naver-shopping/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchNaverShoppingImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/naver-shopping/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchNaverShoppingUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/ebay/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchEbayImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/ebay/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchEbayUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/google-lens/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchGoogleLensImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/google-lens/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchGoogleLensUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/bing/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchBingImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/bing/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchBingUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/baidu/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchBaiduImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/baidu/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchBaiduUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/yandex/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchYandexImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/yandex/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchYandexUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/wildberries/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchWildberriesImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/wildberries/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchWildberriesUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/domeggook/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchDomeggookImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/domeggook/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchDomeggookUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/coupang/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchCoupangImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/coupang/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchCoupangUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/netsea/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchNetseaImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/netsea/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchNetseaUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/ownerclan/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchOwnerclanImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/ownerclan/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchOwnerclanUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/onch3/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchOnch3Image
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/onch3/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchOnch3Url
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/mercari/image:
-    post:
-      summary: ''
-      operationId: postApiImageSearchMercariImage
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/image-search/mercari/url:
-    post:
-      summary: ''
-      operationId: postApiImageSearchMercariUrl
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - 其他接口
-      security: []
-  /api/auth/send-code:
-    post:
-      summary: 发送短信验证码
-      operationId: ''
-      description: 向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送
+      summary: '1688 以图搜图'
+      operationId: '1688'
+      description: '上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品'
       parameters: []
       responses:
         200:
@@ -754,8 +166,13 @@ paths:
                 example:
                   success: true
                   code: 200
-                  data: null
-                  message: 验证码已发送，请注意查收
+                  data:
+                    -
+                      title: 2024新款现货懒人神器
+                      price: '29.90'
+                      image: 'https://cbu01.alicdn.com/img/ibank/xxx.jpg'
+                      url: 'https://detail.1688.com/offer/12345.html'
+                  message: '搜图成功，找到 20 条结果'
                 properties:
                   success:
                     type: boolean
@@ -764,11 +181,31 @@ paths:
                     type: integer
                     example: 200
                   data:
-                    type: string
-                    example: null
+                    type: array
+                    example:
+                      -
+                        title: 2024新款现货懒人神器
+                        price: '29.90'
+                        image: 'https://cbu01.alicdn.com/img/ibank/xxx.jpg'
+                        url: 'https://detail.1688.com/offer/12345.html'
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: 2024新款现货懒人神器
+                        price:
+                          type: string
+                          example: '29.90'
+                        image:
+                          type: string
+                          example: 'https://cbu01.alicdn.com/img/ibank/xxx.jpg'
+                        url:
+                          type: string
+                          example: 'https://detail.1688.com/offer/12345.html'
                   message:
                     type: string
-                    example: 验证码已发送，请注意查收
+                    example: '搜图成功，找到 20 条结果'
         400:
           description: ''
           content:
@@ -779,7 +216,7 @@ paths:
                   success: false
                   code: 400
                   data: null
-                  message: 请等待60秒后再试
+                  message: '请提供图片文件或 Base64 数据'
                 properties:
                   success:
                     type: boolean
@@ -792,27 +229,44 @@ paths:
                     example: null
                   message:
                     type: string
-                    example: 请等待60秒后再试
+                    example: '请提供图片文件或 Base64 数据'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
       tags:
-        - 用户认证
+        - '1688搜同款 (1688)'
       requestBody:
-        required: true
+        required: false
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               properties:
-                phone_area_code:
+                image:
                   type: string
-                  description: 国际区号，默认86
-                  example: '86'
-                phone:
+                  format: binary
+                  description: '图片文件（与 image_base64 二选一）'
+                image_base64:
                   type: string
-                  description: 手机号
-                  example: '13800138000'
-              required:
-                - phone
-      security: []
+                  description: '图片的 Base64 编码（与 image 二选一）'
+                  example: /9j/4AAQSkZJRg...
+                page:
+                  type: integer
+                  description: '页码，默认 1'
+                  example: 1
+                size:
+                  type: integer
+                  description: '每页数量，默认 20'
+                  example: 20
   /api/auth/register:
     post:
       summary: 用户注册
@@ -897,7 +351,7 @@ paths:
                     type: string
                     example: 该手机号已注册
       tags:
-        - 用户认证
+        - 'User Authentication'
       requestBody:
         required: true
         content:
@@ -925,6 +379,486 @@ paths:
                 - phone
                 - sms_code
                 - password
+      security: []
+  /api/image-search/1688-cross-border/image:
+    post:
+      summary: 以图搜图（待实现）
+      operationId: ''
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/1688-cross-border/url:
+    post:
+      summary: 'URL 搜图（待实现）'
+      operationId: uRL
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/1688-pro/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearch1688ProImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/1688-pro/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearch1688ProUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/taobao/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchTaobaoImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/taobao/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchTaobaoUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/taobao-lite/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchTaobaoLiteImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/taobao-lite/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchTaobaoLiteUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/alibaba/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAlibabaImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/alibaba/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAlibabaUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/amazon/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAmazonImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/amazon/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAmazonUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/amazon-lite/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAmazonLiteImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/amazon-lite/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAmazonLiteUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/aliexpress/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAliexpressImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/aliexpress/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAliexpressUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/aliexpress-pro/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAliexpressProImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/aliexpress-pro/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchAliexpressProUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/shein/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchSheinImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/shein/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchSheinUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/ozon/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchOzonImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/ozon/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchOzonUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/naver-shopping/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchNaverShoppingImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/naver-shopping/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchNaverShoppingUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/ebay/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchEbayImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/ebay/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchEbayUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/google-lens/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchGoogleLensImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/google-lens/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchGoogleLensUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/bing/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchBingImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/bing/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchBingUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/baidu/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchBaiduImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/baidu/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchBaiduUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/yandex/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchYandexImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/yandex/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchYandexUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/wildberries/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchWildberriesImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/wildberries/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchWildberriesUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/domeggook/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchDomeggookImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/domeggook/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchDomeggookUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/coupang/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchCoupangImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/coupang/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchCoupangUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/netsea/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchNetseaImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/netsea/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchNetseaUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/ownerclan/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchOwnerclanImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/ownerclan/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchOwnerclanUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/onch3/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchOnch3Image
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/onch3/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchOnch3Url
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/mercari/image:
+    post:
+      summary: ''
+      operationId: postApiImageSearchMercariImage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
+      security: []
+  /api/image-search/mercari/url:
+    post:
+      summary: ''
+      operationId: postApiImageSearchMercariUrl
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - '其他接口 (Others)'
       security: []
   /api/auth/login:
     post:
@@ -1233,3 +1167,78 @@ paths:
                     example: 退出成功
       tags:
         - 用户认证
+  /api/auth/send-code:
+    post:
+      summary: 发送短信验证码
+      operationId: ''
+      description: 向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data: null
+                  message: 验证码已发送，请注意查收
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 验证码已发送，请注意查收
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  code: 400
+                  data: null
+                  message: 请等待60秒后再试
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 请等待60秒后再试
+      tags:
+        - '用户认证 (User Auth)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_area_code:
+                  type: string
+                  description: 国际区号，默认86
+                  example: '86'
+                phone:
+                  type: string
+                  description: 手机号
+                  example: '13800138000'
+              required:
+                - phone
+      security: []
