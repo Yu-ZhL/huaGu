@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>飞猫选品</title>
+    @vite(['resources/js/app.js'])
 </head>
 <body>
 <div id="app"></div>
