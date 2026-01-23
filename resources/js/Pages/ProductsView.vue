@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth.js'
 import { ArrowPathIcon } from '@heroicons/vue/24/outline'
+import { Link } from '@inertiajs/vue3'
 
 const authStore = useAuthStore()
 const isLoading = ref(false)
@@ -64,6 +65,18 @@ const totalPages = computed(() => {
 onMounted(() => {
     loadProducts()
 })
+
+const pageRange = computed(() => {
+    const range = []
+    const start = Math.max(1, pagination.value.current_page - 2)
+    const end = Math.min(totalPages.value, pagination.value.current_page + 2)
+
+    for (let i = start; i <= end; i++) {
+        range.push(i)
+    }
+
+    return range
+})
 </script>
 
 <template>
@@ -71,13 +84,14 @@ onMounted(() => {
         <div v-if="!authStore.isAuthenticated" class="py-12 text-center text-gray-500">
             <div class="text-lg font-medium mb-2">请先登录后使用商品库</div>
             <div class="text-gray-400 mb-6">登录后可查看列表、导出、估量、1688匹配等功能</div>
-            <button
+            <Link
+                href="/login"
+                as="button"
                 class="px-6 py-3 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition flex items-center mx-auto"
-                @click=" $router.push('/login')"
             >
                 <ArrowPathIcon class="h-4 w-4 mr-2" />
                 去登录
-            </button>
+            </Link>
         </div>
 
         <div v-else>
@@ -244,21 +258,4 @@ onMounted(() => {
     </div>
 </template>
 
-<script>
-// 计算分页范围
-export default {
-    computed: {
-        pageRange() {
-            const range = []
-            const start = Math.max(1, this.pagination.current_page - 2)
-            const end = Math.min(this.totalPages, this.pagination.current_page + 2)
 
-            for (let i = start; i <= end; i++) {
-                range.push(i)
-            }
-
-            return range
-        }
-    }
-}
-</script>

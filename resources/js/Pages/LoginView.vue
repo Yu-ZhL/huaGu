@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { router } from '@inertiajs/vue3'
 import { useAuthStore } from '@/stores/auth.js'
 import { ArrowLeftOnRectangleIcon } from '@heroicons/vue/24/outline'
 
-const router = useRouter()
+
 const authStore = useAuthStore()
 const email = ref('')
 const password = ref('')
@@ -19,7 +19,7 @@ const handleSubmit = async () => {
         await authStore.login({ email: email.value, password: password.value })
 
         // 登录成功，跳转到商品库
-        router.push('/')
+        router.visit('/')
     } catch (err) {
         error.value = err.response?.data?.message || '登录失败，请检查用户名和密码'
     } finally {

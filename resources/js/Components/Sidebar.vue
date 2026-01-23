@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { Link, router } from '@inertiajs/vue3'
 import {
     HomeIcon,
     CubeIcon,
@@ -16,7 +16,7 @@ const props = defineProps({
     }
 })
 
-const router = useRouter()
+
 const authStore = useAuthStore()
 
 const navigation = [
@@ -27,7 +27,7 @@ const navigation = [
 
 const handleLogout = () => {
     authStore.logout()
-    router.push('/login')
+    router.visit('/login')
 }
 </script>
 
@@ -50,11 +50,10 @@ const handleLogout = () => {
 
         <nav class="flex-1 px-2 py-4 overflow-y-auto">
             <div class="space-y-1">
-                <a
+                <Link
                     v-for="(item, index) in navigation"
                     :key="index"
                     :href="item.href"
-                    @click.prevent="router.push(item.href)"
                     class="group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors"
                     :class="[
             item.current
@@ -70,7 +69,7 @@ const handleLogout = () => {
                     <span class="ml-3 transition-opacity duration-300" :class="{ 'opacity-0': !isOpen }">
             {{ item.name }}
           </span>
-                </a>
+                </Link>
             </div>
         </nav>
 
