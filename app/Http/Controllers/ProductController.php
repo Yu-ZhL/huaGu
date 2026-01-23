@@ -6,43 +6,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
-    }
+        $products = [
+        ['id' => 1, 'name' => '手机壳', 'sales' => '1000', 'store' => 'TikTok Store', 'price' => 9.99, 'reviews' => '120', 'rating' => 4.8],
+        ['id' => 2, 'name' => '耳机', 'sales' => '500', 'store' => 'TEMU', 'price' => 19.99, 'reviews' => '80', 'rating' => 4.5],
+    ];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('product.list', compact('products'));
     }
 }
