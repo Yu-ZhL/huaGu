@@ -8,7 +8,13 @@ servers:
     url: 'http://103.214.173.247:3019'
 tags:
   -
+    name: '1688 Image Search'
+    description: ''
+  -
     name: '1688 搜同款'
+    description: ''
+  -
+    name: 'User Authentication'
     description: ''
   -
     name: 其他接口
@@ -119,7 +125,7 @@ paths:
                     type: string
                     example: Unauthenticated.
       tags:
-        - '1688 搜同款'
+        - '1688 Image Search'
       requestBody:
         required: false
         content:
@@ -258,6 +264,194 @@ paths:
                   example: 20
               required:
                 - url
+  /api/auth/send-code:
+    post:
+      summary: 发送短信验证码
+      operationId: ''
+      description: 向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data: null
+                  message: 验证码已发送，请注意查收
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 验证码已发送，请注意查收
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  code: 400
+                  data: null
+                  message: 请等待60秒后再试
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 请等待60秒后再试
+      tags:
+        - 'User Authentication'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_area_code:
+                  type: string
+                  description: 国际区号，默认86
+                  example: '86'
+                phone:
+                  type: string
+                  description: 手机号
+                  example: '13800138000'
+              required:
+                - phone
+      security: []
+  /api/auth/register:
+    post:
+      summary: 用户注册
+      operationId: ''
+      description: 通过手机号和短信验证码注册新用户，注册成功后自动登录
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    user:
+                      id: 1
+                      phone: '13800138000'
+                      phone_area_code: '86'
+                      name: null
+                      vip_level_id: 0
+                    token: 1|abc...xyz
+                  message: 注册成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          phone:
+                            type: string
+                            example: '13800138000'
+                          phone_area_code:
+                            type: string
+                            example: '86'
+                          name:
+                            type: string
+                            example: null
+                          vip_level_id:
+                            type: integer
+                            example: 0
+                      token:
+                        type: string
+                        example: 1|abc...xyz
+                  message:
+                    type: string
+                    example: 注册成功
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  code: 400
+                  data: null
+                  message: 该手机号已注册
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 该手机号已注册
+      tags:
+        - 'User Authentication'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_area_code:
+                  type: string
+                  description: 国际区号，默认86
+                  example: '86'
+                phone:
+                  type: string
+                  description: 手机号
+                  example: '13800138000'
+                sms_code:
+                  type: string
+                  description: 短信验证码
+                  example: '123456'
+                password:
+                  type: string
+                  description: 密码，至少6位
+                  example: password123
+              required:
+                - phone
+                - sms_code
+                - password
+      security: []
   /api/image-search/1688-cross-border/image:
     post:
       summary: 以图搜图（待实现）
@@ -737,194 +931,6 @@ paths:
       responses: {  }
       tags:
         - 其他接口
-      security: []
-  /api/auth/send-code:
-    post:
-      summary: 发送短信验证码
-      operationId: ''
-      description: 向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送
-      parameters: []
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  success: true
-                  code: 200
-                  data: null
-                  message: 验证码已发送，请注意查收
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  code:
-                    type: integer
-                    example: 200
-                  data:
-                    type: string
-                    example: null
-                  message:
-                    type: string
-                    example: 验证码已发送，请注意查收
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  success: false
-                  code: 400
-                  data: null
-                  message: 请等待60秒后再试
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  code:
-                    type: integer
-                    example: 400
-                  data:
-                    type: string
-                    example: null
-                  message:
-                    type: string
-                    example: 请等待60秒后再试
-      tags:
-        - 用户认证
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                phone_area_code:
-                  type: string
-                  description: 国际区号，默认86
-                  example: '86'
-                phone:
-                  type: string
-                  description: 手机号
-                  example: '13800138000'
-              required:
-                - phone
-      security: []
-  /api/auth/register:
-    post:
-      summary: 用户注册
-      operationId: ''
-      description: 通过手机号和短信验证码注册新用户，注册成功后自动登录
-      parameters: []
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  success: true
-                  code: 200
-                  data:
-                    user:
-                      id: 1
-                      phone: '13800138000'
-                      phone_area_code: '86'
-                      name: null
-                      vip_level_id: 0
-                    token: 1|abc...xyz
-                  message: 注册成功
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  code:
-                    type: integer
-                    example: 200
-                  data:
-                    type: object
-                    properties:
-                      user:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                            example: 1
-                          phone:
-                            type: string
-                            example: '13800138000'
-                          phone_area_code:
-                            type: string
-                            example: '86'
-                          name:
-                            type: string
-                            example: null
-                          vip_level_id:
-                            type: integer
-                            example: 0
-                      token:
-                        type: string
-                        example: 1|abc...xyz
-                  message:
-                    type: string
-                    example: 注册成功
-        400:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  success: false
-                  code: 400
-                  data: null
-                  message: 该手机号已注册
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  code:
-                    type: integer
-                    example: 400
-                  data:
-                    type: string
-                    example: null
-                  message:
-                    type: string
-                    example: 该手机号已注册
-      tags:
-        - 用户认证
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                phone_area_code:
-                  type: string
-                  description: 国际区号，默认86
-                  example: '86'
-                phone:
-                  type: string
-                  description: 手机号
-                  example: '13800138000'
-                sms_code:
-                  type: string
-                  description: 短信验证码
-                  example: '123456'
-                password:
-                  type: string
-                  description: 密码，至少6位
-                  example: password123
-              required:
-                - phone
-                - sms_code
-                - password
       security: []
   /api/auth/login:
     post:

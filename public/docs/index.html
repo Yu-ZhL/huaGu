@@ -66,16 +66,36 @@
                     <a href="#">验证请求</a>
                 </li>
                             </ul>
+                    <ul id="tocify-header-1688-image-search" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="1688-image-search">
+                    <a href="#1688-image-search">1688 Image Search</a>
+                </li>
+                                    <ul id="tocify-subheader-1688-image-search" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="1688-image-search-POSTapi-image-search-1688-image">
+                                <a href="#1688-image-search-POSTapi-image-search-1688-image">1688 以图搜图</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-1688" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="1688">
                     <a href="#1688">1688 搜同款</a>
                 </li>
                                     <ul id="tocify-subheader-1688" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="1688-POSTapi-image-search-1688-image">
-                                <a href="#1688-POSTapi-image-search-1688-image">1688 以图搜图</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="1688-POSTapi-image-search-1688-url">
+                                                    <li class="tocify-item level-2" data-unique="1688-POSTapi-image-search-1688-url">
                                 <a href="#1688-POSTapi-image-search-1688-url">1688 URL 搜图</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-user-authentication" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="user-authentication">
+                    <a href="#user-authentication">User Authentication</a>
+                </li>
+                                    <ul id="tocify-subheader-user-authentication" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="user-authentication-POSTapi-auth-send-code">
+                                <a href="#user-authentication-POSTapi-auth-send-code">发送短信验证码</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="user-authentication-POSTapi-auth-register">
+                                <a href="#user-authentication-POSTapi-auth-register">用户注册</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -235,13 +255,7 @@
                     <a href="#">用户认证</a>
                 </li>
                                     <ul id="tocify-subheader-" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="-POSTapi-auth-send-code">
-                                <a href="#-POSTapi-auth-send-code">发送短信验证码</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-register">
-                                <a href="#-POSTapi-auth-register">用户注册</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-login">
+                                                    <li class="tocify-item level-2" data-unique="-POSTapi-auth-login">
                                 <a href="#-POSTapi-auth-login">用户登录</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="-POSTapi-auth-reset-password">
@@ -285,11 +299,11 @@
 <p>所有经过身份验证的端点都在下面的文档中标记了 <code>requires authentication</code> 徽章。</p>
 <p>您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。</p>
 
-        <h1 id="1688">1688 搜同款</h1>
+        <h1 id="1688-image-search">1688 Image Search</h1>
 
     
 
-                                <h2 id="1688-POSTapi-image-search-1688-image">1688 以图搜图</h2>
+                                <h2 id="1688-image-search-POSTapi-image-search-1688-image">1688 以图搜图</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -351,7 +365,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpFCB7.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpA823.tmp', 'r')
             ],
         ],
     ]
@@ -497,7 +511,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpFCB7.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpA823.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -537,7 +551,11 @@ print_r(json_decode((string) $body));</code></pre></div>
         </div>
         </form>
 
-                    <h2 id="1688-POSTapi-image-search-1688-url">1688 URL 搜图</h2>
+                <h1 id="1688">1688 搜同款</h1>
+
+    
+
+                                <h2 id="1688-POSTapi-image-search-1688-url">1688 URL 搜图</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -757,6 +775,403 @@ print_r(json_decode((string) $body));</code></pre></div>
                data-component="body">
     <br>
 <p>每页数量，默认 20 Example: <code>20</code></p>
+        </div>
+        </form>
+
+                <h1 id="user-authentication">User Authentication</h1>
+
+    
+
+                                <h2 id="user-authentication-POSTapi-auth-send-code">发送短信验证码</h2>
+
+<p>
+</p>
+
+<p>向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送</p>
+
+<span id="example-requests-POSTapi-auth-send-code">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/auth/send-code"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "phone_area_code": "86",
+    "phone": "13800138000"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/auth/send-code';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'phone_area_code' =&gt; '86',
+            'phone' =&gt; '13800138000',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-auth-send-code">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;验证码已发送，请注意查收&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 400,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;请等待60秒后再试&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-auth-send-code" hidden>
+    <blockquote>收到响应<span
+                id="execution-response-status-POSTapi-auth-send-code"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-send-code"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-auth-send-code" hidden>
+    <blockquote>请求失败，错误信息:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-send-code">
+
+提示：请检查您的网络连接是否正常。
+如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
+您可以查看开发者工具控制台获取调试信息。</code></pre>
+</span>
+<form id="form-POSTapi-auth-send-code" data-method="POST"
+      data-path="api/auth/send-code"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-send-code', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-auth-send-code"
+                    onclick="tryItOut('POSTapi-auth-send-code');">试一试 ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-auth-send-code"
+                    onclick="cancelTryOut('POSTapi-auth-send-code');" hidden>取消 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-auth-send-code"
+                    data-initial-text="发送请求 💥"
+                    data-loading-text="⏱ 发送中..."
+                    hidden>发送请求 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/auth/send-code</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-auth-send-code"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-auth-send-code"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone_area_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone_area_code"                data-endpoint="POSTapi-auth-send-code"
+               value="86"
+               data-component="body">
+    <br>
+<p>国际区号，默认86 Example: <code>86</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-auth-send-code"
+               value="13800138000"
+               data-component="body">
+    <br>
+<p>手机号 Example: <code>13800138000</code></p>
+        </div>
+        </form>
+
+                    <h2 id="user-authentication-POSTapi-auth-register">用户注册</h2>
+
+<p>
+</p>
+
+<p>通过手机号和短信验证码注册新用户，注册成功后自动登录</p>
+
+<span id="example-requests-POSTapi-auth-register">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/auth/register"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "phone_area_code": "86",
+    "phone": "13800138000",
+    "sms_code": "123456",
+    "password": "password123"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/auth/register';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'phone_area_code' =&gt; '86',
+            'phone' =&gt; '13800138000',
+            'sms_code' =&gt; '123456',
+            'password' =&gt; 'password123',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-auth-register">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;user&quot;: {
+            &quot;id&quot;: 1,
+            &quot;phone&quot;: &quot;13800138000&quot;,
+            &quot;phone_area_code&quot;: &quot;86&quot;,
+            &quot;name&quot;: null,
+            &quot;vip_level_id&quot;: 0
+        },
+        &quot;token&quot;: &quot;1|abc...xyz&quot;
+    },
+    &quot;message&quot;: &quot;注册成功&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 400,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;该手机号已注册&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-auth-register" hidden>
+    <blockquote>收到响应<span
+                id="execution-response-status-POSTapi-auth-register"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-auth-register"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-auth-register" hidden>
+    <blockquote>请求失败，错误信息:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-auth-register">
+
+提示：请检查您的网络连接是否正常。
+如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
+您可以查看开发者工具控制台获取调试信息。</code></pre>
+</span>
+<form id="form-POSTapi-auth-register" data-method="POST"
+      data-path="api/auth/register"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-register', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-auth-register"
+                    onclick="tryItOut('POSTapi-auth-register');">试一试 ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-auth-register"
+                    onclick="cancelTryOut('POSTapi-auth-register');" hidden>取消 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-auth-register"
+                    data-initial-text="发送请求 💥"
+                    data-loading-text="⏱ 发送中..."
+                    hidden>发送请求 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/auth/register</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-auth-register"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-auth-register"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone_area_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone_area_code"                data-endpoint="POSTapi-auth-register"
+               value="86"
+               data-component="body">
+    <br>
+<p>国际区号，默认86 Example: <code>86</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="phone"                data-endpoint="POSTapi-auth-register"
+               value="13800138000"
+               data-component="body">
+    <br>
+<p>手机号 Example: <code>13800138000</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>sms_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="sms_code"                data-endpoint="POSTapi-auth-register"
+               value="123456"
+               data-component="body">
+    <br>
+<p>短信验证码 Example: <code>123456</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="password"                data-endpoint="POSTapi-auth-register"
+               value="password123"
+               data-component="body">
+    <br>
+<p>密码，至少6位 Example: <code>password123</code></p>
         </div>
         </form>
 
@@ -6480,400 +6895,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
     
 
-                                <h2 id="-POSTapi-auth-send-code">发送短信验证码</h2>
-
-<p>
-</p>
-
-<p>向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送</p>
-
-<span id="example-requests-POSTapi-auth-send-code">
-<blockquote>请求示例:</blockquote>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://103.214.173.247:3019/api/auth/send-code"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "phone_area_code": "86",
-    "phone": "13800138000"
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://103.214.173.247:3019/api/auth/send-code';
-$response = $client-&gt;post(
-    $url,
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-        'json' =&gt; [
-            'phone_area_code' =&gt; '86',
-            'phone' =&gt; '13800138000',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-auth-send-code">
-            <blockquote>
-            <p>响应示例 (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: true,
-    &quot;code&quot;: 200,
-    &quot;data&quot;: null,
-    &quot;message&quot;: &quot;验证码已发送，请注意查收&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>响应示例 (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: false,
-    &quot;code&quot;: 400,
-    &quot;data&quot;: null,
-    &quot;message&quot;: &quot;请等待60秒后再试&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-POSTapi-auth-send-code" hidden>
-    <blockquote>收到响应<span
-                id="execution-response-status-POSTapi-auth-send-code"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-auth-send-code"
-      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-auth-send-code" hidden>
-    <blockquote>请求失败，错误信息:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-auth-send-code">
-
-提示：请检查您的网络连接是否正常。
-如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
-您可以查看开发者工具控制台获取调试信息。</code></pre>
-</span>
-<form id="form-POSTapi-auth-send-code" data-method="POST"
-      data-path="api/auth/send-code"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-send-code', this);">
-    <h3>
-        请求&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-auth-send-code"
-                    onclick="tryItOut('POSTapi-auth-send-code');">试一试 ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-auth-send-code"
-                    onclick="cancelTryOut('POSTapi-auth-send-code');" hidden>取消 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-auth-send-code"
-                    data-initial-text="发送请求 💥"
-                    data-loading-text="⏱ 发送中..."
-                    hidden>发送请求 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/auth/send-code</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-auth-send-code"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-auth-send-code"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>phone_area_code</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="phone_area_code"                data-endpoint="POSTapi-auth-send-code"
-               value="86"
-               data-component="body">
-    <br>
-<p>国际区号，默认86 Example: <code>86</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="phone"                data-endpoint="POSTapi-auth-send-code"
-               value="13800138000"
-               data-component="body">
-    <br>
-<p>手机号 Example: <code>13800138000</code></p>
-        </div>
-        </form>
-
-                    <h2 id="-POSTapi-auth-register">用户注册</h2>
-
-<p>
-</p>
-
-<p>通过手机号和短信验证码注册新用户，注册成功后自动登录</p>
-
-<span id="example-requests-POSTapi-auth-register">
-<blockquote>请求示例:</blockquote>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://103.214.173.247:3019/api/auth/register"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "phone_area_code": "86",
-    "phone": "13800138000",
-    "sms_code": "123456",
-    "password": "password123"
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://103.214.173.247:3019/api/auth/register';
-$response = $client-&gt;post(
-    $url,
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-        'json' =&gt; [
-            'phone_area_code' =&gt; '86',
-            'phone' =&gt; '13800138000',
-            'sms_code' =&gt; '123456',
-            'password' =&gt; 'password123',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-auth-register">
-            <blockquote>
-            <p>响应示例 (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: true,
-    &quot;code&quot;: 200,
-    &quot;data&quot;: {
-        &quot;user&quot;: {
-            &quot;id&quot;: 1,
-            &quot;phone&quot;: &quot;13800138000&quot;,
-            &quot;phone_area_code&quot;: &quot;86&quot;,
-            &quot;name&quot;: null,
-            &quot;vip_level_id&quot;: 0
-        },
-        &quot;token&quot;: &quot;1|abc...xyz&quot;
-    },
-    &quot;message&quot;: &quot;注册成功&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>响应示例 (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: false,
-    &quot;code&quot;: 400,
-    &quot;data&quot;: null,
-    &quot;message&quot;: &quot;该手机号已注册&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-POSTapi-auth-register" hidden>
-    <blockquote>收到响应<span
-                id="execution-response-status-POSTapi-auth-register"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-auth-register"
-      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-auth-register" hidden>
-    <blockquote>请求失败，错误信息:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-auth-register">
-
-提示：请检查您的网络连接是否正常。
-如果您是此 API 的维护者，请确认您的 API 正在运行并已启用 CORS。
-您可以查看开发者工具控制台获取调试信息。</code></pre>
-</span>
-<form id="form-POSTapi-auth-register" data-method="POST"
-      data-path="api/auth/register"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-auth-register', this);">
-    <h3>
-        请求&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-auth-register"
-                    onclick="tryItOut('POSTapi-auth-register');">试一试 ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-auth-register"
-                    onclick="cancelTryOut('POSTapi-auth-register');" hidden>取消 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-auth-register"
-                    data-initial-text="发送请求 💥"
-                    data-loading-text="⏱ 发送中..."
-                    hidden>发送请求 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/auth/register</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-auth-register"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-auth-register"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>phone_area_code</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="phone_area_code"                data-endpoint="POSTapi-auth-register"
-               value="86"
-               data-component="body">
-    <br>
-<p>国际区号，默认86 Example: <code>86</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="phone"                data-endpoint="POSTapi-auth-register"
-               value="13800138000"
-               data-component="body">
-    <br>
-<p>手机号 Example: <code>13800138000</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>sms_code</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="sms_code"                data-endpoint="POSTapi-auth-register"
-               value="123456"
-               data-component="body">
-    <br>
-<p>短信验证码 Example: <code>123456</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="password"                data-endpoint="POSTapi-auth-register"
-               value="password123"
-               data-component="body">
-    <br>
-<p>密码，至少6位 Example: <code>password123</code></p>
-        </div>
-        </form>
-
-                    <h2 id="-POSTapi-auth-login">用户登录</h2>
+                                <h2 id="-POSTapi-auth-login">用户登录</h2>
 
 <p>
 </p>
