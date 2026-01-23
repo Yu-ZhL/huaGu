@@ -14,11 +14,12 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(createPinia()) // Add Pinia since it's in package.json and used in components
+            .use(createPinia()) // 挂载 Pinia 状态管理
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#2563EB',
+        showSpinner: true,
     },
 });
 

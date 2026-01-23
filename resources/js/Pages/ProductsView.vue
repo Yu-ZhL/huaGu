@@ -21,23 +21,17 @@ const loadProducts = async () => {
         isLoading.value = true
 
         if (!authStore.isAuthenticated) {
-            // 未登录时不加载数据
+            // 未登录状态直接返回，不请求接口
             return'';
         }
 
-        // 实际项目中这里会调用API
-        // const response = await axios.get('/api/products', {
-        //   params: {
-        //     page: pagination.value.current_page,
-        //     per_page: itemsPerPage.value
-        //   }
-        // })
+        // TODO: 对接后端 API 接口
+        // const response = await axios.get('/api/products', { ... })
 
-        // 模拟空数据状态 - 未登录
-        // 实际项目中，后端会返回真实数据
+
 
     } catch (error) {
-        console.error('加载商品失败:', error)
+        console.error('获取商品列表出错:', error)
     } finally {
         isLoading.value = false
     }
