@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 const routes = [
     {
         path: '/',
@@ -8,7 +7,7 @@ const routes = [
             {
                 path: '',
                 name: 'products',
-                component: () => import('../views/ProductsView.vue')
+                component: () => import('../Pages/ProductsView.vue')
             },
             // 其他路由...
         ]
@@ -16,7 +15,7 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: () => import('../views/LoginView.vue')
+        component: () => import('../Pages/LoginView.vue')
     }
 ]
 
