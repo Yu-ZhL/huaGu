@@ -25,10 +25,12 @@ class Platform1688Controller extends Controller
      * 
      * 上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品
      *
+     * @group 1688 搜同款
+     *
      * @param  Request  $request
      * @return JsonResponse
      * 
-     * @bodyParam image file 图片文件（与 image_base64 二选一） Example: (binary)
+     * @bodyParam image file 图片文件（与 image_base64 二选一）
      * @bodyParam image_base64 string 图片的 Base64 编码（与 image 二选一） Example: /9j/4AAQSkZJRg...
      * @bodyParam page integer 页码，默认 1 Example: 1
      * @bodyParam size integer 每页数量，默认 20 Example: 20
@@ -121,6 +123,8 @@ class Platform1688Controller extends Controller
      * 1688 URL 搜图
      * 
      * 提供图片 URL 地址，在 1688 平台搜索相似商品
+     *
+     * @group 1688 搜同款
      *
      * @param  Request  $request
      * @return JsonResponse
