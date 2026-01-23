@@ -1,14 +1,13 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import path from 'path';
 
 export default defineConfig({
     plugins: [
-        laravel({
-            input: 'resources/js/app.js',
-            refresh: true,
-        }),
+        laravel([
+            'resources/css/app.css', // 确保这一行存在
+            'resources/js/app.js',
+        ]),
         vue({
             template: {
                 transformAssetUrls: {
@@ -20,7 +19,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, './resources/js'),
+            '@': '/resources/js',
         },
     },
     server: {
