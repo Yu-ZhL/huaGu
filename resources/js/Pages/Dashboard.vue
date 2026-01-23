@@ -1,30 +1,35 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import Sidebar from '@/components/Sidebar.vue'
+import HeaderBar from '@/components/HeaderBar.vue'
+import PlatformTabs from '@/components/PlatformTabs.vue'
+
+const authStore = useAuthStore()
+const isSidebarOpen = ref(true)
+
+onMounted(() => {
+    authStore.initialize()
+})
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <div class="flex h-screen bg-gray-100">
+        <!-- 侧边栏 -->
+        <Sidebar :is-open="isSidebarOpen" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                Dashboard
-            </h2>
-        </template>
+        <!-- 主内容区 -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- 顶部导航 -->
+            <HeaderBar @toggle-sidebar="isSidearpen = !isSidebarOpen" />
 
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div
-                    class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
-                >
-                    <div class="p-6 text-gray-900">
-                        You're logged in!12313123
-                    </div>
-                </div>
-            </div>
+            <!-- 平台标签 -->
+            <PlatformTabs />
+
+            <!-- 页面内容 -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <router-view />
+            </main>
         </div>
-    </AuthenticatedLayout>
+    </div>
 </template>
