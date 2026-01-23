@@ -2,9 +2,15 @@
 
 use Knuckles\Scribe\Extracting\Strategies;
 use Knuckles\Scribe\Config\Defaults;
+use Knuckles\Scribe\Config\AuthIn;
 use function Knuckles\Scribe\Config\{removeStrategies, configureStrategy};
 
 // 仅显示最常用的配置。查看 https://scribe.knuckles.wtf/laravel/reference/config 了解所有配置项。
+
+// 生产环境下，如果 Scribe 未安装，返回空配置
+if (!class_exists(\Knuckles\Scribe\Config\Defaults::class)) {
+    return [];
+}
 
 return [
     // 生成文档的 HTML <title>
@@ -130,8 +136,8 @@ return [
     // 要添加您自己的语言，请参见 https://scribe.knuckles.wtf/laravel/advanced/example-requests
     // 注意：不适用于 `external` 文档类型
     'example_languages' => [
-        'bash',
         'javascript',
+        'php',
     ],
 
     // 除了 HTML 文档之外，还生成 Postman 集合（v2.1.0）。
