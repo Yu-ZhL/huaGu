@@ -29,10 +29,11 @@ class PaymentController extends Controller
     }
 
     /**
-     * 创建支付宝支付
-     * 
-     * 为订单创建支付宝当面付二维码
-     * 
+     * 开通VIP会员（创建支付宝支付）
+     *
+     * 为已创建的订单生成支付宝支付二维码，用户扫码后完成支付即可开通VIP
+     *
+     * @group Payment
      * @authenticated
      * 
      * @bodyParam order_no string required 订单号 Example: 202601261500001ABC
@@ -41,10 +42,9 @@ class PaymentController extends Controller
      *   "success": true,
      *   "code": 200,
      *   "data": {
-     *     "order_no": "202601261500001ABC",
-     *     "qr_code": "https://qr.alipay.com/bax03187eihnryxaqkee00ac"
+     *     "qr_code": "https://qr.alipay.com/..."
      *   },
-     *   "message": "支付二维码生成成功"
+     *   "message": "支付创建成功，请扫描二维码完成支付"
      * }
      */
     public function createAlipay(Request $request): JsonResponse

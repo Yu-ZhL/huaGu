@@ -91,6 +91,16 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-payment" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="payment">
+                    <a href="#payment">Payment</a>
+                </li>
+                                    <ul id="tocify-subheader-payment" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="payment-POSTapi-payment-alipay-create">
+                                <a href="#payment-POSTapi-payment-alipay-create">开通VIP会员（创建支付宝支付）</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-vip-vip-plans" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="vip-vip-plans">
                     <a href="#vip-vip-plans">VIP管理 (VIP Plans)</a>
@@ -264,10 +274,7 @@
                     <a href="#payment">支付管理 (Payment)</a>
                 </li>
                                     <ul id="tocify-subheader-payment" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="payment-POSTapi-payment-alipay-create">
-                                <a href="#payment-POSTapi-payment-alipay-create">创建支付宝支付</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="payment-POSTapi-payment-alipay-notify">
+                                                    <li class="tocify-item level-2" data-unique="payment-POSTapi-payment-alipay-notify">
                                 <a href="#payment-POSTapi-payment-alipay-notify">支付宝异步通知</a>
                             </li>
                                                                         </ul>
@@ -412,7 +419,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpD270.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php9C35.tmp', 'r')
             ],
         ],
     ]
@@ -558,7 +565,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpD270.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php9C35.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -1296,6 +1303,179 @@ print_r(json_decode((string) $body));</code></pre></div>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                <h1 id="payment">Payment</h1>
+
+    
+
+                                <h2 id="payment-POSTapi-payment-alipay-create">开通VIP会员（创建支付宝支付）</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>为已创建的订单生成支付宝支付二维码，用户扫码后完成支付即可开通VIP</p>
+
+<span id="example-requests-POSTapi-payment-alipay-create">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/payment/alipay/create"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "order_no": "202601261500001ABC"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/payment/alipay/create';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'order_no' =&gt; '202601261500001ABC',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-payment-alipay-create">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;qr_code&quot;: &quot;https://qr.alipay.com/...&quot;
+    },
+    &quot;message&quot;: &quot;支付创建成功，请扫描二维码完成支付&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-payment-alipay-create" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-payment-alipay-create"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-payment-alipay-create"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-payment-alipay-create" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-payment-alipay-create">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-payment-alipay-create" data-method="POST"
+      data-path="api/payment/alipay/create"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-payment-alipay-create', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-payment-alipay-create"
+                    onclick="tryItOut('POSTapi-payment-alipay-create');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-payment-alipay-create"
+                    onclick="cancelTryOut('POSTapi-payment-alipay-create');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-payment-alipay-create"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/payment/alipay/create</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-payment-alipay-create"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-payment-alipay-create"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-payment-alipay-create"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>order_no</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="order_no"                data-endpoint="POSTapi-payment-alipay-create"
+               value="202601261500001ABC"
+               data-component="body">
+    <br>
+<p>订单号 Example: <code>202601261500001ABC</code></p>
+        </div>
+        </form>
 
                 <h1 id="vip-vip-plans">VIP管理 (VIP Plans)</h1>
 
@@ -7446,177 +7626,7 @@ print_r(json_decode((string) $body));</code></pre></div>
 
     
 
-                                <h2 id="payment-POSTapi-payment-alipay-create">创建支付宝支付</h2>
-
-<p>
-<small class="badge badge-darkred">需要认证</small>
-</p>
-
-<p>为订单创建支付宝当面付二维码</p>
-
-<span id="example-requests-POSTapi-payment-alipay-create">
-<blockquote>请求示例:</blockquote>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/payment/alipay/create"
-);
-
-const headers = {
-    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "order_no": "202601261500001ABC"
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/payment/alipay/create';
-$response = $client-&gt;post(
-    $url,
-    [
-        'headers' =&gt; [
-            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-        'json' =&gt; [
-            'order_no' =&gt; '202601261500001ABC',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTapi-payment-alipay-create">
-            <blockquote>
-            <p>响应示例 (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;success&quot;: true,
-    &quot;code&quot;: 200,
-    &quot;data&quot;: {
-        &quot;order_no&quot;: &quot;202601261500001ABC&quot;,
-        &quot;qr_code&quot;: &quot;https://qr.alipay.com/bax03187eihnryxaqkee00ac&quot;
-    },
-    &quot;message&quot;: &quot;支付二维码生成成功&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-POSTapi-payment-alipay-create" hidden>
-    <blockquote>接口返回数据<span
-                id="execution-response-status-POSTapi-payment-alipay-create"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTapi-payment-alipay-create"
-      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-POSTapi-payment-alipay-create" hidden>
-    <blockquote>请求发生错误:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-payment-alipay-create">
-
-调试提示：如果请求失败，请检查网络连接是否正常。
-对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
-更多错误详情请查看浏览器控制台。</code></pre>
-</span>
-<form id="form-POSTapi-payment-alipay-create" data-method="POST"
-      data-path="api/payment/alipay/create"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTapi-payment-alipay-create', this);">
-    <h3>
-        请求&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTapi-payment-alipay-create"
-                    onclick="tryItOut('POSTapi-payment-alipay-create');">在线调试
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTapi-payment-alipay-create"
-                    onclick="cancelTryOut('POSTapi-payment-alipay-create');" hidden>取消调试
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTapi-payment-alipay-create"
-                    data-initial-text="发送请求"
-                    data-loading-text="请求处理中..."
-                    hidden>发送请求
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>api/payment/alipay/create</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-payment-alipay-create"
-               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
-               data-component="header">
-    <br>
-<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-payment-alipay-create"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-payment-alipay-create"
-               value="application/json"
-               data-component="header">
-    <br>
-<p>Example: <code>application/json</code></p>
-            </div>
-                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>order_no</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="order_no"                data-endpoint="POSTapi-payment-alipay-create"
-               value="202601261500001ABC"
-               data-component="body">
-    <br>
-<p>订单号 Example: <code>202601261500001ABC</code></p>
-        </div>
-        </form>
-
-                    <h2 id="payment-POSTapi-payment-alipay-notify">支付宝异步通知</h2>
+                                <h2 id="payment-POSTapi-payment-alipay-notify">支付宝异步通知</h2>
 
 <p>
 </p>

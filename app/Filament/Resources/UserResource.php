@@ -105,6 +105,10 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('姓名')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('邮箱')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('vipPlan.name')
                     ->label('VIP套餐')
                     ->default('普通用户')
@@ -113,11 +117,33 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('vip_expired_at')
                     ->label('VIP过期时间')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('ai_points')
                     ->label('AI点数')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('last_login_at')
+                    ->label('最后登录')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('last_login_ip')
+                    ->label('登录IP')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('last_login_location')
+                    ->label('登录地点')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('register_ip')
+                    ->label('注册IP')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('register_location')
+                    ->label('注册地点')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\IconColumn::make('is_sub_account')
+                    ->label('子账号')
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('status')
                     ->label('状态')
                     ->boolean(),
@@ -136,6 +162,23 @@ class UserResource extends Resource
                     ->boolean()
                     ->trueLabel('正常')
                     ->falseLabel('禁用'),
+                Tables\Filters\TernaryFilter::make('is_sub_account')
+                    ->label('账号类型')
+                    ->boolean()
+                    ->trueLabel('子账号')
+                    ->falseLabel('主账号'),
+                Tables\Filters\Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')
+                            ->label('注册开始日期'),
+                        Forms\Components\DatePicker::make('created_until')
+                            ->label('注册结束日期'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['created_from'], fn($q, $date) => $q->whereDate('created_at', '>=', $date))
+                            ->when($data['created_until'], fn($q, $date) => $q->whereDate('created_at', '<=', $date));
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

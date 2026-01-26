@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserAiPoint extends Model
 {
+    // 类型常量
+    const TYPE_PURCHASE = 'vip_purchase';       // 购买获得
+    const TYPE_GIFT = 'register_gift';          // 赠送获得
+    const TYPE_CONSUME = 'consumption';          // 消费扣除
+    const TYPE_ADMIN_ADJUST = 'admin_adjust';   // 管理员调整
+
+    // 旧常量保留（向后兼容）
     const TYPE_REGISTER_GIFT = 'register_gift';
     const TYPE_VIP_PURCHASE = 'vip_purchase';
     const TYPE_CONSUMPTION = 'consumption';
-    const TYPE_ADMIN_ADJUST = 'admin_adjust';
 
     protected $fillable = [
         'user_id',

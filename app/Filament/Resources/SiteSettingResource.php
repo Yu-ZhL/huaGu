@@ -53,6 +53,12 @@ class SiteSettingResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->label('描述')
                     ->rows(2),
+                Forms\Components\Toggle::make('status')
+                    ->label('状态')
+                    ->default(true),
+                Forms\Components\Placeholder::make('help')
+                    ->label('获取配置说明')
+                    ->content('在代码中使用 SiteSetting::getValue(\'key\') 获取配置值。例如：SiteSetting::getValue(\'new_user_gift_points\') 获取新用户赠送点数。'),
             ]);
     }
 

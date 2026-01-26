@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "6f8f6b53-386b-4017-9197-25b110f8ee5a",
+        "_postman_id": "8bd1d8ff-2d84-4392-96c6-bb3f03436944",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -248,6 +248,47 @@
                         }
                     },
                     "response": []
+                }
+            ]
+        },
+        {
+            "name": "Payment",
+            "description": "",
+            "item": [
+                {
+                    "name": "\u5f00\u901aVIP\u4f1a\u5458\uff08\u521b\u5efa\u652f\u4ed8\u5b9d\u652f\u4ed8\uff09",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/payment\/alipay\/create",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/payment\/alipay\/create"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"order_no\":\"202601261500001ABC\"}"
+                        },
+                        "description": "\u4e3a\u5df2\u521b\u5efa\u7684\u8ba2\u5355\u751f\u6210\u652f\u4ed8\u5b9d\u652f\u4ed8\u4e8c\u7ef4\u7801\uff0c\u7528\u6237\u626b\u7801\u540e\u5b8c\u6210\u652f\u4ed8\u5373\u53ef\u5f00\u901aVIP"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"qr_code\": \"https:\/\/qr.alipay.com\/...\"\n  },\n  \"message\": \"\u652f\u4ed8\u521b\u5efa\u6210\u529f\uff0c\u8bf7\u626b\u63cf\u4e8c\u7ef4\u7801\u5b8c\u6210\u652f\u4ed8\"\n}",
+                            "name": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -1703,41 +1744,6 @@
             "name": "\u652f\u4ed8\u7ba1\u7406 (Payment)",
             "description": "",
             "item": [
-                {
-                    "name": "\u521b\u5efa\u652f\u4ed8\u5b9d\u652f\u4ed8",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/payment\/alipay\/create",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/payment\/alipay\/create"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"order_no\":\"202601261500001ABC\"}"
-                        },
-                        "description": "\u4e3a\u8ba2\u5355\u521b\u5efa\u652f\u4ed8\u5b9d\u5f53\u9762\u4ed8\u4e8c\u7ef4\u7801"
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 200,
-                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"order_no\": \"202601261500001ABC\",\n    \"qr_code\": \"https:\/\/qr.alipay.com\/bax03187eihnryxaqkee00ac\"\n  },\n  \"message\": \"\u652f\u4ed8\u4e8c\u7ef4\u7801\u751f\u6210\u6210\u529f\"\n}",
-                            "name": ""
-                        }
-                    ]
-                },
                 {
                     "name": "\u652f\u4ed8\u5b9d\u5f02\u6b65\u901a\u77e5",
                     "request": {

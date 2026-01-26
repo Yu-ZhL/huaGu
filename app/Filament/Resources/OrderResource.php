@@ -95,14 +95,53 @@ class OrderResource extends Resource
                     ->sortable(),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->label('用户')
+                    ->relationship('user', 'phone')
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('vip_plan_id')
+                    ->label('VIP套餐')
+                    ->relationship('vipPlan', 'name')
+                    ->multiple(),
                 Tables\Filters\SelectFilter::make('status')
-                    ->label('状态')
+                    ->label('订单状态')
                     ->options([
                         'pending' => '待支付',
                         'paid' => '已支付',
                         'cancelled' => '已取消',
                         'expired' => '已过期',
-                    ]),
+                    ])
+                    ->multiple(),
+                Tables\Filters\TernaryFilter::make('coupon_code')
+                    ->label('使用优惠码')
+                    ->nullable()
+                    ->trueLabel('已使用')
+                    ->falseLabel('未使用'),
+                Tables\Filters\Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')
+                            ->label('下单开始日期'),
+                        Forms\Components\DatePicker::make('created_until')
+                            ->label('下单结束日期'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['created_from'], fn($q, $date) => $q->whereDate('created_at', '>=', $date))
+                            ->when($data['created_until'], fn($q, $date) => $q->whereDate('created_at', '<=', $date));
+                    }),
+                Tables\Filters\Filter::make('paid_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('paid_from')
+                            ->label('支付开始日期'),
+                        Forms\Components\DatePicker::make('paid_until')
+                            ->label('支付结束日期'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['paid_from'], fn($q, $date) => $q->whereDate('paid_at', '>=', $date))
+                            ->when($data['paid_until'], fn($q, $date) => $q->whereDate('paid_at', '<=', $date));
+                    }),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
