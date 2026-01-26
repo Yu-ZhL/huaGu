@@ -92,14 +92,28 @@ class OrderResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('user_id')
-                    ->label('用户')
-                    ->relationship('user', 'phone')
-                    ->searchable()
-                    ->preload(),
+                Tables\Filters\Filter::make('user_filter')
+                    ->form([
+                        Forms\Components\Select::make('user_id')
+                            ->label('用户')
+                            ->searchable()
+                            ->getSearchResultsUsing(function (string $search) {
+                                return \App\Models\User::query()
+                                    ->where('phone', 'like', "%{$search}%")
+                                    ->limit(50)
+                                    ->pluck('phone', 'id');
+                            })
+                            ->getOptionLabelUsing(fn($value): ?string => \App\Models\User::find($value)?->phone),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query->when(
+                            $data['user_id'],
+                            fn($query, $userId) => $query->where('user_id', $userId)
+                        );
+                    }),
                 Tables\Filters\SelectFilter::make('vip_plan_id')
                     ->label('VIP套餐')
-                    ->relationship('vipPlan', 'name')
+                    ->options(\App\Models\VipPlan::pluck('name', 'id'))
                     ->multiple(),
                 Tables\Filters\SelectFilter::make('status')
                     ->label('订单状态')
