@@ -12,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware('api')
                 ->group(base_path('routes/auth_api.php'));
 
             Route::middleware('api')

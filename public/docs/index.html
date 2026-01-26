@@ -91,6 +91,35 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-vip-vip-plans" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="vip-vip-plans">
+                    <a href="#vip-vip-plans">VIP管理 (VIP Plans)</a>
+                </li>
+                                    <ul id="tocify-subheader-vip-vip-plans" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="vip-vip-plans-GETapi-vip-plans">
+                                <a href="#vip-vip-plans-GETapi-vip-plans">获取VIP套餐列表</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="vip-vip-plans-GETapi-vip-my-info">
+                                <a href="#vip-vip-plans-GETapi-vip-my-info">获取我的VIP信息</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="vip-vip-plans-GETapi-vip-my-orders">
+                                <a href="#vip-vip-plans-GETapi-vip-my-orders">获取我的订单列表</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="vip-vip-plans-GETapi-vip-my-ai-points">
+                                <a href="#vip-vip-plans-GETapi-vip-my-ai-points">获取我的AI点数明细</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-coupons" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="coupons">
+                    <a href="#coupons">优惠码管理 (Coupons)</a>
+                </li>
+                                    <ul id="tocify-subheader-coupons" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="coupons-POSTapi-coupons-validate">
+                                <a href="#coupons-POSTapi-coupons-validate">验证优惠码</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-others" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="others">
                     <a href="#others">其他接口 (Others)</a>
@@ -230,6 +259,19 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-payment" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="payment">
+                    <a href="#payment">支付管理 (Payment)</a>
+                </li>
+                                    <ul id="tocify-subheader-payment" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="payment-POSTapi-payment-alipay-create">
+                                <a href="#payment-POSTapi-payment-alipay-create">创建支付宝支付</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="payment-POSTapi-payment-alipay-notify">
+                                <a href="#payment-POSTapi-payment-alipay-notify">支付宝异步通知</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-user-auth" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="user-auth">
                     <a href="#user-auth">用户认证 (User Auth)</a>
@@ -252,6 +294,25 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="user-auth-POSTapi-auth-logout">
                                 <a href="#user-auth-POSTapi-auth-logout">退出登录</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-orders" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="orders">
+                    <a href="#orders">订单管理 (Orders)</a>
+                </li>
+                                    <ul id="tocify-subheader-orders" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="orders-POSTapi-orders">
+                                <a href="#orders-POSTapi-orders">创建订单</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="orders-GETapi-orders--orderNo-">
+                                <a href="#orders-GETapi-orders--orderNo-">查询订单详情</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="orders-POSTapi-orders--orderNo--cancel">
+                                <a href="#orders-POSTapi-orders--orderNo--cancel">取消订单</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="orders-GETapi-orders--orderNo--payment-status">
+                                <a href="#orders-GETapi-orders--orderNo--payment-status">查询订单支付状态</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -351,7 +412,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpFBC1.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpD270.tmp', 'r')
             ],
         ],
     ]
@@ -497,7 +558,7 @@ print_r(json_decode((string) $body));</code></pre></div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpFBC1.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpD270.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -1235,6 +1296,911 @@ print_r(json_decode((string) $body));</code></pre></div>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                <h1 id="vip-vip-plans">VIP管理 (VIP Plans)</h1>
+
+    
+
+                                <h2 id="vip-vip-plans-GETapi-vip-plans">获取VIP套餐列表</h2>
+
+<p>
+</p>
+
+<p>获取所有可用的VIP套餐，按推荐和排序展示。
+前端根据关键数据渲染描述：价格/月、AI点数、约N次使用额度（点数/2）、品牌预估/运费测算功能</p>
+
+<span id="example-requests-GETapi-vip-plans">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/vip/plans"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/vip/plans';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-vip-plans">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;月度会员 68元&quot;,
+            &quot;price&quot;: &quot;68.00&quot;,
+            &quot;final_price&quot;: &quot;68.00&quot;,
+            &quot;ai_points&quot;: 6000,
+            &quot;duration_days&quot;: 30,
+            &quot;features&quot;: [],
+            &quot;is_recommended&quot;: false,
+            &quot;sort_order&quot;: 1
+        }
+    ],
+    &quot;message&quot;: &quot;获取成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-vip-plans" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-GETapi-vip-plans"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-vip-plans"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-vip-plans" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-vip-plans">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-vip-plans" data-method="GET"
+      data-path="api/vip/plans"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-vip-plans', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-vip-plans"
+                    onclick="tryItOut('GETapi-vip-plans');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-vip-plans"
+                    onclick="cancelTryOut('GETapi-vip-plans');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-vip-plans"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/vip/plans</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-vip-plans"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-vip-plans"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="vip-vip-plans-GETapi-vip-my-info">获取我的VIP信息</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>获取当前用户的VIP状态、AI点数余额等信息</p>
+
+<span id="example-requests-GETapi-vip-my-info">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/vip/my-info"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/vip/my-info';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-vip-my-info">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;is_vip&quot;: true,
+        &quot;vip_plan&quot;: {
+            &quot;id&quot;: 2,
+            &quot;name&quot;: &quot;月度会员 128元&quot;
+        },
+        &quot;vip_expired_at&quot;: &quot;2026-02-26 15:00:00&quot;,
+        &quot;ai_points&quot;: 15000,
+        &quot;ai_points_records_count&quot;: 5
+    },
+    &quot;message&quot;: &quot;获取成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-vip-my-info" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-GETapi-vip-my-info"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-vip-my-info"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-vip-my-info" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-vip-my-info">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-vip-my-info" data-method="GET"
+      data-path="api/vip/my-info"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-vip-my-info', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-vip-my-info"
+                    onclick="tryItOut('GETapi-vip-my-info');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-vip-my-info"
+                    onclick="cancelTryOut('GETapi-vip-my-info');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-vip-my-info"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/vip/my-info</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-vip-my-info"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-vip-my-info"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-vip-my-info"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+                    <h2 id="vip-vip-plans-GETapi-vip-my-orders">获取我的订单列表</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>获取当前用户的VIP购买订单历史</p>
+
+<span id="example-requests-GETapi-vip-my-orders">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/vip/my-orders"
+);
+
+const params = {
+    "page": "1",
+    "per_page": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/vip/my-orders';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page' =&gt; '1',
+            'per_page' =&gt; '10',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-vip-my-orders">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;data&quot;: [
+            {
+                &quot;id&quot;: 1,
+                &quot;order_no&quot;: &quot;202601261500001ABC&quot;,
+                &quot;plan_name&quot;: &quot;月度会员 128元&quot;,
+                &quot;final_price&quot;: &quot;128.00&quot;,
+                &quot;status&quot;: &quot;paid&quot;,
+                &quot;paid_at&quot;: &quot;2026-01-26 15:05:00&quot;,
+                &quot;created_at&quot;: &quot;2026-01-26 15:00:00&quot;
+            }
+        ],
+        &quot;per_page&quot;: 10,
+        &quot;total&quot;: 1
+    },
+    &quot;message&quot;: &quot;获取成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-vip-my-orders" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-GETapi-vip-my-orders"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-vip-my-orders"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-vip-my-orders" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-vip-my-orders">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-vip-my-orders" data-method="GET"
+      data-path="api/vip/my-orders"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-vip-my-orders', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-vip-my-orders"
+                    onclick="tryItOut('GETapi-vip-my-orders');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-vip-my-orders"
+                    onclick="cancelTryOut('GETapi-vip-my-orders');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-vip-my-orders"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/vip/my-orders</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-vip-my-orders"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-vip-my-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-vip-my-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query 参数</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-vip-my-orders"
+               value="1"
+               data-component="query">
+    <br>
+<p>页码 Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-vip-my-orders"
+               value="10"
+               data-component="query">
+    <br>
+<p>每页数量 Example: <code>10</code></p>
+            </div>
+                </form>
+
+                    <h2 id="vip-vip-plans-GETapi-vip-my-ai-points">获取我的AI点数明细</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>获取当前用户的AI点数变动记录</p>
+
+<span id="example-requests-GETapi-vip-my-ai-points">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/vip/my-ai-points"
+);
+
+const params = {
+    "page": "1",
+    "per_page": "20",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/vip/my-ai-points';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page' =&gt; '1',
+            'per_page' =&gt; '20',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-vip-my-ai-points">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;data&quot;: [
+            {
+                &quot;id&quot;: 1,
+                &quot;points&quot;: 15000,
+                &quot;balance_after&quot;: 15000,
+                &quot;type&quot;: &quot;vip_purchase&quot;,
+                &quot;description&quot;: &quot;购买VIP套餐&quot;,
+                &quot;expired_at&quot;: null,
+                &quot;created_at&quot;: &quot;2026-01-26 15:05:00&quot;
+            }
+        ],
+        &quot;per_page&quot;: 20,
+        &quot;total&quot;: 1
+    },
+    &quot;message&quot;: &quot;获取成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-vip-my-ai-points" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-GETapi-vip-my-ai-points"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-vip-my-ai-points"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-vip-my-ai-points" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-vip-my-ai-points">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-vip-my-ai-points" data-method="GET"
+      data-path="api/vip/my-ai-points"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-vip-my-ai-points', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-vip-my-ai-points"
+                    onclick="tryItOut('GETapi-vip-my-ai-points');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-vip-my-ai-points"
+                    onclick="cancelTryOut('GETapi-vip-my-ai-points');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-vip-my-ai-points"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/vip/my-ai-points</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-vip-my-ai-points"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-vip-my-ai-points"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-vip-my-ai-points"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Query 参数</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-vip-my-ai-points"
+               value="1"
+               data-component="query">
+    <br>
+<p>页码 Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-vip-my-ai-points"
+               value="20"
+               data-component="query">
+    <br>
+<p>每页数量 Example: <code>20</code></p>
+            </div>
+                </form>
+
+                <h1 id="coupons">优惠码管理 (Coupons)</h1>
+
+    
+
+                                <h2 id="coupons-POSTapi-coupons-validate">验证优惠码</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>验证优惠码是否可用，并返回折扣信息</p>
+
+<span id="example-requests-POSTapi-coupons-validate">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/coupons/validate"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "code": "NEWUSER2026",
+    "amount": 128
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/coupons/validate';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'code' =&gt; 'NEWUSER2026',
+            'amount' =&gt; 128.0,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-coupons-validate">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;valid&quot;: true,
+        &quot;message&quot;: &quot;优惠码可用&quot;,
+        &quot;coupon&quot;: {
+            &quot;code&quot;: &quot;NEWUSER2026&quot;,
+            &quot;name&quot;: &quot;新用户优惠&quot;,
+            &quot;type&quot;: &quot;fixed&quot;,
+            &quot;discount_value&quot;: &quot;10.00&quot;
+        },
+        &quot;discount_amount&quot;: &quot;10.00&quot;,
+        &quot;final_amount&quot;: &quot;118.00&quot;
+    },
+    &quot;message&quot;: &quot;验证成功&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 400,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;优惠码已过期&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-coupons-validate" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-coupons-validate"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-coupons-validate"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-coupons-validate" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-coupons-validate">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-coupons-validate" data-method="POST"
+      data-path="api/coupons/validate"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-coupons-validate', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-coupons-validate"
+                    onclick="tryItOut('POSTapi-coupons-validate');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-coupons-validate"
+                    onclick="cancelTryOut('POSTapi-coupons-validate');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-coupons-validate"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/coupons/validate</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-coupons-validate"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-coupons-validate"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-coupons-validate"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="code"                data-endpoint="POSTapi-coupons-validate"
+               value="NEWUSER2026"
+               data-component="body">
+    <br>
+<p>优惠码 Example: <code>NEWUSER2026</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>amount</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="amount"                data-endpoint="POSTapi-coupons-validate"
+               value="128"
+               data-component="body">
+    <br>
+<p>订单金额 Example: <code>128</code></p>
+        </div>
+        </form>
 
                 <h1 id="others">其他接口 (Others)</h1>
 
@@ -6476,6 +7442,299 @@ print_r(json_decode((string) $body));</code></pre></div>
             </div>
                         </form>
 
+                <h1 id="payment">支付管理 (Payment)</h1>
+
+    
+
+                                <h2 id="payment-POSTapi-payment-alipay-create">创建支付宝支付</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>为订单创建支付宝当面付二维码</p>
+
+<span id="example-requests-POSTapi-payment-alipay-create">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/payment/alipay/create"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "order_no": "202601261500001ABC"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/payment/alipay/create';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'order_no' =&gt; '202601261500001ABC',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-payment-alipay-create">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;order_no&quot;: &quot;202601261500001ABC&quot;,
+        &quot;qr_code&quot;: &quot;https://qr.alipay.com/bax03187eihnryxaqkee00ac&quot;
+    },
+    &quot;message&quot;: &quot;支付二维码生成成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-payment-alipay-create" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-payment-alipay-create"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-payment-alipay-create"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-payment-alipay-create" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-payment-alipay-create">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-payment-alipay-create" data-method="POST"
+      data-path="api/payment/alipay/create"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-payment-alipay-create', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-payment-alipay-create"
+                    onclick="tryItOut('POSTapi-payment-alipay-create');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-payment-alipay-create"
+                    onclick="cancelTryOut('POSTapi-payment-alipay-create');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-payment-alipay-create"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/payment/alipay/create</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-payment-alipay-create"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-payment-alipay-create"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-payment-alipay-create"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>order_no</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="order_no"                data-endpoint="POSTapi-payment-alipay-create"
+               value="202601261500001ABC"
+               data-component="body">
+    <br>
+<p>订单号 Example: <code>202601261500001ABC</code></p>
+        </div>
+        </form>
+
+                    <h2 id="payment-POSTapi-payment-alipay-notify">支付宝异步通知</h2>
+
+<p>
+</p>
+
+<p>接收支付宝的支付结果通知</p>
+
+<span id="example-requests-POSTapi-payment-alipay-notify">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/payment/alipay-notify"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/payment/alipay-notify';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-payment-alipay-notify">
+</span>
+<span id="execution-results-POSTapi-payment-alipay-notify" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-payment-alipay-notify"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-payment-alipay-notify"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-payment-alipay-notify" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-payment-alipay-notify">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-payment-alipay-notify" data-method="POST"
+      data-path="api/payment/alipay-notify"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-payment-alipay-notify', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-payment-alipay-notify"
+                    onclick="tryItOut('POSTapi-payment-alipay-notify');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-payment-alipay-notify"
+                    onclick="cancelTryOut('POSTapi-payment-alipay-notify');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-payment-alipay-notify"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/payment/alipay-notify</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-payment-alipay-notify"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-payment-alipay-notify"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
                 <h1 id="user-auth">用户认证 (User Auth)</h1>
 
     
@@ -7590,6 +8849,693 @@ print_r(json_decode((string) $body));</code></pre></div>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                <h1 id="orders">订单管理 (Orders)</h1>
+
+    
+
+                                <h2 id="orders-POSTapi-orders">创建订单</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>选择VIP套餐创建订单，可选使用优惠码</p>
+
+<span id="example-requests-POSTapi-orders">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/orders"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "vip_plan_id": 2,
+    "coupon_code": "NEWUSER2026"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/orders';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'vip_plan_id' =&gt; 2,
+            'coupon_code' =&gt; 'NEWUSER2026',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-orders">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;order_no&quot;: &quot;202601261500001ABC&quot;,
+        &quot;plan_name&quot;: &quot;月度会员 128元&quot;,
+        &quot;original_price&quot;: &quot;128.00&quot;,
+        &quot;discount_amount&quot;: &quot;10.00&quot;,
+        &quot;final_price&quot;: &quot;118.00&quot;,
+        &quot;status&quot;: &quot;pending&quot;,
+        &quot;expired_at&quot;: &quot;2026-01-26 15:30:00&quot;
+    },
+    &quot;message&quot;: &quot;订单创建成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-orders" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-orders"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-orders"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-orders" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-orders">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-orders" data-method="POST"
+      data-path="api/orders"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-orders', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-orders"
+                    onclick="tryItOut('POSTapi-orders');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-orders"
+                    onclick="cancelTryOut('POSTapi-orders');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-orders"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/orders</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-orders"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-orders"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>vip_plan_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="vip_plan_id"                data-endpoint="POSTapi-orders"
+               value="2"
+               data-component="body">
+    <br>
+<p>VIP套餐ID Example: <code>2</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>coupon_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="coupon_code"                data-endpoint="POSTapi-orders"
+               value="NEWUSER2026"
+               data-component="body">
+    <br>
+<p>优惠码 Example: <code>NEWUSER2026</code></p>
+        </div>
+        </form>
+
+                    <h2 id="orders-GETapi-orders--orderNo-">查询订单详情</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>根据订单号查询订单详细信息</p>
+
+<span id="example-requests-GETapi-orders--orderNo-">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/orders/202601261500001ABC"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/orders/202601261500001ABC';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-orders--orderNo-">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;order_no&quot;: &quot;202601261500001ABC&quot;,
+        &quot;plan_name&quot;: &quot;月度会员 128元&quot;,
+        &quot;original_price&quot;: &quot;128.00&quot;,
+        &quot;discount_amount&quot;: &quot;10.00&quot;,
+        &quot;final_price&quot;: &quot;118.00&quot;,
+        &quot;payment_method&quot;: &quot;alipay&quot;,
+        &quot;status&quot;: &quot;pending&quot;,
+        &quot;paid_at&quot;: null,
+        &quot;expired_at&quot;: &quot;2026-01-26 15:30:00&quot;,
+        &quot;created_at&quot;: &quot;2026-01-26 15:00:00&quot;
+    },
+    &quot;message&quot;: &quot;获取成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-orders--orderNo-" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-GETapi-orders--orderNo-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-orders--orderNo-"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-orders--orderNo-" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-orders--orderNo-">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-orders--orderNo-" data-method="GET"
+      data-path="api/orders/{orderNo}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-orders--orderNo-', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-orders--orderNo-"
+                    onclick="tryItOut('GETapi-orders--orderNo-');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-orders--orderNo-"
+                    onclick="cancelTryOut('GETapi-orders--orderNo-');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-orders--orderNo-"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/orders/{orderNo}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-orders--orderNo-"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-orders--orderNo-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-orders--orderNo-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL 参数</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>orderNo</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="orderNo"                data-endpoint="GETapi-orders--orderNo-"
+               value="202601261500001ABC"
+               data-component="url">
+    <br>
+<p>订单号 Example: <code>202601261500001ABC</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="orders-POSTapi-orders--orderNo--cancel">取消订单</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>取消未支付的订单</p>
+
+<span id="example-requests-POSTapi-orders--orderNo--cancel">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/orders/202601261500001ABC/cancel"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/orders/202601261500001ABC/cancel';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-orders--orderNo--cancel">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;订单已取消&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-orders--orderNo--cancel" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-orders--orderNo--cancel"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-orders--orderNo--cancel"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-orders--orderNo--cancel" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-orders--orderNo--cancel">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-orders--orderNo--cancel" data-method="POST"
+      data-path="api/orders/{orderNo}/cancel"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-orders--orderNo--cancel', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-orders--orderNo--cancel"
+                    onclick="tryItOut('POSTapi-orders--orderNo--cancel');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-orders--orderNo--cancel"
+                    onclick="cancelTryOut('POSTapi-orders--orderNo--cancel');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-orders--orderNo--cancel"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/orders/{orderNo}/cancel</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-orders--orderNo--cancel"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-orders--orderNo--cancel"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-orders--orderNo--cancel"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL 参数</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>orderNo</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="orderNo"                data-endpoint="POSTapi-orders--orderNo--cancel"
+               value="202601261500001ABC"
+               data-component="url">
+    <br>
+<p>订单号 Example: <code>202601261500001ABC</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="orders-GETapi-orders--orderNo--payment-status">查询订单支付状态</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>查询订单当前的支付状态</p>
+
+<span id="example-requests-GETapi-orders--orderNo--payment-status">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/orders/202601261500001ABC/payment-status"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/orders/202601261500001ABC/payment-status';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-orders--orderNo--payment-status">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: {
+        &quot;order_no&quot;: &quot;202601261500001ABC&quot;,
+        &quot;status&quot;: &quot;paid&quot;,
+        &quot;paid_at&quot;: &quot;2026-01-26 15:05:00&quot;
+    },
+    &quot;message&quot;: &quot;查询成功&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-orders--orderNo--payment-status" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-GETapi-orders--orderNo--payment-status"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-orders--orderNo--payment-status"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-orders--orderNo--payment-status" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-orders--orderNo--payment-status">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-orders--orderNo--payment-status" data-method="GET"
+      data-path="api/orders/{orderNo}/payment-status"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-orders--orderNo--payment-status', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-orders--orderNo--payment-status"
+                    onclick="tryItOut('GETapi-orders--orderNo--payment-status');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-orders--orderNo--payment-status"
+                    onclick="cancelTryOut('GETapi-orders--orderNo--payment-status');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-orders--orderNo--payment-status"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/orders/{orderNo}/payment-status</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-orders--orderNo--payment-status"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-orders--orderNo--payment-status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-orders--orderNo--payment-status"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL 参数</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>orderNo</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="orderNo"                data-endpoint="GETapi-orders--orderNo--payment-status"
+               value="202601261500001ABC"
+               data-component="url">
+    <br>
+<p>订单号 Example: <code>202601261500001ABC</code></p>
+            </div>
+                    </form>
 
             
 

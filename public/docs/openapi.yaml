@@ -11,10 +11,22 @@ tags:
     name: '1688搜同款 (1688)'
     description: ''
   -
+    name: 'VIP管理 (VIP Plans)'
+    description: ''
+  -
+    name: '优惠码管理 (Coupons)'
+    description: ''
+  -
     name: '其他接口 (Others)'
     description: ''
   -
+    name: '支付管理 (Payment)'
+    description: ''
+  -
     name: '用户认证 (User Auth)'
+    description: ''
+  -
+    name: '订单管理 (Orders)'
     description: ''
 components:
   securitySchemes:
@@ -298,6 +310,480 @@ paths:
       tags:
         - '1688搜同款 (1688)'
       security: []
+  /api/vip/plans:
+    get:
+      summary: 获取VIP套餐列表
+      operationId: VIP
+      description: "获取所有可用的VIP套餐，按推荐和排序展示。\n前端根据关键数据渲染描述：价格/月、AI点数、约N次使用额度（点数/2）、品牌预估/运费测算功能"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    -
+                      id: 1
+                      name: '月度会员 68元'
+                      price: '68.00'
+                      final_price: '68.00'
+                      ai_points: 6000
+                      duration_days: 30
+                      features: []
+                      is_recommended: false
+                      sort_order: 1
+                  message: 获取成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        name: '月度会员 68元'
+                        price: '68.00'
+                        final_price: '68.00'
+                        ai_points: 6000
+                        duration_days: 30
+                        features: []
+                        is_recommended: false
+                        sort_order: 1
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        name:
+                          type: string
+                          example: '月度会员 68元'
+                        price:
+                          type: string
+                          example: '68.00'
+                        final_price:
+                          type: string
+                          example: '68.00'
+                        ai_points:
+                          type: integer
+                          example: 6000
+                        duration_days:
+                          type: integer
+                          example: 30
+                        features:
+                          type: array
+                          example: []
+                        is_recommended:
+                          type: boolean
+                          example: false
+                        sort_order:
+                          type: integer
+                          example: 1
+                  message:
+                    type: string
+                    example: 获取成功
+      tags:
+        - 'VIP管理 (VIP Plans)'
+      security: []
+  /api/vip/my-info:
+    get:
+      summary: 获取我的VIP信息
+      operationId: VIP
+      description: 获取当前用户的VIP状态、AI点数余额等信息
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    is_vip: true
+                    vip_plan:
+                      id: 2
+                      name: '月度会员 128元'
+                    vip_expired_at: '2026-02-26 15:00:00'
+                    ai_points: 15000
+                    ai_points_records_count: 5
+                  message: 获取成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      is_vip:
+                        type: boolean
+                        example: true
+                      vip_plan:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: '月度会员 128元'
+                      vip_expired_at:
+                        type: string
+                        example: '2026-02-26 15:00:00'
+                      ai_points:
+                        type: integer
+                        example: 15000
+                      ai_points_records_count:
+                        type: integer
+                        example: 5
+                  message:
+                    type: string
+                    example: 获取成功
+      tags:
+        - 'VIP管理 (VIP Plans)'
+  /api/vip/my-orders:
+    get:
+      summary: 获取我的订单列表
+      operationId: ''
+      description: 获取当前用户的VIP购买订单历史
+      parameters:
+        -
+          in: query
+          name: page
+          description: 页码
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 页码
+            example: 1
+        -
+          in: query
+          name: per_page
+          description: 每页数量
+          example: 10
+          required: false
+          schema:
+            type: integer
+            description: 每页数量
+            example: 10
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    current_page: 1
+                    data:
+                      -
+                        id: 1
+                        order_no: 202601261500001ABC
+                        plan_name: '月度会员 128元'
+                        final_price: '128.00'
+                        status: paid
+                        paid_at: '2026-01-26 15:05:00'
+                        created_at: '2026-01-26 15:00:00'
+                    per_page: 10
+                    total: 1
+                  message: 获取成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      data:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            order_no: 202601261500001ABC
+                            plan_name: '月度会员 128元'
+                            final_price: '128.00'
+                            status: paid
+                            paid_at: '2026-01-26 15:05:00'
+                            created_at: '2026-01-26 15:00:00'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            order_no:
+                              type: string
+                              example: 202601261500001ABC
+                            plan_name:
+                              type: string
+                              example: '月度会员 128元'
+                            final_price:
+                              type: string
+                              example: '128.00'
+                            status:
+                              type: string
+                              example: paid
+                            paid_at:
+                              type: string
+                              example: '2026-01-26 15:05:00'
+                            created_at:
+                              type: string
+                              example: '2026-01-26 15:00:00'
+                      per_page:
+                        type: integer
+                        example: 10
+                      total:
+                        type: integer
+                        example: 1
+                  message:
+                    type: string
+                    example: 获取成功
+      tags:
+        - 'VIP管理 (VIP Plans)'
+  /api/vip/my-ai-points:
+    get:
+      summary: 获取我的AI点数明细
+      operationId: AI
+      description: 获取当前用户的AI点数变动记录
+      parameters:
+        -
+          in: query
+          name: page
+          description: 页码
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 页码
+            example: 1
+        -
+          in: query
+          name: per_page
+          description: 每页数量
+          example: 20
+          required: false
+          schema:
+            type: integer
+            description: 每页数量
+            example: 20
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    current_page: 1
+                    data:
+                      -
+                        id: 1
+                        points: 15000
+                        balance_after: 15000
+                        type: vip_purchase
+                        description: 购买VIP套餐
+                        expired_at: null
+                        created_at: '2026-01-26 15:05:00'
+                    per_page: 20
+                    total: 1
+                  message: 获取成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      data:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            points: 15000
+                            balance_after: 15000
+                            type: vip_purchase
+                            description: 购买VIP套餐
+                            expired_at: null
+                            created_at: '2026-01-26 15:05:00'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            points:
+                              type: integer
+                              example: 15000
+                            balance_after:
+                              type: integer
+                              example: 15000
+                            type:
+                              type: string
+                              example: vip_purchase
+                            description:
+                              type: string
+                              example: 购买VIP套餐
+                            expired_at:
+                              type: string
+                              example: null
+                            created_at:
+                              type: string
+                              example: '2026-01-26 15:05:00'
+                      per_page:
+                        type: integer
+                        example: 20
+                      total:
+                        type: integer
+                        example: 1
+                  message:
+                    type: string
+                    example: 获取成功
+      tags:
+        - 'VIP管理 (VIP Plans)'
+  /api/coupons/validate:
+    post:
+      summary: 验证优惠码
+      operationId: ''
+      description: 验证优惠码是否可用，并返回折扣信息
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    valid: true
+                    message: 优惠码可用
+                    coupon:
+                      code: NEWUSER2026
+                      name: 新用户优惠
+                      type: fixed
+                      discount_value: '10.00'
+                    discount_amount: '10.00'
+                    final_amount: '118.00'
+                  message: 验证成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      valid:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: 优惠码可用
+                      coupon:
+                        type: object
+                        properties:
+                          code:
+                            type: string
+                            example: NEWUSER2026
+                          name:
+                            type: string
+                            example: 新用户优惠
+                          type:
+                            type: string
+                            example: fixed
+                          discount_value:
+                            type: string
+                            example: '10.00'
+                      discount_amount:
+                        type: string
+                        example: '10.00'
+                      final_amount:
+                        type: string
+                        example: '118.00'
+                  message:
+                    type: string
+                    example: 验证成功
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  code: 400
+                  data: null
+                  message: 优惠码已过期
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 优惠码已过期
+      tags:
+        - '优惠码管理 (Coupons)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: 优惠码
+                  example: NEWUSER2026
+                amount:
+                  type: number
+                  description: 订单金额
+                  example: 128.0
+              required:
+                - code
+                - amount
   /api/image-search/taobao/image:
     post:
       summary: ''
@@ -737,6 +1223,70 @@ paths:
       responses: {  }
       tags:
         - '其他接口 (Others)'
+      security: []
+  /api/payment/alipay/create:
+    post:
+      summary: 创建支付宝支付
+      operationId: ''
+      description: 为订单创建支付宝当面付二维码
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    order_no: 202601261500001ABC
+                    qr_code: 'https://qr.alipay.com/bax03187eihnryxaqkee00ac'
+                  message: 支付二维码生成成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      order_no:
+                        type: string
+                        example: 202601261500001ABC
+                      qr_code:
+                        type: string
+                        example: 'https://qr.alipay.com/bax03187eihnryxaqkee00ac'
+                  message:
+                    type: string
+                    example: 支付二维码生成成功
+      tags:
+        - '支付管理 (Payment)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_no:
+                  type: string
+                  description: 订单号
+                  example: 202601261500001ABC
+              required:
+                - order_no
+  /api/payment/alipay-notify:
+    post:
+      summary: 支付宝异步通知
+      operationId: ''
+      description: 接收支付宝的支付结果通知
+      parameters: []
+      responses: {  }
+      tags:
+        - '支付管理 (Payment)'
       security: []
   /api/auth/send-code:
     post:
@@ -1233,3 +1783,268 @@ paths:
                     example: 退出成功
       tags:
         - '用户认证 (User Auth)'
+  /api/orders:
+    post:
+      summary: 创建订单
+      operationId: ''
+      description: 选择VIP套餐创建订单，可选使用优惠码
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    id: 1
+                    order_no: 202601261500001ABC
+                    plan_name: '月度会员 128元'
+                    original_price: '128.00'
+                    discount_amount: '10.00'
+                    final_price: '118.00'
+                    status: pending
+                    expired_at: '2026-01-26 15:30:00'
+                  message: 订单创建成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      order_no:
+                        type: string
+                        example: 202601261500001ABC
+                      plan_name:
+                        type: string
+                        example: '月度会员 128元'
+                      original_price:
+                        type: string
+                        example: '128.00'
+                      discount_amount:
+                        type: string
+                        example: '10.00'
+                      final_price:
+                        type: string
+                        example: '118.00'
+                      status:
+                        type: string
+                        example: pending
+                      expired_at:
+                        type: string
+                        example: '2026-01-26 15:30:00'
+                  message:
+                    type: string
+                    example: 订单创建成功
+      tags:
+        - '订单管理 (Orders)'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vip_plan_id:
+                  type: integer
+                  description: VIP套餐ID
+                  example: 2
+                coupon_code:
+                  type: string
+                  description: 优惠码
+                  example: NEWUSER2026
+                  nullable: true
+              required:
+                - vip_plan_id
+  '/api/orders/{orderNo}':
+    get:
+      summary: 查询订单详情
+      operationId: ''
+      description: 根据订单号查询订单详细信息
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    id: 1
+                    order_no: 202601261500001ABC
+                    plan_name: '月度会员 128元'
+                    original_price: '128.00'
+                    discount_amount: '10.00'
+                    final_price: '118.00'
+                    payment_method: alipay
+                    status: pending
+                    paid_at: null
+                    expired_at: '2026-01-26 15:30:00'
+                    created_at: '2026-01-26 15:00:00'
+                  message: 获取成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      order_no:
+                        type: string
+                        example: 202601261500001ABC
+                      plan_name:
+                        type: string
+                        example: '月度会员 128元'
+                      original_price:
+                        type: string
+                        example: '128.00'
+                      discount_amount:
+                        type: string
+                        example: '10.00'
+                      final_price:
+                        type: string
+                        example: '118.00'
+                      payment_method:
+                        type: string
+                        example: alipay
+                      status:
+                        type: string
+                        example: pending
+                      paid_at:
+                        type: string
+                        example: null
+                      expired_at:
+                        type: string
+                        example: '2026-01-26 15:30:00'
+                      created_at:
+                        type: string
+                        example: '2026-01-26 15:00:00'
+                  message:
+                    type: string
+                    example: 获取成功
+      tags:
+        - '订单管理 (Orders)'
+    parameters:
+      -
+        in: path
+        name: orderNo
+        description: 订单号
+        example: 202601261500001ABC
+        required: true
+        schema:
+          type: string
+  '/api/orders/{orderNo}/cancel':
+    post:
+      summary: 取消订单
+      operationId: ''
+      description: 取消未支付的订单
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data: null
+                  message: 订单已取消
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: string
+                    example: null
+                  message:
+                    type: string
+                    example: 订单已取消
+      tags:
+        - '订单管理 (Orders)'
+    parameters:
+      -
+        in: path
+        name: orderNo
+        description: 订单号
+        example: 202601261500001ABC
+        required: true
+        schema:
+          type: string
+  '/api/orders/{orderNo}/payment-status':
+    get:
+      summary: 查询订单支付状态
+      operationId: ''
+      description: 查询订单当前的支付状态
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    order_no: 202601261500001ABC
+                    status: paid
+                    paid_at: '2026-01-26 15:05:00'
+                  message: 查询成功
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      order_no:
+                        type: string
+                        example: 202601261500001ABC
+                      status:
+                        type: string
+                        example: paid
+                      paid_at:
+                        type: string
+                        example: '2026-01-26 15:05:00'
+                  message:
+                    type: string
+                    example: 查询成功
+      tags:
+        - '订单管理 (Orders)'
+    parameters:
+      -
+        in: path
+        name: orderNo
+        description: 订单号
+        example: 202601261500001ABC
+        required: true
+        schema:
+          type: string

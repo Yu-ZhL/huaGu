@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "ea6f4857-018a-4b26-b894-8821c43b2cf7",
+        "_postman_id": "6f8f6b53-386b-4017-9197-25b110f8ee5a",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -248,6 +248,216 @@
                         }
                     },
                     "response": []
+                }
+            ]
+        },
+        {
+            "name": "VIP\u7ba1\u7406 (VIP Plans)",
+            "description": "",
+            "item": [
+                {
+                    "name": "\u83b7\u53d6VIP\u5957\u9910\u5217\u8868",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/vip\/plans",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/vip\/plans"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u83b7\u53d6\u6240\u6709\u53ef\u7528\u7684VIP\u5957\u9910\uff0c\u6309\u63a8\u8350\u548c\u6392\u5e8f\u5c55\u793a\u3002\n\u524d\u7aef\u6839\u636e\u5173\u952e\u6570\u636e\u6e32\u67d3\u63cf\u8ff0\uff1a\u4ef7\u683c\/\u6708\u3001AI\u70b9\u6570\u3001\u7ea6N\u6b21\u4f7f\u7528\u989d\u5ea6\uff08\u70b9\u6570\/2\uff09\u3001\u54c1\u724c\u9884\u4f30\/\u8fd0\u8d39\u6d4b\u7b97\u529f\u80fd",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"\u6708\u5ea6\u4f1a\u5458 68\u5143\",\n      \"price\": \"68.00\",\n      \"final_price\": \"68.00\",\n      \"ai_points\": 6000,\n      \"duration_days\": 30,\n      \"features\": [],\n      \"is_recommended\": false,\n      \"sort_order\": 1\n    }\n  ],\n  \"message\": \"\u83b7\u53d6\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u6211\u7684VIP\u4fe1\u606f",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/vip\/my-info",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/vip\/my-info"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u83b7\u53d6\u5f53\u524d\u7528\u6237\u7684VIP\u72b6\u6001\u3001AI\u70b9\u6570\u4f59\u989d\u7b49\u4fe1\u606f"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"is_vip\": true,\n    \"vip_plan\": {\n      \"id\": 2,\n      \"name\": \"\u6708\u5ea6\u4f1a\u5458 128\u5143\"\n    },\n    \"vip_expired_at\": \"2026-02-26 15:00:00\",\n    \"ai_points\": 15000,\n    \"ai_points_records_count\": 5\n  },\n  \"message\": \"\u83b7\u53d6\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u6211\u7684\u8ba2\u5355\u5217\u8868",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/vip\/my-orders",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "\u9875\u7801",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "10",
+                                    "description": "\u6bcf\u9875\u6570\u91cf",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/vip\/my-orders?page=1&per_page=10"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u83b7\u53d6\u5f53\u524d\u7528\u6237\u7684VIP\u8d2d\u4e70\u8ba2\u5355\u5386\u53f2"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"current_page\": 1,\n    \"data\": [\n      {\n        \"id\": 1,\n        \"order_no\": \"202601261500001ABC\",\n        \"plan_name\": \"\u6708\u5ea6\u4f1a\u5458 128\u5143\",\n        \"final_price\": \"128.00\",\n        \"status\": \"paid\",\n        \"paid_at\": \"2026-01-26 15:05:00\",\n        \"created_at\": \"2026-01-26 15:00:00\"\n      }\n    ],\n    \"per_page\": 10,\n    \"total\": 1\n  },\n  \"message\": \"\u83b7\u53d6\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u6211\u7684AI\u70b9\u6570\u660e\u7ec6",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/vip\/my-ai-points",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "\u9875\u7801",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "20",
+                                    "description": "\u6bcf\u9875\u6570\u91cf",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/vip\/my-ai-points?page=1&per_page=20"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u83b7\u53d6\u5f53\u524d\u7528\u6237\u7684AI\u70b9\u6570\u53d8\u52a8\u8bb0\u5f55"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"current_page\": 1,\n    \"data\": [\n      {\n        \"id\": 1,\n        \"points\": 15000,\n        \"balance_after\": 15000,\n        \"type\": \"vip_purchase\",\n        \"description\": \"\u8d2d\u4e70VIP\u5957\u9910\",\n        \"expired_at\": null,\n        \"created_at\": \"2026-01-26 15:05:00\"\n      }\n    ],\n    \"per_page\": 20,\n    \"total\": 1\n  },\n  \"message\": \"\u83b7\u53d6\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\u4f18\u60e0\u7801\u7ba1\u7406 (Coupons)",
+            "description": "",
+            "item": [
+                {
+                    "name": "\u9a8c\u8bc1\u4f18\u60e0\u7801",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/coupons\/validate",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/coupons\/validate"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"code\":\"NEWUSER2026\",\"amount\":128}"
+                        },
+                        "description": "\u9a8c\u8bc1\u4f18\u60e0\u7801\u662f\u5426\u53ef\u7528\uff0c\u5e76\u8fd4\u56de\u6298\u6263\u4fe1\u606f"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"valid\": true,\n    \"message\": \"\u4f18\u60e0\u7801\u53ef\u7528\",\n    \"coupon\": {\n      \"code\": \"NEWUSER2026\",\n      \"name\": \"\u65b0\u7528\u6237\u4f18\u60e0\",\n      \"type\": \"fixed\",\n      \"discount_value\": \"10.00\"\n    },\n    \"discount_amount\": \"10.00\",\n    \"final_amount\": \"118.00\"\n  },\n  \"message\": \"\u9a8c\u8bc1\u6210\u529f\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n  \"success\": false,\n  \"code\": 400,\n  \"data\": null,\n  \"message\": \"\u4f18\u60e0\u7801\u5df2\u8fc7\u671f\"\n}",
+                            "name": ""
+                        }
+                    ]
                 }
             ]
         },
@@ -1490,6 +1700,75 @@
             ]
         },
         {
+            "name": "\u652f\u4ed8\u7ba1\u7406 (Payment)",
+            "description": "",
+            "item": [
+                {
+                    "name": "\u521b\u5efa\u652f\u4ed8\u5b9d\u652f\u4ed8",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/payment\/alipay\/create",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/payment\/alipay\/create"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"order_no\":\"202601261500001ABC\"}"
+                        },
+                        "description": "\u4e3a\u8ba2\u5355\u521b\u5efa\u652f\u4ed8\u5b9d\u5f53\u9762\u4ed8\u4e8c\u7ef4\u7801"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"order_no\": \"202601261500001ABC\",\n    \"qr_code\": \"https:\/\/qr.alipay.com\/bax03187eihnryxaqkee00ac\"\n  },\n  \"message\": \"\u652f\u4ed8\u4e8c\u7ef4\u7801\u751f\u6210\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u652f\u4ed8\u5b9d\u5f02\u6b65\u901a\u77e5",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/payment\/alipay-notify",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/payment\/alipay-notify"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u63a5\u6536\u652f\u4ed8\u5b9d\u7684\u652f\u4ed8\u7ed3\u679c\u901a\u77e5",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
             "name": "\u7528\u6237\u8ba4\u8bc1 (User Auth)",
             "description": "",
             "item": [
@@ -1735,6 +2014,167 @@
                             "header": [],
                             "code": 200,
                             "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": null,\n  \"message\": \"\u9000\u51fa\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\u8ba2\u5355\u7ba1\u7406 (Orders)",
+            "description": "",
+            "item": [
+                {
+                    "name": "\u521b\u5efa\u8ba2\u5355",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/orders",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/orders"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"vip_plan_id\":2,\"coupon_code\":\"NEWUSER2026\"}"
+                        },
+                        "description": "\u9009\u62e9VIP\u5957\u9910\u521b\u5efa\u8ba2\u5355\uff0c\u53ef\u9009\u4f7f\u7528\u4f18\u60e0\u7801"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"id\": 1,\n    \"order_no\": \"202601261500001ABC\",\n    \"plan_name\": \"\u6708\u5ea6\u4f1a\u5458 128\u5143\",\n    \"original_price\": \"128.00\",\n    \"discount_amount\": \"10.00\",\n    \"final_price\": \"118.00\",\n    \"status\": \"pending\",\n    \"expired_at\": \"2026-01-26 15:30:00\"\n  },\n  \"message\": \"\u8ba2\u5355\u521b\u5efa\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u67e5\u8be2\u8ba2\u5355\u8be6\u60c5",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/orders\/:orderNo",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/orders\/:orderNo",
+                            "variable": [
+                                {
+                                    "id": "orderNo",
+                                    "key": "orderNo",
+                                    "value": "202601261500001ABC",
+                                    "description": "\u8ba2\u5355\u53f7"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u6839\u636e\u8ba2\u5355\u53f7\u67e5\u8be2\u8ba2\u5355\u8be6\u7ec6\u4fe1\u606f"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"id\": 1,\n    \"order_no\": \"202601261500001ABC\",\n    \"plan_name\": \"\u6708\u5ea6\u4f1a\u5458 128\u5143\",\n    \"original_price\": \"128.00\",\n    \"discount_amount\": \"10.00\",\n    \"final_price\": \"118.00\",\n    \"payment_method\": \"alipay\",\n    \"status\": \"pending\",\n    \"paid_at\": null,\n    \"expired_at\": \"2026-01-26 15:30:00\",\n    \"created_at\": \"2026-01-26 15:00:00\"\n  },\n  \"message\": \"\u83b7\u53d6\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u53d6\u6d88\u8ba2\u5355",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/orders\/:orderNo\/cancel",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/orders\/:orderNo\/cancel",
+                            "variable": [
+                                {
+                                    "id": "orderNo",
+                                    "key": "orderNo",
+                                    "value": "202601261500001ABC",
+                                    "description": "\u8ba2\u5355\u53f7"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u53d6\u6d88\u672a\u652f\u4ed8\u7684\u8ba2\u5355"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": null,\n  \"message\": \"\u8ba2\u5355\u5df2\u53d6\u6d88\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u67e5\u8be2\u8ba2\u5355\u652f\u4ed8\u72b6\u6001",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/orders\/:orderNo\/payment-status",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/orders\/:orderNo\/payment-status",
+                            "variable": [
+                                {
+                                    "id": "orderNo",
+                                    "key": "orderNo",
+                                    "value": "202601261500001ABC",
+                                    "description": "\u8ba2\u5355\u53f7"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u67e5\u8be2\u8ba2\u5355\u5f53\u524d\u7684\u652f\u4ed8\u72b6\u6001"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"order_no\": \"202601261500001ABC\",\n    \"status\": \"paid\",\n    \"paid_at\": \"2026-01-26 15:05:00\"\n  },\n  \"message\": \"\u67e5\u8be2\u6210\u529f\"\n}",
                             "name": ""
                         }
                     ]
