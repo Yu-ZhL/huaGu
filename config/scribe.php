@@ -175,13 +175,20 @@ return [
 
     'groups' => [
         // 没有 @group 的端点将放置在此默认组中。
-        'default' => '其他接口 (Others)',
+        'default' => '其他接口',
 
         // 默认情况下，Scribe 将按字母顺序对组进行排序，并按照定义路由的顺序对端点进行排序。
         // 您可以通过在此处按您想要的顺序列出组、子组和端点来覆盖此设置。
         // 有关详细信息，请参见 https://scribe.knuckles.wtf/blog/laravel-v4#easier-sorting 和 https://scribe.knuckles.wtf/laravel/reference/config#order
         // 注意：不适用于 `external` 文档类型
-        'order' => [],
+        'order' => [
+            '用户认证',
+            'VIP会员',
+            '订单管理',
+            '支付接口',
+            '优惠码',
+            '图片搜索',
+        ],
     ],
 
     // 自定义徽标路径。这将用作 <img> 标签的 src 属性的值，

@@ -33,25 +33,25 @@ class StatsOverview extends BaseWidget
 
         // 充值订单统计（已支付的订单）
         $totalOrders = Order::where('status', 'paid')->count();
-        $totalRevenue = Order::where('status', 'paid')->sum('total_amount');
+        $totalRevenue = Order::where('status', 'paid')->sum('final_price');
         $yearOrders = Order::where('status', 'paid')
             ->where('paid_at', '>=', $yearStart)
             ->count();
         $yearRevenue = Order::where('status', 'paid')
             ->where('paid_at', '>=', $yearStart)
-            ->sum('total_amount');
+            ->sum('final_price');
         $monthOrders = Order::where('status', 'paid')
             ->where('paid_at', '>=', $monthStart)
             ->count();
         $monthRevenue = Order::where('status', 'paid')
             ->where('paid_at', '>=', $monthStart)
-            ->sum('total_amount');
+            ->sum('final_price');
         $weekOrders = Order::where('status', 'paid')
             ->where('paid_at', '>=', $weekStart)
             ->count();
         $weekRevenue = Order::where('status', 'paid')
             ->where('paid_at', '>=', $weekStart)
-            ->sum('total_amount');
+            ->sum('final_price');
 
         return [
             Stat::make('用户总数', $totalUsers)
@@ -123,7 +123,7 @@ class StatsOverview extends BaseWidget
             $date = now()->subDays($i)->startOfDay();
             $revenue = Order::where('status', 'paid')
                 ->whereDate('paid_at', $date)
-                ->sum('total_amount');
+                ->sum('final_price');
             $data[] = (int) $revenue;
         }
         return $data;

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 /**
  * 用户认证接口
  * 
- * @group 用户认证 (User Auth)
+ * @group 用户认证
  */
 class AuthController extends Controller
 {
