@@ -730,7 +730,7 @@ paths:
                 url:
                   type: string
                   description: '图片 URL 地址'
-                  example: 'https://img.kwcdn.com/product/fancy/605bead6-9775-4ddf-a732-09f369e697b5.jpg'
+                  example: 'https://cbu01.alicdn.com/img/ibank/O1CN01cM2vWn1U3e9n2HF80_!!2219132612462-0-cib.jpg'
                 page:
                   type: integer
                   description: '页码，默认 1'

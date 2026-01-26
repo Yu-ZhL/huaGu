@@ -623,10 +623,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                               name="url"                data-endpoint="POSTapi-image-search-1688-url"
-               value="https://img.kwcdn.com/product/fancy/605bead6-9775-4ddf-a732-09f369e697b5.jpg"
+               value="https://cbu01.alicdn.com/img/ibank/O1CN01cM2vWn1U3e9n2HF80_!!2219132612462-0-cib.jpg"
                data-component="body">
     <br>
-<p>图片 URL 地址 Example: <code>https://img.kwcdn.com/product/fancy/605bead6-9775-4ddf-a732-09f369e697b5.jpg</code></p>
+<p>图片 URL 地址 Example: <code>https://cbu01.alicdn.com/img/ibank/O1CN01cM2vWn1U3e9n2HF80_!!2219132612462-0-cib.jpg</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;

@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * 1688 平台搜同款控制器
- * 
+ *
  * @group 图片搜索：1688
  */
 class Platform1688Controller extends Controller
@@ -24,19 +24,19 @@ class Platform1688Controller extends Controller
 
     /**
      * 1688 以图搜图
-     * 
+     *
      * 上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品
      *
      * @authenticated
      *
      * @param  Request  $request
      * @return JsonResponse
-     * 
+     *
      * @bodyParam image file 图片文件（与 image_base64 二选一）
      * @bodyParam image_base64 string 图片的 Base64 编码（与 image 二选一） Example: /9j/4AAQSkZJRg...
      * @bodyParam page integer 页码，默认 1 Example: 1
      * @bodyParam size integer 每页数量，默认 20 Example: 20
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
@@ -50,14 +50,14 @@ class Platform1688Controller extends Controller
      *   ],
      *   "message": "搜图成功，找到 20 条结果"
      * }
-     * 
+     *
      * @response 400 {
      *   "success": false,
      *   "code": 400,
      *   "data": null,
      *   "message": "请提供图片文件或 Base64 数据"
      * }
-     * 
+     *
      * @response 401 {
      *   "message": "Unauthenticated."
      * }
@@ -127,18 +127,18 @@ class Platform1688Controller extends Controller
 
     /**
      * 1688 URL 搜图
-     * 
+     *
      * 提供图片 URL 地址，在 1688 平台搜索相似商品
      *
      * @authenticated
      *
      * @param  Request  $request
      * @return JsonResponse
-     * 
-     * @bodyParam url string required 图片 URL 地址 Example: https://img.kwcdn.com/product/fancy/605bead6-9775-4ddf-a732-09f369e697b5.jpg
+     *
+     * @bodyParam url string required 图片 URL 地址 Example: https://cbu01.alicdn.com/img/ibank/O1CN01cM2vWn1U3e9n2HF80_!!2219132612462-0-cib.jpg
      * @bodyParam page integer 页码，默认 1 Example: 1
      * @bodyParam size integer 每页数量，默认 20 Example: 20
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
@@ -152,14 +152,14 @@ class Platform1688Controller extends Controller
      *   ],
      *   "message": "搜图成功，找到 20 条结果"
      * }
-     * 
+     *
      * @response 400 {
      *   "success": false,
      *   "code": 400,
      *   "data": null,
      *   "message": "请提供图片 URL"
      * }
-     * 
+     *
      * @response 401 {
      *   "message": "Unauthenticated."
      * }
