@@ -130,8 +130,6 @@ class VipPlanResource extends Resource
     {
         return [
             'index' => Pages\ListVipPlans::route('/'),
-            'create' => Pages\CreateVipPlan::route('/create'),
-            'edit' => Pages\EditVipPlan::route('/{record}/edit'),
         ];
     }
 }

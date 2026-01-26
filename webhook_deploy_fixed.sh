@@ -57,12 +57,16 @@ $PHP_BIN artisan route:cache
 $PHP_BIN artisan view:cache
 
 # 发布 Filament 静态资源
-echo ' 发布 Filament 资源...'
+echo '📦 发布 Filament 资源...'
 $PHP_BIN artisan vendor:publish --tag=laravel-assets --force
 
+# 清理 Filament 缓存
+echo '🗑️  清理 Filament 缓存...'
+$PHP_BIN artisan filament:cache-clear
+
 # 最终权限修正
-echo ' 最终权限修正...'
+echo '✅ 最终权限修正...'
 chown -R www:www .
 chmod -R 775 storage bootstrap/cache
 
-echo ' 部署结束！SUCCESS'
+echo '🎉 部署结束！SUCCESS'

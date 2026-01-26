@@ -102,8 +102,6 @@ class SiteSettingResource extends Resource
     {
         return [
             'index' => Pages\ListSiteSettings::route('/'),
-            'create' => Pages\CreateSiteSetting::route('/create'),
-            'edit' => Pages\EditSiteSetting::route('/{record}/edit'),
         ];
     }
 }
