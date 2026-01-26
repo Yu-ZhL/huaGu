@@ -11,9 +11,6 @@ tags:
     name: '1688搜同款 (1688)'
     description: ''
   -
-    name: Payment
-    description: ''
-  -
     name: 'VIP管理 (VIP Plans)'
     description: ''
   -
@@ -23,7 +20,7 @@ tags:
     name: '其他接口 (Others)'
     description: ''
   -
-    name: '支付管理 (Payment)'
+    name: 支付接口
     description: ''
   -
     name: 用户认证
@@ -313,56 +310,6 @@ paths:
       tags:
         - '1688搜同款 (1688)'
       security: []
-  /api/payment/alipay/create:
-    post:
-      summary: 开通VIP会员（创建支付宝支付）
-      operationId: VIP
-      description: 为已创建的订单生成支付宝支付二维码，用户扫码后完成支付即可开通VIP
-      parameters: []
-      responses:
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  success: true
-                  code: 200
-                  data:
-                    qr_code: 'https://qr.alipay.com/...'
-                  message: 支付创建成功，请扫描二维码完成支付
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  code:
-                    type: integer
-                    example: 200
-                  data:
-                    type: object
-                    properties:
-                      qr_code:
-                        type: string
-                        example: 'https://qr.alipay.com/...'
-                  message:
-                    type: string
-                    example: 支付创建成功，请扫描二维码完成支付
-      tags:
-        - Payment
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                order_no:
-                  type: string
-                  description: 订单号
-                  example: 202601261500001ABC
-              required:
-                - order_no
   /api/vip/plans:
     get:
       summary: 获取VIP套餐列表
@@ -1277,6 +1224,56 @@ paths:
       tags:
         - '其他接口 (Others)'
       security: []
+  /api/payment/alipay/create:
+    post:
+      summary: 开通VIP会员（创建支付宝支付）
+      operationId: VIP
+      description: 为已创建的订单生成支付宝支付二维码，用户扫码后完成支付即可开通VIP
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  code: 200
+                  data:
+                    qr_code: 'https://qr.alipay.com/...'
+                  message: 支付创建成功，请扫描二维码完成支付
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  data:
+                    type: object
+                    properties:
+                      qr_code:
+                        type: string
+                        example: 'https://qr.alipay.com/...'
+                  message:
+                    type: string
+                    example: 支付创建成功，请扫描二维码完成支付
+      tags:
+        - 支付接口
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order_no:
+                  type: string
+                  description: 订单号
+                  example: 202601261500001ABC
+              required:
+                - order_no
   /api/payment/alipay-notify:
     post:
       summary: 支付宝异步通知
@@ -1285,7 +1282,7 @@ paths:
       parameters: []
       responses: {  }
       tags:
-        - '支付管理 (Payment)'
+        - 支付接口
       security: []
   /api/auth/send-code:
     post:

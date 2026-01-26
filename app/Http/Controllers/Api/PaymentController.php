@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 /**
  * 支付接口
  * 
- * @group 支付管理 (Payment)
+ * @group 支付接口
  */
 class PaymentController extends Controller
 {
@@ -33,7 +33,6 @@ class PaymentController extends Controller
      *
      * 为已创建的订单生成支付宝支付二维码，用户扫码后完成支付即可开通VIP
      *
-     * @group Payment
      * @authenticated
      * 
      * @bodyParam order_no string required 订单号 Example: 202601261500001ABC

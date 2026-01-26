@@ -34,11 +34,13 @@ class OrderResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->label('用户')
                     ->relationship('user', 'phone')
+                    ->getOptionLabelFromRecordUsing(fn($record) => $record->phone ?? 'N/A')
                     ->searchable()
                     ->disabled(),
                 Forms\Components\Select::make('vip_plan_id')
                     ->label('VIP套餐')
                     ->relationship('vipPlan', 'name')
+                    ->getOptionLabelFromRecordUsing(fn($record) => $record->name ?? '未知套餐')
                     ->disabled(),
                 Forms\Components\TextInput::make('final_price')
                     ->label('实付金额')
