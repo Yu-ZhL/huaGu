@@ -4,10 +4,13 @@ import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
     plugins: [
-        laravel([
-            'resources/css/app.css', // 确保这一行存在
-            'resources/js/app.js',
-        ]),
+        laravel({
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
+            refresh: true,
+        }),
         vue({
             template: {
                 transformAssetUrls: {
@@ -23,12 +26,17 @@ export default defineConfig({
         },
     },
     server: {
-        host: '0.0.0.0', // 允许外部访问
+        // 允许局域网
+        host: '0.0.0.0',
+
+        // HMR 热更�?指向虚拟域名
         hmr: {
-            host: '103.214.173.247', // 热更新连接的IP
+            // host: 'huagu.test',
         },
+
+        // 关闭轮询
         watch: {
-            usePolling: true, // 监控文件变化
+            usePolling: false,
         }
     },
 });

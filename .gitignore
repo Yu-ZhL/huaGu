@@ -27,3 +27,5 @@ yarn-error.log
 /.agent/
 /.scribe/
 /docs/
+/vite.config.js
+.htaccess
