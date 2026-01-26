@@ -18,8 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware('api')
                 ->group(base_path('routes/auth_api.php'));
 
-            Route::middleware('api')
-                ->group(base_path('routes/image_search.php'));
+            // 图片搜索路由（如需使用请取消注释）
+            // Route::middleware('api')
+            //     ->group(base_path('routes/image_search.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {

@@ -35,7 +35,13 @@ return [
         [
             'match' => [
                 // 仅匹配路径符合此模式的路由（使用 * 作为通配符匹配任何字符）。例如：'users/*'。
-                'prefixes' => ['api/*'],
+                'prefixes' => [
+                    'api/auth/*',
+                    'api/vip/*',
+                    'api/orders/*',
+                    'api/payment/*',
+                    'api/coupons/*',
+                ],
 
                 // 仅匹配域名符合此模式的路由（使用 * 作为通配符匹配任何字符）。例如：'api.*'。
                 'domains' => ['*'],
@@ -48,7 +54,6 @@ return [
 
             // 即使符合上述规则，也排除这些路由。
             'exclude' => [
-                // 'GET /health', 'admin.*'
             ],
         ],
     ],

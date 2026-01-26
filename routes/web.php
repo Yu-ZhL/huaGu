@@ -15,7 +15,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard'); 
+    return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
@@ -26,5 +26,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/image_search.php';
-require __DIR__ . '/auth_api.php';
+// require __DIR__ . '/image_search.php';
+// require __DIR__ . '/auth_api.php';
