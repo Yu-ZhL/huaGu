@@ -32,9 +32,6 @@ class VipPlanResource extends Resource
                     ->label('套餐名称')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->label('套餐描述')
-                    ->rows(3),
                 Forms\Components\TextInput::make('price')
                     ->label('原价')
                     ->required()

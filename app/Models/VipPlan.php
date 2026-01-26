@@ -9,7 +9,6 @@ class VipPlan extends Model
 {
     protected $fillable = [
         'name',
-        'description',
         'price',
         'final_price',
         'ai_points',

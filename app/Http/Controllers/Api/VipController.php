@@ -20,7 +20,8 @@ class VipController extends Controller
     /**
      * 获取VIP套餐列表
      * 
-     * 获取所有可用的VIP套餐，按推荐和排序展示
+     * 获取所有可用的VIP套餐，按推荐和排序展示。
+     * 前端根据关键数据渲染描述：价格/月、AI点数、约N次使用额度（点数/2）、品牌预估/运费测算功能
      * 
      * @response 200 {
      *   "success": true,
@@ -29,13 +30,13 @@ class VipController extends Controller
      *     {
      *       "id": 1,
      *       "name": "月度会员 68元",
-     *       "description": "每月ai点数6000 可使用运费测算功能 约3000次使用额度",
      *       "price": "68.00",
      *       "final_price": "68.00",
      *       "ai_points": 6000,
      *       "duration_days": 30,
-     *       "features": ["运费测算", "6000点数"],
-     *       "is_recommended": false
+     *       "features": [],
+     *       "is_recommended": false,
+     *       "sort_order": 1
      *     }
      *   ],
      *   "message": "获取成功"
