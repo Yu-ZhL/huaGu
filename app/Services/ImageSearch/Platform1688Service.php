@@ -68,9 +68,9 @@ class Platform1688Service extends ImageSearchBaseService
             }
 
             $params = $this->buildRequestParams($page, $size);
-            $params['url'] = $url;
+            $jsonData = ['url' => $url];
 
-            $result = $this->sendRequest($params);
+            $result = $this->sendRequest($params, $jsonData);
 
             if ($result && isset($result['success']) && $result['success']) {
                 $dataCount = isset($result['data']) ? count($result['data']) : 0;
@@ -121,14 +121,11 @@ class Platform1688Service extends ImageSearchBaseService
             $request = Http::withHeaders($this->config['headers'])
                 ->timeout(30);
 
-            if ($jsonData) {
-                $response = $request->post($this->config['base_url'], array_merge(
-                    ['query' => http_build_query($params)],
-                    $jsonData
-                ));
-            } else {
-                $response = $request->post($this->config['base_url'] . '?' . http_build_query($params));
-            }
+            // 将公共参数拼接到 URL 查询字符串
+            $url = $this->config['base_url'] . '?' . http_build_query($params);
+
+            // 发送 POST 请求，数据作为 JSON Body
+            $response = $request->post($url, $jsonData ?? []);
 
             if ($response->successful()) {
                 // 处理可能的 BOM

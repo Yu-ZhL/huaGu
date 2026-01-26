@@ -85,19 +85,19 @@ class Platform1688Controller extends Controller
             } elseif ($request->has('image_base64')) {
                 $imageBase64 = $request->input('image_base64');
 
-                // 校验 Base64 数据
-                if (!ImageUtil::validateBase64($imageBase64)) {
+                // 宽松处理 Base64，移除可能的前缀
+                if (preg_match('/^data:image\/(\w+);base64,/', $imageBase64)) {
+                    $imageBase64 = substr($imageBase64, strpos($imageBase64, ',') + 1);
+                }
+
+                // 简单的 Base64 格式检查
+                if (base64_decode($imageBase64, true) === false) {
                     return response()->json([
                         'success' => false,
                         'code' => 400,
                         'data' => null,
                         'message' => 'Base64 图片数据格式不正确',
                     ], 400);
-                }
-
-                // 去掉可能的 data URI 前缀
-                if (strpos($imageBase64, 'data:image') === 0) {
-                    $imageBase64 = substr($imageBase64, strpos($imageBase64, ',') + 1);
                 }
             } else {
                 return response()->json([
