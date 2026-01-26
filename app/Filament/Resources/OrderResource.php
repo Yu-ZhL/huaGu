@@ -31,16 +31,11 @@ class OrderResource extends Resource
                 Forms\Components\TextInput::make('order_no')
                     ->label('订单号')
                     ->disabled(),
-                Forms\Components\Select::make('user_id')
-                    ->label('用户')
-                    ->relationship('user', 'phone')
-                    ->getOptionLabelFromRecordUsing(fn($record) => $record->phone ?? 'N/A')
-                    ->searchable()
+                Forms\Components\TextInput::make('user.phone')
+                    ->label('用户手机号')
                     ->disabled(),
-                Forms\Components\Select::make('vip_plan_id')
+                Forms\Components\TextInput::make('plan_name')
                     ->label('VIP套餐')
-                    ->relationship('vipPlan', 'name')
-                    ->getOptionLabelFromRecordUsing(fn($record) => $record->name ?? '未知套餐')
                     ->disabled(),
                 Forms\Components\TextInput::make('final_price')
                     ->label('实付金额')

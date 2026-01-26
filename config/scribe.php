@@ -35,13 +35,7 @@ return [
         [
             'match' => [
                 // 仅匹配路径符合此模式的路由（使用 * 作为通配符匹配任何字符）。例如：'users/*'。
-                'prefixes' => [
-                    'api/auth/*',
-                    'api/vip/*',
-                    'api/orders/*',
-                    'api/payment/*',
-                    'api/coupons/*',
-                ],
+                'prefixes' => ['api/*'],
 
                 // 仅匹配域名符合此模式的路由（使用 * 作为通配符匹配任何字符）。例如：'api.*'。
                 'domains' => ['*'],
@@ -54,6 +48,7 @@ return [
 
             // 即使符合上述规则，也排除这些路由。
             'exclude' => [
+                // 'GET /health', 'admin.*'
             ],
         ],
     ],
@@ -186,14 +181,7 @@ return [
         // 您可以通过在此处按您想要的顺序列出组、子组和端点来覆盖此设置。
         // 有关详细信息，请参见 https://scribe.knuckles.wtf/blog/laravel-v4#easier-sorting 和 https://scribe.knuckles.wtf/laravel/reference/config#order
         // 注意：不适用于 `external` 文档类型
-        'order' => [
-            '用户认证',
-            'VIP会员',
-            '订单管理',
-            '支付接口',
-            '优惠码',
-            '图片搜索',
-        ],
+        'order' => [],
     ],
 
     // 自定义徽标路径。这将用作 <img> 标签的 src 属性的值，
