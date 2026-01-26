@@ -20,6 +20,8 @@ class OrderResource extends Resource
 
     protected static ?string $modelLabel = '订单';
 
+    protected static ?string $navigationGroup = 'VIP系统';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form

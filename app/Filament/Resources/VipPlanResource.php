@@ -20,6 +20,8 @@ class VipPlanResource extends Resource
 
     protected static ?string $modelLabel = 'VIP套餐';
 
+    protected static ?string $navigationGroup = 'VIP系统';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -107,7 +109,8 @@ class VipPlanResource extends Resource
                     ->falseLabel('禁用'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->modalWidth('3xl'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

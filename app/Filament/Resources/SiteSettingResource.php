@@ -20,7 +20,9 @@ class SiteSettingResource extends Resource
 
     protected static ?string $modelLabel = '配置';
 
-    protected static ?int $navigationSort = 10;
+    protected static ?string $navigationGroup = '系统设置';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -84,7 +86,8 @@ class SiteSettingResource extends Resource
             ->filters([
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->modalWidth('2xl'),
             ])
             ->bulkActions([]);
     }

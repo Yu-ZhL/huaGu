@@ -1,28 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\VipController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\CouponController;
 
-Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+// 认证路由
+Route::post('/auth/send-code', [AuthController::class, 'sendCode']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
 
-Route::get('/vip/plans', [App\Http\Controllers\Api\VipController::class, 'index']);
+// VIP套餐（无需认证）
+Route::get('/vip/plans', [VipController::class, 'index']);
 
+// 需要认证的路由
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
-    Route::post('/products/export', [App\Http\Controllers\ProductController::class, 'export']);
-    Route::post('/products/batch-calculate', [App\Http\Controllers\ProductController::class, 'batchCalculate']);
+    // 认证用户信息
+    Route::get('/auth/me', [AuthController::class, 'me']);
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
 
-    Route::get('/vip/my-info', [App\Http\Controllers\Api\VipController::class, 'myVipInfo']);
-    Route::get('/vip/my-orders', [App\Http\Controllers\Api\VipController::class, 'myOrders']);
-    Route::get('/vip/my-ai-points', [App\Http\Controllers\Api\VipController::class, 'myAiPoints']);
+    // VIP信息
+    Route::get('/vip/my-info', [VipController::class, 'myVipInfo']);
+    Route::get('/vip/my-orders', [VipController::class, 'myOrders']);
+    Route::get('/vip/my-ai-points', [VipController::class, 'myAiPoints']);
 
-    Route::post('/orders', [App\Http\Controllers\Api\OrderController::class, 'create']);
-    Route::get('/orders/{orderNo}', [App\Http\Controllers\Api\OrderController::class, 'show']);
-    Route::post('/orders/{orderNo}/cancel', [App\Http\Controllers\Api\OrderController::class, 'cancel']);
-    Route::get('/orders/{orderNo}/payment-status', [App\Http\Controllers\Api\OrderController::class, 'queryPaymentStatus']);
+    // 订单
+    Route::post('/orders', [OrderController::class, 'create']);
+    Route::get('/orders/{orderNo}', [OrderController::class, 'show']);
+    Route::post('/orders/{orderNo}/cancel', [OrderController::class, 'cancel']);
+    Route::get('/orders/{orderNo}/payment-status', [OrderController::class, 'queryPaymentStatus']);
 
-    Route::post('/payment/alipay/create', [App\Http\Controllers\Api\PaymentController::class, 'createAlipay']);
+    // 支付
+    Route::post('/payment/alipay/create', [PaymentController::class, 'createAlipay']);
 
-    Route::post('/coupons/validate', [App\Http\Controllers\Api\CouponController::class, 'validate']);
+    // 优惠码
+    Route::post('/coupons/validate', [CouponController::class, 'validate']);
 });
 
-Route::post('/payment/alipay-notify', [App\Http\Controllers\Api\PaymentController::class, 'alipayNotify']);
+// 支付回调（不需要认证）
+Route::post('/payment/alipay-notify', [PaymentController::class, 'alipayNotify']);
