@@ -95,6 +95,19 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-1688" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="1688">
+                    <a href="#1688">图片搜索：1688</a>
+                </li>
+                                    <ul id="tocify-subheader-1688" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="1688-POSTapi-image-search-1688-image">
+                                <a href="#1688-POSTapi-image-search-1688-image">1688 以图搜图</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="1688-POSTapi-image-search-1688-url">
+                                <a href="#1688-POSTapi-image-search-1688-url">1688 URL 搜图</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="">
                     <a href="#">支付接口</a>
@@ -1084,6 +1097,481 @@ print_r(json_decode((string) $body));</code></pre></div>
                data-component="body">
     <br>
 <p>订单金额 Example: <code>128</code></p>
+        </div>
+        </form>
+
+                <h1 id="1688">图片搜索：1688</h1>
+
+    
+
+                                <h2 id="1688-POSTapi-image-search-1688-image">1688 以图搜图</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>上传图片文件或提供 Base64 编码的图片数据，在 1688 平台搜索相似商品</p>
+
+<span id="example-requests-POSTapi-image-search-1688-image">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/image-search/1688/image"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('image_base64', '/9j/4AAQSkZJRg...');
+body.append('page', '1');
+body.append('size', '20');
+body.append('image', document.querySelector('input[name="image"]').files[0]);
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/image-search/1688/image';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'multipart/form-data',
+            'Accept' =&gt; 'application/json',
+        ],
+        'multipart' =&gt; [
+            [
+                'name' =&gt; 'image_base64',
+                'contents' =&gt; '/9j/4AAQSkZJRg...'
+            ],
+            [
+                'name' =&gt; 'page',
+                'contents' =&gt; '1'
+            ],
+            [
+                'name' =&gt; 'size',
+                'contents' =&gt; '20'
+            ],
+            [
+                'name' =&gt; 'image',
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpAB25.tmp', 'r')
+            ],
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-image-search-1688-image">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: [
+        {
+            &quot;title&quot;: &quot;2024新款现货懒人神器&quot;,
+            &quot;price&quot;: &quot;29.90&quot;,
+            &quot;image&quot;: &quot;https://cbu01.alicdn.com/img/ibank/xxx.jpg&quot;,
+            &quot;url&quot;: &quot;https://detail.1688.com/offer/12345.html&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;搜图成功，找到 20 条结果&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 400,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;请提供图片文件或 Base64 数据&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-image-search-1688-image" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-image-search-1688-image"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-image"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-image-search-1688-image" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-image-search-1688-image">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-image-search-1688-image" data-method="POST"
+      data-path="api/image-search/1688/image"
+      data-authed="1"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-image', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-image-search-1688-image"
+                    onclick="tryItOut('POSTapi-image-search-1688-image');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-image-search-1688-image"
+                    onclick="cancelTryOut('POSTapi-image-search-1688-image');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-image-search-1688-image"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/image-search/1688/image</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-image-search-1688-image"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-image"
+               value="multipart/form-data"
+               data-component="header">
+    <br>
+<p>Example: <code>multipart/form-data</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-image-search-1688-image"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>image</code></b>&nbsp;&nbsp;
+<small>file</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="file" style="display: none"
+                              name="image"                data-endpoint="POSTapi-image-search-1688-image"
+               value=""
+               data-component="body">
+    <br>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpAB25.tmp</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="image_base64"                data-endpoint="POSTapi-image-search-1688-image"
+               value="/9j/4AAQSkZJRg..."
+               data-component="body">
+    <br>
+<p>图片的 Base64 编码（与 image 二选一） Example: <code>/9j/4AAQSkZJRg...</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="POSTapi-image-search-1688-image"
+               value="1"
+               data-component="body">
+    <br>
+<p>页码，默认 1 Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>size</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="size"                data-endpoint="POSTapi-image-search-1688-image"
+               value="20"
+               data-component="body">
+    <br>
+<p>每页数量，默认 20 Example: <code>20</code></p>
+        </div>
+        </form>
+
+                    <h2 id="1688-POSTapi-image-search-1688-url">1688 URL 搜图</h2>
+
+<p>
+<small class="badge badge-darkred">需要认证</small>
+</p>
+
+<p>提供图片 URL 地址，在 1688 平台搜索相似商品</p>
+
+<span id="example-requests-POSTapi-image-search-1688-url">
+<blockquote>请求示例:</blockquote>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/image-search/1688/url"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "url": "https:\/\/img.kwcdn.com\/product\/fancy\/605bead6-9775-4ddf-a732-09f369e697b5.jpg",
+    "page": 1,
+    "size": 20
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://127.0.0.1:8000/api/image-search/1688/url';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'url' =&gt; 'https://img.kwcdn.com/product/fancy/605bead6-9775-4ddf-a732-09f369e697b5.jpg',
+            'page' =&gt; 1,
+            'size' =&gt; 20,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-image-search-1688-url">
+            <blockquote>
+            <p>响应示例 (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;code&quot;: 200,
+    &quot;data&quot;: [
+        {
+            &quot;title&quot;: &quot;2024新款现货懒人神器&quot;,
+            &quot;price&quot;: &quot;29.90&quot;,
+            &quot;image&quot;: &quot;https://cbu01.alicdn.com/img/ibank/xxx.jpg&quot;,
+            &quot;url&quot;: &quot;https://detail.1688.com/offer/12345.html&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;搜图成功，找到 20 条结果&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;code&quot;: 400,
+    &quot;data&quot;: null,
+    &quot;message&quot;: &quot;请提供图片 URL&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>响应示例 (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-image-search-1688-url" hidden>
+    <blockquote>接口返回数据<span
+                id="execution-response-status-POSTapi-image-search-1688-url"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-image-search-1688-url"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-image-search-1688-url" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-image-search-1688-url">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-image-search-1688-url" data-method="POST"
+      data-path="api/image-search/1688/url"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-image-search-1688-url', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-image-search-1688-url"
+                    onclick="tryItOut('POSTapi-image-search-1688-url');">在线调试
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-image-search-1688-url"
+                    onclick="cancelTryOut('POSTapi-image-search-1688-url');" hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-image-search-1688-url"
+                    data-initial-text="发送请求"
+                    data-loading-text="请求处理中..."
+                    hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/image-search/1688/url</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-image-search-1688-url"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-image-search-1688-url"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-image-search-1688-url"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>url</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="url"                data-endpoint="POSTapi-image-search-1688-url"
+               value="https://img.kwcdn.com/product/fancy/605bead6-9775-4ddf-a732-09f369e697b5.jpg"
+               data-component="body">
+    <br>
+<p>图片 URL 地址 Example: <code>https://img.kwcdn.com/product/fancy/605bead6-9775-4ddf-a732-09f369e697b5.jpg</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="POSTapi-image-search-1688-url"
+               value="1"
+               data-component="body">
+    <br>
+<p>页码，默认 1 Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>size</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="size"                data-endpoint="POSTapi-image-search-1688-url"
+               value="20"
+               data-component="body">
+    <br>
+<p>每页数量，默认 20 Example: <code>20</code></p>
         </div>
         </form>
 

@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 /**
  * 1688 平台搜同款控制器
  * 
- * @group 1688搜同款 (1688)
+ * @group 图片搜索：1688
  */
 class Platform1688Controller extends Controller
 {
