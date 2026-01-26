@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://103.214.173.247:3019'
+    url: 'http://127.0.0.1:8000'
 tags:
   -
     name: '1688搜同款 (1688)'
