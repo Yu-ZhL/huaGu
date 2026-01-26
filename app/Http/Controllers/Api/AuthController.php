@@ -183,6 +183,19 @@ class AuthController extends Controller
             'last_login_at' => now(),
         ]);
 
+        $giftPoints = \App\Models\SiteSetting::getNewUserGiftPoints();
+        $expireDays = \App\Models\SiteSetting::getGiftPointsExpireDays();
+
+        if ($giftPoints > 0) {
+            $user->addAiPoints(
+                $giftPoints,
+                \App\Models\UserAiPoint::TYPE_REGISTER_GIFT,
+                '新用户注册赠送',
+                null,
+                now()->addDays($expireDays)
+            );
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return ApiResponse::success([
@@ -192,6 +205,7 @@ class AuthController extends Controller
                 'phone_area_code' => $user->phone_area_code,
                 'name' => $user->name,
                 'vip_level_id' => $user->vip_level_id,
+                'ai_points' => $user->ai_points,
             ],
             'token' => $token,
         ], '注册成功');

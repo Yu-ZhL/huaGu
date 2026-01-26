@@ -1,0 +1,36 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\SiteSetting;
+use Illuminate\Database\Seeder;
+
+class SiteSettingSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $settings = [
+            [
+                'key' => 'new_user_gift_points',
+                'value' => '500',
+                'type' => 'integer',
+                'label' => '新用户赠送AI点数',
+                'description' => '新用户注册时自动赠送的AI点数数量',
+            ],
+            [
+                'key' => 'gift_points_expire_days',
+                'value' => '30',
+                'type' => 'integer',
+                'label' => '赠送点数有效期（天）',
+                'description' => '新用户注册赠送的AI点数的有效期，单位为天',
+            ],
+        ];
+
+        foreach ($settings as $setting) {
+            SiteSetting::updateOrCreate(
+                ['key' => $setting['key']],
+                $setting
+            );
+        }
+    }
+}

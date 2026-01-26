@@ -29,3 +29,4 @@ yarn-error.log
 /docs/
 /vite.config.js
 .htaccess
+/demo-*

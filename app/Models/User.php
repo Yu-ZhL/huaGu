@@ -17,21 +17,22 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone', // 手机号
-        'phone_area_code', // 区号，默认86
-        'invitation_code', // 邀请码，推广用的
-        'plaintext_password', // 明文密码 预留
-        'vip_level_id', // VIP等级ID
-        'vip_expired_at', // VIP过期时间
+        'phone',
+        'phone_area_code',
+        'invitation_code',
+        'plaintext_password',
+        'vip_level_id',
+        'vip_expired_at',
+        'ai_points',
         'last_login_ip',
         'last_login_location',
-        'last_login_at', // 最近一次登录时间
+        'last_login_at',
         'register_ip',
         'register_location',
-        'status', // 账号状态，1是正常，0是禁用
-        'is_sub_account', // 是不是子账号
-        'parent_id', // 父账号ID
-        'remark', // 备注信息
+        'status',
+        'is_sub_account',
+        'parent_id',
+        'remark',
     ];
 
     // JSON序列化时隐藏这些字段，安全第一
@@ -49,8 +50,47 @@ class User extends Authenticatable
             'password' => 'hashed',
             'vip_expired_at' => 'datetime',
             'last_login_at' => 'datetime',
-            'status' => 'boolean', // 数据库里是tinyint，这里转成布尔值方便判断
+            'status' => 'boolean',
             'is_sub_account' => 'boolean',
+            'ai_points' => 'integer',
         ];
+    }
+
+    public function vipPlan()
+    {
+        return $this->belongsTo(VipPlan::class, 'vip_level_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function aiPointRecords()
+    {
+        return $this->hasMany(UserAiPoint::class);
+    }
+
+    public function isVip(): bool
+    {
+        return $this->vip_level_id > 0 &&
+            $this->vip_expired_at &&
+            $this->vip_expired_at->isFuture();
+    }
+
+    public function addAiPoints(int $points, string $type, ?string $description = null, ?int $sourceId = null, ?\DateTime $expiredAt = null)
+    {
+        return UserAiPoint::addPoints($this->id, $points, $type, $description, $sourceId, $expiredAt);
+    }
+
+    public function deductAiPoints(int $points, string $type, ?string $description = null, ?int $sourceId = null)
+    {
+        return UserAiPoint::deductPoints($this->id, $points, $type, $description, $sourceId);
+    }
+
+
+    public function getAvailableAiPoints(): int
+    {
+        return $this->ai_points;
     }
 }
