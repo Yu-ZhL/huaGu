@@ -153,6 +153,20 @@ class AuthController extends Controller
             return ApiResponse::error('该手机号已注册', 400);
         }
 
+        // 检查IP注册限制
+        $ip = $request->ip();
+        $maxPerIp = \App\Models\SiteSetting::getMaxRegisterPerIp();
+
+        if ($maxPerIp > 0) {
+            $todayCount = User::where('register_ip', $ip)
+                ->whereDate('created_at', today())
+                ->count();
+
+            if ($todayCount >= $maxPerIp) {
+                return ApiResponse::error('当前IP注册频繁，请明日再试', 429);
+            }
+        }
+
         // 验证短信验证码
         $code = SmsCode::where('phone_area_code', $phoneAreaCode)
             ->where('phone', $phone)

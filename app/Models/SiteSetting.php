@@ -65,4 +65,9 @@ class SiteSetting extends Model
     {
         return self::get('gift_points_expire_days', 30);
     }
+
+    public static function getMaxRegisterPerIp(): int
+    {
+        return self::get('max_register_per_ip', 3);
+    }
 }
