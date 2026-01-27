@@ -23,39 +23,6 @@ return [
     'intro_text' => <<<INTRO
         API 文档
 
-        <style>
-            .tocify-wrapper > img {
-                max-width: 80% !important;
-                margin: 20px auto !important;
-                display: block !important;
-            }
-        </style>
-        <script>
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    // 修复中文标题的锚点链接
-                    function fixHeader(text, newId) {
-                        var headers = document.querySelectorAll('h1, h2');
-                        for(var i=0; i<headers.length; i++) {
-                            if(headers[i].textContent.trim() === text) {
-                                headers[i].id = newId;
-                                // 更新侧边栏链接
-                                var links = document.querySelectorAll('.tocify-item a');
-                                for(var j=0; j<links.length; j++) {
-                                    if(links[j].textContent.trim() === text) {
-                                        links[j].setAttribute('href', '#' + newId);
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    fixHeader('系统简介', 'introduction');
-                    fixHeader('用户认证指南', 'authentication');
-                }, 1000);
-            });
-        </script>
-
         <aside>在页面滚动时，您可以在右侧的黑色区域（手机端则在正文中）看到不同编程语言的 API 调用示例。 您可以点击右上角的标签页来切换语言（手机端请通过左上角的菜单栏进行切换）。</aside>
     INTRO,
 

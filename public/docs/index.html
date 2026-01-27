@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
@@ -13,39 +14,44 @@
 
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 
-    <link rel="stylesheet"
-          href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
 
-    <style id="language-style">
-        /* starts out as display none and is replaced with js later  */
-                    body .content .javascript-example code { display: none; }
-                    body .content .php-example code { display: none; }
-            </style>
+            <style id="language-style">
+            /* starts out as display none and is replaced with js later  */
+                            body .content .javascript-example code {
+                    display: none;
+                }
 
-    <script>
-        var tryItOutBaseUrl = "http://103.214.173.247:3019";
-        var useCsrf = Boolean();
-        var csrfUrl = "/sanctum/csrf-cookie";
-    </script>
-    <script src="../docs/js/tryitout-5.6.0.js"></script>
+                            body .content .php-example code {
+                    display: none;
+                }
 
+                    </style>
+    
+            <script>
+            var tryItOutBaseUrl = "http://103.214.173.247:3019";
+            var useCsrf = Boolean();
+            var csrfUrl = "/sanctum/csrf-cookie";
+        </script>
+        <script src="../docs/js/tryitout-5.6.0.js"></script>
+    
     <script src="../docs/js/theme-default-5.6.0.js"></script>
 
 </head>
 
 <body data-languages="[&quot;javascript&quot;,&quot;php&quot;]">
 
-<a href="#" id="nav-button">
+    <a href="#" id="nav-button">
     <span>
         MENU
         <img src="../docs/images/navbar.png" alt="navbar-image" />
     </span>
 </a>
 <div class="tocify-wrapper">
-            <img src="../logo.svg" alt="logo" class="logo" style="padding-top: 10px;" width="100%" />
+            <img src="../logo.svg" alt="logo" class="logo" style="padding-top: 10px; max-width: 80%; display: block; margin: 0 auto;" />
     
             <div class="lang-selector">
                                             <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
@@ -57,17 +63,17 @@
     </div>
 
     <div id="toc">
-                    <ul id="tocify-header-ea39ea8e8773612fccedafc006d89c0d" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="ea39ea8e8773612fccedafc006d89c0d">
-                    <a href="#ea39ea8e8773612fccedafc006d89c0d">系统简介</a>
+                                <ul id="tocify-header-introduction" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="introduction">
+                    <a href="#introduction">系统简介</a>
                 </li>
                             </ul>
-                    <ul id="tocify-header-58858a6ad8ce0dc6aea5f37360bbf75f" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="58858a6ad8ce0dc6aea5f37360bbf75f">
-                    <a href="#58858a6ad8ce0dc6aea5f37360bbf75f">用户认证指南</a>
+                                <ul id="tocify-header-authentication" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="authentication">
+                    <a href="#authentication">用户认证指南</a>
                 </li>
                             </ul>
-                    <ul id="tocify-header-87f70c6e4807627934ff24e8bb33f671" class="tocify-header">
+                                <ul id="tocify-header-87f70c6e4807627934ff24e8bb33f671" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="87f70c6e4807627934ff24e8bb33f671">
                     <a href="#87f70c6e4807627934ff24e8bb33f671">VIP管理 (VIP Plans)</a>
                 </li>
@@ -86,7 +92,7 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-623610103dc35c83101738655330ddc4" class="tocify-header">
+                                <ul id="tocify-header-623610103dc35c83101738655330ddc4" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="623610103dc35c83101738655330ddc4">
                     <a href="#623610103dc35c83101738655330ddc4">优惠码管理 (Coupons)</a>
                 </li>
@@ -96,7 +102,7 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-581190ff5e8a831286c8f8bb6a14bb52" class="tocify-header">
+                                <ul id="tocify-header-581190ff5e8a831286c8f8bb6a14bb52" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="581190ff5e8a831286c8f8bb6a14bb52">
                     <a href="#581190ff5e8a831286c8f8bb6a14bb52">图片搜索：1688</a>
                 </li>
@@ -109,7 +115,7 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-8a1ec3da9012d874a22be1b2beac5507" class="tocify-header">
+                                <ul id="tocify-header-8a1ec3da9012d874a22be1b2beac5507" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="8a1ec3da9012d874a22be1b2beac5507">
                     <a href="#8a1ec3da9012d874a22be1b2beac5507">支付接口</a>
                 </li>
@@ -122,7 +128,7 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-785a37313cbc5189279700e6217bb8f5" class="tocify-header">
+                                <ul id="tocify-header-785a37313cbc5189279700e6217bb8f5" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="785a37313cbc5189279700e6217bb8f5">
                     <a href="#785a37313cbc5189279700e6217bb8f5">用户认证</a>
                 </li>
@@ -147,7 +153,7 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-dfa7f5ac897954f97f2337b095ea9d22" class="tocify-header">
+                                <ul id="tocify-header-dfa7f5ac897954f97f2337b095ea9d22" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="dfa7f5ac897954f97f2337b095ea9d22">
                     <a href="#dfa7f5ac897954f97f2337b095ea9d22">订单管理 (Orders)</a>
                 </li>
@@ -166,7 +172,7 @@
                             </li>
                                                                         </ul>
                             </ul>
-                    <ul id="tocify-header-32c6eed914882f5c4bddde976f2f6f39" class="tocify-header">
+                                <ul id="tocify-header-32c6eed914882f5c4bddde976f2f6f39" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="32c6eed914882f5c4bddde976f2f6f39">
                     <a href="#32c6eed914882f5c4bddde976f2f6f39">飞猫选品</a>
                 </li>
@@ -190,57 +196,24 @@
         <li>最后更新时间: 2026年01月27日</li>
     </ul>
 </div>
-<div class="page-wrapper">
-    <div class="dark-box"></div>
-    <div class="content">
-        <h1 id="">系统简介</h1>
+    <div class="page-wrapper">
+        <div class="dark-box"></div>
+        <div class="content">
+            <h1 id="introduction">系统简介</h1>
 <p>已经实现了标准化的搜同款(以图搜图)接口系统，支持多平台商品搜索功能。当前已完成 1688 平台的接口实现，并为其他 24 个平台预留了标准化的接口框架。</p>
 <aside>
     <strong>基础 URL</strong>: <code>http://103.214.173.247:3019/</code>
 </aside>
 <pre><code>API 文档
 
-&lt;style&gt;
-    .tocify-wrapper &gt; img {
-        max-width: 80% !important;
-        margin: 20px auto !important;
-        display: block !important;
-    }
-&lt;/style&gt;
-&lt;script&gt;
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            // 修复中文标题的锚点链接
-            function fixHeader(text, newId) {
-                var headers = document.querySelectorAll('h1, h2');
-                for(var i=0; i&lt;headers.length; i++) {
-                    if(headers[i].textContent.trim() === text) {
-                        headers[i].id = newId;
-                        // 更新侧边栏链接
-                        var links = document.querySelectorAll('.tocify-item a');
-                        for(var j=0; j&lt;links.length; j++) {
-                            if(links[j].textContent.trim() === text) {
-                                links[j].setAttribute('href', '#' + newId);
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-            fixHeader('系统简介', 'introduction');
-            fixHeader('用户认证指南', 'authentication');
-        }, 1000);
-    });
-&lt;/script&gt;
-
 &lt;aside&gt;在页面滚动时，您可以在右侧的黑色区域（手机端则在正文中）看到不同编程语言的 API 调用示例。 您可以点击右上角的标签页来切换语言（手机端请通过左上角的菜单栏进行切换）。&lt;/aside&gt;</code></pre>
 
-        <h1 id="">用户认证指南</h1>
+            <h1 id="authentication">用户认证指南</h1>
 <p>要进行请求验证，请包含一个 <strong><code>Authorization</code></strong> 头，其值为 <strong><code>"Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"</code></strong>。</p>
 <p>所有经过身份验证的端点都在下面的文档中标记了 <code>需要认证</code> 徽章。</p>
 <p>您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。</p>
 
-        <h1 id="87f70c6e4807627934ff24e8bb33f671">VIP管理 (VIP Plans)</h1>
+            <h1 id="87f70c6e4807627934ff24e8bb33f671">VIP管理 (VIP Plans)</h1>
 
 
 
@@ -1201,7 +1174,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpAC80.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php9513.tmp', 'r')
             ],
         ],
     ]
@@ -1345,7 +1318,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpAC80.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php9513.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -3886,19 +3859,20 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value="temu"
                data-component="body">
     <br>
-<p>渠道 (调试用，后端固定为temu) Example: <code>temu</code></p>
+<p>渠道 (调试用，固定为temu) Example: <code>temu</code></p>
         </div>
         </form>
 
 
-        
+            
+        </div>
+        <div class="dark-box">
+                            <div class="lang-selector">
+                                                                    <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                                                                    <button type="button" class="lang-button" data-language-name="php">php</button>
+                                    </div>
+                    </div>
     </div>
-    <div class="dark-box">
-                    <div class="lang-selector">
-                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
-                                                        <button type="button" class="lang-button" data-language-name="php">php</button>
-                            </div>
-            </div>
-</div>
 </body>
+
 </html>

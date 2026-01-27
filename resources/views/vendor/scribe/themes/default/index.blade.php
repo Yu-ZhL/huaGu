@@ -3,6 +3,7 @@
 @endphp
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
@@ -16,59 +17,63 @@
 
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 
-    <link rel="stylesheet"
-          href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/styles/obsidian.min.css">
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.6.0/highlight.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
 
-@if(isset($metadata['example_languages']))
-    <style id="language-style">
-        /* starts out as display none and is replaced with js later  */
-        @foreach($metadata['example_languages'] as $lang)
-            body .content .{{ $lang }}-example code { display: none; }
-        @endforeach
-    </style>
-@endif
+    @if(isset($metadata['example_languages']))
+        <style id="language-style">
+            /* starts out as display none and is replaced with js later  */
+            @foreach($metadata['example_languages'] as $lang)
+                body .content .{{ $lang }}-example code {
+                    display: none;
+                }
 
-@if($tryItOut['enabled'] ?? true)
-    <script>
-        var tryItOutBaseUrl = "{!! $tryItOut['base_url'] ?? $baseUrl !!}";
-        var useCsrf = Boolean({!! $tryItOut['use_csrf'] ?? null !!});
-        var csrfUrl = "{!! $tryItOut['csrf_url'] ?? null !!}";
-    </script>
-    <script src="{{ u::getVersionedAsset($assetPathPrefix.'js/tryitout.js') }}"></script>
-@endif
+            @endforeach
+        </style>
+    @endif
 
-    <script src="{{ u::getVersionedAsset($assetPathPrefix.'js/theme-default.js') }}"></script>
+    @if($tryItOut['enabled'] ?? true)
+        <script>
+            var tryItOutBaseUrl = "{!! $tryItOut['base_url'] ?? $baseUrl !!}";
+            var useCsrf = Boolean({!! $tryItOut['use_csrf'] ?? null !!});
+            var csrfUrl = "{!! $tryItOut['csrf_url'] ?? null !!}";
+        </script>
+        <script src="{{ u::getVersionedAsset($assetPathPrefix . 'js/tryitout.js') }}"></script>
+    @endif
+
+    <script src="{{ u::getVersionedAsset($assetPathPrefix . 'js/theme-default.js') }}"></script>
 
 </head>
 
 <body data-languages="{{ json_encode($metadata['example_languages'] ?? []) }}">
 
-@include("scribe::themes.default.sidebar")
+    @include("scribe::themes.default.sidebar")
 
-<div class="page-wrapper">
-    <div class="dark-box"></div>
-    <div class="content">
-        {!! $intro !!}
+    <div class="page-wrapper">
+        <div class="dark-box"></div>
+        <div class="content">
+            {!! str_replace('<h1 id="">系统简介</h1>', '<h1 id="introduction">系统简介</h1>', $intro) !!}
 
-        {!! $auth !!}
+            {!! str_replace('<h1 id="">用户认证指南</h1>', '<h1 id="authentication">用户认证指南</h1>', $auth) !!}
 
-        @include("scribe::themes.default.groups")
+            @include("scribe::themes.default.groups")
 
-        {!! $append !!}
+            {!! $append !!}
+        </div>
+        <div class="dark-box">
+            @if(isset($metadata['example_languages']))
+                <div class="lang-selector">
+                    @foreach($metadata['example_languages'] as $name => $lang)
+                        @php if (is_numeric($name))
+                        $name = $lang; @endphp
+                        <button type="button" class="lang-button" data-language-name="{{$lang}}">{{$name}}</button>
+                    @endforeach
+                </div>
+            @endif
+        </div>
     </div>
-    <div class="dark-box">
-        @if(isset($metadata['example_languages']))
-            <div class="lang-selector">
-                @foreach($metadata['example_languages'] as $name => $lang)
-                    @php if (is_numeric($name)) $name = $lang; @endphp
-                    <button type="button" class="lang-button" data-language-name="{{$lang}}">{{$name}}</button>
-                @endforeach
-            </div>
-        @endif
-    </div>
-</div>
 </body>
+
 </html>

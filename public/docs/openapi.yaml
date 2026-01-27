@@ -1647,7 +1647,7 @@ paths:
                   example: 40
                 channel:
                   type: string
-                  description: '渠道 (调试用，后端固定为temu)'
+                  description: '渠道 (调试用，固定为temu)'
                   example: temu
               required:
                 - productIds

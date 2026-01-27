@@ -9,7 +9,7 @@
 </a>
 <div class="tocify-wrapper">
     @if($metadata['logo'] != false)
-        <img src="{{ $metadata['logo'] }}" alt="logo" class="logo" style="padding-top: 10px;" width="100%" />
+        <img src="{{ $metadata['logo'] }}" alt="logo" class="logo" style="padding-top: 10px; max-width: 80%; display: block; margin: 0 auto;" />
     @endif
 
     @isset($metadata['example_languages'])
@@ -28,12 +28,20 @@
 
     <div id="toc">
         @foreach($headings as $h1)
-            <ul id="tocify-header-{{ md5($h1['name']) }}" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="{!! md5($h1['name']) !!}">
-                    <a href="#{!! md5($h1['name']) !!}">{!! $h1['name'] !!}</a>
+            @php
+                $h1Id = md5($h1['name']);
+                if ($h1['name'] === '系统简介') {
+                    $h1Id = 'introduction';
+                } elseif ($h1['name'] === '用户认证指南') {
+                    $h1Id = 'authentication';
+                }
+            @endphp
+            <ul id="tocify-header-{{ $h1Id }}" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="{!! $h1Id !!}">
+                    <a href="#{!! $h1Id !!}">{!! $h1['name'] !!}</a>
                 </li>
                 @if(count($h1['subheadings']) > 0)
-                    <ul id="tocify-subheader-{!! md5($h1['name']) !!}" class="tocify-subheader">
+                    <ul id="tocify-subheader-{!! $h1Id !!}" class="tocify-subheader">
                         @foreach($h1['subheadings'] as $h2)
                             <li class="tocify-item level-2" data-unique="{!! md5($h2['name']) !!}">
                                 <a href="#{!! md5($h2['name']) !!}">{!! $h2['name'] !!}</a>
