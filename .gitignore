@@ -30,4 +30,4 @@ yarn-error.log
 /vite.config.js
 .htaccess
 /demo-*
-/public/feimao-extension
+/public/feimao-extension/node_modules

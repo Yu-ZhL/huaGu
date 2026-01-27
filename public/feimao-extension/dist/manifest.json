@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "飞猫选品采集助手",
+  "version": "1.3.0",
+  "description": "Temu 采集助手",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://103.214.173.247:3019/*",
+    "https://*.temu.com/*",
+    "https://*.temu.net/*"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "assets/index.js-kRzLB4E8.js"
+      ],
+      "matches": [
+        "https://*.temu.com/*",
+        "https://*.temu.net/*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "assets/index-TH9aeKoQ.css"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*.temu.com/*",
+        "https://*.temu.net/*"
+      ],
+      "resources": [
+        "assets/index.js-kRzLB4E8.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}
