@@ -64,12 +64,17 @@ class UserResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('vip_level_id')
                             ->label('VIP套餐')
-                            ->relationship('vipPlan', 'name', fn($query) => $query->where('status', 1))
+                            ->options(function () {
+                                $plans = \App\Models\VipPlan::where('status', 1)
+                                    ->orderBy('sort_order')
+                                    ->pluck('name', 'id')
+                                    ->toArray();
+                                return [0 => '无VIP'] + $plans;
+                            })
                             ->searchable()
-                            ->preload()
-                            ->nullable()
-                            ->placeholder('无VIP')
-                            ->default(null),
+                            ->default(0)
+                            ->dehydrateStateUsing(fn($state) => $state ?? 0)
+                            ->required(),
                         Forms\Components\DateTimePicker::make('vip_expired_at')
                             ->label('VIP过期时间'),
                         Forms\Components\TextInput::make('ai_points')
