@@ -189,7 +189,7 @@ return [
     // 例如，如果您的徽标在 public/img 中：
     // - 'logo' => '../img/logo.png' // 用于 `static` 类型（输出文件夹是 public/docs）
     // - 'logo' => 'img/logo.png' // 用于 `laravel` 类型
-    'logo' => false,
+    'logo' => '../logo.svg',
 
     // 通过指定标记和格式来自定义文档中显示的"最后更新"值。
     // 示例：
