@@ -7,6 +7,36 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // 监听来自 Content Script / Popup 的消息，用于转发 API 请求
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === 'CLEAR_TEMU_COOKIES') {
+        const domains = ['.temu.com', '.temu.net', 'www.temu.com', 'www.temu.net'];
+        
+        // 获取所有相关 cookies
+        chrome.cookies.getAll({}, (cookies) => {
+            let pending = 0;
+            cookies.forEach(cookie => {
+                if (domains.some(domain => cookie.domain.endsWith(domain))) {
+                   pending++;
+                   const protocol = cookie.secure ? 'https:' : 'http:';
+                   const url = `${protocol}//${cookie.domain}${cookie.path}`;
+                   chrome.cookies.remove({
+                       url: url,
+                       name: cookie.name,
+                       storeId: cookie.storeId
+                   }, () => {
+                       pending--;
+                       if (pending <= 0) {
+                           sendResponse({ success: true });
+                       }
+                   });
+                }
+            });
+            if (pending === 0) {
+                sendResponse({ success: true });
+            }
+        });
+        return true; 
+    }
+
     if (request.action === 'API_REQUEST') {
         const { method, url, data, headers } = request.payload;
 
