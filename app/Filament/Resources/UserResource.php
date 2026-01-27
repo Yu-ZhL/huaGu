@@ -64,10 +64,12 @@ class UserResource extends Resource
                     ->schema([
                         Forms\Components\Select::make('vip_level_id')
                             ->label('VIP套餐')
-                            ->relationship('vipPlan', 'name')
+                            ->relationship('vipPlan', 'name', fn($query) => $query->where('status', 1))
                             ->searchable()
                             ->preload()
-                            ->default(0),
+                            ->nullable()
+                            ->placeholder('无VIP')
+                            ->default(null),
                         Forms\Components\DateTimePicker::make('vip_expired_at')
                             ->label('VIP过期时间'),
                         Forms\Components\TextInput::make('ai_points')
@@ -155,7 +157,7 @@ class UserResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('vip_level_id')
                     ->label('VIP等级')
-                    ->relationship('vipPlan', 'name')
+                    ->relationship('vipPlan', 'name', fn($query) => $query->where('status', 1))
                     ->multiple(),
                 Tables\Filters\TernaryFilter::make('status')
                     ->label('账号状态')
