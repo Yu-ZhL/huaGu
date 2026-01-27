@@ -57,14 +57,14 @@
     </div>
 
     <div id="toc">
-                    <ul id="tocify-header-ea39ea8e8773612fccedafc006d89c0d" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="ea39ea8e8773612fccedafc006d89c0d">
-                    <a href="#ea39ea8e8773612fccedafc006d89c0d">系统简介</a>
+                    <ul id="tocify-header-3fb5ec095fae651940787075bb14b0ec" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="3fb5ec095fae651940787075bb14b0ec">
+                    <a href="#3fb5ec095fae651940787075bb14b0ec">系统简介 <a name="introduction"></a></a>
                 </li>
                             </ul>
-                    <ul id="tocify-header-58858a6ad8ce0dc6aea5f37360bbf75f" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="58858a6ad8ce0dc6aea5f37360bbf75f">
-                    <a href="#58858a6ad8ce0dc6aea5f37360bbf75f">用户认证指南</a>
+                    <ul id="tocify-header-5986d91470502ff0015d6b192a68f464" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="5986d91470502ff0015d6b192a68f464">
+                    <a href="#5986d91470502ff0015d6b192a68f464">用户认证指南 <a name="authenticating-requests"></a></a>
                 </li>
                             </ul>
                     <ul id="tocify-header-87f70c6e4807627934ff24e8bb33f671" class="tocify-header">
@@ -193,7 +193,7 @@
 <div class="page-wrapper">
     <div class="dark-box"></div>
     <div class="content">
-        <h1 id="">系统简介</h1>
+        <h1 id="a-nameintroductiona">系统简介 <a name="introduction"></a></h1>
 <p>已经实现了标准化的搜同款(以图搜图)接口系统，支持多平台商品搜索功能。当前已完成 1688 平台的接口实现，并为其他 24 个平台预留了标准化的接口框架。</p>
 <aside>
     <strong>基础 URL</strong>: <code>http://127.0.0.1:8000</code>
@@ -202,7 +202,7 @@
 
 &lt;aside&gt;在页面滚动时，您可以在右侧的黑色区域（手机端则在正文中）看到不同编程语言的 API 调用示例。 您可以点击右上角的标签页来切换语言（手机端请通过左上角的菜单栏进行切换）。&lt;/aside&gt;</code></pre>
 
-        <h1 id="">用户认证指南</h1>
+        <h1 id="a-nameauthenticating-requestsa">用户认证指南 <a name="authenticating-requests"></a></h1>
 <p>要进行请求验证，请包含一个 <strong><code>Authorization</code></strong> 头，其值为 <strong><code>"Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"</code></strong>。</p>
 <p>所有经过身份验证的端点都在下面的文档中标记了 <code>需要认证</code> 徽章。</p>
 <p>您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。</p>
@@ -1168,7 +1168,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php26D8.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpEFAE.tmp', 'r')
             ],
         ],
     ]
@@ -1312,7 +1312,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php26D8.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpEFAE.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -3671,10 +3671,13 @@ const headers = {
 
 let body = {
     "productIds": [
-        "601104442920701"
+        "601100055961140",
+        "601099661205317",
+        "601105314564080"
     ],
     "pageNum": 1,
-    "pageSize": 40
+    "pageSize": 40,
+    "channel": "temu"
 };
 
 fetch(url, {
@@ -3696,10 +3699,13 @@ $response = $client-&gt;post(
         ],
         'json' =&gt; [
             'productIds' =&gt; [
-                '601104442920701',
+                '601100055961140',
+                '601099661205317',
+                '601105314564080',
             ],
             'pageNum' =&gt; 1,
             'pageSize' =&gt; 40,
+            'channel' =&gt; 'temu',
         ],
     ]
 );
@@ -3836,6 +3842,18 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                data-component="body">
     <br>
 <p>每页数量 Example: <code>40</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>channel</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="channel"                data-endpoint="POSTapi-feimao-products"
+               value="temu"
+               data-component="body">
+    <br>
+<p>渠道 (调试用，后端固定为temu) Example: <code>temu</code></p>
         </div>
         </form>
 

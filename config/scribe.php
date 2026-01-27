@@ -21,6 +21,7 @@ return [
 
     // 放置在"介绍"部分的文本，紧接在 `description` 之后。支持 Markdown 和 HTML。
     'intro_text' => <<<INTRO
+        <span id="系统简介"></span>
         API 文档
 
         <aside>在页面滚动时，您可以在右侧的黑色区域（手机端则在正文中）看到不同编程语言的 API 调用示例。 您可以点击右上角的标签页来切换语言（手机端请通过左上角的菜单栏进行切换）。</aside>
@@ -128,7 +129,7 @@ return [
         'placeholder' => '1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
 
         // 为用户提供的任何额外身份验证相关信息。支持 Markdown 和 HTML。
-        'extra_info' => '您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。',
+        'extra_info' => '<span id="用户认证指南"></span>您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。',
     ],
 
     // 每个端点的示例请求将以这些语言显示。
