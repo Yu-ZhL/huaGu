@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * 用户认证接口
- * 
+ *
  * @group 用户认证
  */
 class AuthController extends Controller
@@ -28,19 +28,19 @@ class AuthController extends Controller
 
     /**
      * 发送短信验证码
-     * 
+     *
      * 向指定手机号发送验证码，验证码有效期5分钟，60秒内不可重复发送
-     * 
+     *
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
      *   "data": null,
      *   "message": "验证码已发送，请注意查收"
      * }
-     * 
+     *
      * @response 400 {
      *   "success": false,
      *   "code": 400,
@@ -90,14 +90,14 @@ class AuthController extends Controller
 
     /**
      * 用户注册
-     * 
+     *
      * 通过手机号和短信验证码注册新用户，注册成功后自动登录
-     * 
+     *
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000
      * @bodyParam sms_code string required 短信验证码 Example: 123456
      * @bodyParam password string required 密码，至少6位 Example: password123
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
@@ -113,7 +113,7 @@ class AuthController extends Controller
      *   },
      *   "message": "注册成功"
      * }
-     * 
+     *
      * @response 400 {
      *   "success": false,
      *   "code": 400,
@@ -227,13 +227,13 @@ class AuthController extends Controller
 
     /**
      * 用户登录
-     * 
+     *
      * 通过手机号和密码登录，返回访问令牌
-     * 
+     *
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000
      * @bodyParam password string required 密码 Example: password123
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
@@ -249,7 +249,7 @@ class AuthController extends Controller
      *   },
      *   "message": "登录成功"
      * }
-     * 
+     *
      * @response 401 {
      *   "success": false,
      *   "code": 401,
@@ -313,21 +313,21 @@ class AuthController extends Controller
 
     /**
      * 重置密码
-     * 
+     *
      * 通过短信验证码重置密码
-     * 
+     *
      * @bodyParam phone_area_code string 国际区号，默认86 Example: 86
      * @bodyParam phone string required 手机号 Example: 13800138000
      * @bodyParam sms_code string required 短信验证码 Example: 123456
      * @bodyParam password string required 新密码，至少6位 Example: newpassword123
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
      *   "data": null,
      *   "message": "密码重置成功，请重新登录"
      * }
-     * 
+     *
      * @response 404 {
      *   "success": false,
      *   "code": 404,
@@ -394,11 +394,11 @@ class AuthController extends Controller
 
     /**
      * 获取当前用户信息
-     * 
+     *
      * 获取已登录用户的详细信息
-     * 
+     *
      * @authenticated
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
@@ -415,7 +415,7 @@ class AuthController extends Controller
      *   },
      *   "message": "获取成功"
      * }
-     * 
+     *
      * @response 401 {
      *   "message": "Unauthenticated."
      * }
@@ -427,6 +427,7 @@ class AuthController extends Controller
         return ApiResponse::success([
             'id' => $user->id,
             'phone' => $user->phone,
+            'ai_points' => $user->ai_points,
             'phone_area_code' => $user->phone_area_code,
             'name' => $user->name,
             'email' => $user->email,
@@ -439,11 +440,11 @@ class AuthController extends Controller
 
     /**
      * 退出登录
-     * 
+     *
      * 删除当前访问令牌
-     * 
+     *
      * @authenticated
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
