@@ -45,6 +45,7 @@
     </span>
 </a>
 <div class="tocify-wrapper">
+            <img src="../logo.svg" alt="logo" class="logo" style="padding-top: 10px;" width="100%" />
     
             <div class="lang-selector">
                                             <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
@@ -170,8 +171,8 @@
                     <a href="#32c6eed914882f5c4bddde976f2f6f39">飞猫选品</a>
                 </li>
                                     <ul id="tocify-subheader-32c6eed914882f5c4bddde976f2f6f39" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="dd8f0fc44ac42c22424ebadf01a9e870">
-                                <a href="#dd8f0fc44ac42c22424ebadf01a9e870">获取商品列表</a>
+                                                    <li class="tocify-item level-2" data-unique="363dec5852da80100c17ce0cc78f154b">
+                                <a href="#363dec5852da80100c17ce0cc78f154b">批量查询商品详情</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -224,7 +225,7 @@
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/vip/plans"
+    "http://103.214.173.247:3019/api/vip/plans"
 );
 
 const headers = {
@@ -240,7 +241,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/vip/plans';
+$url = 'http://103.214.173.247:3019/api/vip/plans';
 $response = $client-&gt;get(
     $url,
     [
@@ -366,7 +367,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/vip/my-info"
+    "http://103.214.173.247:3019/api/vip/my-info"
 );
 
 const headers = {
@@ -383,7 +384,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/vip/my-info';
+$url = 'http://103.214.173.247:3019/api/vip/my-info';
 $response = $client-&gt;get(
     $url,
     [
@@ -519,7 +520,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/vip/my-orders"
+    "http://103.214.173.247:3019/api/vip/my-orders"
 );
 
 const params = {
@@ -543,7 +544,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/vip/my-orders';
+$url = 'http://103.214.173.247:3019/api/vip/my-orders';
 $response = $client-&gt;get(
     $url,
     [
@@ -714,7 +715,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/vip/my-ai-points"
+    "http://103.214.173.247:3019/api/vip/my-ai-points"
 );
 
 const params = {
@@ -738,7 +739,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/vip/my-ai-points';
+$url = 'http://103.214.173.247:3019/api/vip/my-ai-points';
 $response = $client-&gt;get(
     $url,
     [
@@ -913,7 +914,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/coupons/validate"
+    "http://103.214.173.247:3019/api/coupons/validate"
 );
 
 const headers = {
@@ -936,7 +937,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/coupons/validate';
+$url = 'http://103.214.173.247:3019/api/coupons/validate';
 $response = $client-&gt;post(
     $url,
     [
@@ -1119,7 +1120,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/image-search/1688/image"
+    "http://103.214.173.247:3019/api/image-search/1688/image"
 );
 
 const headers = {
@@ -1143,7 +1144,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/image-search/1688/image';
+$url = 'http://103.214.173.247:3019/api/image-search/1688/image';
 $response = $client-&gt;post(
     $url,
     [
@@ -1167,7 +1168,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpB40F.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php26D8.tmp', 'r')
             ],
         ],
     ]
@@ -1311,7 +1312,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpB40F.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php26D8.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -1365,7 +1366,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/image-search/1688/url"
+    "http://103.214.173.247:3019/api/image-search/1688/url"
 );
 
 const headers = {
@@ -1389,7 +1390,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/image-search/1688/url';
+$url = 'http://103.214.173.247:3019/api/image-search/1688/url';
 $response = $client-&gt;post(
     $url,
     [
@@ -1590,7 +1591,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/payment/alipay/create"
+    "http://103.214.173.247:3019/api/payment/alipay/create"
 );
 
 const headers = {
@@ -1612,7 +1613,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/payment/alipay/create';
+$url = 'http://103.214.173.247:3019/api/payment/alipay/create';
 $response = $client-&gt;post(
     $url,
     [
@@ -1756,7 +1757,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/payment/alipay-notify"
+    "http://103.214.173.247:3019/api/payment/alipay-notify"
 );
 
 const headers = {
@@ -1772,7 +1773,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/payment/alipay-notify';
+$url = 'http://103.214.173.247:3019/api/payment/alipay-notify';
 $response = $client-&gt;post(
     $url,
     [
@@ -1877,7 +1878,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/auth/send-code"
+    "http://103.214.173.247:3019/api/auth/send-code"
 );
 
 const headers = {
@@ -1899,7 +1900,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/auth/send-code';
+$url = 'http://103.214.173.247:3019/api/auth/send-code';
 $response = $client-&gt;post(
     $url,
     [
@@ -2053,7 +2054,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/auth/register"
+    "http://103.214.173.247:3019/api/auth/register"
 );
 
 const headers = {
@@ -2077,7 +2078,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/auth/register';
+$url = 'http://103.214.173.247:3019/api/auth/register';
 $response = $client-&gt;post(
     $url,
     [
@@ -2266,7 +2267,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/auth/login"
+    "http://103.214.173.247:3019/api/auth/login"
 );
 
 const headers = {
@@ -2289,7 +2290,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/auth/login';
+$url = 'http://103.214.173.247:3019/api/auth/login';
 $response = $client-&gt;post(
     $url,
     [
@@ -2465,7 +2466,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/auth/reset-password"
+    "http://103.214.173.247:3019/api/auth/reset-password"
 );
 
 const headers = {
@@ -2489,7 +2490,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/auth/reset-password';
+$url = 'http://103.214.173.247:3019/api/auth/reset-password';
 $response = $client-&gt;post(
     $url,
     [
@@ -2670,7 +2671,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/auth/me"
+    "http://103.214.173.247:3019/api/auth/me"
 );
 
 const headers = {
@@ -2687,7 +2688,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/auth/me';
+$url = 'http://103.214.173.247:3019/api/auth/me';
 $response = $client-&gt;get(
     $url,
     [
@@ -2834,7 +2835,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/auth/logout"
+    "http://103.214.173.247:3019/api/auth/logout"
 );
 
 const headers = {
@@ -2851,7 +2852,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/auth/logout';
+$url = 'http://103.214.173.247:3019/api/auth/logout';
 $response = $client-&gt;post(
     $url,
     [
@@ -2982,7 +2983,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/orders"
+    "http://103.214.173.247:3019/api/orders"
 );
 
 const headers = {
@@ -3005,7 +3006,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/orders';
+$url = 'http://103.214.173.247:3019/api/orders';
 $response = $client-&gt;post(
     $url,
     [
@@ -3170,7 +3171,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/orders/202601261500001ABC"
+    "http://103.214.173.247:3019/api/orders/202601261500001ABC"
 );
 
 const headers = {
@@ -3187,7 +3188,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/orders/202601261500001ABC';
+$url = 'http://103.214.173.247:3019/api/orders/202601261500001ABC';
 $response = $client-&gt;get(
     $url,
     [
@@ -3339,7 +3340,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/orders/202601261500001ABC/cancel"
+    "http://103.214.173.247:3019/api/orders/202601261500001ABC/cancel"
 );
 
 const headers = {
@@ -3356,7 +3357,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/orders/202601261500001ABC/cancel';
+$url = 'http://103.214.173.247:3019/api/orders/202601261500001ABC/cancel';
 $response = $client-&gt;post(
     $url,
     [
@@ -3496,7 +3497,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/orders/202601261500001ABC/payment-status"
+    "http://103.214.173.247:3019/api/orders/202601261500001ABC/payment-status"
 );
 
 const headers = {
@@ -3513,7 +3514,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/orders/202601261500001ABC/payment-status';
+$url = 'http://103.214.173.247:3019/api/orders/202601261500001ABC/payment-status';
 $response = $client-&gt;get(
     $url,
     [
@@ -3645,14 +3646,14 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 
 <h1 id="32c6eed914882f5c4bddde976f2f6f39">飞猫选品</h1>
 
-<p>第三方飞猫选品平台对接接口</p>
+<p>第三方选品平台接口</p>
 
-    <h2 id="dd8f0fc44ac42c22424ebadf01a9e870">获取商品列表</h2>
+    <h2 id="363dec5852da80100c17ce0cc78f154b">批量查询商品详情</h2>
 
 <p>
         </p>
 
-<p>根据商品ID列表获取飞猫平台的详细商品信息。</p>
+
 
 <span id="example-requests-POSTapi-feimao-products">
     <blockquote>请求示例:</blockquote>
@@ -3660,7 +3661,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/feimao/products"
+    "http://103.214.173.247:3019/api/feimao/products"
 );
 
 const headers = {
@@ -3685,7 +3686,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://127.0.0.1:8000/api/feimao/products';
+$url = 'http://103.214.173.247:3019/api/feimao/products';
 $response = $client-&gt;post(
     $url,
     [
@@ -3810,7 +3811,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                name="productIds[1]"                data-endpoint="POSTapi-feimao-products"
                data-component="body">
     <br>
-<p>商品ID数组，例如 ['601104442920701']</p>
+<p>商品ID数组</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>pageNum</code></b>&nbsp;&nbsp;
