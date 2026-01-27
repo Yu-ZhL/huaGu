@@ -1201,6 +1201,7 @@ paths:
                   data:
                     id: 1
                     phone: '13800138000'
+                    ai_points: 0
                     phone_area_code: '86'
                     name: null
                     email: null
@@ -1225,6 +1226,9 @@ paths:
                       phone:
                         type: string
                         example: '13800138000'
+                      ai_points:
+                        type: integer
+                        example: 0
                       phone_area_code:
                         type: string
                         example: '86'

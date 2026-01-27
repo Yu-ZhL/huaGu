@@ -405,6 +405,7 @@ class AuthController extends Controller
      *   "data": {
      *     "id": 1,
      *     "phone": "13800138000",
+     *     "ai_points": 0,
      *     "phone_area_code": "86",
      *     "name": null,
      *     "email": null,

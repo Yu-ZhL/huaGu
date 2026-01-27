@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "24695101-2515-4aaf-ba46-5e6b8d7d1eff",
+        "_postman_id": "d585af9e-0bd5-443f-b69b-df457d940e99",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -322,7 +322,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"url\":\"https:\\\/\\\/img.kwcdn.com\\\/product\\\/fancy\\\/605bead6-9775-4ddf-a732-09f369e697b5.jpg\",\"page\":1,\"size\":20}"
+                            "raw": "{\"url\":\"https:\\\/\\\/cbu01.alicdn.com\\\/img\\\/ibank\\\/O1CN01cM2vWn1U3e9n2HF80_!!2219132612462-0-cib.jpg\",\"page\":1,\"size\":20}"
                         },
                         "description": "\u63d0\u4f9b\u56fe\u7247 URL \u5730\u5740\uff0c\u5728 1688 \u5e73\u53f0\u641c\u7d22\u76f8\u4f3c\u5546\u54c1"
                     },
@@ -625,7 +625,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"id\": 1,\n    \"phone\": \"13800138000\",\n    \"phone_area_code\": \"86\",\n    \"name\": null,\n    \"email\": null,\n    \"vip_level_id\": 0,\n    \"vip_expired_at\": null,\n    \"last_login_at\": \"2026-01-23 15:30:00\",\n    \"last_login_location\": \"\u4e2d\u56fd \u5e7f\u4e1c\u7701 \u6df1\u5733\u5e02\"\n  },\n  \"message\": \"\u83b7\u53d6\u6210\u529f\"\n}",
+                            "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"id\": 1,\n    \"phone\": \"13800138000\",\n    \"ai_points\": 0,\n    \"phone_area_code\": \"86\",\n    \"name\": null,\n    \"email\": null,\n    \"vip_level_id\": 0,\n    \"vip_expired_at\": null,\n    \"last_login_at\": \"2026-01-23 15:30:00\",\n    \"last_login_location\": \"\u4e2d\u56fd \u5e7f\u4e1c\u7701 \u6df1\u5733\u5e02\"\n  },\n  \"message\": \"\u83b7\u53d6\u6210\u529f\"\n}",
                             "name": ""
                         },
                         {
