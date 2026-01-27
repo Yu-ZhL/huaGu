@@ -33,7 +33,7 @@ components:
     default:
       type: http
       scheme: bearer
-      description: '<span id="用户认证指南"></span>您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。'
+      description: '您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。'
 security:
   -
     default: []
