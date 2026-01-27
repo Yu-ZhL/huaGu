@@ -22,8 +22,7 @@ class FeimaoProductController extends Controller
     /**
      * 批量查询商品详情
      */
-    #[BodyParam("channel", "string", "渠道 (调试用，后端固定为temu)", required: false, example: "temu")]
-    #[BodyParam("productIds", "array", "商品ID数组", required: true, example: ["601100055961140", "601099661205317", "601105314564080"])]
+    #[BodyParam("productIds", "array", "商品ID数组", required: true, example: ["601104442920701"])]
     #[BodyParam("pageNum", "integer", "页码", required: false, example: 1)]
     #[BodyParam("pageSize", "integer", "每页数量", required: false, example: 40)]
     #[Response([

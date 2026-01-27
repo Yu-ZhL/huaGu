@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "72d73e07-ac09-4348-aab8-a3702685635a",
+        "_postman_id": "43056cfe-8847-4034-8ebc-7760e3485573",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -833,10 +833,10 @@
         },
         {
             "name": "\u98de\u732b\u9009\u54c1",
-            "description": "\u7b2c\u4e09\u65b9\u9009\u54c1\u5e73\u53f0\u63a5\u53e3",
+            "description": "\u7b2c\u4e09\u65b9\u98de\u732b\u9009\u54c1\u5e73\u53f0\u5bf9\u63a5\u63a5\u53e3",
             "item": [
                 {
-                    "name": "\u6279\u91cf\u67e5\u8be2\u5546\u54c1\u8be6\u60c5",
+                    "name": "\u83b7\u53d6\u5546\u54c1\u5217\u8868",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -857,9 +857,9 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"productIds\":[\"601100055961140\",\"601099661205317\",\"601105314564080\"],\"pageNum\":1,\"pageSize\":40,\"channel\":\"temu\"}"
+                            "raw": "{\"productIds\":[\"601104442920701\"],\"pageNum\":1,\"pageSize\":40}"
                         },
-                        "description": "",
+                        "description": "\u6839\u636e\u5546\u54c1ID\u5217\u8868\u83b7\u53d6\u98de\u732b\u5e73\u53f0\u7684\u8be6\u7ec6\u5546\u54c1\u4fe1\u606f\u3002",
                         "auth": {
                             "type": "noauth"
                         }
