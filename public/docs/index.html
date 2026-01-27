@@ -56,16 +56,6 @@
     </div>
 
     <div id="toc">
-                    <ul id="tocify-header-ea39ea8e8773612fccedafc006d89c0d" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="ea39ea8e8773612fccedafc006d89c0d">
-                    <a href="#ea39ea8e8773612fccedafc006d89c0d">系统简介</a>
-                </li>
-                            </ul>
-                    <ul id="tocify-header-58858a6ad8ce0dc6aea5f37360bbf75f" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="58858a6ad8ce0dc6aea5f37360bbf75f">
-                    <a href="#58858a6ad8ce0dc6aea5f37360bbf75f">用户认证指南</a>
-                </li>
-                            </ul>
                     <ul id="tocify-header-87f70c6e4807627934ff24e8bb33f671" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="87f70c6e4807627934ff24e8bb33f671">
                     <a href="#87f70c6e4807627934ff24e8bb33f671">VIP管理 (VIP Plans)</a>
@@ -170,8 +160,8 @@
                     <a href="#32c6eed914882f5c4bddde976f2f6f39">飞猫选品</a>
                 </li>
                                     <ul id="tocify-subheader-32c6eed914882f5c4bddde976f2f6f39" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="dd8f0fc44ac42c22424ebadf01a9e870">
-                                <a href="#dd8f0fc44ac42c22424ebadf01a9e870">获取商品列表</a>
+                                                    <li class="tocify-item level-2" data-unique="363dec5852da80100c17ce0cc78f154b">
+                                <a href="#363dec5852da80100c17ce0cc78f154b">批量查询商品详情</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -192,7 +182,7 @@
 <div class="page-wrapper">
     <div class="dark-box"></div>
     <div class="content">
-        <h1 id="">系统简介</h1>
+        <h1 id="introduction">系统简介</h1>
 <p>已经实现了标准化的搜同款(以图搜图)接口系统，支持多平台商品搜索功能。当前已完成 1688 平台的接口实现，并为其他 24 个平台预留了标准化的接口框架。</p>
 <aside>
     <strong>基础 URL</strong>: <code>http://127.0.0.1:8000</code>
@@ -201,7 +191,7 @@
 
 &lt;aside&gt;在页面滚动时，您可以在右侧的黑色区域（手机端则在正文中）看到不同编程语言的 API 调用示例。 您可以点击右上角的标签页来切换语言（手机端请通过左上角的菜单栏进行切换）。&lt;/aside&gt;</code></pre>
 
-        <h1 id="">用户认证指南</h1>
+        <h1 id="authenticating-requests">用户认证指南</h1>
 <p>要进行请求验证，请包含一个 <strong><code>Authorization</code></strong> 头，其值为 <strong><code>"Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"</code></strong>。</p>
 <p>所有经过身份验证的端点都在下面的文档中标记了 <code>需要认证</code> 徽章。</p>
 <p>您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。</p>
@@ -1167,7 +1157,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpB40F.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php5F19.tmp', 'r')
             ],
         ],
     ]
@@ -1311,7 +1301,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpB40F.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php5F19.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -3645,14 +3635,14 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 
 <h1 id="32c6eed914882f5c4bddde976f2f6f39">飞猫选品</h1>
 
-<p>第三方飞猫选品平台对接接口</p>
+<p>第三方选品平台接口</p>
 
-    <h2 id="dd8f0fc44ac42c22424ebadf01a9e870">获取商品列表</h2>
+    <h2 id="363dec5852da80100c17ce0cc78f154b">批量查询商品详情</h2>
 
 <p>
         </p>
 
-<p>根据商品ID列表获取飞猫平台的详细商品信息。</p>
+
 
 <span id="example-requests-POSTapi-feimao-products">
     <blockquote>请求示例:</blockquote>
@@ -3670,10 +3660,13 @@ const headers = {
 
 let body = {
     "productIds": [
-        "601104442920701"
+        "601100055961140",
+        "601099661205317",
+        "601105314564080"
     ],
     "pageNum": 1,
-    "pageSize": 40
+    "pageSize": 40,
+    "channel": "temu"
 };
 
 fetch(url, {
@@ -3695,10 +3688,13 @@ $response = $client-&gt;post(
         ],
         'json' =&gt; [
             'productIds' =&gt; [
-                '601104442920701',
+                '601100055961140',
+                '601099661205317',
+                '601105314564080',
             ],
             'pageNum' =&gt; 1,
             'pageSize' =&gt; 40,
+            'channel' =&gt; 'temu',
         ],
     ]
 );
@@ -3810,7 +3806,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                name="productIds[1]"                data-endpoint="POSTapi-feimao-products"
                data-component="body">
     <br>
-<p>商品ID数组，例如 ['601104442920701']</p>
+<p>商品ID数组</p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>pageNum</code></b>&nbsp;&nbsp;
@@ -3835,6 +3831,18 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                data-component="body">
     <br>
 <p>每页数量 Example: <code>40</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>channel</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="channel"                data-endpoint="POSTapi-feimao-products"
+               value="temu"
+               data-component="body">
+    <br>
+<p>渠道 (调试用，后端固定为temu) Example: <code>temu</code></p>
         </div>
         </form>
 

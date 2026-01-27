@@ -27,7 +27,7 @@ tags:
     description: ''
   -
     name: 飞猫选品
-    description: 第三方飞猫选品平台对接接口
+    description: 第三方选品平台接口
 components:
   securitySchemes:
     default:
@@ -1570,9 +1570,9 @@ paths:
           type: string
   /api/feimao/products:
     post:
-      summary: 获取商品列表
+      summary: 批量查询商品详情
       operationId: ''
-      description: 根据商品ID列表获取飞猫平台的详细商品信息。
+      description: ''
       parameters: []
       responses:
         200:
@@ -1630,9 +1630,11 @@ paths:
               properties:
                 productIds:
                   type: array
-                  description: "商品ID数组，例如 ['601104442920701']"
+                  description: 商品ID数组
                   example:
-                    - '601104442920701'
+                    - '601100055961140'
+                    - '601099661205317'
+                    - '601105314564080'
                   items:
                     type: string
                 pageNum:
@@ -1643,6 +1645,10 @@ paths:
                   type: integer
                   description: 每页数量
                   example: 40
+                channel:
+                  type: string
+                  description: '渠道 (调试用，后端固定为temu)'
+                  example: temu
               required:
                 - productIds
       security: []
