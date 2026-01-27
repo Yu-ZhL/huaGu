@@ -25,6 +25,9 @@ tags:
   -
     name: '订单管理 (Orders)'
     description: ''
+  -
+    name: 飞猫选品
+    description: 第三方飞猫选品平台对接接口
 components:
   securitySchemes:
     default:
@@ -1565,3 +1568,81 @@ paths:
         required: true
         schema:
           type: string
+  /api/feimao/products:
+    post:
+      summary: 获取商品列表
+      operationId: ''
+      description: 根据商品ID列表获取飞猫平台的详细商品信息。
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  code: 200
+                  message: success
+                  data:
+                    list:
+                      -
+                        productId: '601104442920701'
+                        productName: 示例商品
+                        price: 100
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      list:
+                        type: array
+                        example:
+                          -
+                            productId: '601104442920701'
+                            productName: 示例商品
+                            price: 100
+                        items:
+                          type: object
+                          properties:
+                            productId:
+                              type: string
+                              example: '601104442920701'
+                            productName:
+                              type: string
+                              example: 示例商品
+                            price:
+                              type: integer
+                              example: 100
+      tags:
+        - 飞猫选品
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productIds:
+                  type: array
+                  description: "商品ID数组，例如 ['601104442920701']"
+                  example:
+                    - '601104442920701'
+                  items:
+                    type: string
+                pageNum:
+                  type: integer
+                  description: 页码
+                  example: 1
+                pageSize:
+                  type: integer
+                  description: 每页数量
+                  example: 40
+              required:
+                - productIds
+      security: []

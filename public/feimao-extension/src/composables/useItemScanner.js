@@ -14,41 +14,75 @@ export function useItemScanner() {
     })
 
     const scanItems = () => {
-        // 通用策略：查找含价格符号的元素
-        let items = Array.from(document.querySelectorAll('[data-goods-id], [data-id]'))
+    // 策略更新：根据 demo.html 分析，Temu 价格元素通常带有 data-type="price"
+    // 这是一个非常强烈的特征
+        let priceElements = Array.from(document.querySelectorAll('[data-type="price"]'))
 
-        items = items.filter(el => {
-            return el.querySelector('img') && (
-                el.textContent.includes('$') ||
-                el.textContent.includes('¥') ||
-                el.textContent.includes('€') ||
-                el.textContent.includes('£')
-            )
+    // 如果没有找到 data-type="price"，尝试回退到通用寻找
+    if (priceElements.length === 0) {
+    priceElements = Array.from(document.querySelectorAll('[class*="price"], [class*="Price"]'))
+    }
+
+    // 以价格元素为锚点，向上查找商品卡片
+    // 通常价格是商品卡片的一部分
+        const items = []
+    
+    priceElements.forEach(priceEl => {
+        // 向上寻找合适的卡片容器
+            // 启发式：向上找 3-5 层，或者找包含 img 的最近父级
+        let card = priceEl.parentElement
+            let found = false
+        for (let i = 0; i < 5; i++) {
+            if (!card) break
+        // 如果该容器包含 img，且不是 priceEl 自己，大概率是卡片
+                if (card.querySelector('img')) {
+            items.push({ card, priceEl })
+            found = true
+            break
+                }
+        card = card.parentElement
+    }
+    // 如果没找到含图片的父级，就姑且把 priceEl 的几层父级当作卡片处理
+    if (!found && priceEl.parentElement) {
+     items.push({ card: priceEl.parentElement.parentElement || priceEl.parentElement, priceEl })
+    }
         })
-
-        if (items.length === 0) {
-            // items = ... fallback strategy if needed
-        }
-
-        totalCount.value = items.length
-
-        let matchCount = 0
+    
+    // 去重 (可能多个价格对应同一个卡片)
+        const uniqueItems = []
+    const seenCards = new Set()
         items.forEach(item => {
-            const text = item.textContent
+    if (!seenCards.has(item.card)) {
+        seenCards.add(item.card)
+    uniqueItems.push(item)
+    }
+    })
+
+        totalCount.value = uniqueItems.length
+
+    let matchCount = 0
+    uniqueItems.forEach(({ card, priceEl }) => {
+    const cardText = card.textContent
+    const priceText = priceEl.textContent
 
             // 提取价格
-            const priceMatch = text.match(/[\$¥€£]\s*(\d+(\.\d+)?)/) || text.match(/(\d+(\.\d+)?)\s*[\$¥€£]/)
-            const price = priceMatch ? parseFloat(priceMatch[1]) : 0
+    // 优先从 priceEl提取，更精准
+    const priceMatch = priceText.match(/[\$¥€£]\s*(\d+(\.\d+)?)/) || priceText.match(/(\d+(\.\d+)?)\s*[\$¥€£]/)
+    const price = priceMatch ? parseFloat(priceMatch[1]) : 0
 
-            // 提取销量
-            let sales = 0
-            if (text.includes('sold') || text.includes('已售')) {
-                const salesMatch = text.match(/(\d+([\.,]\d+)?)[kKwW]?\+?\s*(sold|已售)/)
-                if (salesMatch) sales = parseFloat(salesMatch[1].replace(',', ''))
+    // 提取销量 (e.g. "100+ sold", "1万+ 已售")
+            // 在整个卡片文本里找
+    let sales = 0
+        if (cardText.includes('sold') || cardText.includes('已售')) {
+                const salesMatch = cardText.match(/(\d+([\.,]\d+)?)[kKwW]?\+?\s*(sold|已售)/)
+            if (salesMatch) sales = parseFloat(salesMatch[1].replace(',', ''))
+            } else if (cardText.includes('Sold')) { // 处理大小写
+                 const salesMatch = cardText.match(/(\d+([\.,]\d+)?)[kKwW]?\+?\s*Sold/)
+                 if (salesMatch) sales = parseFloat(salesMatch[1].replace(',', ''))
             }
 
             // 提取包邮
-            const isFreeShipping = text.toLowerCase().includes('free shipping') || text.includes('包邮')
+            const isFreeShipping = cardText.toLowerCase().includes('free shipping') || cardText.includes('包邮')
 
             let pass = true
 
@@ -72,6 +106,9 @@ export function useItemScanner() {
                 if (filters.shippment === 'paid' && isFreeShipping) pass = false
             }
 
+            // 品牌筛选 (简单通过文本判断，不一定准)
+            // 这里的逻辑通常需要特定 selector，现阶段只能略过或基于关键词
+            
             if (pass) matchCount++
         })
 

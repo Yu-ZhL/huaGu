@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "6b5b2e72-e7a6-4f4b-8528-37b955e2f9a6",
+        "_postman_id": "43056cfe-8847-4034-8ebc-7760e3485573",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -825,6 +825,50 @@
                             "header": [],
                             "code": 200,
                             "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": {\n    \"order_no\": \"202601261500001ABC\",\n    \"status\": \"paid\",\n    \"paid_at\": \"2026-01-26 15:05:00\"\n  },\n  \"message\": \"\u67e5\u8be2\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\u98de\u732b\u9009\u54c1",
+            "description": "\u7b2c\u4e09\u65b9\u98de\u732b\u9009\u54c1\u5e73\u53f0\u5bf9\u63a5\u63a5\u53e3",
+            "item": [
+                {
+                    "name": "\u83b7\u53d6\u5546\u54c1\u5217\u8868",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/feimao\/products",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/feimao\/products"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"productIds\":[\"601104442920701\"],\"pageNum\":1,\"pageSize\":40}"
+                        },
+                        "description": "\u6839\u636e\u5546\u54c1ID\u5217\u8868\u83b7\u53d6\u98de\u732b\u5e73\u53f0\u7684\u8be6\u7ec6\u5546\u54c1\u4fe1\u606f\u3002",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"code\":200,\"message\":\"success\",\"data\":{\"list\":[{\"productId\":\"601104442920701\",\"productName\":\"\\u793a\\u4f8b\\u5546\\u54c1\",\"price\":100}]}}",
                             "name": ""
                         }
                     ]

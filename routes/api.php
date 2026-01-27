@@ -42,3 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // 支付回调（不需要认证）
 Route::post('/payment/alipay-notify', [PaymentController::class, 'alipayNotify']);
+
+// 飞猫选品（Scribe文档）
+use App\Http\Controllers\Api\FeimaoProductController;
+Route::post('/feimao/products', [FeimaoProductController::class, 'index']);
