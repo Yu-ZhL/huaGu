@@ -200,6 +200,39 @@
 </aside>
 <pre><code>API 文档
 
+&lt;style&gt;
+    .tocify-wrapper &gt; img {
+        max-width: 80% !important;
+        margin: 20px auto !important;
+        display: block !important;
+    }
+&lt;/style&gt;
+&lt;script&gt;
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            // 修复中文标题的锚点链接
+            function fixHeader(text, newId) {
+                var headers = document.querySelectorAll('h1, h2');
+                for(var i=0; i&lt;headers.length; i++) {
+                    if(headers[i].textContent.trim() === text) {
+                        headers[i].id = newId;
+                        // 更新侧边栏链接
+                        var links = document.querySelectorAll('.tocify-item a');
+                        for(var j=0; j&lt;links.length; j++) {
+                            if(links[j].textContent.trim() === text) {
+                                links[j].setAttribute('href', '#' + newId);
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            fixHeader('系统简介', 'introduction');
+            fixHeader('用户认证指南', 'authentication');
+        }, 1000);
+    });
+&lt;/script&gt;
+
 &lt;aside&gt;在页面滚动时，您可以在右侧的黑色区域（手机端则在正文中）看到不同编程语言的 API 调用示例。 您可以点击右上角的标签页来切换语言（手机端请通过左上角的菜单栏进行切换）。&lt;/aside&gt;</code></pre>
 
         <h1 id="">用户认证指南</h1>
@@ -1168,7 +1201,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php49E2.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpAC80.tmp', 'r')
             ],
         ],
     ]
@@ -1312,7 +1345,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php49E2.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpAC80.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
