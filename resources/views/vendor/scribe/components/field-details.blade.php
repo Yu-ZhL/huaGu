@@ -45,10 +45,12 @@
                @if($inputType === 'number')step="any"@endif
                name="{{ $fullName."[0]" }}" @if($class)class="{{ $class }}"@endif
                data-endpoint="{{ $endpointId }}"
+               value="{!! (isset($example) && is_array($example) && isset($example[0])) ? $example[0] : '' !!}"
                data-component="{{ $component }}">
         <input type="{{ $inputType }}" style="display: none"
                name="{{ $fullName."[1]" }}" @if($class)class="{{ $class }}"@endif
                data-endpoint="{{ $endpointId }}"
+               value="{!! (isset($example) && is_array($example) && isset($example[1])) ? $example[1] : '' !!}"
                data-component="{{ $component }}">
     @else
         <input type="{{ $inputType }}" style="display: none"
