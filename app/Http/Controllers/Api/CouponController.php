@@ -51,9 +51,12 @@ class CouponController extends Controller
      *   "message": "优惠码已过期"
      * }
      */
+    // 验证优惠码
+    // $code 是从 URL 路径传下来的 /api/coupons/{code}/validate
     public function check(Request $request, string $code): JsonResponse
     {
         $validator = Validator::make($request->all(), [
+            // code 在 URL 里，这里只需要验证 body 里的 amount
             'amount' => 'required|numeric|min:0',
         ], [
             'amount.required' => '订单金额不能为空',

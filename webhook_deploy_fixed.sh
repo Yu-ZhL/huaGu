@@ -45,6 +45,7 @@ npm run build
 
 # 清理并重构 Laravel 缓存
 echo "🧹 清理并优化 Laravel 缓存..."
+$PHP_BIN artisan route:clear
 $PHP_BIN artisan optimize
 $PHP_BIN artisan view:cache
 $PHP_BIN artisan event:cache

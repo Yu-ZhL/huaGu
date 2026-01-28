@@ -37,6 +37,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payment/alipay/create', [PaymentController::class, 'createAlipay']);
 
     // 优惠码
+    // 优惠码验证
+    // 注意：这里必须用 match 或 any，或者确保请求方法严格匹配。
+    // 之前的坑：Guzzle 请求如果遇到 301 跳转可能会把 POST 变 GET，导致 MethodNotAllowed。
+    // 如果再报错，检查下是不是客户端自动跳转了，或者路由缓存没清干净。
     Route::post('/coupons/{code}/validate', [CouponController::class, 'check']);
 });
 
