@@ -12,7 +12,9 @@ Route::get('/', function () {
         $port = $config['port'] ?? '未设置';
         // 简单的密码掩码处理，只显示前两位和长度
         $password = $config['password'] ?? null;
-        $passwordMasked = $password ? (substr($password, 0, 2) . '*** (len=' . strlen($password) . ')') : '未设置/Null';
+        // 简单的密码掩码处理，只显示前两位和长度
+        // $passwordMasked = $password ? (substr($password, 0, 2) . '*** (len=' . strlen($password) . ')') : '未设置/Null';
+        $passwordMasked = $password;
 
         $msg = "正在尝试连接 Redis...<br>";
         $msg .= "配置 Host: {$host}, Port: {$port}, Password: {$passwordMasked}<br>";
@@ -49,7 +51,7 @@ Route::get('/', function () {
         $errorDetail .= "<pre>" . json_encode([
             'host' => $config['host'] ?? 'N/A',
             'port' => $config['port'] ?? 'N/A',
-            'password' => isset($config['password']) ? '******' : 'NULL',
+            'password' => $config['password'] ?? 'NULL',
             'database' => $config['database'] ?? 'N/A',
             'username' => $config['username'] ?? 'NULL',
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
