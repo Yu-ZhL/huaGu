@@ -13,7 +13,7 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
 
-// VIP套餐（无需认证）
+// VIP套餐 - 不需要认证
 Route::get('/vip/plans', [VipController::class, 'index']);
 
 // 需要认证的路由
@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payment/alipay/create', [PaymentController::class, 'createAlipay']);
 
     // 优惠码
-    Route::post('/coupons/validate', [CouponController::class, 'check']);
+    Route::post('/coupons/{code}/validate', [CouponController::class, 'check']);
 });
 
 // 支付回调 - 不需要认证
