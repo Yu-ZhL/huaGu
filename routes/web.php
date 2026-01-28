@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    try {
+        Illuminate\Support\Facades\Redis::connection()->set('test_redis_key', 'Redis 连接成功! ' . date('Y-m-d H:i:s'));
+        $value = Illuminate\Support\Facades\Redis::connection()->get('test_redis_key');
+        return response("Redis 测试成功: " . $value);
+    } catch (\Exception $e) {
+        return response("Redis 连接失败: " . $e->getMessage(), 500);
+    }
 });
 
 Route::get('/dashboard', function () {
