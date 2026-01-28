@@ -24,9 +24,38 @@ Route::get('/', function () {
         // 尝试 PING
         try {
             $redis->ping();
-            $msg .= "PING 成功。<br>";
+            $msg .= "Laravel Facade PING 成功。<br>";
         } catch (\Exception $e) {
-            throw new \Exception("PING 失败: " . $e->getMessage(), $e->getCode(), $e);
+            $msg .= "Laravel Facade PING 失败: " . $e->getMessage() . "<br>";
+        }
+
+        $msg .= "<hr><strong>尝试原生 Redis 类连接测试 (绕过 Laravel):</strong><br>";
+        if (class_exists('Redis')) {
+            try {
+                $nativeRedis = new \Redis();
+                $connected = $nativeRedis->connect($host, (int) $port, 2.5); // 2.5s timeout
+                if ($connected) {
+                    $msg .= "原生 connect 成功。<br>";
+                    if ($password) {
+                        // 注意：如果密码错误，auth 会抛出异常还是返回 false 取决于 phpredis 版本
+                        $authRes = $nativeRedis->auth($password);
+                        $msg .= "原生 auth 结果: " . ($authRes ? 'true' : 'false') . "<br>";
+                    }
+                    $msg .= "原生 ping: " . $nativeRedis->ping() . "<br>";
+                } else {
+                    $msg .= "原生 connect 返回 false。<br>";
+                }
+            } catch (\Exception $ne) {
+                $msg .= "原生 Redis 异常: " . $ne->getMessage() . "<br>";
+            }
+        } else {
+            $msg .= "错误: Redis 类不存在 (php-redis 扩展未加载?)。<br>";
+        }
+        $msg .= "Redis 扩展版本: " . phpversion('redis') . "<br>";
+
+        // 重新抛出异常以显示之前的详细错误面板
+        if (strpos($msg, "Laravel Facade PING 失败") !== false) {
+            throw new \Exception("Laravel Redis 连接最终失败", 500);
         }
 
         $redis->set('test_redis_key', 'Redis 连接成功! ' . date('Y-m-d H:i:s'));

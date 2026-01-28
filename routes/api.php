@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payment/alipay/create', [PaymentController::class, 'createAlipay']);
 
     // 优惠码
-    Route::post('/coupons/validate', [CouponController::class, 'validate']);
+    Route::post('/coupons/validate', [CouponController::class, 'check']);
 });
 
 // 支付回调（不需要认证）

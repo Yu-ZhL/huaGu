@@ -51,7 +51,7 @@ class CouponController extends Controller
      *   "message": "优惠码已过期"
      * }
      */
-    public function validate(Request $request): JsonResponse
+    public function check(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'code' => 'required|string',
