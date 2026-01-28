@@ -161,8 +161,8 @@ return [
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_DB', '0'),
             'timeout' => 5,
-            'read_write_timeout' => -1, // 设置为 -1 以禁用读写超时，防止 went away
-            'persistent' => false,      // 显式禁用持久连接
+            'read_write_timeout' => 0, // 设置为 0 表示无限等待，避免超时断开
+            'persistent' => false,
             'max_retries' => env('REDIS_MAX_RETRIES', 3),
             'backoff_algorithm' => env('REDIS_BACKOFF_ALGORITHM', 'decorrelated_jitter'),
             'backoff_base' => env('REDIS_BACKOFF_BASE', 100),
