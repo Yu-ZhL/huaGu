@@ -11,21 +11,21 @@ use Illuminate\Support\Facades\Validator;
 
 /**
  * 优惠码接口
- * 
+ *
  * @group 优惠码管理 (Coupons)
  */
 class CouponController extends Controller
 {
     /**
      * 验证优惠码
-     * 
+     *
      * 验证优惠码是否可用，并返回折扣信息
-     * 
+     *
      * @authenticated
-     * 
+     *
      * @urlParam code string required 优惠码 Example: NEWUSER2026
      * @bodyParam amount number required 订单金额 Example: 128.00
-     * 
+     *
      * @response 200 {
      *   "success": true,
      *   "code": 200,
@@ -43,7 +43,7 @@ class CouponController extends Controller
      *   },
      *   "message": "验证成功"
      * }
-     * 
+     *
      * @response 400 {
      *   "success": false,
      *   "code": 400,
@@ -52,11 +52,9 @@ class CouponController extends Controller
      * }
      */
     // 验证优惠码
-    // $code 是从 URL 路径传下来的 /api/coupons/{code}/validate
     public function check(Request $request, string $code): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            // code 在 URL 里，这里只需要验证 body 里的 amount
             'amount' => 'required|numeric|min:0',
         ], [
             'amount.required' => '订单金额不能为空',
