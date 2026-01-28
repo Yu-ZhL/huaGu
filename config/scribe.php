@@ -237,7 +237,8 @@ return [
         'responses' => configureStrategy(
             Defaults::RESPONSES_STRATEGIES,
             Strategies\Responses\ResponseCalls::withSettings(
-                only: ['GET *'],
+                // only: ['GET *'],
+                only: ['GET *', 'POST *'],
                 // 推荐：在响应调用中禁用调试模式以避免响应中的错误堆栈跟踪
                 config: [
                     'app.debug' => false,
