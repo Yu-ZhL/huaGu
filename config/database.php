@@ -150,7 +150,7 @@ return [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
             'prefix' => 'laravel_database_',
             // 'prefix' => env('REDIS_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')) . '-database-'),
-            'persistent' => env('REDIS_PERSISTENT', false),
+            'persistent' => false, // 强制禁用
         ],
 
         'default' => [
@@ -161,7 +161,7 @@ return [
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_DB', '0'),
             'timeout' => 5,
-            'read_write_timeout' => 60, // 增加读写超时时间
+            'read_write_timeout' => -1, // 设置为 -1 以禁用读写超时，防止 went away
             'persistent' => false,      // 显式禁用持久连接
             'max_retries' => env('REDIS_MAX_RETRIES', 3),
             'backoff_algorithm' => env('REDIS_BACKOFF_ALGORITHM', 'decorrelated_jitter'),
