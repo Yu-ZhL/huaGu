@@ -6,87 +6,79 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    try {
-        $config = config('database.redis.default');
-        $host = $config['host'] ?? '未设置';
-        $port = $config['port'] ?? '未设置';
-        // 简单的密码掩码处理，只显示前两位和长度
-        $password = $config['password'] ?? null;
-        // 简单的密码掩码处理，只显示前两位和长度
-        // $passwordMasked = $password ? (substr($password, 0, 2) . '*** (len=' . strlen($password) . ')') : '未设置/Null';
-        $passwordMasked = $password;
+    $output = "<html><body style='font-family:sans-serif; padding:20px;'>";
+    $output .= "<h2>Redis 连接诊断报告 (Debug Mode)</h2>";
+    $output .= "<p>时间: " . date('Y-m-d H:i:s') . "</p>";
 
-        $msg = "正在尝试连接 Redis...<br>";
-        $msg .= "配置 Host: {$host}, Port: {$port}, Password: {$passwordMasked}<br>";
+    // 1. 获取配置
+    $config = config('database.redis.default');
+    $host = $config['host'] ?? '未设置';
+    $port = $config['port'] ?? '未设置';
+    $password = $config['password'] ?? null;
+    $output .= "<h3>1. 配置信息</h3>";
+    $output .= "<ul>";
+    $output .= "<li>Host: <strong>{$host}</strong></li>";
+    $output .= "<li>Port: <strong>{$port}</strong></li>";
+    $output .= "<li>Password: <strong>" . ($password ?? 'NULL') . "</strong></li>";
+    $output .= "</ul>";
 
-        $redis = Illuminate\Support\Facades\Redis::connection();
-
-        // 尝试 PING
+    // 2. 原生 Redis 类测试
+    $output .= "<h3>2. 原生 Redis 类测试 (phpredis)</h3>";
+    if (class_exists('Redis')) {
+        $output .= "<div>Redis 扩展版本: " . phpversion('redis') . "</div>";
+        $nativeRedis = new \Redis();
         try {
-            $redis->ping();
-            $msg .= "Laravel Facade PING 成功。<br>";
-        } catch (\Exception $e) {
-            $msg .= "Laravel Facade PING 失败: " . $e->getMessage() . "<br>";
-        }
+            $t1 = microtime(true);
+            $connected = $nativeRedis->connect($host, (int) $port, 2.5); // 2.5s timeout
+            $t2 = microtime(true);
 
-        $msg .= "<hr><strong>尝试原生 Redis 类连接测试 (绕过 Laravel):</strong><br>";
-        if (class_exists('Redis')) {
-            try {
-                $nativeRedis = new \Redis();
-                $connected = $nativeRedis->connect($host, (int) $port, 2.5); // 2.5s timeout
-                if ($connected) {
-                    $msg .= "原生 connect 成功。<br>";
-                    if ($password) {
-                        // 注意：如果密码错误，auth 会抛出异常还是返回 false 取决于 phpredis 版本
-                        $authRes = $nativeRedis->auth($password);
-                        $msg .= "原生 auth 结果: " . ($authRes ? 'true' : 'false') . "<br>";
-                    }
-                    $msg .= "原生 ping: " . $nativeRedis->ping() . "<br>";
-                } else {
-                    $msg .= "原生 connect 返回 false。<br>";
+            if ($connected) {
+                $output .= "<div style='color:green'>✔ 原生 connect 成功 (耗时 " . round(($t2 - $t1) * 1000, 2) . "ms)</div>";
+
+                if ($password) {
+                    $authRes = $nativeRedis->auth($password);
+                    $output .= "<div>原生 auth 结果: " . ($authRes ? 'true' : 'false') . "</div>";
                 }
-            } catch (\Exception $ne) {
-                $msg .= "原生 Redis 异常: " . $ne->getMessage() . "<br>";
+
+                try {
+                    $ping = $nativeRedis->ping();
+                    $output .= "<div style='color:green'>✔ 原生 PING 响应: {$ping}</div>";
+                } catch (\Exception $e) {
+                    $output .= "<div style='color:red'>✘ 原生 PING 异常: " . $e->getMessage() . "</div>";
+                }
+
+            } else {
+                $output .= "<div style='color:red'>✘ 原生 connect 返回 false</div>";
             }
-        } else {
-            $msg .= "错误: Redis 类不存在 (php-redis 扩展未加载?)。<br>";
+        } catch (\Exception $e) {
+            $output .= "<div style='color:red'>✘ 原生测试发生异常: " . $e->getMessage() . "</div>";
         }
-        $msg .= "Redis 扩展版本: " . phpversion('redis') . "<br>";
-
-        // 重新抛出异常以显示之前的详细错误面板
-        if (strpos($msg, "Laravel Facade PING 失败") !== false) {
-            throw new \Exception("Laravel Redis 连接最终失败", 500);
-        }
-
-        $redis->set('test_redis_key', 'Redis 连接成功! ' . date('Y-m-d H:i:s'));
-        $value = $redis->get('test_redis_key');
-
-        return response($msg . "写入/读取测试成功: " . $value);
-    } catch (\Exception $e) {
-        $errorDetail = "<h3>Redis 连接失败</h3>";
-        $errorDetail .= "<strong>错误信息:</strong> " . $e->getMessage() . "<br>";
-        $errorDetail .= "<strong>错误代码:</strong> " . $e->getCode() . "<br>";
-        $errorDetail .= "<strong>异常类型:</strong> " . get_class($e) . "<br>";
-        $errorDetail .= "<strong>文件/行号:</strong> " . $e->getFile() . ":" . $e->getLine() . "<br>";
-
-        // 如果是 Predis 连接异常，通常包含更底层的错误
-        if ($e->getPrevious()) {
-            $errorDetail .= "<strong>底层错误:</strong> " . $e->getPrevious()->getMessage() . "<br>";
-        }
-
-        // 显示当前加载的配置以便核对
-        $config = config('database.redis.default');
-        $errorDetail .= "<hr><strong>当前使用的配置 (database.redis.default):</strong><br>";
-        $errorDetail .= "<pre>" . json_encode([
-            'host' => $config['host'] ?? 'N/A',
-            'port' => $config['port'] ?? 'N/A',
-            'password' => $config['password'] ?? 'NULL',
-            'database' => $config['database'] ?? 'N/A',
-            'username' => $config['username'] ?? 'NULL',
-        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
-
-        return response($errorDetail, 500);
+    } else {
+        $output .= "<div style='color:red'>✘ 错误: Redis 类不存在</div>";
     }
+
+    // 3. Laravel Facade 测试
+    $output .= "<h3>3. Laravel Facade 测试</h3>";
+    try {
+        $redis = Illuminate\Support\Facades\Redis::connection();
+        $redis->ping();
+        $output .= "<div style='color:green'>✔ Laravel Facade PING 成功</div>";
+
+        $redis->set('test_laravel_key', 'ok_' . time());
+        $val = $redis->get('test_laravel_key');
+        $output .= "<div>Laravel 读写测试: {$val}</div>";
+
+    } catch (\Exception $e) {
+        $output .= "<div style='color:red'>✘ Laravel Facade 连接失败</div>";
+        $output .= "<pre style='background:#eee;padding:10px;'>" . $e->getMessage() . "</pre>";
+        $output .= "<div>文件: " . $e->getFile() . ":" . $e->getLine() . "</div>";
+
+        // 只有在 Laravel 失败时才显示详细配置 dump
+        $output .= "<hr><strong>完整配置 Dump:</strong><pre>" . json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+    }
+
+    $output .= "</body></html>";
+    return response($output);
 });
 
 Route::get('/dashboard', function () {
