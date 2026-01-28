@@ -402,7 +402,7 @@ paths:
       tags:
         - 'VIP管理 (VIP Plans)'
   '/api/coupons/{code}/validate':
-    get:
+    post:
       summary: 验证优惠码
       operationId: ''
       description: 验证优惠码是否可用，并返回折扣信息
