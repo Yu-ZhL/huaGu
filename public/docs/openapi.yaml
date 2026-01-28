@@ -401,7 +401,7 @@ paths:
                     example: 获取成功
       tags:
         - 'VIP管理 (VIP Plans)'
-  /api/coupons/validate:
+  '/api/coupons/{code}/validate':
     post:
       summary: 验证优惠码
       operationId: ''
@@ -501,17 +501,21 @@ paths:
             schema:
               type: object
               properties:
-                code:
-                  type: string
-                  description: 优惠码
-                  example: NEWUSER2026
                 amount:
                   type: number
                   description: 订单金额
                   example: 128.0
               required:
-                - code
                 - amount
+    parameters:
+      -
+        in: path
+        name: code
+        description: 优惠码
+        example: NEWUSER2026
+        required: true
+        schema:
+          type: string
   /api/image-search/1688/image:
     post:
       summary: '1688 以图搜图'

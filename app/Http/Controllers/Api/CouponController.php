@@ -23,7 +23,7 @@ class CouponController extends Controller
      * 
      * @authenticated
      * 
-     * @bodyParam code string required 优惠码 Example: NEWUSER2026
+     * @urlParam code string required 优惠码 Example: NEWUSER2026
      * @bodyParam amount number required 订单金额 Example: 128.00
      * 
      * @response 200 {
@@ -51,13 +51,11 @@ class CouponController extends Controller
      *   "message": "优惠码已过期"
      * }
      */
-    public function check(Request $request): JsonResponse
+    public function check(Request $request, string $code): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'code' => 'required|string',
             'amount' => 'required|numeric|min:0',
         ], [
-            'code.required' => '优惠码不能为空',
             'amount.required' => '订单金额不能为空',
             'amount.numeric' => '订单金额格式错误',
         ]);
@@ -66,8 +64,6 @@ class CouponController extends Controller
             return ApiResponse::error($validator->errors()->first(), 400);
         }
 
-        // 获取请求中的优惠码
-        $code = $request->input('code');
         $coupon = Coupon::where('code', $code)->first();
 
         if (!$coupon) {
