@@ -914,13 +914,13 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 
 <p>验证优惠码是否可用，并返回折扣信息</p>
 
-<span id="example-requests-POSTapi-coupons--code--validate">
+<span id="example-requests-POSTapi-coupons-validate">
     <blockquote>请求示例:</blockquote>
 
     
         <div class="javascript-example">
             <pre><code class="language-javascript">const url = new URL(
-    "http://103.214.173.247:3019/api/coupons/NEWUSER2026/validate"
+    "http://103.214.173.247:3019/api/coupons/validate"
 );
 
 const headers = {
@@ -930,6 +930,7 @@ const headers = {
 };
 
 let body = {
+    "code": "NEWUSER2026",
     "amount": 128
 };
 
@@ -942,7 +943,7 @@ fetch(url, {
     
         <div class="php-example">
             <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$url = 'http://103.214.173.247:3019/api/coupons/NEWUSER2026/validate';
+$url = 'http://103.214.173.247:3019/api/coupons/validate';
 $response = $client-&gt;post(
     $url,
     [
@@ -952,6 +953,7 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
+            'code' =&gt; 'NEWUSER2026',
             'amount' =&gt; 128.0,
         ],
     ]
@@ -961,7 +963,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 
     </span>
 
-<span id="example-responses-POSTapi-coupons--code--validate">
+<span id="example-responses-POSTapi-coupons-validate">
             <blockquote>
         <p>响应示例 (200):</p>
     </blockquote>
@@ -998,41 +1000,41 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 }</code>
  </pre>
         </span>
-<span id="execution-results-POSTapi-coupons--code--validate" hidden>
+<span id="execution-results-POSTapi-coupons-validate" hidden>
     <blockquote>接口返回数据<span
-            id="execution-response-status-POSTapi-coupons--code--validate"></span>:
+            id="execution-response-status-POSTapi-coupons-validate"></span>:
     </blockquote>
     <pre
-        class="json"><code id="execution-response-content-POSTapi-coupons--code--validate"
+        class="json"><code id="execution-response-content-POSTapi-coupons-validate"
       data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-POSTapi-coupons--code--validate" hidden>
+<span id="execution-error-POSTapi-coupons-validate" hidden>
     <blockquote>请求发生错误:</blockquote>
-    <pre><code id="execution-error-message-POSTapi-coupons--code--validate">
+    <pre><code id="execution-error-message-POSTapi-coupons-validate">
 
 调试提示：如果请求失败，请检查网络连接是否正常。
 对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
 更多错误详情请查看浏览器控制台。</code></pre>
 </span>
-<form id="form-POSTapi-coupons--code--validate" data-method="POST"
-    data-path="api/coupons/{code}/validate" data-authed="1"
+<form id="form-POSTapi-coupons-validate" data-method="POST"
+    data-path="api/coupons/validate" data-authed="1"
     data-hasfiles="0" data-isarraybody="0"
-    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-coupons--code--validate', this);">
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-coupons-validate', this);">
     <h3>
         请求&nbsp;&nbsp;&nbsp;
                     <button type="button"
                 style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                id="btn-tryout-POSTapi-coupons--code--validate"
-                onclick="tryItOut('POSTapi-coupons--code--validate');">在线调试
+                id="btn-tryout-POSTapi-coupons-validate"
+                onclick="tryItOut('POSTapi-coupons-validate');">在线调试
             </button>
             <button type="button"
                 style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                id="btn-canceltryout-POSTapi-coupons--code--validate" onclick="cancelTryOut('POSTapi-coupons--code--validate');"
+                id="btn-canceltryout-POSTapi-coupons-validate" onclick="cancelTryOut('POSTapi-coupons-validate');"
                 hidden>取消调试
             </button>&nbsp;&nbsp;
             <button type="submit"
                 style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                id="btn-executetryout-POSTapi-coupons--code--validate"
+                id="btn-executetryout-POSTapi-coupons-validate"
                 data-initial-text="发送请求"
                 data-loading-text="请求处理中..."
                 hidden>发送请求
@@ -1040,7 +1042,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             </h3>
             <p>
             <small class="badge badge-black">POST</small>
-            <b><code>api/coupons/{code}/validate</code></b>
+            <b><code>api/coupons/validate</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -1049,7 +1051,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-coupons--code--validate"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-coupons-validate"
                value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
                data-component="header">
     <br>
@@ -1061,7 +1063,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="POSTapi-coupons--code--validate"
+                              name="Content-Type"                data-endpoint="POSTapi-coupons-validate"
                value="application/json"
                data-component="header">
     <br>
@@ -1073,33 +1075,32 @@ print_r(json_decode((string) $body));</code></pre>        </div>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="POSTapi-coupons--code--validate"
+                              name="Accept"                data-endpoint="POSTapi-coupons-validate"
                value="application/json"
                data-component="header">
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                        <h4 class="fancy-heading-panel"><b>URL 参数</b></h4>
-                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="code"                data-endpoint="POSTapi-coupons--code--validate"
+                              name="code"                data-endpoint="POSTapi-coupons-validate"
                value="NEWUSER2026"
-               data-component="url">
+               data-component="body">
     <br>
 <p>优惠码 Example: <code>NEWUSER2026</code></p>
-            </div>
-                            <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>amount</code></b>&nbsp;&nbsp;
 <small>number</small>&nbsp;
  &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="amount"                data-endpoint="POSTapi-coupons--code--validate"
+               step="any"               name="amount"                data-endpoint="POSTapi-coupons-validate"
                value="128"
                data-component="body">
     <br>
@@ -1173,7 +1174,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php7ED9.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php8C1D.tmp', 'r')
             ],
         ],
     ]
@@ -1317,7 +1318,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php7ED9.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php8C1D.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;

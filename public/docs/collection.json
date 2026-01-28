@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "90489f03-e75d-4a8a-a6f5-0bdfa8ebaac0",
+        "_postman_id": "e543289b-090e-4346-9def-638ad89c9e3a",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -187,17 +187,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/coupons\/:code\/validate",
+                            "path": "api\/coupons\/validate",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/coupons\/:code\/validate",
-                            "variable": [
-                                {
-                                    "id": "code",
-                                    "key": "code",
-                                    "value": "NEWUSER2026",
-                                    "description": "\u4f18\u60e0\u7801"
-                                }
-                            ]
+                            "raw": "{{baseUrl}}\/api\/coupons\/validate"
                         },
                         "method": "POST",
                         "header": [
@@ -212,7 +204,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"amount\":128}"
+                            "raw": "{\"code\":\"NEWUSER2026\",\"amount\":128}"
                         },
                         "description": "\u9a8c\u8bc1\u4f18\u60e0\u7801\u662f\u5426\u53ef\u7528\uff0c\u5e76\u8fd4\u56de\u6298\u6263\u4fe1\u606f"
                     },
