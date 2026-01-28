@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import Sidebar from '@/components/Sidebar.vue'
-import HeaderBar from '@/components/HeaderBar.vue'
-import PlatformTabs from '@/components/PlatformTabs.vue'
+import Sidebar from '@/Components/Sidebar.vue'
+import HeaderBar from '@/Components/HeaderBar.vue'
+import PlatformTabs from '@/Components/PlatformTabs.vue'
 
 const authStore = useAuthStore()
 const isSidebarOpen = ref(true)
