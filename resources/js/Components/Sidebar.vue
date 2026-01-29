@@ -23,7 +23,6 @@ const authStore = useAuthStore()
 const navigation = [
     { name: '商品库', href: '/', icon: CubeIcon, current: true },
     { name: '仪表盘', href: '/dashboard', icon: HomeIcon, current: false },
-    { name: '飞猫缓存', href: '/feimao/cache', icon: CircleStackIcon, current: false },
     { name: '设置', href: '/settings', icon: Cog6ToothIcon, current: false },
 ]
 
