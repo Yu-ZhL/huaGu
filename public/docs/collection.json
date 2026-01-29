@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "99f7d49b-867b-45ec-a596-782412230231",
+        "_postman_id": "a62f5c5c-a5d5-4cad-a2bb-700f04d0ae3d",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -897,6 +897,126 @@
                             "header": [],
                             "code": 200,
                             "body": "{\"code\":200,\"message\":\"success\",\"data\":{\"list\":[{\"productId\":\"601104442920701\",\"productName\":\"\\u793a\\u4f8b\\u5546\\u54c1\",\"price\":100}]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u5206\u7c7b\u5217\u8868",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/feimao\/categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/feimao\/categories"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"parentId\":0}"
+                        },
+                        "description": "\u83b7\u53d6\u98de\u732b\u9009\u54c1\u7684\u5546\u54c1\u5206\u7c7b\u3002parentId\u4e3a0\u65f6\u83b7\u53d6\u4e00\u7ea7\u5206\u7c7b\uff0c\u4f20\u5165\u4e00\u7ea7\u5206\u7c7bID\u65f6\u83b7\u53d6\u4e8c\u7ea7\u5206\u7c7b\u3002",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"code\":200,\"message\":\"Success\",\"data\":[{\"categoryId\":953224,\"parentId\":0,\"categoryLevel\":1,\"categoryName\":\"\\u73e0\\u5b9d\\u914d\\u9970\\u53ca\\u884d\\u751f\\u54c1\"},{\"categoryId\":951432,\"parentId\":0,\"categoryLevel\":1,\"categoryName\":\"\\u6536\\u85cf\\u54c1\"}]}",
+                            "name": "\u4e00\u7ea7\u5206\u7c7b\u54cd\u5e94"
+                        },
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"code\":200,\"message\":\"Success\",\"data\":[{\"categoryId\":964744,\"parentId\":953224,\"categoryLevel\":2,\"categoryName\":\"\\u6885\\u5229\\u7279\"},{\"categoryId\":964616,\"parentId\":953224,\"categoryLevel\":2,\"categoryName\":\"\\u7425\\u73c0\\u8272\"}]}",
+                            "name": "\u4e8c\u7ea7\u5206\u7c7b\u54cd\u5e94"
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u5206\u7c7b\u5546\u54c1\u5217\u8868",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/feimao\/products\/list",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/feimao\/products\/list"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"pageNum\":1,\"pageSize\":10,\"categoryId\":\"953224\"}"
+                        },
+                        "description": "\u83b7\u53d6\u98de\u732b\u9009\u54c1\u6307\u5b9a\u5206\u7c7b\u4e0b\u7684\u5546\u54c1\u5217\u8868\uff0c\u652f\u6301\u5206\u9875\u3002",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"code\":200,\"message\":\"Success\",\"data\":{\"current\":1,\"pages\":40206,\"records\":[{\"id\":1,\"productId\":\"1732140290455343698\",\"categoryId\":\"601152\",\"categoryName\":\"\\u5973\\u88c5\\u548c\\u5185\\u8863\",\"commissionRate\":14.5,\"commissionRateText\":\"1450\",\"coverUrl\":\"https:\\\/\\\/p16-oec-general-useast5.ttcdn-us.com\\\/tos-useast5-i-omjb5zjo8w-tx\\\/b84981e47a204a648979cff29cffb13f~tplv-fhlh96nyum-resize-jpeg:800:800.jpeg\",\"title\":\"Women's 2 Piece Matching Lounge Set\",\"sales\":845,\"salesText\":\"845 sold\",\"formatPrice\":16.11,\"formatPriceText\":\"$16.11\",\"productLink\":\"https:\\\/\\\/www.tiktok.com\\\/shop\\\/pdp\\\/1732140290455343698\",\"shopName\":\"HHFSHOP\"}],\"size\":10,\"total\":402058},\"timestamp\":1769668251877}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u9500\u91cf\u8bb0\u5f55",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/feimao\/sales-records",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/feimao\/sales-records"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"productId\":\"1732140290455343698\"}"
+                        },
+                        "description": "\u83b7\u53d6\u6307\u5b9a\u5546\u54c1\u7684\u9500\u91cf\u5386\u53f2\u8bb0\u5f55\u3002",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"code\":200,\"message\":\"Success\",\"data\":[{\"sales\":845,\"createdTime\":\"2026-01-24 15:28:40\"},{\"sales\":845,\"createdTime\":\"2026-01-25 00:01:01\"}],\"timestamp\":1769668346840}",
                             "name": ""
                         }
                     ]

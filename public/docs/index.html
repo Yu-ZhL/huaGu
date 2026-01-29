@@ -180,6 +180,15 @@
                                                     <li class="tocify-item level-2" data-unique="363dec5852da80100c17ce0cc78f154b">
                                 <a href="#363dec5852da80100c17ce0cc78f154b">批量查询商品详情</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="838b3e5d82626d271302d1c309e6b6b1">
+                                <a href="#838b3e5d82626d271302d1c309e6b6b1">获取分类列表</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="0bb656c07677ab600cdbc1c60551c5ef">
+                                <a href="#0bb656c07677ab600cdbc1c60551c5ef">获取分类商品列表</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="996d607cd4d9a6468ce96b2a271bdf3a">
+                                <a href="#996d607cd4d9a6468ce96b2a271bdf3a">获取销量记录</a>
+                            </li>
                                                                         </ul>
                             </ul>
             </div>
@@ -1177,7 +1186,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php5575.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php76D4.tmp', 'r')
             ],
         ],
     ]
@@ -1321,7 +1330,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php5575.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php76D4.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -3883,6 +3892,552 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                data-component="body">
     <br>
 <p>渠道 (调试用，固定为temu) Example: <code>temu</code></p>
+        </div>
+        </form>
+
+    <h2 id="838b3e5d82626d271302d1c309e6b6b1">获取分类列表</h2>
+
+<p>
+        </p>
+
+<p>获取飞猫选品的商品分类。parentId为0时获取一级分类，传入一级分类ID时获取二级分类。</p>
+
+<span id="example-requests-POSTapi-feimao-categories">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/feimao/categories"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "parentId": 0
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/feimao/categories';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'parentId' =&gt; 0,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-POSTapi-feimao-categories">
+            <blockquote>
+        <p>响应示例 (200, 一级分类响应):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;Success&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;categoryId&quot;: 953224,
+            &quot;parentId&quot;: 0,
+            &quot;categoryLevel&quot;: 1,
+            &quot;categoryName&quot;: &quot;珠宝配饰及衍生品&quot;
+        },
+        {
+            &quot;categoryId&quot;: 951432,
+            &quot;parentId&quot;: 0,
+            &quot;categoryLevel&quot;: 1,
+            &quot;categoryName&quot;: &quot;收藏品&quot;
+        }
+    ]
+}</code>
+ </pre>
+        <blockquote>
+        <p>响应示例 (200, 二级分类响应):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;Success&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;categoryId&quot;: 964744,
+            &quot;parentId&quot;: 953224,
+            &quot;categoryLevel&quot;: 2,
+            &quot;categoryName&quot;: &quot;梅利特&quot;
+        },
+        {
+            &quot;categoryId&quot;: 964616,
+            &quot;parentId&quot;: 953224,
+            &quot;categoryLevel&quot;: 2,
+            &quot;categoryName&quot;: &quot;琥珀色&quot;
+        }
+    ]
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-POSTapi-feimao-categories" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-POSTapi-feimao-categories"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-POSTapi-feimao-categories"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-feimao-categories" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-feimao-categories">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-feimao-categories" data-method="POST"
+    data-path="api/feimao/categories" data-authed="0"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-feimao-categories', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-POSTapi-feimao-categories"
+                onclick="tryItOut('POSTapi-feimao-categories');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-POSTapi-feimao-categories" onclick="cancelTryOut('POSTapi-feimao-categories');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-POSTapi-feimao-categories"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/feimao/categories</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-feimao-categories"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-feimao-categories"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>parentId</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="parentId"                data-endpoint="POSTapi-feimao-categories"
+               value="0"
+               data-component="body">
+    <br>
+<p>父级ID (0为一级分类) Example: <code>0</code></p>
+        </div>
+        </form>
+
+    <h2 id="0bb656c07677ab600cdbc1c60551c5ef">获取分类商品列表</h2>
+
+<p>
+        </p>
+
+<p>获取飞猫选品指定分类下的商品列表，支持分页。</p>
+
+<span id="example-requests-POSTapi-feimao-products-list">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/feimao/products/list"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "pageNum": 1,
+    "pageSize": 10,
+    "categoryId": "953224"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/feimao/products/list';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'pageNum' =&gt; 1,
+            'pageSize' =&gt; 10,
+            'categoryId' =&gt; '953224',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-POSTapi-feimao-products-list">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;Success&quot;,
+    &quot;data&quot;: {
+        &quot;current&quot;: 1,
+        &quot;pages&quot;: 40206,
+        &quot;records&quot;: [
+            {
+                &quot;id&quot;: 1,
+                &quot;productId&quot;: &quot;1732140290455343698&quot;,
+                &quot;categoryId&quot;: &quot;601152&quot;,
+                &quot;categoryName&quot;: &quot;女装和内衣&quot;,
+                &quot;commissionRate&quot;: 14.5,
+                &quot;commissionRateText&quot;: &quot;1450&quot;,
+                &quot;coverUrl&quot;: &quot;https://p16-oec-general-useast5.ttcdn-us.com/tos-useast5-i-omjb5zjo8w-tx/b84981e47a204a648979cff29cffb13f~tplv-fhlh96nyum-resize-jpeg:800:800.jpeg&quot;,
+                &quot;title&quot;: &quot;Women&#039;s 2 Piece Matching Lounge Set&quot;,
+                &quot;sales&quot;: 845,
+                &quot;salesText&quot;: &quot;845 sold&quot;,
+                &quot;formatPrice&quot;: 16.11,
+                &quot;formatPriceText&quot;: &quot;$16.11&quot;,
+                &quot;productLink&quot;: &quot;https://www.tiktok.com/shop/pdp/1732140290455343698&quot;,
+                &quot;shopName&quot;: &quot;HHFSHOP&quot;
+            }
+        ],
+        &quot;size&quot;: 10,
+        &quot;total&quot;: 402058
+    },
+    &quot;timestamp&quot;: 1769668251877
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-POSTapi-feimao-products-list" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-POSTapi-feimao-products-list"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-POSTapi-feimao-products-list"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-feimao-products-list" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-feimao-products-list">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-feimao-products-list" data-method="POST"
+    data-path="api/feimao/products/list" data-authed="0"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-feimao-products-list', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-POSTapi-feimao-products-list"
+                onclick="tryItOut('POSTapi-feimao-products-list');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-POSTapi-feimao-products-list" onclick="cancelTryOut('POSTapi-feimao-products-list');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-POSTapi-feimao-products-list"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/feimao/products/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-feimao-products-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-feimao-products-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>pageNum</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="pageNum"                data-endpoint="POSTapi-feimao-products-list"
+               value="1"
+               data-component="body">
+    <br>
+<p>页码 Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>pageSize</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="pageSize"                data-endpoint="POSTapi-feimao-products-list"
+               value="10"
+               data-component="body">
+    <br>
+<p>每页数量 Example: <code>10</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>categoryId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="categoryId"                data-endpoint="POSTapi-feimao-products-list"
+               value="953224"
+               data-component="body">
+    <br>
+<p>分类ID Example: <code>953224</code></p>
+        </div>
+        </form>
+
+    <h2 id="996d607cd4d9a6468ce96b2a271bdf3a">获取销量记录</h2>
+
+<p>
+        </p>
+
+<p>获取指定商品的销量历史记录。</p>
+
+<span id="example-requests-POSTapi-feimao-sales-records">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/feimao/sales-records"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "productId": "1732140290455343698"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/feimao/sales-records';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'productId' =&gt; '1732140290455343698',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-POSTapi-feimao-sales-records">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;code&quot;: 200,
+    &quot;message&quot;: &quot;Success&quot;,
+    &quot;data&quot;: [
+        {
+            &quot;sales&quot;: 845,
+            &quot;createdTime&quot;: &quot;2026-01-24 15:28:40&quot;
+        },
+        {
+            &quot;sales&quot;: 845,
+            &quot;createdTime&quot;: &quot;2026-01-25 00:01:01&quot;
+        }
+    ],
+    &quot;timestamp&quot;: 1769668346840
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-POSTapi-feimao-sales-records" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-POSTapi-feimao-sales-records"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-POSTapi-feimao-sales-records"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-feimao-sales-records" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-feimao-sales-records">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-feimao-sales-records" data-method="POST"
+    data-path="api/feimao/sales-records" data-authed="0"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-feimao-sales-records', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-POSTapi-feimao-sales-records"
+                onclick="tryItOut('POSTapi-feimao-sales-records');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-POSTapi-feimao-sales-records" onclick="cancelTryOut('POSTapi-feimao-sales-records');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-POSTapi-feimao-sales-records"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/feimao/sales-records</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-feimao-sales-records"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-feimao-sales-records"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>productId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="productId"                data-endpoint="POSTapi-feimao-sales-records"
+               value="1732140290455343698"
+               data-component="body">
+    <br>
+<p>商品ID Example: <code>1732140290455343698</code></p>
         </div>
         </form>
 

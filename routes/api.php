@@ -46,3 +46,6 @@ Route::post('/payment/alipay-notify', [PaymentController::class, 'alipayNotify']
 // 飞猫选品
 use App\Http\Controllers\Api\FeimaoProductController;
 Route::post('/feimao/products', [FeimaoProductController::class, 'index']);
+Route::post('/feimao/categories', [FeimaoProductController::class, 'getCategories']);
+Route::post('/feimao/products/list', [FeimaoProductController::class, 'getCategoryProducts']);
+Route::post('/feimao/sales-records', [FeimaoProductController::class, 'getSalesRecord']);
