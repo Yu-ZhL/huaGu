@@ -48,13 +48,21 @@ class FeimaoCacheManager extends Page
                 $type = '身份令牌';
 
             $ttl = Redis::ttl($key);
+            $rawContent = Redis::get($key);
+            $parsedContent = json_decode($rawContent, true);
+
+            $url = $parsedContent['url'] ?? '-';
+            if ($type === '身份令牌')
+                $url = 'https://feimaoxuanpin.com/api/system/login';
 
             // 格式化数据供视图使用
             $items[] = [
                 'key' => $key,
                 'short_key' => str_replace($prefix, '', $key),
                 'type' => $type,
+                'url' => $url,
                 'ttl' => $ttl,
+                'content' => $rawContent, // 原始 JSON 用于查看
                 'can_refresh' => true,
             ];
         }

@@ -128,22 +128,27 @@ class FeimaoService
     // 获取分类
     public function getCategories(int $parentId = 0)
     {
-        // 缓存键名：feimao:categories:父ID
         $cacheKey = "feimao:categories:{$parentId}";
-
-        // 尝试从缓存读取
-        $cachedData = Redis::get($cacheKey);
-        if ($cachedData) {
-            return json_decode($cachedData, true);
-        }
-
         $url = '/api/bestSellingProducts/category';
         $payload = ['parentId' => $parentId];
+
+        $cachedData = Redis::get($cacheKey);
+        if ($cachedData) {
+            $data = json_decode($cachedData, true);
+            // 兼容旧格式或提取响应内容
+            return $data['response'] ?? $data;
+        }
+
         $result = $this->request('POST', $url, $payload);
 
-        // 响应正常才存入缓存，分类数据永不过期
         if (isset($result['code']) && $result['code'] == 200) {
-            Redis::set($cacheKey, json_encode($result));
+            $cacheContent = [
+                'url' => $this->baseUrl . $url,
+                'payload' => $payload,
+                'response' => $result,
+                'updated_at' => now()->toDateTimeString(),
+            ];
+            Redis::set($cacheKey, json_encode($cacheContent));
         }
 
         return $result;
@@ -152,26 +157,30 @@ class FeimaoService
     // 获取分类下的商品列表
     public function getProductListByCategory(int $pageNum, int $pageSize, string $categoryId = '')
     {
-        // 缓存键名
         $cacheKey = "feimao:product_list:{$categoryId}:{$pageNum}:{$pageSize}";
-
-        // 读缓存
-        $cachedData = Redis::get($cacheKey);
-        if ($cachedData) {
-            return json_decode($cachedData, true);
-        }
-
         $url = '/api/collectProduct/list';
         $payload = [
             'pageNum' => $pageNum,
             'pageSize' => $pageSize,
             'categoryId' => $categoryId
         ];
+
+        $cachedData = Redis::get($cacheKey);
+        if ($cachedData) {
+            $data = json_decode($cachedData, true);
+            return $data['response'] ?? $data;
+        }
+
         $result = $this->request('POST', $url, $payload);
 
-        // 响应正常才存缓存，缓存1天
         if (isset($result['code']) && $result['code'] == 200) {
-            Redis::setex($cacheKey, 86400, json_encode($result));
+            $cacheContent = [
+                'url' => $this->baseUrl . $url,
+                'payload' => $payload,
+                'response' => $result,
+                'updated_at' => now()->toDateTimeString(),
+            ];
+            Redis::setex($cacheKey, 86400, json_encode($cacheContent));
         }
 
         return $result;
@@ -180,22 +189,26 @@ class FeimaoService
     // 获取销量记录
     public function getSalesRecord(string $productId)
     {
-        // 缓存键名
         $cacheKey = "feimao:sales_record:{$productId}";
-
-        // 读缓存
-        $cachedData = Redis::get($cacheKey);
-        if ($cachedData) {
-            return json_decode($cachedData, true);
-        }
-
         $url = '/api/bestSellingProducts/salesRecord';
         $payload = ['productId' => $productId];
+
+        $cachedData = Redis::get($cacheKey);
+        if ($cachedData) {
+            $data = json_decode($cachedData, true);
+            return $data['response'] ?? $data;
+        }
+
         $result = $this->request('POST', $url, $payload);
 
-        // 响应正常才存缓存，缓存1天
         if (isset($result['code']) && $result['code'] == 200) {
-            Redis::setex($cacheKey, 86400, json_encode($result));
+            $cacheContent = [
+                'url' => $this->baseUrl . $url,
+                'payload' => $payload,
+                'response' => $result,
+                'updated_at' => now()->toDateTimeString(),
+            ];
+            Redis::setex($cacheKey, 86400, json_encode($cacheContent));
         }
 
         return $result;
