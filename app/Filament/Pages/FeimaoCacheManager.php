@@ -78,7 +78,8 @@ class FeimaoCacheManager extends Page
                 'url' => $url,
                 'ttl' => $ttl,
                 'content' => $rawContent,
-                'payload' => $parsedContent['payload'] ?? null, // 显式传递参数
+                'payload' => $parsedContent['payload'] ?? null,
+                'response' => $parsedContent['response'] ?? $parsedContent,
                 'can_refresh' => true,
             ];
         }
