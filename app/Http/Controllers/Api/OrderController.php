@@ -137,7 +137,7 @@ class OrderController extends Controller
             ->first();
 
         if (!$order) {
-            return ApiResponse::error('订单不存在', 404);
+            return ApiResponse::error('订单不存在', 400);
         }
 
         return ApiResponse::success($order, '获取成功');
@@ -172,7 +172,7 @@ class OrderController extends Controller
             ->first();
 
         if (!$order) {
-            return ApiResponse::error('订单不存在', 404);
+            return ApiResponse::error('订单不存在', 400);
         }
 
         return ApiResponse::success([
@@ -207,7 +207,7 @@ class OrderController extends Controller
             ->first();
 
         if (!$order) {
-            return ApiResponse::error('订单不存在', 404);
+            return ApiResponse::error('订单不存在', 400);
         }
 
         if (!$order->isPending()) {

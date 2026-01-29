@@ -363,7 +363,7 @@ class AuthController extends Controller
             ->first();
 
         if (!$user) {
-            return ApiResponse::error('该手机号未注册', 404);
+            return ApiResponse::error('该手机号未注册', 400);
         }
 
         // 验证短信验证码

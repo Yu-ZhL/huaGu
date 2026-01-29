@@ -64,7 +64,7 @@ class PaymentController extends Controller
             ->first();
 
         if (!$order) {
-            return ApiResponse::error('订单不存在', 404);
+            return ApiResponse::error('订单不存在', 400);
         }
 
         if ($order->isPaid()) {
