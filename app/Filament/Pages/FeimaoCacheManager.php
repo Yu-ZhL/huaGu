@@ -18,6 +18,10 @@ class FeimaoCacheManager extends Page
 
     protected static ?string $slug = 'feimao-cache';
 
+    protected static ?string $navigationGroup = '系统设置';
+
+    protected static ?int $navigationSort = 10;
+
     protected static string $view = 'filament.pages.feimao-cache-manager';
 
     public function mount()
