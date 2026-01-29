@@ -68,7 +68,7 @@ class CouponController extends Controller
         $coupon = Coupon::where('code', $code)->first();
 
         if (!$coupon) {
-            return ApiResponse::error('优惠码不存在', 404);
+            return ApiResponse::error('优惠码不存在', 400);
         }
 
         $amount = floatval($request->amount);
