@@ -5,8 +5,7 @@ import {
     HomeIcon,
     CubeIcon,
     Cog6ToothIcon,
-    ArrowLeftOnRectangleIcon,
-    CircleStackIcon
+    ArrowLeftOnRectangleIcon
 } from '@heroicons/vue/24/outline'
 import { useAuthStore } from '@/stores/auth'
 
