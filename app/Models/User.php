@@ -33,6 +33,9 @@ class User extends Authenticatable
         'is_sub_account',
         'parent_id',
         'remark',
+        'freight_price_per_kg',
+        'operation_fee',
+        'freight_config_updated_at',
     ];
 
     // JSON序列化时隐藏这些字段，安全第一
@@ -53,6 +56,9 @@ class User extends Authenticatable
             'status' => 'boolean',
             'is_sub_account' => 'boolean',
             'ai_points' => 'integer',
+            'freight_price_per_kg' => 'decimal:2',
+            'operation_fee' => 'decimal:2',
+            'freight_config_updated_at' => 'datetime',
         ];
     }
 
@@ -92,5 +98,10 @@ class User extends Authenticatable
     public function getAvailableAiPoints(): int
     {
         return $this->ai_points;
+    }
+
+    public function temuProducts()
+    {
+        return $this->hasMany(TemuCollectedProduct::class);
     }
 }

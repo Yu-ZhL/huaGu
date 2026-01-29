@@ -1,17 +1,101 @@
-import { createApp } from 'vue'
-import App from '../App.vue'
 import '../style.css'
+import { apiRequest } from './api.js'
+import { createProductUI } from './ui-components.js'
+import { handleChooseSource, handleCalculateProfit } from './product-handler.js'
 
-// 创建容器
-const root = document.createElement('div')
-root.id = 'feimao-extension-root'
-document.body.appendChild(root)
+function isTemuProductPage() {
+    return window.location.hostname.includes('temu.com')
+}
 
-// 使用 Shadow DOM 隔离样式 (可选，但推荐)
-// const shadow = root.attachShadow({ mode: 'open' })
-// const appRoot = document.createElement('div')
-// shadow.appendChild(appRoot) 
-// 注意：如果使用 Shadow DOM，样式注入需要特殊处理 (style-loader等)，
-// 这里为了简化和确保 Tailwind/CSS 工作，先直接挂载在 root 上，但在 App.vue 中从严控制样式作用域
+function extractProductNodes() {
+    const productNodes = document.querySelectorAll('[data-product-id], [data-goods-id]')
+    const products = []
 
-createApp(App).mount(root)
+    productNodes.forEach(node => {
+        const productId = node.getAttribute('data-product-id') || node.getAttribute('data-goods-id')
+        if (productId && !node.querySelector('[data-fm-host="1"]')) {
+            products.push({
+                node,
+                productId,
+                data: {
+                    productId,
+                    title: node.querySelector('[class*="title"]')?.textContent?.trim(),
+                    price: node.querySelector('[class*="price"]')?.textContent?.trim(),
+                    image: node.querySelector('img')?.src,
+                }
+            })
+        }
+    })
+
+    return products
+}
+
+async function submitProductsToAPI(products) {
+    try {
+        const productIds = products.map(p => p.productId)
+        const siteUrl = window.location.href
+
+        const result = await apiRequest('/feimao/products', {
+            method: 'POST',
+            body: JSON.stringify({
+                productIds,
+                site_url: siteUrl
+            })
+        })
+
+        console.log('商品数据已提交', result)
+    } catch (error) {
+        console.error('提交商品数据失败', error)
+    }
+}
+
+function injectUI() {
+    if (!isTemuProductPage()) {
+        return
+    }
+
+    const products = extractProductNodes()
+
+    if (products.length > 0) {
+        products.forEach(product => {
+            const ui = createProductUI(product)
+
+            const aiBtn = ui.querySelector('[data-fm="aiBtn"]')
+            const chooseBtn = ui.querySelector('[data-fm="chooseBtn"]')
+
+            aiBtn.addEventListener('click', () => handleCalculateProfit(product.productId, ui))
+            chooseBtn.addEventListener('click', () => handleChooseSource(product.productId, ui))
+
+            product.node.appendChild(ui)
+        })
+
+        submitProductsToAPI(products)
+    }
+}
+
+let lastUrl = location.href
+function observePageChanges() {
+    const observer = new MutationObserver(() => {
+        if (location.href !== lastUrl) {
+            lastUrl = location.href
+            setTimeout(injectUI, 1000)
+        } else {
+            injectUI()
+        }
+    })
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    })
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(injectUI, 1000)
+        observePageChanges()
+    })
+} else {
+    setTimeout(injectUI, 1000)
+    observePageChanges()
+}

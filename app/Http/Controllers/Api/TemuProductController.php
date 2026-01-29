@@ -1,0 +1,248 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\TemuCollectedProduct;
+use App\Models\Product1688Source;
+use App\Services\TemuCollectionService;
+use Illuminate\Http\Request;
+use Knuckles\Scribe\Attributes\Group;
+use Knuckles\Scribe\Attributes\BodyParam;
+use Knuckles\Scribe\Attributes\Response;
+use Knuckles\Scribe\Attributes\Authenticated;
+
+#[Group("Temu 商品管理", "Temu 商品采集和同款管理")]
+#[Authenticated]
+class TemuProductController extends Controller
+{
+    protected $temuService;
+
+    public function __construct(TemuCollectionService $temuService)
+    {
+        $this->temuService = $temuService;
+    }
+
+    /**
+     * 获取采集商品列表
+     */
+    #[BodyParam("page", "integer", "页码", required: false, example: 1)]
+    #[BodyParam("per_page", "integer", "每页数量", required: false, example: 15)]
+    #[Response([
+        "success" => true,
+        "data" => [
+            "current_page" => 1,
+            "data" => [
+                [
+                    "id" => 1,
+                    "product_id" => "601099661205317",
+                    "title" => "示例商品",
+                    "sale_price" => 99.99,
+                    "weight" => 0.5,
+                    "sources_count" => 5
+                ]
+            ],
+            "total" => 50
+        ]
+    ])]
+    public function index(Request $request)
+    {
+        $user = auth()->user();
+
+        $products = TemuCollectedProduct::where('user_id', $user->id)
+            ->withCount('sources1688')
+            ->orderBy('collected_at', 'desc')
+            ->paginate($request->input('per_page', 15));
+
+        return response()->json([
+            'success' => true,
+            'data' => $products,
+        ]);
+    }
+
+    /**
+     * 获取商品详情
+     */
+    #[Response([
+        "success" => true,
+        "data" => [
+            "id" => 1,
+            "product_id" => "601099661205317",
+            "title" => "示例商品",
+            "sale_price" => 99.99,
+            "weight" => 0.5,
+            "sources" => []
+        ]
+    ])]
+    public function show($id)
+    {
+        $user = auth()->user();
+
+        $product = TemuCollectedProduct::with('sources1688')
+            ->where('user_id', $user->id)
+            ->findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $product,
+        ]);
+    }
+
+    /**
+     * 开始采集1688同款
+     */
+    #[BodyParam("product_id", "integer", "Temu商品ID", required: true, example: 1)]
+    #[BodyParam("search_method", "string", "搜索方式 (image/url)", required: false, example: "image")]
+    #[BodyParam("max_count", "integer", "最大采集数量", required: false, example: 20)]
+    #[Response([
+        "success" => true,
+        "message" => "成功采集 10 条1688同款",
+        "data" => [
+            "count" => 10,
+            "total" => 10
+        ]
+    ])]
+    public function collectSimilar(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|integer',
+            'search_method' => 'string|in:image,url',
+            'max_count' => 'integer|min:1|max:20',
+        ]);
+
+        $user = auth()->user();
+        $productId = $validated['product_id'];
+        $searchMethod = $validated['search_method'] ?? 'image';
+        $maxCount = $validated['max_count'] ?? 20;
+
+        $result = $this->temuService->collectSimilarProducts(
+            $productId,
+            $user->id,
+            $searchMethod,
+            $maxCount
+        );
+
+        return response()->json($result);
+    }
+
+    /**
+     * 获取商品的1688货源列表
+     */
+    #[Response([
+        "success" => true,
+        "data" => [
+            [
+                "id" => 1,
+                "title" => "1688商品标题",
+                "price" => 29.90,
+                "image" => "https://cbu01.alicdn.com/img/xxx.jpg",
+                "url" => "https://detail.1688.com/offer/12345.html",
+                "is_primary" => true,
+                "tags" => ["7天无理由", "48小时发货"]
+            ]
+        ]
+    ])]
+    public function getSources($productId)
+    {
+        $user = auth()->user();
+
+        $product = TemuCollectedProduct::where('id', $productId)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        $sources = Product1688Source::where('temu_product_id', $productId)
+            ->where('user_id', $user->id)
+            ->orderBy('is_primary', 'desc')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $sources,
+        ]);
+    }
+
+    /**
+     * 设置主选货源
+     */
+    #[BodyParam("source_id", "integer", "1688货源ID", required: true, example: 1)]
+    #[BodyParam("product_id", "integer", "Temu商品ID", required: true, example: 1)]
+    #[Response([
+        "success" => true,
+        "message" => "设置成功",
+        "data" => [
+            "id" => 1,
+            "is_primary" => true
+        ]
+    ])]
+    public function setPrimarySource(Request $request)
+    {
+        $validated = $request->validate([
+            'source_id' => 'required|integer',
+            'product_id' => 'required|integer',
+        ]);
+
+        $user = auth()->user();
+
+        try {
+            $source = $this->temuService->setPrimarySource(
+                $validated['source_id'],
+                $validated['product_id'],
+                $user->id
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => '设置成功',
+                'data' => $source,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    /**
+     * 计算商品利润
+     */
+    #[BodyParam("product_id", "integer", "Temu商品ID", required: true, example: 1)]
+    #[Response([
+        "success" => true,
+        "data" => [
+            "sale_price" => 99.99,
+            "purchase_price" => 29.90,
+            "weight" => 0.5,
+            "freight" => 59.50,
+            "platform_fee" => 5.00,
+            "profit" => 4.59,
+            "freight_config" => [
+                "freight_price_per_kg" => 85.00,
+                "operation_fee" => 17.00
+            ]
+        ]
+    ])]
+    public function calculateProfit(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|integer',
+        ]);
+
+        $user = auth()->user();
+
+        try {
+            $result = $this->temuService->calculateProductProfit(
+                $validated['product_id'],
+                $user->id
+            );
+
+            return response()->json($result);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
+}

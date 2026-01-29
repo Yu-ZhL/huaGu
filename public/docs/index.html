@@ -73,6 +73,31 @@
                     <a href="#authentication">用户认证指南</a>
                 </li>
                             </ul>
+                                <ul id="tocify-header-7c1d13ca0a141b106f1a94650b1c5679" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="7c1d13ca0a141b106f1a94650b1c5679">
+                    <a href="#7c1d13ca0a141b106f1a94650b1c5679">Temu 商品管理</a>
+                </li>
+                                    <ul id="tocify-subheader-7c1d13ca0a141b106f1a94650b1c5679" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="d9328187261f18df13d382a54da9646a">
+                                <a href="#d9328187261f18df13d382a54da9646a">获取采集商品列表</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="fa7afa9e6d22f4618de14e3a734fd9fa">
+                                <a href="#fa7afa9e6d22f4618de14e3a734fd9fa">获取商品详情</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="40a44f8bfc983fe401763e84d9efd4d6">
+                                <a href="#40a44f8bfc983fe401763e84d9efd4d6">开始采集1688同款</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="f5bd8715ab8ecc9804968cf2980f7f6a">
+                                <a href="#f5bd8715ab8ecc9804968cf2980f7f6a">获取商品的1688货源列表</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="4e5dbd3dfbfc60bfe9a5698dc6f1903e">
+                                <a href="#4e5dbd3dfbfc60bfe9a5698dc6f1903e">设置主选货源</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="c4a27a90d9c2d33c065d8c9b0c1f432c">
+                                <a href="#c4a27a90d9c2d33c065d8c9b0c1f432c">计算商品利润</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                                 <ul id="tocify-header-87f70c6e4807627934ff24e8bb33f671" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="87f70c6e4807627934ff24e8bb33f671">
                     <a href="#87f70c6e4807627934ff24e8bb33f671">VIP管理 (VIP Plans)</a>
@@ -188,6 +213,19 @@
                             </li>
                                                                         </ul>
                             </ul>
+                                <ul id="tocify-header-0c2dd386c4872859d4368bed57f14f7f" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="0c2dd386c4872859d4368bed57f14f7f">
+                    <a href="#0c2dd386c4872859d4368bed57f14f7f">运费配置</a>
+                </li>
+                                    <ul id="tocify-subheader-0c2dd386c4872859d4368bed57f14f7f" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="8e67628076762135f20bf6f00deb56d1">
+                                <a href="#8e67628076762135f20bf6f00deb56d1">获取运费配置</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="f332f5795b95d127c4e76eb253b0bd93">
+                                <a href="#f332f5795b95d127c4e76eb253b0bd93">更新运费配置</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                                 <ul id="tocify-header-32c6eed914882f5c4bddde976f2f6f39" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="32c6eed914882f5c4bddde976f2f6f39">
                     <a href="#32c6eed914882f5c4bddde976f2f6f39">飞猫选品</a>
@@ -238,7 +276,1081 @@
 <p>所有经过身份验证的端点都在下面的文档中标记了 <code>需要认证</code> 徽章。</p>
 <p>您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。</p>
 
-            <h1 id="87f70c6e4807627934ff24e8bb33f671">VIP管理 (VIP Plans)</h1>
+            <h1 id="7c1d13ca0a141b106f1a94650b1c5679">Temu 商品管理</h1>
+
+<p>Temu 商品采集和同款管理</p>
+
+    <h2 id="d9328187261f18df13d382a54da9646a">获取采集商品列表</h2>
+
+<p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
+
+
+
+<span id="example-requests-GETapi-temu-products">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/temu/products"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "page": 1,
+    "per_page": 15
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/temu/products';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'page' =&gt; 1,
+            'per_page' =&gt; 15,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-GETapi-temu-products">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;data&quot;: [
+            {
+                &quot;id&quot;: 1,
+                &quot;product_id&quot;: &quot;601099661205317&quot;,
+                &quot;title&quot;: &quot;示例商品&quot;,
+                &quot;sale_price&quot;: 99.99,
+                &quot;weight&quot;: 0.5,
+                &quot;sources_count&quot;: 5
+            }
+        ],
+        &quot;total&quot;: 50
+    }
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-GETapi-temu-products" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-GETapi-temu-products"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-GETapi-temu-products"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-temu-products" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-temu-products">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-temu-products" data-method="GET"
+    data-path="api/temu/products" data-authed="1"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('GETapi-temu-products', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-GETapi-temu-products"
+                onclick="tryItOut('GETapi-temu-products');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-GETapi-temu-products" onclick="cancelTryOut('GETapi-temu-products');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-GETapi-temu-products"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/temu/products</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-temu-products"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-temu-products"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-temu-products"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-temu-products"
+               value="1"
+               data-component="body">
+    <br>
+<p>页码 Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="per_page"                data-endpoint="GETapi-temu-products"
+               value="15"
+               data-component="body">
+    <br>
+<p>每页数量 Example: <code>15</code></p>
+        </div>
+        </form>
+
+    <h2 id="fa7afa9e6d22f4618de14e3a734fd9fa">获取商品详情</h2>
+
+<p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
+
+
+
+<span id="example-requests-GETapi-temu-products--id-">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/temu/products/consequatur"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/temu/products/consequatur';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-GETapi-temu-products--id-">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;product_id&quot;: &quot;601099661205317&quot;,
+        &quot;title&quot;: &quot;示例商品&quot;,
+        &quot;sale_price&quot;: 99.99,
+        &quot;weight&quot;: 0.5,
+        &quot;sources&quot;: []
+    }
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-GETapi-temu-products--id-" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-GETapi-temu-products--id-"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-GETapi-temu-products--id-"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-temu-products--id-" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-temu-products--id-">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-temu-products--id-" data-method="GET"
+    data-path="api/temu/products/{id}" data-authed="1"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('GETapi-temu-products--id-', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-GETapi-temu-products--id-"
+                onclick="tryItOut('GETapi-temu-products--id-');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-GETapi-temu-products--id-" onclick="cancelTryOut('GETapi-temu-products--id-');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-GETapi-temu-products--id-"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/temu/products/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-temu-products--id-"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-temu-products--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-temu-products--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL 参数</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-temu-products--id-"
+               value="consequatur"
+               data-component="url">
+    <br>
+<p>The ID of the product. Example: <code>consequatur</code></p>
+            </div>
+                    </form>
+
+    <h2 id="40a44f8bfc983fe401763e84d9efd4d6">开始采集1688同款</h2>
+
+<p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
+
+
+
+<span id="example-requests-POSTapi-temu-products-collect-similar">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/temu/products/collect-similar"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "product_id": 1,
+    "search_method": "image",
+    "max_count": 20
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/temu/products/collect-similar';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'product_id' =&gt; 1,
+            'search_method' =&gt; 'image',
+            'max_count' =&gt; 20,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-POSTapi-temu-products-collect-similar">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;成功采集 10 条1688同款&quot;,
+    &quot;data&quot;: {
+        &quot;count&quot;: 10,
+        &quot;total&quot;: 10
+    }
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-POSTapi-temu-products-collect-similar" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-POSTapi-temu-products-collect-similar"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-POSTapi-temu-products-collect-similar"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-temu-products-collect-similar" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-temu-products-collect-similar">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-temu-products-collect-similar" data-method="POST"
+    data-path="api/temu/products/collect-similar" data-authed="1"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-temu-products-collect-similar', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-POSTapi-temu-products-collect-similar"
+                onclick="tryItOut('POSTapi-temu-products-collect-similar');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-POSTapi-temu-products-collect-similar" onclick="cancelTryOut('POSTapi-temu-products-collect-similar');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-POSTapi-temu-products-collect-similar"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/temu/products/collect-similar</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-temu-products-collect-similar"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-temu-products-collect-similar"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-temu-products-collect-similar"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>product_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="product_id"                data-endpoint="POSTapi-temu-products-collect-similar"
+               value="1"
+               data-component="body">
+    <br>
+<p>Temu商品ID Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search_method</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search_method"                data-endpoint="POSTapi-temu-products-collect-similar"
+               value="image"
+               data-component="body">
+    <br>
+<p>搜索方式 (image/url) Example: <code>image</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>max_count</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="max_count"                data-endpoint="POSTapi-temu-products-collect-similar"
+               value="20"
+               data-component="body">
+    <br>
+<p>最大采集数量 Example: <code>20</code></p>
+        </div>
+        </form>
+
+    <h2 id="f5bd8715ab8ecc9804968cf2980f7f6a">获取商品的1688货源列表</h2>
+
+<p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
+
+
+
+<span id="example-requests-GETapi-temu-products--productId--sources">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/temu/products/consequatur/sources"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/temu/products/consequatur/sources';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-GETapi-temu-products--productId--sources">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;title&quot;: &quot;1688商品标题&quot;,
+            &quot;price&quot;: 29.9,
+            &quot;image&quot;: &quot;https://cbu01.alicdn.com/img/xxx.jpg&quot;,
+            &quot;url&quot;: &quot;https://detail.1688.com/offer/12345.html&quot;,
+            &quot;is_primary&quot;: true,
+            &quot;tags&quot;: [
+                &quot;7天无理由&quot;,
+                &quot;48小时发货&quot;
+            ]
+        }
+    ]
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-GETapi-temu-products--productId--sources" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-GETapi-temu-products--productId--sources"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-GETapi-temu-products--productId--sources"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-temu-products--productId--sources" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-temu-products--productId--sources">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-temu-products--productId--sources" data-method="GET"
+    data-path="api/temu/products/{productId}/sources" data-authed="1"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('GETapi-temu-products--productId--sources', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-GETapi-temu-products--productId--sources"
+                onclick="tryItOut('GETapi-temu-products--productId--sources');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-GETapi-temu-products--productId--sources" onclick="cancelTryOut('GETapi-temu-products--productId--sources');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-GETapi-temu-products--productId--sources"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/temu/products/{productId}/sources</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-temu-products--productId--sources"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-temu-products--productId--sources"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-temu-products--productId--sources"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL 参数</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>productId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="productId"                data-endpoint="GETapi-temu-products--productId--sources"
+               value="consequatur"
+               data-component="url">
+    <br>
+<p>Example: <code>consequatur</code></p>
+            </div>
+                    </form>
+
+    <h2 id="4e5dbd3dfbfc60bfe9a5698dc6f1903e">设置主选货源</h2>
+
+<p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
+
+
+
+<span id="example-requests-POSTapi-temu-products-set-primary-source">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/temu/products/set-primary-source"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "source_id": 1,
+    "product_id": 1
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/temu/products/set-primary-source';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'source_id' =&gt; 1,
+            'product_id' =&gt; 1,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-POSTapi-temu-products-set-primary-source">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;设置成功&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 1,
+        &quot;is_primary&quot;: true
+    }
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-POSTapi-temu-products-set-primary-source" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-POSTapi-temu-products-set-primary-source"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-POSTapi-temu-products-set-primary-source"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-temu-products-set-primary-source" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-temu-products-set-primary-source">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-temu-products-set-primary-source" data-method="POST"
+    data-path="api/temu/products/set-primary-source" data-authed="1"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-temu-products-set-primary-source', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-POSTapi-temu-products-set-primary-source"
+                onclick="tryItOut('POSTapi-temu-products-set-primary-source');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-POSTapi-temu-products-set-primary-source" onclick="cancelTryOut('POSTapi-temu-products-set-primary-source');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-POSTapi-temu-products-set-primary-source"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/temu/products/set-primary-source</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-temu-products-set-primary-source"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-temu-products-set-primary-source"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-temu-products-set-primary-source"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>source_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="source_id"                data-endpoint="POSTapi-temu-products-set-primary-source"
+               value="1"
+               data-component="body">
+    <br>
+<p>1688货源ID Example: <code>1</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>product_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="product_id"                data-endpoint="POSTapi-temu-products-set-primary-source"
+               value="1"
+               data-component="body">
+    <br>
+<p>Temu商品ID Example: <code>1</code></p>
+        </div>
+        </form>
+
+    <h2 id="c4a27a90d9c2d33c065d8c9b0c1f432c">计算商品利润</h2>
+
+<p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
+
+
+
+<span id="example-requests-POSTapi-temu-products-calculate-profit">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/temu/products/calculate-profit"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "product_id": 1
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/temu/products/calculate-profit';
+$response = $client-&gt;post(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'product_id' =&gt; 1,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-POSTapi-temu-products-calculate-profit">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;sale_price&quot;: 99.99,
+        &quot;purchase_price&quot;: 29.9,
+        &quot;weight&quot;: 0.5,
+        &quot;freight&quot;: 59.5,
+        &quot;platform_fee&quot;: 5,
+        &quot;profit&quot;: 4.59,
+        &quot;freight_config&quot;: {
+            &quot;freight_price_per_kg&quot;: 85,
+            &quot;operation_fee&quot;: 17
+        }
+    }
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-POSTapi-temu-products-calculate-profit" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-POSTapi-temu-products-calculate-profit"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-POSTapi-temu-products-calculate-profit"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-temu-products-calculate-profit" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-temu-products-calculate-profit">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-POSTapi-temu-products-calculate-profit" data-method="POST"
+    data-path="api/temu/products/calculate-profit" data-authed="1"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-temu-products-calculate-profit', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-POSTapi-temu-products-calculate-profit"
+                onclick="tryItOut('POSTapi-temu-products-calculate-profit');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-POSTapi-temu-products-calculate-profit" onclick="cancelTryOut('POSTapi-temu-products-calculate-profit');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-POSTapi-temu-products-calculate-profit"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/temu/products/calculate-profit</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-temu-products-calculate-profit"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-temu-products-calculate-profit"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-temu-products-calculate-profit"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>product_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="product_id"                data-endpoint="POSTapi-temu-products-calculate-profit"
+               value="1"
+               data-component="body">
+    <br>
+<p>Temu商品ID Example: <code>1</code></p>
+        </div>
+        </form>
+
+<h1 id="87f70c6e4807627934ff24e8bb33f671">VIP管理 (VIP Plans)</h1>
 
 
 
@@ -1202,7 +2314,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpF3C.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpF216.tmp', 'r')
             ],
         ],
     ]
@@ -1346,7 +2458,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpF3C.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpF216.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -4088,6 +5200,349 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             </div>
                     </form>
 
+<h1 id="0c2dd386c4872859d4368bed57f14f7f">运费配置</h1>
+
+<p>用户运费定价配置管理</p>
+
+    <h2 id="8e67628076762135f20bf6f00deb56d1">获取运费配置</h2>
+
+<p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
+
+
+
+<span id="example-requests-GETapi-freight-config">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/freight-config"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/freight-config';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-GETapi-freight-config">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: {
+        &quot;freight_price_per_kg&quot;: 85,
+        &quot;operation_fee&quot;: 17,
+        &quot;freight_config_updated_at&quot;: &quot;2026-01-29 10:00:00&quot;,
+        &quot;can_update&quot;: true,
+        &quot;next_update_time&quot;: null
+    }
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-GETapi-freight-config" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-GETapi-freight-config"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-GETapi-freight-config"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-freight-config" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-freight-config">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-freight-config" data-method="GET"
+    data-path="api/freight-config" data-authed="1"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('GETapi-freight-config', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-GETapi-freight-config"
+                onclick="tryItOut('GETapi-freight-config');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-GETapi-freight-config" onclick="cancelTryOut('GETapi-freight-config');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-GETapi-freight-config"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/freight-config</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-freight-config"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-freight-config"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-freight-config"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+    <h2 id="f332f5795b95d127c4e76eb253b0bd93">更新运费配置</h2>
+
+<p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
+
+
+
+<span id="example-requests-PUTapi-freight-config">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/freight-config"
+);
+
+const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "freight_price_per_kg": 85,
+    "operation_fee": 17
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/freight-config';
+$response = $client-&gt;put(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'freight_price_per_kg' =&gt; 85.0,
+            'operation_fee' =&gt; 17.0,
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-PUTapi-freight-config">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;配置更新成功&quot;,
+    &quot;data&quot;: {
+        &quot;freight_price_per_kg&quot;: 85,
+        &quot;operation_fee&quot;: 17
+    }
+}</code>
+ </pre>
+        <blockquote>
+        <p>响应示例 (400):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;24小时内仅支持修改一次，下次可修改时间: 2026-01-30 10:00:00&quot;
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-PUTapi-freight-config" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-PUTapi-freight-config"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-PUTapi-freight-config"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-freight-config" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-freight-config">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-PUTapi-freight-config" data-method="PUT"
+    data-path="api/freight-config" data-authed="1"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('PUTapi-freight-config', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-PUTapi-freight-config"
+                onclick="tryItOut('PUTapi-freight-config');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-PUTapi-freight-config" onclick="cancelTryOut('PUTapi-freight-config');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-PUTapi-freight-config"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/freight-config</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="PUTapi-freight-config"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-freight-config"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-freight-config"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>freight_price_per_kg</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freight_price_per_kg"                data-endpoint="PUTapi-freight-config"
+               value="85"
+               data-component="body">
+    <br>
+<p>运费单价(元/kg) Example: <code>85</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>operation_fee</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="operation_fee"                data-endpoint="PUTapi-freight-config"
+               value="17"
+               data-component="body">
+    <br>
+<p>操作费(元) Example: <code>17</code></p>
+        </div>
+        </form>
+
 <h1 id="32c6eed914882f5c4bddde976f2f6f39">飞猫选品</h1>
 
 <p>第三方选品平台接口</p>
@@ -4121,6 +5576,7 @@ let body = {
     ],
     "pageNum": 1,
     "pageSize": 40,
+    "site_url": "https:\/\/www.temu.com\/category",
     "channel": "temu"
 };
 
@@ -4149,6 +5605,7 @@ $response = $client-&gt;post(
             ],
             'pageNum' =&gt; 1,
             'pageSize' =&gt; 40,
+            'site_url' =&gt; 'https://www.temu.com/category',
             'channel' =&gt; 'temu',
         ],
     ]
@@ -4288,6 +5745,18 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                data-component="body">
     <br>
 <p>每页数量 Example: <code>40</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>site_url</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="site_url"                data-endpoint="POSTapi-feimao-products"
+               value="https://www.temu.com/category"
+               data-component="body">
+    <br>
+<p>采集站点URL Example: <code>https://www.temu.com/category</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>channel</code></b>&nbsp;&nbsp;

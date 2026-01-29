@@ -26,6 +26,7 @@ class FeimaoProductController extends Controller
     #[BodyParam("productIds", "array", "商品ID数组", required: true, example: ["601100055961140", "601099661205317", "601105314564080"])]
     #[BodyParam("pageNum", "integer", "页码", required: false, example: 1)]
     #[BodyParam("pageSize", "integer", "每页数量", required: false, example: 40)]
+    #[BodyParam("site_url", "string", "采集站点URL", required: false, example: "https://www.temu.com/category")]
     #[Response([
         "code" => 200,
         "message" => "success",
@@ -45,19 +46,29 @@ class FeimaoProductController extends Controller
             'productIds' => 'required|array',
             'pageNum' => 'integer',
             'pageSize' => 'integer',
+            'site_url' => 'string',
         ]);
 
         $productIds = $validated['productIds'];
         $pageNum = $request->input('pageNum', 1);
         $pageSize = $request->input('pageSize', 40);
+        $siteUrl = $request->input('site_url');
 
         try {
             $result = $this->feimaoService->getProductList($productIds, $pageNum, $pageSize);
+
+            if ($result['code'] == 200 && !empty($result['data']['list'])) {
+                $user = auth('sanctum')->user();
+                if ($user) {
+                    $temuService = app(\App\Services\TemuCollectionService::class);
+                    $temuService->saveBatchProducts($user->id, $result['data']['list'], $siteUrl);
+                }
+            }
+
             return response()->json($result);
         } catch (\Exception $e) {
             $message = $e->getMessage();
 
-            // 捕获超时错误，返回友好的提示信息
             if (strpos($message, 'timed out') !== false || strpos($message, 'cURL error 28') !== false) {
                 return response()->json([
                     'code' => 504,

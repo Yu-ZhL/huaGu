@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\TemuProductController;
+use App\Http\Controllers\Api\FreightConfigController;
 
 // 认证路由
 Route::post('/auth/send-code', [AuthController::class, 'sendCode']);
@@ -39,6 +41,20 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // 验证优惠码
     Route::match(['post', 'get'], '/coupons/{code}/validate', [CouponController::class, 'check']);
+
+    // Temu 商品管理
+    Route::prefix('temu/products')->group(function () {
+        Route::get('/', [TemuProductController::class, 'index']);
+        Route::get('/{id}', [TemuProductController::class, 'show']);
+        Route::post('/collect-similar', [TemuProductController::class, 'collectSimilar']);
+        Route::get('/{productId}/sources', [TemuProductController::class, 'getSources']);
+        Route::post('/set-primary-source', [TemuProductController::class, 'setPrimarySource']);
+        Route::post('/calculate-profit', [TemuProductController::class, 'calculateProfit']);
+    });
+
+    // 运费配置
+    Route::get('/freight-config', [FreightConfigController::class, 'show']);
+    Route::put('/freight-config', [FreightConfigController::class, 'update']);
 });
 
 // 支付回调 - 不需要认证

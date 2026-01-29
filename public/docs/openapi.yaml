@@ -8,6 +8,9 @@ servers:
     url: 'http://103.214.173.247:3019'
 tags:
   -
+    name: 'Temu 商品管理'
+    description: 'Temu 商品采集和同款管理'
+  -
     name: 'VIP管理 (VIP Plans)'
     description: ''
   -
@@ -29,6 +32,9 @@ tags:
     name: '订单管理 (Orders)'
     description: ''
   -
+    name: 运费配置
+    description: 用户运费定价配置管理
+  -
     name: 飞猫选品
     description: 第三方选品平台接口
 components:
@@ -41,6 +47,420 @@ security:
   -
     default: []
 paths:
+  /api/temu/products:
+    get:
+      summary: 获取采集商品列表
+      operationId: ''
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    current_page: 1
+                    data:
+                      -
+                        id: 1
+                        product_id: '601099661205317'
+                        title: 示例商品
+                        sale_price: 99.99
+                        weight: 0.5
+                        sources_count: 5
+                    total: 50
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      data:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            product_id: '601099661205317'
+                            title: 示例商品
+                            sale_price: 99.99
+                            weight: 0.5
+                            sources_count: 5
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            product_id:
+                              type: string
+                              example: '601099661205317'
+                            title:
+                              type: string
+                              example: 示例商品
+                            sale_price:
+                              type: number
+                              example: 99.99
+                            weight:
+                              type: number
+                              example: 0.5
+                            sources_count:
+                              type: integer
+                              example: 5
+                      total:
+                        type: integer
+                        example: 50
+      tags:
+        - 'Temu 商品管理'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page:
+                  type: integer
+                  description: 页码
+                  example: 1
+                per_page:
+                  type: integer
+                  description: 每页数量
+                  example: 15
+  '/api/temu/products/{id}':
+    get:
+      summary: 获取商品详情
+      operationId: ''
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    id: 1
+                    product_id: '601099661205317'
+                    title: 示例商品
+                    sale_price: 99.99
+                    weight: 0.5
+                    sources: []
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      product_id:
+                        type: string
+                        example: '601099661205317'
+                      title:
+                        type: string
+                        example: 示例商品
+                      sale_price:
+                        type: number
+                        example: 99.99
+                      weight:
+                        type: number
+                        example: 0.5
+                      sources:
+                        type: array
+                        example: []
+      tags:
+        - 'Temu 商品管理'
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the product.'
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/temu/products/collect-similar:
+    post:
+      summary: 开始采集1688同款
+      operationId: '1688'
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  message: '成功采集 10 条1688同款'
+                  data:
+                    count: 10
+                    total: 10
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: '成功采集 10 条1688同款'
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        example: 10
+                      total:
+                        type: integer
+                        example: 10
+      tags:
+        - 'Temu 商品管理'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                  description: Temu商品ID
+                  example: 1
+                search_method:
+                  type: string
+                  description: '搜索方式 (image/url)'
+                  example: image
+                max_count:
+                  type: integer
+                  description: 最大采集数量
+                  example: 20
+              required:
+                - product_id
+  '/api/temu/products/{productId}/sources':
+    get:
+      summary: 获取商品的1688货源列表
+      operationId: '1688'
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 1
+                      title: 1688商品标题
+                      price: 29.9
+                      image: 'https://cbu01.alicdn.com/img/xxx.jpg'
+                      url: 'https://detail.1688.com/offer/12345.html'
+                      is_primary: true
+                      tags:
+                        - 7天无理由
+                        - 48小时发货
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        title: 1688商品标题
+                        price: 29.9
+                        image: 'https://cbu01.alicdn.com/img/xxx.jpg'
+                        url: 'https://detail.1688.com/offer/12345.html'
+                        is_primary: true
+                        tags:
+                          - 7天无理由
+                          - 48小时发货
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        title:
+                          type: string
+                          example: 1688商品标题
+                        price:
+                          type: number
+                          example: 29.9
+                        image:
+                          type: string
+                          example: 'https://cbu01.alicdn.com/img/xxx.jpg'
+                        url:
+                          type: string
+                          example: 'https://detail.1688.com/offer/12345.html'
+                        is_primary:
+                          type: boolean
+                          example: true
+                        tags:
+                          type: array
+                          example:
+                            - 7天无理由
+                            - 48小时发货
+                          items:
+                            type: string
+      tags:
+        - 'Temu 商品管理'
+    parameters:
+      -
+        in: path
+        name: productId
+        description: ''
+        example: consequatur
+        required: true
+        schema:
+          type: string
+  /api/temu/products/set-primary-source:
+    post:
+      summary: 设置主选货源
+      operationId: ''
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  message: 设置成功
+                  data:
+                    id: 1
+                    is_primary: true
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 设置成功
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      is_primary:
+                        type: boolean
+                        example: true
+      tags:
+        - 'Temu 商品管理'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_id:
+                  type: integer
+                  description: 1688货源ID
+                  example: 1
+                product_id:
+                  type: integer
+                  description: Temu商品ID
+                  example: 1
+              required:
+                - source_id
+                - product_id
+  /api/temu/products/calculate-profit:
+    post:
+      summary: 计算商品利润
+      operationId: ''
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    sale_price: 99.99
+                    purchase_price: 29.9
+                    weight: 0.5
+                    freight: 59.5
+                    platform_fee: 5
+                    profit: 4.59
+                    freight_config:
+                      freight_price_per_kg: 85
+                      operation_fee: 17
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      sale_price:
+                        type: number
+                        example: 99.99
+                      purchase_price:
+                        type: number
+                        example: 29.9
+                      weight:
+                        type: number
+                        example: 0.5
+                      freight:
+                        type: number
+                        example: 59.5
+                      platform_fee:
+                        type: integer
+                        example: 5
+                      profit:
+                        type: number
+                        example: 4.59
+                      freight_config:
+                        type: object
+                        properties:
+                          freight_price_per_kg:
+                            type: integer
+                            example: 85
+                          operation_fee:
+                            type: integer
+                            example: 17
+      tags:
+        - 'Temu 商品管理'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                  description: Temu商品ID
+                  example: 1
+              required:
+                - product_id
   /api/vip/plans:
     get:
       summary: 获取VIP套餐列表
@@ -1657,6 +2077,121 @@ paths:
         required: true
         schema:
           type: string
+  /api/freight-config:
+    get:
+      summary: 获取运费配置
+      operationId: ''
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    freight_price_per_kg: 85
+                    operation_fee: 17
+                    freight_config_updated_at: '2026-01-29 10:00:00'
+                    can_update: true
+                    next_update_time: null
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      freight_price_per_kg:
+                        type: integer
+                        example: 85
+                      operation_fee:
+                        type: integer
+                        example: 17
+                      freight_config_updated_at:
+                        type: string
+                        example: '2026-01-29 10:00:00'
+                      can_update:
+                        type: boolean
+                        example: true
+                      next_update_time:
+                        type: string
+                        example: null
+      tags:
+        - 运费配置
+    put:
+      summary: 更新运费配置
+      operationId: ''
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  message: 配置更新成功
+                  data:
+                    freight_price_per_kg: 85
+                    operation_fee: 17
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 配置更新成功
+                  data:
+                    type: object
+                    properties:
+                      freight_price_per_kg:
+                        type: integer
+                        example: 85
+                      operation_fee:
+                        type: integer
+                        example: 17
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: '24小时内仅支持修改一次，下次可修改时间: 2026-01-30 10:00:00'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: '24小时内仅支持修改一次，下次可修改时间: 2026-01-30 10:00:00'
+      tags:
+        - 运费配置
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                freight_price_per_kg:
+                  type: number
+                  description: 运费单价(元/kg)
+                  example: 85.0
+                operation_fee:
+                  type: number
+                  description: 操作费(元)
+                  example: 17.0
+              required:
+                - freight_price_per_kg
+                - operation_fee
   /api/feimao/products:
     post:
       summary: 批量查询商品详情
@@ -1734,6 +2269,10 @@ paths:
                   type: integer
                   description: 每页数量
                   example: 40
+                site_url:
+                  type: string
+                  description: 采集站点URL
+                  example: 'https://www.temu.com/category'
                 channel:
                   type: string
                   description: '渠道 (调试用，固定为temu)'

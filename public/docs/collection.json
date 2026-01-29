@@ -10,11 +10,237 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "ce4d7abe-95bb-4c07-8907-65c78b1e838a",
+        "_postman_id": "7dd404a3-439d-4daa-b4a5-83c916f04bf0",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
+        {
+            "name": "Temu \u5546\u54c1\u7ba1\u7406",
+            "description": "Temu \u5546\u54c1\u91c7\u96c6\u548c\u540c\u6b3e\u7ba1\u7406",
+            "item": [
+                {
+                    "name": "\u83b7\u53d6\u91c7\u96c6\u5546\u54c1\u5217\u8868",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/temu\/products",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/temu\/products"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"page\":1,\"per_page\":15}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"product_id\":\"601099661205317\",\"title\":\"\\u793a\\u4f8b\\u5546\\u54c1\",\"sale_price\":99.99,\"weight\":0.5,\"sources_count\":5}],\"total\":50}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u5546\u54c1\u8be6\u60c5",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/temu\/products\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/temu\/products\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "consequatur",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"id\":1,\"product_id\":\"601099661205317\",\"title\":\"\\u793a\\u4f8b\\u5546\\u54c1\",\"sale_price\":99.99,\"weight\":0.5,\"sources\":[]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u5f00\u59cb\u91c7\u96c61688\u540c\u6b3e",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/temu\/products\/collect-similar",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/temu\/products\/collect-similar"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"product_id\":1,\"search_method\":\"image\",\"max_count\":20}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"message\":\"\\u6210\\u529f\\u91c7\\u96c6 10 \\u67611688\\u540c\\u6b3e\",\"data\":{\"count\":10,\"total\":10}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u5546\u54c1\u76841688\u8d27\u6e90\u5217\u8868",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/temu\/products\/:productId\/sources",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/temu\/products\/:productId\/sources",
+                            "variable": [
+                                {
+                                    "id": "productId",
+                                    "key": "productId",
+                                    "value": "consequatur",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"id\":1,\"title\":\"1688\\u5546\\u54c1\\u6807\\u9898\",\"price\":29.9,\"image\":\"https:\\\/\\\/cbu01.alicdn.com\\\/img\\\/xxx.jpg\",\"url\":\"https:\\\/\\\/detail.1688.com\\\/offer\\\/12345.html\",\"is_primary\":true,\"tags\":[\"7\\u5929\\u65e0\\u7406\\u7531\",\"48\\u5c0f\\u65f6\\u53d1\\u8d27\"]}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u8bbe\u7f6e\u4e3b\u9009\u8d27\u6e90",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/temu\/products\/set-primary-source",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/temu\/products\/set-primary-source"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"source_id\":1,\"product_id\":1}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"message\":\"\\u8bbe\\u7f6e\\u6210\\u529f\",\"data\":{\"id\":1,\"is_primary\":true}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u8ba1\u7b97\u5546\u54c1\u5229\u6da6",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/temu\/products\/calculate-profit",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/temu\/products\/calculate-profit"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"product_id\":1}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"sale_price\":99.99,\"purchase_price\":29.9,\"weight\":0.5,\"freight\":59.5,\"platform_fee\":5,\"profit\":4.59,\"freight_config\":{\"freight_price_per_kg\":85,\"operation_fee\":17}}}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
         {
             "name": "VIP\u7ba1\u7406 (VIP Plans)",
             "description": "",
@@ -984,6 +1210,85 @@
             ]
         },
         {
+            "name": "\u8fd0\u8d39\u914d\u7f6e",
+            "description": "\u7528\u6237\u8fd0\u8d39\u5b9a\u4ef7\u914d\u7f6e\u7ba1\u7406",
+            "item": [
+                {
+                    "name": "\u83b7\u53d6\u8fd0\u8d39\u914d\u7f6e",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/freight-config",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/freight-config"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"freight_price_per_kg\":85,\"operation_fee\":17,\"freight_config_updated_at\":\"2026-01-29 10:00:00\",\"can_update\":true,\"next_update_time\":null}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u66f4\u65b0\u8fd0\u8d39\u914d\u7f6e",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/freight-config",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/freight-config"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"freight_price_per_kg\":85,\"operation_fee\":17}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"message\":\"\\u914d\\u7f6e\\u66f4\\u65b0\\u6210\\u529f\",\"data\":{\"freight_price_per_kg\":85,\"operation_fee\":17}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\"success\":false,\"message\":\"24\\u5c0f\\u65f6\\u5185\\u4ec5\\u652f\\u6301\\u4fee\\u6539\\u4e00\\u6b21\\uff0c\\u4e0b\\u6b21\\u53ef\\u4fee\\u6539\\u65f6\\u95f4: 2026-01-30 10:00:00\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "\u98de\u732b\u9009\u54c1",
             "description": "\u7b2c\u4e09\u65b9\u9009\u54c1\u5e73\u53f0\u63a5\u53e3",
             "item": [
@@ -1009,7 +1314,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"productIds\":[\"601100055961140\",\"601099661205317\",\"601105314564080\"],\"pageNum\":1,\"pageSize\":40,\"channel\":\"temu\"}"
+                            "raw": "{\"productIds\":[\"601100055961140\",\"601099661205317\",\"601105314564080\"],\"pageNum\":1,\"pageSize\":40,\"site_url\":\"https:\\\/\\\/www.temu.com\\\/category\",\"channel\":\"temu\"}"
                         },
                         "description": "",
                         "auth": {
