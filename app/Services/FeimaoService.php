@@ -159,7 +159,7 @@ class FeimaoService
     public function getProductListByCategory(int $pageNum, int $pageSize, string $categoryId = '')
     {
         $cacheKey = "feimao:product_list:{$categoryId}:{$pageNum}:{$pageSize}";
-        $url = '/api/collectProduct/list';
+        $url = '/api/bestSellingProducts/list';
         $payload = [
             'pageNum' => $pageNum,
             'pageSize' => $pageSize,
