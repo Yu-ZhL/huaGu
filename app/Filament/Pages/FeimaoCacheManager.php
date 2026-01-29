@@ -34,15 +34,18 @@ class FeimaoCacheManager extends Page
     {
         $prefix = config('database.redis.options.prefix', '');
 
-        // 使用底层 Client 获取包含前缀的完整 Key
-        $connection = Redis::connection();
-        $keys = $connection->client()->keys($prefix . 'feimao:*');
+        // 使用 Facade 查找，Laravel 会自动处理前缀搜索
+        $keys = Redis::keys('feimao:*');
 
         $items = [];
 
         foreach ($keys as $fullKey) {
-            // 剥离前缀，得到 Laravel 逻辑 Key
-            $key = $prefix ? substr($fullKey, strlen($prefix)) : $fullKey;
+            // Redis::keys 返回的是带前缀的完整键名 (e.g. laravel_database_feimao:123)
+            // 但 Redis::ttl / Redis::get 期望的是不带前缀的逻辑键名 (e.g. feimao:123)
+            // 所以这里必须剥离前缀
+            $key = ($prefix && strpos($fullKey, $prefix) === 0)
+                ? substr($fullKey, strlen($prefix))
+                : $fullKey;
 
             $type = '未知类型';
             if (strpos($key, 'feimao:categories') !== false)
