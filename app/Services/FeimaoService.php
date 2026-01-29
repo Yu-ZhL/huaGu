@@ -141,7 +141,8 @@ class FeimaoService
 
         $result = $this->request('POST', $url, $payload);
 
-        if (isset($result['code']) && $result['code'] == 200) {
+        // 响应正常且数据不为空才存入缓存
+        if (isset($result['code']) && $result['code'] == 200 && !empty($result['data'])) {
             $cacheContent = [
                 'url' => $this->baseUrl . $url,
                 'payload' => $payload,
@@ -173,7 +174,8 @@ class FeimaoService
 
         $result = $this->request('POST', $url, $payload);
 
-        if (isset($result['code']) && $result['code'] == 200) {
+        // 响应正常且 records 不为空才存缓存
+        if (isset($result['code']) && $result['code'] == 200 && !empty($result['data']['records'])) {
             $cacheContent = [
                 'url' => $this->baseUrl . $url,
                 'payload' => $payload,
@@ -201,7 +203,8 @@ class FeimaoService
 
         $result = $this->request('POST', $url, $payload);
 
-        if (isset($result['code']) && $result['code'] == 200) {
+        // 响应正常且数据不为空才存缓存
+        if (isset($result['code']) && $result['code'] == 200 && !empty($result['data'])) {
             $cacheContent = [
                 'url' => $this->baseUrl . $url,
                 'payload' => $payload,

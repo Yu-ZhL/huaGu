@@ -77,7 +77,8 @@ class FeimaoCacheManager extends Page
                 'type' => $type,
                 'url' => $url,
                 'ttl' => $ttl,
-                'content' => $rawContent, // 原始 JSON 用于查看
+                'content' => $rawContent,
+                'payload' => $parsedContent['payload'] ?? null, // 显式传递参数
                 'can_refresh' => true,
             ];
         }
