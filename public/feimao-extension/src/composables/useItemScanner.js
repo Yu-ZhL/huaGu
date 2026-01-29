@@ -3,6 +3,7 @@ import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
 export function useItemScanner() {
     const totalCount = ref(0)
     const filteredCount = ref(0)
+    const isScanning = ref(false)
     let observer = null
 
     // 筛选条件
@@ -117,6 +118,7 @@ export function useItemScanner() {
     }
 
     const startScanning = () => {
+        isScanning.value = true
         scanItems()
         observer = new MutationObserver(() => {
             scanItems()
@@ -125,6 +127,7 @@ export function useItemScanner() {
     }
 
     const stopScanning = () => {
+        isScanning.value = false
         if (observer) observer.disconnect()
     }
 
@@ -137,6 +140,7 @@ export function useItemScanner() {
         filteredCount,
         filters,
         startScanning,
-        stopScanning
+        stopScanning,
+        isScanning
     }
 }

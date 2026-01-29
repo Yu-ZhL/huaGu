@@ -1,0 +1,136 @@
+/* 采集明细弹窗样式 */
+.fm-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fm-dialog {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.fm-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fm-head-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fm-badge {
+    background: #4a78f5;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.fm-close-x {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.fm-close-x:hover {
+    color: #222;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.fm-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+}
+
+.fm-table-wrap {
+    overflow-x: auto;
+}
+
+.fm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.fm-table thead {
+    background: #f7f7f7;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.fm-table th {
+    padding: 10px 8px;
+    text-align: left;
+    font-weight: 600;
+    color: #222;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.fm-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.fm-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.fm-foot {
+    padding: 16px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fm-hint {
+    font-size: 14px;
+    color: #666;
+}
+
+.fm-btn {
+    padding: 8px 20px;
+    background: #4a78f5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.fm-btn:hover {
+    background: #3a68e5;
+}
