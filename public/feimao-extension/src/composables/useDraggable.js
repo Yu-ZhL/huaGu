@@ -10,27 +10,38 @@ export function useDraggable(initialPos = { top: 200, left: 300 }) {
     let startLeft = 0
     let startTop = 0
 
+    // 鼠标按下，开始拖拽
     const onMouseDown = (e) => {
         isDragging = true
+        // 记录初始点击位置
         startX = e.clientX
         startY = e.clientY
+        // 记录元素当前位置
         startLeft = position.left
         startTop = position.top
 
+        // 绑定移动和松开事件到 document，防止鼠标移出元素导致丢失
         document.addEventListener('mousemove', onMouseMove)
         document.addEventListener('mouseup', onMouseUp)
     }
 
+    // 鼠标移动，更新位置
     const onMouseMove = (e) => {
         if (!isDragging) return
+
+        // 计算偏移量
         const dx = e.clientX - startX
         const dy = e.clientY - startY
+
+        // 更新位置
         position.left = startLeft + dx
         position.top = startTop + dy
     }
 
+    // 鼠标松开，结束拖拽
     const onMouseUp = () => {
         isDragging = false
+        // 移除全局事件监听
         document.removeEventListener('mousemove', onMouseMove)
         document.removeEventListener('mouseup', onMouseUp)
     }

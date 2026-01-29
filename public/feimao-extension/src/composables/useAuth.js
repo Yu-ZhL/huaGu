@@ -67,23 +67,24 @@ export function useAuth() {
 
                 alert('登录成功！')
             } else {
-                console.warn('Login API response structure might differ:', res)
+                console.warn('登录返回数据结构可能有变:', res)
                 alert(res.message || '登录异常，请重试')
             }
         } catch (error) {
-            console.error('Login failed:', error)
+            console.error('登录请求失败:', error)
             alert('登录失败，请检查账号密码')
         } finally {
             loading.value = false
         }
     }
 
-    // 退出
+    // 退出登录
     const handleLogout = async () => {
         try {
             await requestApi('POST', '/auth/logout')
         } catch (e) {
-            console.warn('Logout api failed', e)
+            // 退出失败一般不需要阻塞用户，记录日志即可
+            console.warn('退出接口调用失败', e)
         }
 
         isLoggedIn.value = false

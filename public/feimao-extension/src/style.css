@@ -1,24 +1,24 @@
-/* Global styles for the extension */
-/* Ensure high z-index and reset some properties for the root */
+/* 扩展的全局样式 */
+/* 确保根元素拥有最高层级，并重置部分属性 */
 #feimao-extension-root {
   position: fixed;
-  z-index: 999999;
+  z-index: 2147483647; /* 设置为最大整数，防止被页面其他元素遮挡 */
   top: 0;
   left: 0;
   width: 0;
   height: 0;
-  pointer-events: none; /* Let clicks pass through the container, enable on children */
+  pointer-events: none; /* 让点击事件穿透容器，但允许子元素响应 */
 }
 
 #feimao-extension-root * {
   box-sizing: border-box;
-  pointer-events: auto; /* Re-enable pointer events for extension UI */
+  pointer-events: auto; /* 重新启用扩展UI的鼠标事件 */
 }
 
 /* 提供的 CSS 样式还原 */
 .feimao-card {
   position: fixed;
-  background: #1e293b; /* Dark background similar to image */
+  background: #1e293b; /* 深色背景，类似设计图 */
   color: white;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);

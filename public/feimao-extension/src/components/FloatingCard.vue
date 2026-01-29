@@ -5,22 +5,23 @@ import { useItemScanner } from '../composables/useItemScanner'
 import { useCache } from '../composables/useCache'
 import { useDraggable } from '../composables/useDraggable'
 
-// Composables
+// 引入组合式函数
 const { isLoggedIn, userInfo, loading, loginForm, checkLoginStatus, handleLogin, handleLogout } = useAuth()
 const { totalCount, filteredCount, filters, startScanning, stopScanning } = useItemScanner()
 const { handleClearExtensionCache, handleClearTemuCache } = useCache()
 const { position, onMouseDown, headerRef } = useDraggable()
 
-// Component State
+// 组件内部状态
 const isCollapsed = ref(false)
 
 const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value
 }
 
-// Lifecycle
+// 生命周期钩子
 onMounted(() => {
     checkLoginStatus()
+    // 进入页面即开始扫描
     startScanning()
 })
 
