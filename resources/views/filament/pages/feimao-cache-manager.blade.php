@@ -21,30 +21,33 @@
                 <tbody>
                     @forelse($this->cacheItems as $item)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" x-data="{ 
-                                    ttl: {{ $item['ttl'] }},
-                                    showContent: false,
-                                    content: @js(json_decode($item['content'], true) ?? $item['content'])
-                                }" x-init="
-                                        if(ttl > 0) {
-                                            setInterval(() => { if(ttl > 0) ttl--; }, 1000)
-                                        }
-                                ">
+                                        ttl: {{ $item['ttl'] }},
+                                        showContent: false,
+                                        content: @js(json_decode($item['content'], true) ?? $item['content'])
+                                    }" x-init="
+                                            if(ttl > 0) {
+                                                setInterval(() => { if(ttl > 0) ttl--; }, 1000)
+                                            }
+                                    ">
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <x-filament::badge :color="$item['type'] === '身份令牌' ? 'warning' : 'success'">
                                     {{ $item['type'] }}
                                 </x-filament::badge>
+                            </td>
+                            <td class="px-6 py-4 font-mono text-xs max-w-[200px] truncate" title="{{ $item['key'] }}">
+                                {{ $item['short_key'] }}
                             </td>
                             <td class="px-6 py-4 truncate max-w-[300px]" title="{{ $item['url'] }}">
                                 <span class="font-mono text-xs">{{ $item['url'] }}</span>
                             </td>
                             <td class="px-6 py-4">
                                 <span class="font-bold" :class="{'text-danger-600': ttl < 60 && ttl > 0}" x-text="
-                                            ttl === -1 ? '永久有效' : 
-                                            (ttl <= -2 ? '已过期' : 
-                                            ((Math.floor(ttl/3600) > 0 ? Math.floor(ttl/3600) + 'h ' : '') + 
-                                            (Math.floor((ttl%3600)/60) > 0 ? Math.floor((ttl%3600)/60) + 'm ' : '') + 
-                                            (ttl%60) + 's'))
-                                        "></span>
+                                                ttl === -1 ? '永久有效' : 
+                                                (ttl <= -2 ? '已过期' : 
+                                                ((Math.floor(ttl/3600) > 0 ? Math.floor(ttl/3600) + 'h ' : '') + 
+                                                (Math.floor((ttl%3600)/60) > 0 ? Math.floor((ttl%3600)/60) + 'm ' : '') + 
+                                                (ttl%60) + 's'))
+                                            "></span>
                             </td>
                             <td class="px-6 py-4 text-right space-x-1">
                                 <x-filament::button size="xs" color="info" outlined @click="showContent = true">

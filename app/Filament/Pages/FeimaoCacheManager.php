@@ -32,11 +32,18 @@ class FeimaoCacheManager extends Page
     #[Computed]
     public function cacheItems()
     {
-        $keys = Redis::keys('feimao:*');
-        $items = [];
         $prefix = config('database.redis.options.prefix', '');
 
-        foreach ($keys as $key) {
+        // 使用底层 Client 获取包含前缀的完整 Key
+        $connection = Redis::connection();
+        $keys = $connection->client()->keys($prefix . 'feimao:*');
+
+        $items = [];
+
+        foreach ($keys as $fullKey) {
+            // 剥离前缀，得到 Laravel 逻辑 Key
+            $key = $prefix ? substr($fullKey, strlen($prefix)) : $fullKey;
+
             $type = '未知类型';
             if (strpos($key, 'feimao:categories') !== false)
                 $type = '分类数据';
@@ -49,7 +56,12 @@ class FeimaoCacheManager extends Page
 
             $ttl = Redis::ttl($key);
             $rawContent = Redis::get($key);
+
             $parsedContent = json_decode($rawContent, true);
+            // 简单防错
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $parsedContent = ['response' => $rawContent];
+            }
 
             $url = $parsedContent['url'] ?? '-';
             if ($type === '身份令牌')
@@ -58,7 +70,7 @@ class FeimaoCacheManager extends Page
             // 格式化数据供视图使用
             $items[] = [
                 'key' => $key,
-                'short_key' => str_replace($prefix, '', $key),
+                'short_key' => str_replace('feimao:', '', $key),
                 'type' => $type,
                 'url' => $url,
                 'ttl' => $ttl,
