@@ -120,6 +120,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Feimao Cache Management
+    Route::get('/feimao/cache', [\App\Http\Controllers\FeimaoCacheController::class, 'index'])->name('feimao.cache');
+    Route::delete('/feimao/cache', [\App\Http\Controllers\FeimaoCacheController::class, 'destroy'])->name('feimao.cache.destroy');
+    Route::post('/feimao/cache/refresh', [\App\Http\Controllers\FeimaoCacheController::class, 'refresh'])->name('feimao.cache.refresh');
 });
 
 require __DIR__ . '/auth.php';
