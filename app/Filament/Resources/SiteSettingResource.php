@@ -99,10 +99,6 @@ class SiteSettingResource extends Resource
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Toggle::make('status')
-                    ->label('状态')
-                    ->default(true),
-
                 Forms\Components\Placeholder::make('help')
                     ->label('使用说明')
                     ->content('在代码中使用 SiteSetting::get(\'key\') 获取。复杂配置将返回数组格式。')
@@ -153,11 +149,6 @@ class SiteSettingResource extends Resource
                         $record->key === 'customer_service' ? '点击编辑查看详情' : $state
                     )
                     ->color('gray'),
-
-                Tables\Columns\IconColumn::make('status')
-                    ->label('启用状态')
-                    ->boolean()
-                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('最后更新')
