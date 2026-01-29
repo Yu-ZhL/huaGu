@@ -151,6 +151,7 @@ return [
             'prefix' => 'laravel_database_',
             // 'prefix' => env('REDIS_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')) . '-database-'),
             'persistent' => false, // 强制禁用
+            'name' => 'laravel_database_',
         ],
 
         'default' => [

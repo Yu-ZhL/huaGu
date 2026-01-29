@@ -4,134 +4,107 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Redis\RedisManager;
 
 Route::get('/', function () {
-    $output = "<html><body style='font-family:sans-serif; padding:20px;'>";
-    $output .= "<h2>Redis 连接诊断报告 (Deep Debug Mode)</h2>";
+    $output = "<html><body style='font-family:sans-serif; padding:20px; line-height:1.6'>";
+    $output .= "<h2>Redis 终极诊断报告</h2>";
     $output .= "<p>时间: " . date('Y-m-d H:i:s') . "</p>";
 
-    // 1. 获取配置
-    $config = config('database.redis.default');
-    $host = $config['host'] ?? '未设置';
-    $port = $config['port'] ?? '未设置';
-    $password = $config['password'] ?? null;
-    $output .= "<h3>1. 配置信息</h3>";
-    $output .= "<ul>";
-    $output .= "<li>Host: <strong>{$host}</strong></li>";
-    $output .= "<li>Port: <strong>{$port}</strong></li>";
-    $output .= "<li>Password: <strong>" . ($password ?? 'NULL') . "</strong></li>";
-    $output .= "</ul>";
+    // --- 0. 环境与配置检测 ---
+    $output .= "<h3>0. 环境与配置</h3>";
+    $extVer = phpversion('redis');
+    $output .= "<div>Redis 扩展版本: " . ($extVer ?: '<span style="color:red">未安装</span>') . "</div>";
 
-    // 2. 原生 Redis 类测试 (phpredis)
-    $output .= "<h3>2. 原生 Redis 类测试 (phpredis)</h3>";
-    if (class_exists('Redis')) {
-        $output .= "<div>扩展版本: " . phpversion('redis') . "</div>";
-        $nativeRedis = new \Redis();
-        try {
-            $t1 = microtime(true);
+    // 获取所有相关配置
+    $dbConfig = config('database.redis');
+    $output .= "<details><summary><strong>完整 Redis 配置 (点击展开)</strong></summary><pre style='background:#f4f4f4;padding:10px;'>" . json_encode($dbConfig, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre></details>";
 
-            // Test 1: 类型严格测试 - 模拟 Config 传入 String 端口
-            $portVal = $port;
-            $output .= "<div>尝试连接: Host={$host}, Port=" . var_export($portVal, true) . " (Type: " . gettype($portVal) . "), Timeout=5...</div>";
+    // --- 1. 原生基准测试 (Control Group) ---
+    $output .= "<h3>1. 原生 Redis 基准测试</h3>";
+    $host = $dbConfig['default']['host'];
+    $port = $dbConfig['default']['port'];
+    $pwd = $dbConfig['default']['password'];
 
-            // 注意：这里我们故意不转 int，看看是否与之前行为一致，且使用 Laravel 的默认参数
-            // connect(host, port, timeout, reserved, retry, read_timeout)
-            $connected = $nativeRedis->connect($host, $portVal, 5, null, 0, 0);
-
-            $t2 = microtime(true);
-
-            if ($connected) {
-                $output .= "<div style='color:green'>✔ 原生连接成功 (耗时 " . round(($t2 - $t1) * 1000, 2) . "ms)</div>";
-
-                if ($password) {
-                    if ($nativeRedis->auth($password)) {
-                        $output .= "<div>认证成功</div>";
-                    } else {
-                        $output .= "<div style='color:red'>认证失败</div>";
-                    }
+    $native = new \Redis();
+    try {
+        // 严格模拟 Laravel 的参数
+        $connected = $native->connect($host, $port, 5, null, 0, 0);
+        if ($connected) {
+            $output .= "<div style='color:green'>✔ Socket 连接成功</div>";
+            if ($pwd) {
+                if ($native->auth($pwd)) {
+                    $output .= "<div style='color:green'>✔ Auth 认证成功</div>";
+                } else {
+                    $output .= "<div style='color:red'>✘ Auth 认证失败</div>";
                 }
-
-                // 尝试切库
-                if (isset($config['database'])) {
-                    $nativeRedis->select((int) $config['database']);
-                }
-
-                try {
-                    $ping = $nativeRedis->ping();
-                    $output .= "<div style='color:green'>✔ PING: {$ping}</div>";
-                } catch (\Exception $e) {
-                    $output .= "<div style='color:red'>✘ PING 异常: " . $e->getMessage() . "</div>";
-                }
-                $nativeRedis->close();
-
-            } else {
-                $output .= "<div style='color:red'>✘ 原生 connect 返回 false</div>";
             }
-        } catch (\Exception $e) {
-            $output .= "<div style='color:red'>✘ 原生测试异常: " . $e->getMessage() . "</div>";
+            $pong = $native->ping();
+            $output .= "<div style='color:green'>✔ Ping 响应: {$pong}</div>";
+        } else {
+            $output .= "<div style='color:red'>✘ Socket 连接失败</div>";
         }
-    } else {
-        $output .= "<div style='color:red'>✘ 没找到 Redis 类</div>";
+        $native->close();
+    } catch (\Throwable $e) {
+        $output .= "<div style='color:red'>✘ 原生测试抛出异常: " . $e->getMessage() . "</div>";
     }
 
-    // 2.5 Illuminate PhpRedisConnector 直接测试
-    $output .= "<h3>2.5 Illuminate PhpRedisConnector 直接测试</h3>";
+    // --- 2. 手动构建 RedisManager 测试 (Isolation Test) ---
+    // 这个测试用于判断是 Facade/Container 单例污染，还是 RedisManager 本身逻辑与环境不兼容
+    $output .= "<h3>2. 手动构建 RedisManager (隔离测试)</h3>";
     try {
-        $connector = new \Illuminate\Redis\Connectors\PhpRedisConnector();
-        $output .= "<div>实例化 Connector 成功</div>";
+        $driver = $dbConfig['client'];
+        $configArr = $dbConfig;
 
-        // 构造 Laravel 传递给 Connector 的标准配置数组
-        $laravelConfig = [
-            'host' => $host,
-            'port' => $port,
-            'password' => $password,
-            'database' => $config['database'] ?? 0,
-            'timeout' => 5,
-            'read_write_timeout' => 0,
-            'persistent' => false,
-            'name' => 'default',
-        ];
+        // 手动实例化 Manager，不经过 Laravel IOC 容器
+        $manager = new RedisManager(app(), $driver, $configArr);
 
-        // 如果 config 有 options，也加上
-        if (isset($config['options'])) {
-            $output .= "<div>Debug: Config has options: " . json_encode($config['options']) . "</div>";
-        }
+        // 尝试获取连接
+        $conn = $manager->connection('default');
+        $output .= "<div>Manager->connection() 获取成功</div>";
 
-        $output .= "<div>尝试使用 Connector->connect()...</div>";
-        // 注意：Laravel 11 connect 签名可能是 (config, options)
-        $redisAdapter = $connector->connect($laravelConfig, $config['options'] ?? []);
-        $output .= "<div style='color:green'>✔ Connector->connect() 成功返回对象</div>";
+        // 尝试 Ping
+        $res = $conn->ping();
+        $output .= "<div style='color:green'>✔ Manager 新实例 Ping 成功: {$res}</div>";
 
-        // 尝试操作
-        $redisAdapter->set('test_connector', 'Hello');
-        $output .= "<div>写入测试成功</div>";
+        // 尝试读写
+        $conn->set('debug_mgr_key', 'works');
+        $output .= "<div>Manager 读写测试: " . $conn->get('debug_mgr_key') . "</div>";
 
-    } catch (\Exception $e) {
-        $output .= "<div style='color:red'>✘ Connector 测试失败: " . $e->getMessage() . "</div>";
-        $output .= "<div>Error File: " . $e->getFile() . ":" . $e->getLine() . "</div>";
-        // 打印特定的 Trace 信息，看是不是在 connect 内部挂的
+        // 检查实际的 Client 对象
+        $client = $conn->client();
+        $output .= "<div>底层 Client 对象: " . get_class($client) . "</div>";
+
+    } catch (\Throwable $e) {
+        $output .= "<div style='color:red'>✘ 手动 Manager 测试失败: " . $e->getMessage() . "</div>";
+        $output .= "<div style='font-size:12px;color:#666'>File: " . $e->getFile() . ":" . $e->getLine() . "</div>";
     }
 
-    // 3. Laravel Facade 测试
-    $output .= "<h3>3. Laravel Facade 测试</h3>";
+    // --- 3. Facade 诊断与修复尝试 (Facade Test) ---
+    $output .= "<h3>3. Laravel Facade 诊断</h3>";
     try {
-        // 强制清除之前的实例
-        Illuminate\Support\Facades\Redis::clearResolvedInstances();
-        $redis = Illuminate\Support\Facades\Redis::connection();
+        // 3.1 原始状态测试
+        try {
+            Illuminate\Support\Facades\Redis::connection('default')->ping();
+            $output .= "<div style='color:green'>✔ 原始 Facade Ping 成功 (奇迹!)</div>";
+        } catch (\Throwable $e) {
+            $output .= "<div style='color:red'>✘ 原始 Facade Ping 失败: " . $e->getMessage() . "</div>";
 
-        $redis->ping();
-        $output .= "<div style='color:green'>✔ Laravel Facade PING 成功</div>";
+            // 3.2 尝试从错误中恢复：清除所有已解析的实例
+            $output .= "<div>尝试清除 Facade 缓存重连...</div>";
+            Illuminate\Support\Facades\Redis::clearResolvedInstances(); // 清除 Facade 缓存
+            app()->forgetInstance('redis'); // 清除容器绑定
+            app()->register(\Illuminate\Redis\RedisServiceProvider::class, true); // 重新注册 Provider
 
-        $redis->set('test_laravel_key', 'ok_' . time());
-        $val = $redis->get('test_laravel_key');
-        $output .= "<div>读写测试值: {$val}</div>";
-
-    } catch (\Exception $e) {
-        $output .= "<div style='color:red'>✘ Laravel Facade 失败: " . $e->getMessage() . "</div>";
-        $output .= "<div style='background:#f5f5f5;padding:10px;margin-top:5px;border-radius:4px;font-family:monospace;'>" . $e->getFile() . ":" . $e->getLine() . "</div>";
-
-        // 出错时打印配置
-        $output .= "<hr><strong>配置 Dump:</strong><pre>" . json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+            try {
+                Illuminate\Support\Facades\Redis::connection('default')->ping();
+                $output .= "<div style='color:green'>✔ 重置 Provider 后 Ping 成功 (说明是单例污染或初始化时机问题)</div>";
+            } catch (\Throwable $e2) {
+                $output .= "<div style='color:red'>✘ 重置后依然失败: " . $e2->getMessage() . "</div>";
+            }
+        }
+    } catch (\Throwable $e) {
+        $output .= "<div>Facade 测试发生严重错误: " . $e->getMessage() . "</div>";
     }
 
     $output .= "</body></html>";
