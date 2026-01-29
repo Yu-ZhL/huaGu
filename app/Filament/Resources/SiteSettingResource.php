@@ -114,34 +114,75 @@ class SiteSettingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('key')
-                    ->label('配置键')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('label')
-                    ->label('显示名称')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('value')
-                    ->label('配置值')
-                    ->limit(50),
+                    ->label('配置项名称')
+                    ->description(fn($record) => $record->key)
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('type')
                     ->label('类型')
+                    ->badge()
+                    ->icon(fn($state) => match ($state) {
+                        'text' => 'heroicon-m-document-text',
+                        'integer' => 'heroicon-m-hashtag',
+                        'boolean' => 'heroicon-m-check-circle',
+                        'json' => 'heroicon-m-code-bracket',
+                        default => 'heroicon-m-question-mark-circle',
+                    })
+                    ->color(fn($state) => match ($state) {
+                        'text' => 'gray',
+                        'integer' => 'info',
+                        'boolean' => 'success',
+                        'json' => 'warning',
+                        default => 'gray',
+                    })
                     ->formatStateUsing(fn($state) => match ($state) {
                         'text' => '文本',
-                        'integer' => '整数',
-                        'boolean' => '布尔值',
-                        'json' => 'JSON',
+                        'integer' => '数字',
+                        'boolean' => '布尔',
+                        'json' => '配置集',
                         default => $state,
                     }),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('更新时间')
-                    ->dateTime()
+
+                Tables\Columns\TextColumn::make('value')
+                    ->label('配置预览')
+                    ->limit(40)
+                    ->formatStateUsing(
+                        fn($state, $record) =>
+                        $record->key === 'customer_service' ? '点击编辑查看详情' : $state
+                    )
+                    ->color('gray'),
+
+                Tables\Columns\IconColumn::make('status')
+                    ->label('启用状态')
+                    ->boolean()
                     ->sortable(),
+
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('最后更新')
+                    ->dateTime()
+                    ->since()
+                    ->sortable()
+                    ->color('gray'),
             ])
+            ->defaultPaginationPageOption(20)
+            ->defaultSort('updated_at', 'desc')
             ->filters([
+                Tables\Filters\SelectFilter::make('type')
+                    ->label('类型过滤')
+                    ->options([
+                        'text' => '文本',
+                        'integer' => '数字',
+                        'boolean' => '布尔',
+                        'json' => '配置集',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                    ->modalWidth('2xl'),
+                    ->modalWidth('3xl')
+                    ->button()
+                    ->label('管理'),
             ])
             ->bulkActions([]);
     }
