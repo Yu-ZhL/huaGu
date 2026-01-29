@@ -21,17 +21,17 @@
                 <tbody>
                     @forelse($this->cacheItems as $item)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" x-data="{ 
-                                                                        ttl: {{ $item['ttl'] }},
-                                                                        showContent: false,
-                                                                        url: '{{ $item['url'] }}',
-                                                                        payload: @js($item['payload']),
-                                                                        response: @js($item['response']),
-                                                                        rawContent: @js($item['content'])
-                                                                    }" x-init="
-                                                                            if(ttl > 0) {
-                                                                                setInterval(() => { if(ttl > 0) ttl--; }, 1000)
-                                                                            }
-                                                                    ">
+                                                                                ttl: {{ $item['ttl'] }},
+                                                                                showContent: false,
+                                                                                url: '{{ $item['url'] }}',
+                                                                                payload: @js($item['payload']),
+                                                                                response: @js($item['response']),
+                                                                                rawContent: @js($item['content'])
+                                                                            }" x-init="
+                                                                                    if(ttl > 0) {
+                                                                                        setInterval(() => { if(ttl > 0) ttl--; }, 1000)
+                                                                                    }
+                                                                            ">
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <x-filament::badge :color="$item['type'] === '身份令牌' ? 'warning' : 'success'">
                                     {{ $item['type'] }}
@@ -42,12 +42,12 @@
                             </td>
                             <td class="px-6 py-4">
                                 <span class="font-bold" :class="{'text-danger-600': ttl < 60 && ttl > 0}" x-text="
-                                                                                ttl === -1 ? '永久有效' : 
-                                                                                (ttl <= -2 ? '已过期' : 
-                                                                                ((Math.floor(ttl/3600) > 0 ? Math.floor(ttl/3600) + 'h ' : '') + 
-                                                                                (Math.floor((ttl%3600)/60) > 0 ? Math.floor((ttl%3600)/60) + 'm ' : '') + 
-                                                                                (ttl%60) + 's'))
-                                                                            "></span>
+                                                                                        ttl === -1 ? '永久有效' : 
+                                                                                        (ttl <= -2 ? '已过期' : 
+                                                                                        ((Math.floor(ttl/3600) > 0 ? Math.floor(ttl/3600) + 'h ' : '') + 
+                                                                                        (Math.floor((ttl%3600)/60) > 0 ? Math.floor((ttl%3600)/60) + 'm ' : '') + 
+                                                                                        (ttl%60) + 's'))
+                                                                                    "></span>
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex justify-end space-x-2">
@@ -61,7 +61,7 @@
 
                                 {{-- 查看详情的弹窗 --}}
                                 <template x-if="showContent">
-                                    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 overflow-y-auto"
+                                    <div class="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 bg-black/50 overflow-y-auto"
                                         @click.self="showContent = false">
                                         <div
                                             class="bg-white dark:bg-gray-900 rounded-lg shadow-xl w-full max-w-5xl max-h-[90vh] flex flex-col text-left">
@@ -73,7 +73,8 @@
                                                 <button @click="showContent = false"
                                                     class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
                                             </div>
-                                            <div class="p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                            <div
+                                                class="p-6 overflow-y-auto flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-2 gap-6">
                                                 <!-- 左侧栏：请求详情 -->
                                                 <div class="space-y-4">
                                                     <div>
