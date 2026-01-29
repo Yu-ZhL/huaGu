@@ -21,17 +21,17 @@
                 <tbody>
                     @forelse($this->cacheItems as $item)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" x-data="{ 
-                                                                    ttl: {{ $item['ttl'] }},
-                                                                    showContent: false,
-                                                                    url: '{{ $item['url'] }}',
-                                                                    payload: @js($item['payload']),
-                                                                    response: @js($item['response']),
-                                                                    rawContent: @js($item['content'])
-                                                                }" x-init="
-                                                                        if(ttl > 0) {
-                                                                            setInterval(() => { if(ttl > 0) ttl--; }, 1000)
-                                                                        }
-                                                                ">
+                                                                        ttl: {{ $item['ttl'] }},
+                                                                        showContent: false,
+                                                                        url: '{{ $item['url'] }}',
+                                                                        payload: @js($item['payload']),
+                                                                        response: @js($item['response']),
+                                                                        rawContent: @js($item['content'])
+                                                                    }" x-init="
+                                                                            if(ttl > 0) {
+                                                                                setInterval(() => { if(ttl > 0) ttl--; }, 1000)
+                                                                            }
+                                                                    ">
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <x-filament::badge :color="$item['type'] === '身份令牌' ? 'warning' : 'success'">
                                     {{ $item['type'] }}
@@ -42,12 +42,12 @@
                             </td>
                             <td class="px-6 py-4">
                                 <span class="font-bold" :class="{'text-danger-600': ttl < 60 && ttl > 0}" x-text="
-                                                                            ttl === -1 ? '永久有效' : 
-                                                                            (ttl <= -2 ? '已过期' : 
-                                                                            ((Math.floor(ttl/3600) > 0 ? Math.floor(ttl/3600) + 'h ' : '') + 
-                                                                            (Math.floor((ttl%3600)/60) > 0 ? Math.floor((ttl%3600)/60) + 'm ' : '') + 
-                                                                            (ttl%60) + 's'))
-                                                                        "></span>
+                                                                                ttl === -1 ? '永久有效' : 
+                                                                                (ttl <= -2 ? '已过期' : 
+                                                                                ((Math.floor(ttl/3600) > 0 ? Math.floor(ttl/3600) + 'h ' : '') + 
+                                                                                (Math.floor((ttl%3600)/60) > 0 ? Math.floor((ttl%3600)/60) + 'm ' : '') + 
+                                                                                (ttl%60) + 's'))
+                                                                            "></span>
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex justify-end space-x-2">
@@ -73,7 +73,7 @@
                                                 <button @click="showContent = false"
                                                     class="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
                                             </div>
-                                            <div class="p-6 overflow-y-auto flex-1 grid grid-cols-2 gap-6">
+                                            <div class="p-6 overflow-y-auto flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6">
                                                 <!-- 左侧栏：请求详情 -->
                                                 <div class="space-y-4">
                                                     <div>
@@ -85,7 +85,7 @@
                                                         <h4 class="font-bold text-sm text-gray-500 uppercase mb-2">请求参数
                                                             (Payload)</h4>
                                                         <template x-if="payload">
-                                                            <pre class="bg-gray-100 dark:bg-gray-800 p-3 rounded text-xs overflow-x-auto border border-gray-200 dark:border-gray-700 h-[300px]"
+                                                            <pre class="bg-gray-100 dark:bg-gray-800 p-3 rounded text-xs overflow-x-auto border border-gray-200 dark:border-gray-700"
                                                                 x-text="JSON.stringify(payload, null, 2)"></pre>
                                                         </template>
                                                         <template x-if="!payload">
@@ -99,7 +99,7 @@
                                                     <h4 class="font-bold text-sm text-gray-500 uppercase mb-2">响应数据
                                                         (Response)</h4>
                                                     <template x-if="response">
-                                                        <pre class="bg-green-50 dark:bg-green-900/20 p-3 rounded text-xs overflow-x-auto border border-green-100 dark:border-green-900/30 h-[420px]"
+                                                        <pre class="bg-green-50 dark:bg-green-900/20 p-3 rounded text-xs overflow-x-auto border border-green-100 dark:border-green-900/30"
                                                             x-text="JSON.stringify(response, null, 2)"></pre>
                                                     </template>
                                                     <template x-if="!response">
