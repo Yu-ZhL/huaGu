@@ -54,7 +54,7 @@ class CouponResource extends Resource
                             ->required()
                             ->default('fixed')
                             ->live(),
-                        Forms\Components\TextInput::make('value')
+                        Forms\Components\TextInput::make('discount_value')
                             ->label('折扣值')
                             ->required()
                             ->numeric()
@@ -109,11 +109,11 @@ class CouponResource extends Resource
                     ->label('类型')
                     ->badge()
                     ->formatStateUsing(fn($state) => $state === 'fixed' ? '固定金额' : '百分比折扣'),
-                Tables\Columns\TextColumn::make('value')
+                Tables\Columns\TextColumn::make('discount_value')
                     ->label('折扣值')
                     ->formatStateUsing(
                         fn($record) =>
-                        $record->type === 'percent' ? $record->value . '%' : '¥' . $record->value
+                        $record->type === 'percent' ? $record->discount_value . '%' : '¥' . $record->discount_value
                     ),
                 Tables\Columns\TextColumn::make('usage')
                     ->label('使用情况')
