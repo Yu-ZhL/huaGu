@@ -153,6 +153,22 @@
                             </li>
                                                                         </ul>
                             </ul>
+                                <ul id="tocify-header-1409769510adda7e2f32e6d159131c32" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="1409769510adda7e2f32e6d159131c32">
+                    <a href="#1409769510adda7e2f32e6d159131c32">系统设置</a>
+                </li>
+                                    <ul id="tocify-subheader-1409769510adda7e2f32e6d159131c32" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="0a1bd8855f1f1805ac5136efc684a396">
+                                <a href="#0a1bd8855f1f1805ac5136efc684a396">获取专属客服</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="afac2a28c4fd0b367fdfb9b7a93ef926">
+                                <a href="#afac2a28c4fd0b367fdfb9b7a93ef926">获取使用教程</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="8d93d8ec1cc872898f00bf3bca564cde">
+                                <a href="#8d93d8ec1cc872898f00bf3bca564cde">下载飞猫选品插件</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                                 <ul id="tocify-header-dfa7f5ac897954f97f2337b095ea9d22" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="dfa7f5ac897954f97f2337b095ea9d22">
                     <a href="#dfa7f5ac897954f97f2337b095ea9d22">订单管理 (Orders)</a>
@@ -1186,7 +1202,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpFB23.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpF3C.tmp', 'r')
             ],
         ],
     ]
@@ -1330,7 +1346,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpFB23.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpF3C.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -2994,6 +3010,398 @@ print_r(json_decode((string) $body));</code></pre>        </div>
  &nbsp;
                 <input type="text" style="display: none"
                               name="Accept"                data-endpoint="POSTapi-auth-logout"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+<h1 id="1409769510adda7e2f32e6d159131c32">系统设置</h1>
+
+<p>包含专属客服、使用教程和插件下载等配置接口</p>
+
+    <h2 id="0a1bd8855f1f1805ac5136efc684a396">获取专属客服</h2>
+
+<p>
+        </p>
+
+<p>获取客服二维码图片及其底部文案。</p>
+
+<span id="example-requests-GETapi-settings-customer-service">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/settings/customer-service"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/settings/customer-service';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-GETapi-settings-customer-service">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;qr_code&quot;: &quot;http://domain.com/storage/qr.jpg&quot;,
+    &quot;text&quot;: &quot;扫码关注&quot;
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-GETapi-settings-customer-service" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-GETapi-settings-customer-service"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-GETapi-settings-customer-service"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-settings-customer-service" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-settings-customer-service">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-settings-customer-service" data-method="GET"
+    data-path="api/settings/customer-service" data-authed="0"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('GETapi-settings-customer-service', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-GETapi-settings-customer-service"
+                onclick="tryItOut('GETapi-settings-customer-service');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-GETapi-settings-customer-service" onclick="cancelTryOut('GETapi-settings-customer-service');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-GETapi-settings-customer-service"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/settings/customer-service</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-settings-customer-service"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-settings-customer-service"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+    <h2 id="afac2a28c4fd0b367fdfb9b7a93ef926">获取使用教程</h2>
+
+<p>
+        </p>
+
+<p>获取教程视频的 URL。</p>
+
+<span id="example-requests-GETapi-settings-usage-tutorial">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/settings/usage-tutorial"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/settings/usage-tutorial';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-GETapi-settings-usage-tutorial">
+            <blockquote>
+        <p>响应示例 (200):</p>
+    </blockquote>
+        <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;video_url&quot;: &quot;http://domain.com/video/flyingCat_compressed.mp4&quot;
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-GETapi-settings-usage-tutorial" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-GETapi-settings-usage-tutorial"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-GETapi-settings-usage-tutorial"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-settings-usage-tutorial" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-settings-usage-tutorial">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-settings-usage-tutorial" data-method="GET"
+    data-path="api/settings/usage-tutorial" data-authed="0"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('GETapi-settings-usage-tutorial', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-GETapi-settings-usage-tutorial"
+                onclick="tryItOut('GETapi-settings-usage-tutorial');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-GETapi-settings-usage-tutorial" onclick="cancelTryOut('GETapi-settings-usage-tutorial');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-GETapi-settings-usage-tutorial"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/settings/usage-tutorial</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-settings-usage-tutorial"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-settings-usage-tutorial"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+    <h2 id="8d93d8ec1cc872898f00bf3bca564cde">下载飞猫选品插件</h2>
+
+<p>
+        </p>
+
+<p>动态打包最新的插件 dist 目录并提供 Zip 下载。</p>
+
+<span id="example-requests-GETapi-settings-extension-download">
+    <blockquote>请求示例:</blockquote>
+
+    
+        <div class="javascript-example">
+            <pre><code class="language-javascript">const url = new URL(
+    "http://103.214.173.247:3019/api/settings/extension-download"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre>        </div>
+
+    
+        <div class="php-example">
+            <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'http://103.214.173.247:3019/api/settings/extension-download';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre>        </div>
+
+    </span>
+
+<span id="example-responses-GETapi-settings-extension-download">
+            <blockquote>
+        <p>响应示例 (404):</p>
+    </blockquote>
+            <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show
+                    headers</small>
+            </summary>
+            <pre><code class="language-http">                cache-control: no-cache, private
+                            content-type: application/json
+                            access-control-allow-origin: *
+             </code></pre>
+    </details>     <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The route api/settings/extension-download could not be found.&quot;
+}</code>
+ </pre>
+        </span>
+<span id="execution-results-GETapi-settings-extension-download" hidden>
+    <blockquote>接口返回数据<span
+            id="execution-response-status-GETapi-settings-extension-download"></span>:
+    </blockquote>
+    <pre
+        class="json"><code id="execution-response-content-GETapi-settings-extension-download"
+      data-empty-response-text="<空响应>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-settings-extension-download" hidden>
+    <blockquote>请求发生错误:</blockquote>
+    <pre><code id="execution-error-message-GETapi-settings-extension-download">
+
+调试提示：如果请求失败，请检查网络连接是否正常。
+对于开发者：请确保 API 服务已启动并配置了正确的 CORS 跨域策略。
+更多错误详情请查看浏览器控制台。</code></pre>
+</span>
+<form id="form-GETapi-settings-extension-download" data-method="GET"
+    data-path="api/settings/extension-download" data-authed="0"
+    data-hasfiles="0" data-isarraybody="0"
+    autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('GETapi-settings-extension-download', this);">
+    <h3>
+        请求&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-tryout-GETapi-settings-extension-download"
+                onclick="tryItOut('GETapi-settings-extension-download');">在线调试
+            </button>
+            <button type="button"
+                style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-canceltryout-GETapi-settings-extension-download" onclick="cancelTryOut('GETapi-settings-extension-download');"
+                hidden>取消调试
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                id="btn-executetryout-GETapi-settings-extension-download"
+                data-initial-text="发送请求"
+                data-loading-text="请求处理中..."
+                hidden>发送请求
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/settings/extension-download</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-settings-extension-download"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-settings-extension-download"
                value="application/json"
                data-component="header">
     <br>

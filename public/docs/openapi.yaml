@@ -23,6 +23,9 @@ tags:
     name: 用户认证
     description: ''
   -
+    name: 系统设置
+    description: "\n包含专属客服、使用教程和插件下载等配置接口"
+  -
     name: '订单管理 (Orders)'
     description: ''
   -
@@ -1319,6 +1322,76 @@ paths:
                     example: 退出成功
       tags:
         - 用户认证
+  /api/settings/customer-service:
+    get:
+      summary: 获取专属客服
+      operationId: ''
+      description: 获取客服二维码图片及其底部文案。
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  qr_code: 'http://domain.com/storage/qr.jpg'
+                  text: 扫码关注
+                properties:
+                  qr_code:
+                    type: string
+                    example: 'http://domain.com/storage/qr.jpg'
+                  text:
+                    type: string
+                    example: 扫码关注
+      tags:
+        - 系统设置
+      security: []
+  /api/settings/usage-tutorial:
+    get:
+      summary: 获取使用教程
+      operationId: ''
+      description: '获取教程视频的 URL。'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  video_url: 'http://domain.com/video/flyingCat_compressed.mp4'
+                properties:
+                  video_url:
+                    type: string
+                    example: 'http://domain.com/video/flyingCat_compressed.mp4'
+      tags:
+        - 系统设置
+      security: []
+  /api/settings/extension-download:
+    get:
+      summary: 下载飞猫选品插件
+      operationId: ''
+      description: '动态打包最新的插件 dist 目录并提供 Zip 下载。'
+      parameters: []
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The route api/settings/extension-download could not be found.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The route api/settings/extension-download could not be found.'
+      tags:
+        - 系统设置
+      security: []
   /api/orders:
     post:
       summary: 创建订单

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "2cec063f-08fe-4761-955e-463aeef2b1c0",
+        "_postman_id": "ce4d7abe-95bb-4c07-8907-65c78b1e838a",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -692,6 +692,130 @@
                             "header": [],
                             "code": 200,
                             "body": "{\n  \"success\": true,\n  \"code\": 200,\n  \"data\": null,\n  \"message\": \"\u9000\u51fa\u6210\u529f\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\u7cfb\u7edf\u8bbe\u7f6e",
+            "description": "\n\u5305\u542b\u4e13\u5c5e\u5ba2\u670d\u3001\u4f7f\u7528\u6559\u7a0b\u548c\u63d2\u4ef6\u4e0b\u8f7d\u7b49\u914d\u7f6e\u63a5\u53e3",
+            "item": [
+                {
+                    "name": "\u83b7\u53d6\u4e13\u5c5e\u5ba2\u670d",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/customer-service",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/customer-service"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u83b7\u53d6\u5ba2\u670d\u4e8c\u7ef4\u7801\u56fe\u7247\u53ca\u5176\u5e95\u90e8\u6587\u6848\u3002",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n \"qr_code\": \"http:\/\/domain.com\/storage\/qr.jpg\",\n \"text\": \"\u626b\u7801\u5173\u6ce8\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u83b7\u53d6\u4f7f\u7528\u6559\u7a0b",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/usage-tutorial",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/usage-tutorial"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u83b7\u53d6\u6559\u7a0b\u89c6\u9891\u7684 URL\u3002",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n \"video_url\": \"http:\/\/domain.com\/video\/flyingCat_compressed.mp4\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u4e0b\u8f7d\u98de\u732b\u9009\u54c1\u63d2\u4ef6",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/settings\/extension-download",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/settings\/extension-download"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u52a8\u6001\u6253\u5305\u6700\u65b0\u7684\u63d2\u4ef6 dist \u76ee\u5f55\u5e76\u63d0\u4f9b Zip \u4e0b\u8f7d\u3002",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 404,
+                            "body": "{\n    \"message\": \"The route api\/settings\/extension-download could not be found.\"\n}",
                             "name": ""
                         }
                     ]

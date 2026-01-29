@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\VipController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\SettingController;
 
 // 认证路由
 Route::post('/auth/send-code', [AuthController::class, 'sendCode']);
@@ -49,3 +50,8 @@ Route::post('/feimao/products', [FeimaoProductController::class, 'index']);
 Route::post('/feimao/categories', [FeimaoProductController::class, 'getCategories']);
 Route::post('/feimao/products/list', [FeimaoProductController::class, 'getCategoryProducts']);
 Route::post('/feimao/sales-records', [FeimaoProductController::class, 'getSalesRecord']);
+
+// 系统配置
+Route::get('/settings/customer-service', [SettingController::class, 'getCustomerService']);
+Route::get('/settings/usage-tutorial', [SettingController::class, 'getUsageTutorial']);
+Route::get('/settings/extension-download', [SettingController::class, 'downloadExtension']);
