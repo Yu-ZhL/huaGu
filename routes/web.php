@@ -25,36 +25,44 @@ Route::get('/', function () {
     // 2. 原生 Redis 类测试
     $output .= "<h3>2. 原生 Redis 类测试 (phpredis)</h3>";
     if (class_exists('Redis')) {
-        $output .= "<div>Redis 扩展版本: " . phpversion('redis') . "</div>";
+        $output .= "<div>扩展版本: " . phpversion('redis') . "</div>";
         $nativeRedis = new \Redis();
         try {
             $t1 = microtime(true);
-            $connected = $nativeRedis->connect($host, (int) $port, 2.5); // 2.5s timeout
+
+            // 模拟 Laravel 的连接参数：Host, Port, Timeout(5), Reserved(null), Retry(0), ReadTimeout(0)
+            // config('database.redis.default.read_write_timeout') 是 0
+            $connected = $nativeRedis->connect($host, (int) $port, 5, null, 0, 0);
+
             $t2 = microtime(true);
 
             if ($connected) {
-                $output .= "<div style='color:green'>✔ 原生 connect 成功 (耗时 " . round(($t2 - $t1) * 1000, 2) . "ms)</div>";
+                $output .= "<div style='color:green'>✔ 连接成功 (耗时 " . round(($t2 - $t1) * 1000, 2) . "ms)</div>";
 
                 if ($password) {
-                    $authRes = $nativeRedis->auth($password);
-                    $output .= "<div>原生 auth 结果: " . ($authRes ? 'true' : 'false') . "</div>";
+                    // 尝试认证
+                    if ($nativeRedis->auth($password)) {
+                        $output .= "<div>认证成功</div>";
+                    } else {
+                        $output .= "<div style='color:red'>认证失败</div>";
+                    }
                 }
 
                 try {
                     $ping = $nativeRedis->ping();
-                    $output .= "<div style='color:green'>✔ 原生 PING 响应: {$ping}</div>";
+                    $output .= "<div style='color:green'>✔ PING 响应: {$ping}</div>";
                 } catch (\Exception $e) {
-                    $output .= "<div style='color:red'>✘ 原生 PING 异常: " . $e->getMessage() . "</div>";
+                    $output .= "<div style='color:red'>✘ PING 异常: " . $e->getMessage() . "</div>";
                 }
 
             } else {
-                $output .= "<div style='color:red'>✘ 原生 connect 返回 false</div>";
+                $output .= "<div style='color:red'>✘ connect 返回 false</div>";
             }
         } catch (\Exception $e) {
-            $output .= "<div style='color:red'>✘ 原生测试发生异常: " . $e->getMessage() . "</div>";
+            $output .= "<div style='color:red'>✘ 原生测试异常: " . $e->getMessage() . "</div>";
         }
     } else {
-        $output .= "<div style='color:red'>✘ 错误: Redis 类不存在</div>";
+        $output .= "<div style='color:red'>✘ 没找到 Redis 类</div>";
     }
 
     // 3. Laravel Facade 测试
@@ -66,15 +74,14 @@ Route::get('/', function () {
 
         $redis->set('test_laravel_key', 'ok_' . time());
         $val = $redis->get('test_laravel_key');
-        $output .= "<div>Laravel 读写测试: {$val}</div>";
+        $output .= "<div>读写测试值: {$val}</div>";
 
     } catch (\Exception $e) {
-        $output .= "<div style='color:red'>✘ Laravel Facade 连接失败</div>";
-        $output .= "<pre style='background:#eee;padding:10px;'>" . $e->getMessage() . "</pre>";
-        $output .= "<div>文件: " . $e->getFile() . ":" . $e->getLine() . "</div>";
+        $output .= "<div style='color:red'>✘ Laravel Facade 失败: " . $e->getMessage() . "</div>";
+        $output .= "<div style='background:#f5f5f5;padding:10px;margin-top:5px;border-radius:4px;font-family:monospace;'>" . $e->getFile() . ":" . $e->getLine() . "</div>";
 
-        // 只有在 Laravel 失败时才显示详细配置 dump
-        $output .= "<hr><strong>完整配置 Dump:</strong><pre>" . json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
+        // 出错时打印配置
+        $output .= "<hr><strong>配置 Dump:</strong><pre>" . json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
     }
 
     $output .= "</body></html>";
