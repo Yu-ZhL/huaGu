@@ -55,9 +55,19 @@ class FeimaoProductController extends Controller
             $result = $this->feimaoService->getProductList($productIds, $pageNum, $pageSize);
             return response()->json($result);
         } catch (\Exception $e) {
+            $message = $e->getMessage();
+
+            // 捕获超时错误，返回友好的提示信息
+            if (strpos($message, 'timed out') !== false || strpos($message, 'cURL error 28') !== false) {
+                return response()->json([
+                    'code' => 504,
+                    'message' => '请求第三方接口超时，请稍后重试'
+                ], 504);
+            }
+
             return response()->json([
                 'code' => 500,
-                'message' => '接口报错: ' . $e->getMessage()
+                'message' => '接口报错: ' . $message
             ], 500);
         }
     }
