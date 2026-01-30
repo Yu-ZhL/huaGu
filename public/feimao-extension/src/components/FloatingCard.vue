@@ -119,10 +119,10 @@ const handleStartCollecting = async () => {
     return
   }
   
-  // 获取所有商品完整信息
-  console.log('[采集] 开始提取商品完整信息...')
+  // 获取所有商品ID
+  console.log('[采集] 开始提取商品ID...')
   
-  const products = []
+  const uniqueIds = []
   const seenIds = new Set()
   
   // 1. 优先从已注入的UI中提取
@@ -133,28 +133,14 @@ const handleStartCollecting = async () => {
     injectedUIs.forEach(ui => {
       const pid = ui.getAttribute('data-product-id')
       if (pid && !seenIds.has(pid)) {
-          const card = ui.parentElement
-          const img = card.querySelector('img')?.src
-          const title = card.querySelector('[class*="title"]')?.textContent?.trim() || '未命名商品'
-          const priceEl = card.querySelector('[data-type="price"]') || card.querySelector('[class*="price"]')
-          const price = priceEl?.textContent?.trim()?.replace(/[^0-9.]/g, '')
-
           seenIds.add(pid)
-          products.push({
-              product_id: pid,
-              productId: pid, // 兼容后端可能用的字段名
-              coverUrl: img,
-              cover_image: img, // 兼容
-              title: title,
-              price: price,
-              sale_price: price
-          })
+          uniqueIds.push(pid)
       }
     })
   } else {
-    // 2. 降级策略（直接从DOM扫描）
+    // 2. 降级策略（扫描DOM）
     console.log('[采集] 未找到注入UI，尝试直接从DOM扫描...')
-    // 复用之前的扫描逻辑，但这次要提取图片
+    
     let priceElements = Array.from(document.querySelectorAll('[data-type="price"]'))
     if (priceElements.length === 0) {
       priceElements = Array.from(document.querySelectorAll('[class*="price"], [class*="Price"]'))
@@ -167,35 +153,22 @@ const handleStartCollecting = async () => {
         
         for (let i = 0; i < 5; i++) {
           if (!card) break
-          const imgEl = card.querySelector('img')
-          if (imgEl) {
-            productId = card.dataset.goodsId || card.getAttribute('data-goods-id') || card.getAttribute('data-product-id')
-            
-            if (!productId) {
+          
+          productId = card.dataset.goodsId || card.getAttribute('data-goods-id') || card.getAttribute('data-product-id')
+          
+          if (!productId) {
                const link = card.querySelector('a[href]')
                if (link) {
                  const href = link.href
                  const match = href.match(/goods_id=(\d+)/) || href.match(/goodsId=(\d+)/) || href.match(/\/(\d{15,})/)
                  if (match) productId = match[1]
                }
-            }
-            
-            if (productId && !seenIds.has(productId)) {
-                const title = card.querySelector('[class*="title"]')?.textContent?.trim() || '未命名商品'
-                const price = priceEl.textContent?.trim()?.replace(/[^0-9.]/g, '')
-                
-                seenIds.add(productId)
-                products.push({
-                    product_id: productId,
-                    productId: productId,
-                    coverUrl: imgEl.src,
-                    cover_image: imgEl.src,
-                    title: title,
-                    price: price,
-                    sale_price: price
-                })
-            }
-            break
+          }
+          
+          if (productId && !seenIds.has(productId)) {
+              seenIds.add(productId)
+              uniqueIds.push(productId)
+              break
           }
           card = card.parentElement
         }
@@ -203,16 +176,13 @@ const handleStartCollecting = async () => {
     }
   }
 
-  // 去重 (其实上面已经用了set去重，这里为了保险)
-  const uniqueIds = products.map(p => p.productId)
-  
   if (uniqueIds.length === 0) {
     alert('未能提取到有效的商品ID')
     stopScanning()
     return
   }
   
-  console.log(`[采集] 提取到 ${products.length} 个商品详细信息`)
+  console.log(`[采集] 提取到 ${uniqueIds.length} 个商品ID`)
   
   // 提交到后端API
   try {
@@ -222,7 +192,6 @@ const handleStartCollecting = async () => {
     
     const res = await requestApi('POST', '/feimao/products', {
       productIds: uniqueIds,
-      products: products, // 发送完整对象数组
       site_url: window.location.href
     })
     

@@ -38,7 +38,8 @@ class TemuCollectionService
                     'sale_price' => $salePrice,
                     'weight' => $productData['weight'] ?? null,
                     'brand' => $productData['brand'] ?? null,
-                    'cover_image' => $productData['cover_image'] ?? $productData['coverUrl'] ?? null,
+                    // 修复：API返回的是 imageUrl，这里必须映射
+                    'cover_image' => $productData['imageUrl'] ?? $productData['cover_image'] ?? $productData['coverUrl'] ?? null,
                     'product_data' => $productData,
                     'collected_at' => now(),
                 ]
@@ -69,7 +70,9 @@ class TemuCollectionService
         $remainingCount = $maxCount - $existingCount;
 
         try {
-            // 优先使用 URL 搜图
+            Log::info('开始搜图，产品ID: ' . $temuProductId . '，图片URL: ' . $temuProduct->cover_image);
+
+            // 1. 优先尝试使用 URL 搜图
             if (!empty($temuProduct->cover_image)) {
                 $result = $this->platform1688Service->searchByUrl($temuProduct->cover_image, 1, $remainingCount);
             } else {
