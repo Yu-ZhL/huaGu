@@ -57,32 +57,23 @@ class UserResource extends Resource
                             ->password()
                             ->dehydrated(fn($state) => filled($state))
                             ->required(fn(string $context): bool => $context === 'create'),
-                        Forms\Components\TextInput::make('plaintext_password')
-                            ->label('明文密码')
-                            ->helperText('仅用于特殊需求，请谨慎修改'),
+                        Forms\Components\TextInput::make('password_confirmation')
+                            ->label('确认密码')
+                            ->password()
+                            ->dehydrated(false),
                     ])->columns(2),
 
-                Forms\Components\Section::make('VIP信息')
+                Forms\Components\Section::make('账号状态')
                     ->schema([
                         Forms\Components\Select::make('vip_level_id')
-                            ->label('VIP套餐')
-                            ->options(function () {
-                                $plans = \App\Models\VipPlan::where('status', 1)
-                                    ->orderBy('sort_order')
-                                    ->pluck('name', 'id')
-                                    ->toArray();
-                                return [0 => '无VIP'] + $plans;
-                            })
-                            ->searchable()
-                            ->default(0)
-                            ->dehydrateStateUsing(fn($state) => $state ?? 0)
-                            ->required(),
+                            ->label('VIP等级')
+                            ->relationship('vipPlan', 'name')
+                            ->default(0),
                         Forms\Components\DateTimePicker::make('vip_expired_at')
                             ->label('VIP过期时间'),
-                        Forms\Components\TextInput::make('ai_points')
-                            ->label('AI点数余额')
-                            ->numeric()
-                            ->default(0),
+                        Forms\Components\Toggle::make('status')
+                            ->label('账号状态（启用/禁用）')
+                            ->default(true),
                     ])->columns(3),
 
                 Forms\Components\Section::make('运费配置')
@@ -90,35 +81,22 @@ class UserResource extends Resource
                         Forms\Components\TextInput::make('freight_price_per_kg')
                             ->label('每公斤运费')
                             ->numeric()
-                            ->prefix('¥')
-                            ->step(0.01)
-                            ->helperText('用户自定义的每公斤运费价格')
-                            ->default(0),
+                            ->prefix('¥'),
                         Forms\Components\TextInput::make('operation_fee')
                             ->label('操作费')
                             ->numeric()
-                            ->prefix('¥')
-                            ->step(0.01)
-                            ->helperText('每单操作费用')
-                            ->default(0),
+                            ->prefix('¥'),
                         Forms\Components\DateTimePicker::make('freight_config_updated_at')
                             ->label('运费配置更新时间')
                             ->disabled()
                             ->dehydrated(false),
                     ])->columns(3),
 
-                Forms\Components\Section::make('账号状态')
+                Forms\Components\Section::make('备注信息')
                     ->schema([
-                        Forms\Components\Toggle::make('status')
-                            ->label('账号状态')
-                            ->onColor('success')
-                            ->offColor('danger')
-                            ->inline(false)
-                            ->default(true),
                         Forms\Components\Textarea::make('remark')
-                            ->label('备注')
-                            ->columnSpanFull(),
-                    ]),
+                            ->label('备注'),
+                    ])
             ]);
     }
 
@@ -211,7 +189,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->label('邮箱')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('vipPlan.name')
                     ->label('VIP套餐')
                     ->default('普通用户')
@@ -230,17 +208,17 @@ class UserResource extends Resource
                     ->label('每公斤运费')
                     ->money('CNY')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('operation_fee')
                     ->label('操作费')
                     ->money('CNY')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('freight_config_updated_at')
                     ->label('运费配置更新时间')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('last_login_at')
                     ->label('最后登录')
                     ->dateTime()
@@ -248,20 +226,20 @@ class UserResource extends Resource
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('last_login_ip')
                     ->label('登录IP')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('last_login_location')
                     ->label('登录地点')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('register_ip')
                     ->label('注册IP')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('register_location')
                     ->label('注册地点')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\IconColumn::make('is_sub_account')
                     ->label('子账号')
                     ->boolean()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 Tables\Columns\IconColumn::make('status')
                     ->label('状态')
                     ->boolean(),
@@ -296,7 +274,7 @@ class UserResource extends Resource
                         return $query
                             ->when($data['created_from'], fn($q, $date) => $q->whereDate('created_at', '>=', $date))
                             ->when($data['created_until'], fn($q, $date) => $q->whereDate('created_at', '<=', $date));
-                    }),
+                    })
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()

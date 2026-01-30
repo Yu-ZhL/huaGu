@@ -74,15 +74,6 @@ class SiteSettingResource extends Resource
                                     // 解析value (JSON字符串 -> 数组)
                                     $value = is_string($record->value) ? json_decode($record->value, true) : $record->value;
 
-                                    // 调试信息
-                                    $debug = '';
-                                    if (config('app.debug')) {
-                                        $debug = '<div style="background:#f0f0f0;padding:10px;margin-bottom:10px;font-size:12px;font-family:monospace;">';
-                                        $debug .= '<strong>调试信息:</strong><br>';
-                                        $debug .= '原始value类型: ' . gettype($record->value) . '<br>';
-                                        $debug .= '原始value: ' . htmlspecialchars(substr(json_encode($value), 0, 200)) . '<br>';
-                                    }
-
                                     // 处理双层嵌套: {"value": {"qr_code": "...", "text": "..."}}
                                     if (isset($value['value']) && is_array($value['value'])) {
                                         if (config('app.debug')) {

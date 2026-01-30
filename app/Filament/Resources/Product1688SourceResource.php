@@ -172,7 +172,7 @@ class Product1688SourceResource extends Resource
                     ->label('创建时间')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('user_id')
