@@ -83,6 +83,28 @@ class UserResource extends Resource
                             ->default(0),
                     ])->columns(3),
 
+                Forms\Components\Section::make('运费配置')
+                    ->schema([
+                        Forms\Components\TextInput::make('freight_price_per_kg')
+                            ->label('每公斤运费')
+                            ->numeric()
+                            ->prefix('¥')
+                            ->step(0.01)
+                            ->helperText('用户自定义的每公斤运费价格')
+                            ->default(0),
+                        Forms\Components\TextInput::make('operation_fee')
+                            ->label('操作费')
+                            ->numeric()
+                            ->prefix('¥')
+                            ->step(0.01)
+                            ->helperText('每单操作费用')
+                            ->default(0),
+                        Forms\Components\DateTimePicker::make('freight_config_updated_at')
+                            ->label('运费配置更新时间')
+                            ->disabled()
+                            ->dehydrated(false),
+                    ])->columns(3),
+
                 Forms\Components\Section::make('账号状态')
                     ->schema([
                         Forms\Components\Toggle::make('status')
@@ -130,6 +152,21 @@ class UserResource extends Resource
                     ->label('AI点数')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('freight_price_per_kg')
+                    ->label('每公斤运费')
+                    ->money('CNY')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('operation_fee')
+                    ->label('操作费')
+                    ->money('CNY')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('freight_config_updated_at')
+                    ->label('运费配置更新时间')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('last_login_at')
                     ->label('最后登录')
                     ->dateTime()
@@ -188,6 +225,10 @@ class UserResource extends Resource
                     }),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->url(fn($record) => UserResource::getUrl('edit', ['record' => $record]))
+                    ->label('查看详情')
+                    ->icon('heroicon-o-eye'),
                 Tables\Actions\EditAction::make()
                     ->modalWidth('3xl'),
                 Tables\Actions\Action::make('adjustPoints')
@@ -224,6 +265,8 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
+            RelationManagers\TemuProductsRelationManager::class,
+            RelationManagers\AiPointRecordsRelationManager::class,
         ];
     }
 
@@ -231,6 +274,8 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

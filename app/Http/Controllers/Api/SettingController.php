@@ -30,9 +30,26 @@ class SettingController extends Controller
     {
         $setting = SiteSetting::get('customer_service', ['qr_code' => '', 'text' => '']);
 
-        // 处理二维码 URL
         if (!empty($setting['qr_code'])) {
-            $setting['qr_code'] = asset('storage/' . $setting['qr_code']);
+            $qrCodePath = $setting['qr_code'];
+
+            // 如果已经是完整URL,直接返回
+            if (filter_var($qrCodePath, FILTER_VALIDATE_URL)) {
+                // 已经是完整URL,不需要处理
+            }
+            // 如果路径以 http:// 或 https:// 开头
+            elseif (str_starts_with($qrCodePath, 'http://') || str_starts_with($qrCodePath, 'https://')) {
+                // 已经是完整URL,不需要处理
+            }
+            // 如果路径以 storage/ 开头,去掉它
+            elseif (str_starts_with($qrCodePath, 'storage/')) {
+                $qrCodePath = substr($qrCodePath, 8); // 去掉 'storage/'
+                $setting['qr_code'] = asset('storage/' . $qrCodePath);
+            }
+            // 其他情况,直接添加 storage/ 前缀
+            else {
+                $setting['qr_code'] = asset('storage/' . $qrCodePath);
+            }
         }
 
         return response()->json($setting);
