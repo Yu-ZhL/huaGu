@@ -368,9 +368,9 @@ onUnmounted(() => stopScanning())
       <!-- 未登录 -->
       <div v-if="!isLoggedIn" style="display: flex; flex-direction: column; gap: 12px;">
          <p style="color: #ef4444; font-weight: 700;">请先登录</p>
-         <input type="text" class="fm-input" style="width: 100%;" v-model="loginForm.account" placeholder="手机号">
-         <input type="password" class="fm-input" style="width: 100%;" v-model="loginForm.password" placeholder="密码">
-         <button class="fm-btn fm-btn-md fm-btn-primary" style="width: 100%;" @click="handleLogin" :disabled="loading">登录</button>
+         <input type="text" class="fm-input" style="width: 100% !important; height: 36px; padding: 0 10px;" v-model="loginForm.account" placeholder="手机号">
+         <input type="password" class="fm-input" style="width: 100% !important; height: 36px; padding: 0 10px;" v-model="loginForm.password" placeholder="密码">
+         <button class="fm-btn fm-btn-md fm-btn-primary" style="width: 100% !important; height: 36px;" @click="handleLogin" :disabled="loading">登录</button>
       </div>
 
       <!-- 已登录：信息列表 -->
@@ -465,7 +465,7 @@ onUnmounted(() => stopScanning())
           <span style="font-size: 11px; opacity: 0.8;">当前 {{ collectedProducts.length }} 条</span>
         </div>
         
-        <div style="display: flex; items-center; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
            <label style="display: flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer;">
              <input type="checkbox" v-model="isAiBatchEnabled">
              AI批量自动计算
