@@ -137,15 +137,29 @@ class TemuCollectionService
                         break;
                     }
 
+                    // 构建标签
+                    $tags = [];
+                    if (!empty($item['shippingTimeGuarantee'])) {
+                        $tags[] = $item['shippingTimeGuarantee'];
+                    }
+                    if (!empty($item['repurchaseRate'])) {
+                        $tags[] = '复购' . $item['repurchaseRate'];
+                    }
+                    if (!empty($item['monthSold'])) {
+                        $tags[] = '月销' . $item['monthSold'];
+                    }
+
                     $source = Product1688Source::create([
                         'temu_product_id' => $temuProductId,
                         'user_id' => $userId,
                         'title' => $item['title'] ?? $item['subject'] ?? null,
+                        // 修正：API返回的是 picture / ori_picture
+                        'image' => $item['picture'] ?? $item['ori_picture'] ?? $item['image'] ?? $item['imageUrl'] ?? $item['imgUrl'] ?? null,
                         'price' => $item['price'] ?? null,
-                        'image' => $item['image'] ?? $item['imageUrl'] ?? $item['imgUrl'] ?? null,
-                        'url' => $item['url'] ?? $item['detailUrl'] ?? null,
+                        // 修正：API返回的是 real_url
+                        'url' => $item['real_url'] ?? $item['url'] ?? $item['detailUrl'] ?? null,
                         'product_data' => $item,
-                        'tags' => $item['tags'] ?? null,
+                        'tags' => !empty($tags) ? $tags : null, // 假设模型里有 cast 为 array
                         'search_method' => $searchMethod,
                         'is_primary' => ($isFirstSource && $saved === 0), // 第一个货源设为主货源
                     ]);
