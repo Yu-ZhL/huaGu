@@ -7,6 +7,8 @@ use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -120,6 +122,78 @@ class UserResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('基本信息')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('phone')
+                            ->label('手机号')
+                            ->copyable(),
+                        Infolists\Components\TextEntry::make('name')
+                            ->label('姓名'),
+                        Infolists\Components\TextEntry::make('email')
+                            ->label('邮箱'),
+                    ])->columns(3),
+
+                Infolists\Components\Section::make('VIP信息')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('vipPlan.name')
+                            ->label('VIP套餐')
+                            ->default('普通用户')
+                            ->badge()
+                            ->color(fn($record) => $record->vip_level_id > 0 ? 'success' : 'gray'),
+                        Infolists\Components\TextEntry::make('vip_expired_at')
+                            ->label('VIP过期时间')
+                            ->dateTime()
+                            ->placeholder('无VIP'),
+                        Infolists\Components\TextEntry::make('ai_points')
+                            ->label('AI点数余额')
+                            ->badge()
+                            ->color('info'),
+                    ])->columns(3),
+
+                Infolists\Components\Section::make('运费配置')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('freight_price_per_kg')
+                            ->label('每公斤运费')
+                            ->money('CNY'),
+                        Infolists\Components\TextEntry::make('operation_fee')
+                            ->label('操作费')
+                            ->money('CNY'),
+                        Infolists\Components\TextEntry::make('freight_config_updated_at')
+                            ->label('运费配置更新时间')
+                            ->dateTime()
+                            ->placeholder('未配置'),
+                    ])->columns(3),
+
+                Infolists\Components\Section::make('登录信息')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('last_login_at')
+                            ->label('最后登录时间')
+                            ->dateTime(),
+                        Infolists\Components\TextEntry::make('last_login_ip')
+                            ->label('最后登录IP'),
+                        Infolists\Components\TextEntry::make('last_login_location')
+                            ->label('登录地点'),
+                    ])->columns(3),
+
+                Infolists\Components\Section::make('账号状态')
+                    ->schema([
+                        Infolists\Components\IconEntry::make('status')
+                            ->label('账号状态')
+                            ->boolean(),
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->label('注册时间')
+                            ->dateTime(),
+                        Infolists\Components\TextEntry::make('remark')
+                            ->label('备注')
+                            ->columnSpanFull(),
+                    ])->columns(2),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -226,9 +300,11 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                    ->url(fn($record) => UserResource::getUrl('edit', ['record' => $record]))
                     ->label('查看详情')
-                    ->icon('heroicon-o-eye'),
+                    ->icon('heroicon-o-eye')
+                    ->modalWidth('5xl')
+                    ->modalHeading(fn($record) => "用户详情 - {$record->phone}")
+                    ->slideOver(),
                 Tables\Actions\EditAction::make()
                     ->modalWidth('3xl'),
                 Tables\Actions\Action::make('adjustPoints')

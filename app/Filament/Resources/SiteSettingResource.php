@@ -71,7 +71,14 @@ class SiteSettingResource extends Resource
                                         return '上传图片后可预览';
                                     }
 
+                                    // 解析value (JSON字符串 -> 数组)
                                     $value = is_string($record->value) ? json_decode($record->value, true) : $record->value;
+
+                                    // 处理双层嵌套: {"value": {"qr_code": "...", "text": "..."}}
+                                    if (isset($value['value']) && is_array($value['value'])) {
+                                        $value = $value['value'];
+                                    }
+
                                     $qrCode = $value['qr_code'] ?? '';
 
                                     if (empty($qrCode)) {
@@ -85,7 +92,8 @@ class SiteSettingResource extends Resource
                                         <div style="margin-top: 10px;">
                                             <img src="' . $imageUrl . '" 
                                                  style="max-width: 300px; border-radius: 8px; border: 1px solid #ddd;" 
-                                                 alt="客服二维码预览">
+                                                 alt="客服二维码预览"
+                                                 onerror="this.parentElement.innerHTML=\'<p style=\\\'color:red;\\\'>图片加载失败: ' . htmlspecialchars($imageUrl) . '</p>\'">
                                         </div>
                                     ');
                                 })
