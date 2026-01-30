@@ -8,55 +8,78 @@
             </x-filament::button>
         </div>
 
+        <div class="mb-4">
+            <x-filament::input.wrapper>
+                <x-filament::input type="text" wire:model.live="searchKey"
+                    placeholder="搜索键名或类型 (例如: categories, 身份令牌)" />
+            </x-filament::input.wrapper>
+        </div>
+
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3 w-32">缓存类型</th>
                         <th scope="col" class="px-6 py-3">键名 (Key)</th>
-                        <th scope="col" class="px-6 py-3 w-40">有效期 (TTL)</th>
-                        <th scope="col" class="px-6 py-3 w-40 text-right">操作</th>
+                        <th scope="col" class="px-6 py-3" style="width: 140px;">有效期 (TTL)</th>
+                        <th scope="col" class="px-6 py-3" style="width: 260px;">操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($this->cacheItems as $item)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" x-data="{ 
-                                                                                ttl: {{ $item['ttl'] }},
-                                                                                showContent: false,
-                                                                                url: '{{ $item['url'] }}',
-                                                                                payload: @js($item['payload']),
-                                                                                response: @js($item['response']),
-                                                                                rawContent: @js($item['content'])
-                                                                            }" x-init="
-                                                                                    if(ttl > 0) {
-                                                                                        setInterval(() => { if(ttl > 0) ttl--; }, 1000)
-                                                                                    }
-                                                                            ">
+                                                                                        ttl: {{ $item['ttl'] }},
+                                                                                        showContent: false,
+                                                                                        url: '{{ $item['url'] }}',
+                                                                                        payload: @js($item['payload']),
+                                                                                        response: @js($item['response']),
+                                                                                        rawContent: @js($item['content'])
+                                                                                    }" x-init="
+                                                                                            if(ttl > 0) {
+                                                                                                setInterval(() => { if(ttl > 0) ttl--; }, 1000)
+                                                                                            }
+                                                                                    ">
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <x-filament::badge :color="$item['type'] === '身份令牌' ? 'warning' : 'success'">
+                                <x-filament::badge :color="$item['color']">
                                     {{ $item['type'] }}
                                 </x-filament::badge>
                             </td>
                             <td class="px-6 py-4 font-mono text-xs max-w-[300px] truncate" title="{{ $item['key'] }}">
                                 {{ $item['short_key'] }}
                             </td>
-                            <td class="px-6 py-4">
-                                <span class="font-bold" :class="{'text-danger-600': ttl < 60 && ttl > 0}" x-text="
-                                                                                        ttl === -1 ? '永久有效' : 
-                                                                                        (ttl <= -2 ? '已过期' : 
-                                                                                        ((Math.floor(ttl/3600) > 0 ? Math.floor(ttl/3600) + 'h ' : '') + 
-                                                                                        (Math.floor((ttl%3600)/60) > 0 ? Math.floor((ttl%3600)/60) + 'm ' : '') + 
-                                                                                        (ttl%60) + 's'))
-                                                                                    "></span>
+                            <td class="px-6 py-4" style="width: 140px;">
+                                <span class="font-bold inline-block" style="min-width: 80px;" :class="{'text-danger-600': ttl < 60 && ttl > 0}" x-text="
+                                                                                    ttl === -1 ? '永久有效' : 
+                                                                                    (ttl <= -2 ? '已过期' : 
+                                                                                    ((Math.floor(ttl/3600) > 0 ? Math.floor(ttl/3600) + 'h ' : '') + 
+                                                                                    (Math.floor((ttl%3600)/60) > 0 ? Math.floor((ttl%3600)/60) + 'm ' : '') + 
+                                                                                    (ttl%60) + 's'))
+                                                                                "></span>
                             </td>
-                            <td class="px-6 py-4 text-right">
-                                <div class="flex justify-end space-x-2">
-                                    <x-filament::icon-button icon="heroicon-o-eye" color="info" tooltip="查看详情"
-                                        @click="showContent = true" size="sm" />
-                                    <x-filament::icon-button icon="heroicon-o-arrow-path" color="gray" tooltip="重新请求"
-                                        wire:click="refreshItem('{{ $item['key'] }}')" size="sm" />
-                                    <x-filament::icon-button icon="heroicon-o-trash" color="danger" tooltip="删除"
-                                        wire:click="deleteItem('{{ $item['key'] }}')" wire:confirm="确定要删除此缓存吗？" size="sm" />
+                            <td class="px-6 py-4" style="width: 260px;">
+                                <div class="flex gap-2">
+                                    <x-filament::button 
+                                        size="sm" 
+                                        color="info"
+                                        @click="showContent = true"
+                                    >
+                                        查看
+                                    </x-filament::button>
+                                    <x-filament::button 
+                                        size="sm" 
+                                        color="gray"
+                                        wire:click="refreshItem('{{ $item['key'] }}')"
+                                    >
+                                        刷新
+                                    </x-filament::button>
+                                    <x-filament::button 
+                                        size="sm" 
+                                        color="danger"
+                                        wire:click="deleteItem('{{ $item['key'] }}')" 
+                                        wire:confirm="确定要删除此缓存吗?"
+                                    >
+                                        删除
+                                    </x-filament::button>
                                 </div>
 
                                 {{-- 查看详情的弹窗 --}}

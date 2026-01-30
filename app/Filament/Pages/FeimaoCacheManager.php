@@ -24,6 +24,8 @@ class FeimaoCacheManager extends Page
 
     protected static string $view = 'filament.pages.feimao-cache-manager';
 
+    public $searchKey = '';
+
     public function mount()
     {
         // 初始化检查或权限验证
@@ -33,35 +35,42 @@ class FeimaoCacheManager extends Page
     public function cacheItems()
     {
         $prefix = config('database.redis.options.prefix', '');
-
-        // 使用 Facade 查找，Laravel 会自动处理前缀搜索
         $keys = Redis::keys('feimao:*');
-
         $items = [];
 
         foreach ($keys as $fullKey) {
-            // Redis::keys 返回的是带前缀的完整键名 (e.g. laravel_database_feimao:123)
-            // 但 Redis::ttl / Redis::get 期望的是不带前缀的逻辑键名 (e.g. feimao:123)
-            // 所以这里必须剥离前缀
             $key = ($prefix && strpos($fullKey, $prefix) === 0)
                 ? substr($fullKey, strlen($prefix))
                 : $fullKey;
 
             $type = '未知类型';
-            if (strpos($key, 'feimao:categories') !== false)
+            $color = 'gray';
+
+            if (strpos($key, 'feimao:categories') !== false) {
                 $type = '分类数据';
-            elseif (strpos($key, 'feimao:product_list') !== false)
+                $color = 'info';
+            } elseif (strpos($key, 'feimao:product_list') !== false) {
                 $type = '商品列表';
-            elseif (strpos($key, 'feimao:sales_record') !== false)
+                $color = 'success';
+            } elseif (strpos($key, 'feimao:sales_record') !== false) {
                 $type = '销量记录';
-            elseif (strpos($key, 'feimao:auth_token') !== false)
+                $color = 'warning';
+            } elseif (strpos($key, 'feimao:auth_token') !== false) {
                 $type = '身份令牌';
+                $color = 'danger';
+            } elseif (strpos($key, 'feimao:collect_product') !== false) {
+                $type = '采集商品';
+                $color = 'primary';
+            }
+
+            if ($this->searchKey && stripos($key, $this->searchKey) === false && stripos($type, $this->searchKey) === false) {
+                continue;
+            }
 
             $ttl = Redis::ttl($key);
             $rawContent = Redis::get($key);
 
             $parsedContent = json_decode($rawContent, true);
-            // 简单防错
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $parsedContent = ['response' => $rawContent];
             }
@@ -70,11 +79,11 @@ class FeimaoCacheManager extends Page
             if ($type === '身份令牌')
                 $url = 'https://feimaoxuanpin.com/api/system/login';
 
-            // 格式化数据供视图使用
             $items[] = [
                 'key' => $key,
                 'short_key' => str_replace('feimao:', '', $key),
                 'type' => $type,
+                'color' => $color,
                 'url' => $url,
                 'ttl' => $ttl,
                 'content' => $rawContent,
@@ -126,6 +135,14 @@ class FeimaoCacheManager extends Page
             } elseif ($type === 'auth_token') {
                 Redis::del($key);
                 $service->getToken(true);
+            } elseif ($type === 'collect_product') {
+                Redis::del($key);
+                Notification::make()
+                    ->title('缓存已删除')
+                    ->body('采集商品缓存依赖商品ID参数,已删除缓存,下次查询时会自动重新缓存')
+                    ->success()
+                    ->send();
+                return;
             } else {
                 Notification::make()
                     ->title('不支持刷新此类型')

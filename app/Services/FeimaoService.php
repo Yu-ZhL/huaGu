@@ -114,6 +114,7 @@ class FeimaoService
 
     public function getProductList(array $productIds, int $pageNum = 1, int $pageSize = 40)
     {
+        $cacheKey = "feimao:collect_product:" . md5(json_encode($productIds)) . ":{$pageNum}:{$pageSize}";
         $url = '/api/collectProduct/list';
         $payload = [
             'channel' => 'temu',
@@ -122,7 +123,25 @@ class FeimaoService
             'productIds' => $productIds
         ];
 
-        return $this->request('POST', $url, $payload);
+        $cachedData = Redis::get($cacheKey);
+        if ($cachedData) {
+            $data = json_decode($cachedData, true);
+            return $data['response'] ?? $data;
+        }
+
+        $result = $this->request('POST', $url, $payload);
+
+        if (isset($result['code']) && $result['code'] == 200 && !empty($result['data'])) {
+            $cacheContent = [
+                'url' => $this->baseUrl . $url,
+                'payload' => $payload,
+                'response' => $result,
+                'updated_at' => now()->toDateTimeString(),
+            ];
+            Redis::setex($cacheKey, 86400, json_encode($cacheContent));
+        }
+
+        return $result;
     }
 
     // 获取分类
