@@ -2,17 +2,14 @@ import { createApp } from 'vue'
 import '../style.css'
 import App from '../App.vue'
 import { apiRequest } from './api.js'
-import { createProductUI } from './ui-components.js'
+import { createProductUI, updateSourceDisplay } from './ui-components.js'
 import { handleChooseSource, handleCalculateProfit } from './product-handler.js'
 
-console.log('%c[Feimao] Content script loading...', 'color: #4a78f5; font-weight: bold')
+
 
 // ==================== 1. 挂载浮动卡片 ====================
 function mountFloatingCard() {
-    console.log('[Feimao] 挂载FloatingCard...')
-
     if (document.querySelector('#feimao-extension-root')) {
-        console.log('[Feimao] FloatingCard已存在')
         return
     }
 
@@ -21,7 +18,6 @@ function mountFloatingCard() {
         container.id = 'feimao-extension-root'
         document.body.appendChild(container)
         createApp(App).mount(container)
-        console.log('%c[Feimao] ✅ FloatingCard挂载成功', 'color: #10b981; font-weight: bold')
     } catch (error) {
         console.error('%c[Feimao] ❌ FloatingCard挂载失败', 'color: #ef4444', error)
     }
@@ -75,25 +71,16 @@ function extractProductNodes() {
 
     // 步骤1: 查找价格元素
     let priceElements = Array.from(document.querySelectorAll('[data-type="price"]'))
-    console.log(`[Feimao] 找到 ${priceElements.length} 个 [data-type="price"] 元素`)
 
     if (priceElements.length === 0) {
-        console.log('[Feimao] 尝试回退策略...')
         priceElements = Array.from(document.querySelectorAll('[class*="price"], [class*="Price"]'))
-        console.log(`[Feimao] 回退策略找到 ${priceElements.length} 个价格元素`)
     }
 
     if (priceElements.length === 0) {
-        console.warn('%c[Feimao] ⚠️ 未找到价格元素', 'color: #fb923c')
-        console.log('[Feimao] DOM信息:')
-        console.log('  - body子元素:', document.body.children.length)
-        console.log('  - 所有a标签:', document.querySelectorAll('a').length)
-        console.log('  - 所有img标签:', document.querySelectorAll('img').length)
         return []
     }
 
     // 步骤2: 从价格元素向上查找商品卡片
-    console.log('[Feimao] 开始从价格元素向上查找商品卡片...')
     const items = []
 
     priceElements.forEach((priceEl) => {
@@ -117,8 +104,6 @@ function extractProductNodes() {
         }
     })
 
-    console.log(`[Feimao] 初步找到 ${items.length} 个商品容器`)
-
     // 步骤3: 去重
     const uniqueItems = []
     const seenCards = new Set()
@@ -129,10 +114,7 @@ function extractProductNodes() {
         }
     })
 
-    console.log(`[Feimao] 去重后: ${uniqueItems.length} 个唯一商品卡片`)
-
     // 步骤4: 提取商品信息
-    console.log('[Feimao] 开始提取商品信息...')
     const productNodes = []
 
     uniqueItems.forEach((item, index) => {
@@ -162,8 +144,7 @@ function extractProductNodes() {
         })
     })
 
-    console.log(`%c[Feimao] ✅ 最终提取 ${productNodes.length} 个商品节点`, 'color: #10b981; font-weight: bold')
-    console.log('%c[Feimao] ========== 商品节点提取结束 ==========', 'color: #fb923c; font-weight: bold')
+
 
     return productNodes
 }
@@ -171,79 +152,35 @@ function extractProductNodes() {
 // ==================== 3.5. 自动加载第一个1688货源 ====================
 async function autoLoadFirstSource(productId, container, dbId = null) {
     try {
-        console.log(`[货源] 加载商品 ${productId} 的1688货源...`)
-
         let targetDbId = dbId
 
         // 如果没有提供DB ID，则需要先查询
         if (!targetDbId) {
             const temuProducts = await apiRequest('/temu/products')
-            // console.log('[货源] 查询商品API响应:', temuProducts)
 
             const productList = temuProducts?.data?.data || temuProducts?.data?.records || temuProducts?.data || []
             const temuProduct = productList.find(p => p.product_id === productId)
 
             if (!temuProduct) {
-                console.log(`[货源] 商品 ${productId} 未找到`)
                 return
             }
             targetDbId = temuProduct.id
         }
 
-        // console.log(`[货源] 找到商品 DB_ID: ${targetDbId}`)
-
         const sourcesResponse = await apiRequest(`/temu/products/${targetDbId}/sources`)
-        // console.log('[货源] 获取货源API响应:', sourcesResponse)
 
         const sources = sourcesResponse?.data || []
 
         if (!Array.isArray(sources) || sources.length === 0) {
-            console.log(`[货源debug] 暂无1688货源`)
+            updateSourceDisplay(container, null) // 确保重置为“未选择”
             return
         }
 
-        console.log(`[货源debug] ✅ 找到 ${sources.length} 个货源，准备更新UI`)
-
-        const firstSource = sources[0]
-        const sourceText = container.querySelector('[data-fm="sourceText"]')
-        const sourceImg = container.querySelector('[data-fm="sourceImg"]')
-        const sourceLoading = container.querySelector('[data-fm="sourceLoading"]')
-
-        console.log('[货源debug] UI元素状态:', {
-            hasText: !!sourceText,
-            hasImg: !!sourceImg,
-            firstSourceTitle: firstSource.title,
-            firstSourceImage: firstSource.image
-        })
-
-        if (sourceLoading) sourceLoading.style.display = 'none'
-
-        if (sourceText && sourceImg) {
-            // 显示具体的货源标题和价格
-            const shortTitle = firstSource.title ? (firstSource.title.length > 20 ? firstSource.title.substring(0, 20) + '...' : firstSource.title) : '未命名商品';
-            sourceText.textContent = `${shortTitle} ¥${firstSource.price}`;
-            sourceText.style.color = 'rgb(22, 163, 74)';
-            sourceText.title = firstSource.title || ''; // 鼠标悬停显示全名
-
-            if (firstSource.image) {
-                // 强制 HTTPS 以避免 Mixed Content 不显示
-                let secureUrl = firstSource.image
-                if (secureUrl.startsWith('http:')) {
-                    secureUrl = secureUrl.replace('http:', 'https:')
-                } else if (secureUrl.startsWith('//')) {
-                    secureUrl = 'https:' + secureUrl
-                }
-
-                sourceImg.src = secureUrl
-                sourceImg.style.display = 'inline-block'
-                console.log(`[货源debug] 🖼️ 图片已更新: ${secureUrl}`)
-            }
-        } else {
-            console.error('[货源debug] ❌ 未找到UI元素 (sourceText/sourceImg)，无法渲染')
-        }
+        // 直接委派给 ui-components 处理显示逻辑
+        updateSourceDisplay(container, sources[0])
 
     } catch (error) {
-        console.log(`[货源] 加载失败:`, error.message)
+        console.error(`[货源debug] ❌ 加载异常:`, error)
     }
 }
 
@@ -253,12 +190,9 @@ function injectProductUI() {
         return
     }
 
-    console.log('%c[Feimao] 开始注入商品UI...', 'color: #8b5cf6; font-weight: bold')
     const products = extractProductNodes()
 
     if (products.length > 0) {
-        console.log(`[Feimao] 为 ${products.length} 个商品注入UI按钮`)
-
         let successCount = 0
         let failCount = 0
 
@@ -272,16 +206,18 @@ function injectProductUI() {
                     aiBtn.addEventListener('click', (e) => {
                         e.preventDefault()
                         e.stopPropagation()
-                        console.log('[Feimao] AI按钮点击，商品ID:', product.productId)
                         handleCalculateProfit(product.productId, ui)
                     })
                 }
-                if (chooseBtn) {
-                    chooseBtn.addEventListener('click', (e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        console.log('[Feimao] 选货源按钮点击，商品ID:', product.productId)
-                        handleChooseSource(product.productId, ui)
+                const chooseBtns = ui.querySelectorAll('[data-fm="chooseBtn"]')
+
+                if (chooseBtns.length > 0) {
+                    chooseBtns.forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            handleChooseSource(product.productId, ui)
+                        })
                     })
                 }
 
@@ -297,20 +233,15 @@ function injectProductUI() {
             }
         })
 
-        console.log(`%c[Feimao] UI注入完成: ${successCount}成功, ${failCount}失败`, 'color: #10b981; font-weight: bold')
-
         // 提交到后端
         submitProductsToAPI(products)
     } else {
-        console.log('%c[Feimao] 没有商品可注入', 'color: #fb923c')
     }
 }
 
 async function submitProductsToAPI(products) {
     try {
-        console.log('[Feimao] 提交商品到后端API...')
         const productIds = products.map(p => p.productId)
-        console.log('[Feimao] 商品ID列表:', productIds.slice(0, 5), productIds.length > 5 ? `...等${productIds.length}个` : '')
 
         const result = await apiRequest('/feimao/products', {
             method: 'POST',
@@ -319,13 +250,11 @@ async function submitProductsToAPI(products) {
                 site_url: window.location.href
             })
         })
-        console.log('[Feimao] ✅ 商品数据已提交:', result)
 
         // 自动刷新已有货源的UI
         if (result?.data?.saved_products) {
             result.data.saved_products.forEach(p => {
                 if (p.sources1688_count > 0) {
-                    console.log(`[Feimao] 商品 ${p.product_id} 已有货源，刷新UI`)
                     document.dispatchEvent(new CustomEvent('feimao:sources-updated', {
                         detail: {
                             productId: p.product_id,
@@ -345,18 +274,14 @@ let lastUrl = location.href
 let mutationCount = 0
 
 function observePageChanges() {
-    console.log('[Feimao] 启动实时监控 (MutationObserver)...')
-
     const observer = new MutationObserver(() => {
         mutationCount++
 
         if (location.href !== lastUrl) {
             lastUrl = location.href
-            console.log('%c[Feimao] 🔄 URL变化，重新注入', 'color: #f59e0b', location.href)
             setTimeout(injectProductUI, 1000)
         }
         else if (mutationCount % 30 === 0) {
-            console.log(`[Feimao] DOM变化第${mutationCount}次，检查新商品`)
             injectProductUI()
         }
     })
@@ -365,33 +290,21 @@ function observePageChanges() {
         childList: true,
         subtree: true
     })
-
-    console.log('[Feimao] ✅ 实时监控已启动 (每30次mutation检查一次)')
 }
 
 // ==================== 6. 初始化 ====================
 function init() {
-    console.log('%c========================================', 'color: #4a78f5; font-weight: bold; font-size: 16px')
-    console.log('%c🚀 飞猫选品采集助手 v1.3.0', 'color: #4a78f5; font-weight: bold; font-size: 16px')
-    console.log('%c========================================', 'color: #4a78f5; font-weight: bold; font-size: 16px')
-    console.log('[Feimao] URL:', window.location.href)
-    console.log('[Feimao] 时间:', new Date().toLocaleString())
-
     // 1. 挂载浮动卡片
     mountFloatingCard()
 
     // 2. Temu页面功能
     if (window.location.hostname.includes('temu.com')) {
-        console.log('[Feimao] 检测到Temu页面，启动商品UI功能')
-
         setTimeout(() => {
-            console.log('[Feimao] 延迟2秒后开始首次注入...')
             injectProductUI()
         }, 2000)
 
         observePageChanges()
     } else {
-        console.log('[Feimao] 非Temu页面，只挂载FloatingCard')
     }
 
     // 监听货源更新事件
@@ -400,17 +313,13 @@ function init() {
         const targetDbId = e.detail?.dbId // 获取DB ID
 
         if (targetId) {
-            console.log(`[Feimao] 接收到单商品货源更新: ${targetId} (DB_ID: ${targetDbId})`)
             const ui = document.querySelector(`[data-fm-host="1"][data-product-id="${targetId}"]`)
             if (ui) {
                 await autoLoadFirstSource(targetId, ui, targetDbId)
             }
         } else {
-            console.log('[Feimao] 接收到全量货源更新事件，开始刷新UI...')
-
             // 查找所有已注入的UI
             const injectedUIs = document.querySelectorAll('[data-fm-host="1"]')
-            console.log(`[Feimao] 找到 ${injectedUIs.length} 个UI，开始刷新货源`)
 
             for (const ui of injectedUIs) {
                 const productId = ui.getAttribute('data-product-id')
@@ -418,16 +327,12 @@ function init() {
                     await autoLoadFirstSource(productId, ui)
                 }
             }
-            console.log('[Feimao] ✅ 货源UI刷新完成')
         }
     })
-
-    console.log('%c[Feimao] ✅ 初始化完成', 'color: #10b981; font-weight: bold; font-size: 14px')
 }
 
 // 启动
 if (document.readyState === 'loading') {
-    console.log('[Feimao] 等待DOMContentLoaded...')
     document.addEventListener('DOMContentLoaded', init)
 } else {
     init()

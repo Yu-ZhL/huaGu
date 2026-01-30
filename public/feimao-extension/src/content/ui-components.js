@@ -2,26 +2,62 @@ import { apiRequest } from './api.js'
 
 export function createProductUI(product) {
     const container = document.createElement('div')
-    container.setAttribute('data-fm-host', '1')
+
+    // 容器类名 (CSS中定义样式)
+    container.className = 'fm-ui fm-card-injected'
     container.setAttribute('data-product-id', product.productId)
+    container.setAttribute('data-fm-host', '1')
+
+    // 关键修复：阻止事件冒泡，防止点击插件误触商品详情跳转
+    container.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        return false
+    })
+
+    // 阻止鼠标按下事件，防止拖拽等其他意外行为
+    container.addEventListener('mousedown', (e) => {
+        e.stopPropagation()
+    })
+
     container.innerHTML = `
-        <div class="fm-inline-box">
-            <div class="fm-inline-kv">
-                <span class="item"><span class="k">重量:</span> <span class="v" data-fm="weight">0.000kg</span></span>
-                <span class="item"><span class="k">运费:</span> <span class="v" data-fm="freight">¥0.00</span></span>
-                <span class="item"><span class="k">单价:</span> <span class="v" data-fm="unit-price">85/kg</span></span>
-                <span class="item"><span class="k">操作费:</span> <span class="v" data-fm="op-fee">17</span></span>
-                <span class="item"><span class="k">品牌:</span> <span class="v" data-fm="brand">否</span></span>
-                <span class="item"><span class="k">利润:</span> <span class="v" data-fm="profit" style="color: rgb(107, 114, 128);">¥0.00</span></span>
-                <button class="btn-mini" type="button" data-fm="aiBtn">AI计算</button>
+        <!-- 第一行：所有指标在一行 -->
+        <div class="fm-row-metrics">
+            <span class="fm-metric">重量: <b class="fm-val-red" data-fm="weight">--</b></span>
+            <span class="fm-metric">运费: <b class="fm-val-red" data-fm="freight">--</b></span>
+            <span class="fm-metric">品牌: <b class="fm-val-red" data-fm="brand">否</b></span>
+            <span class="fm-metric">利润: <b class="fm-val-green" data-fm="profit">--</b></span>
+        </div>
+
+        <!-- 第二行：AI按钮 靠右 -->
+        <div class="fm-row-action">
+            <button data-fm="aiBtn" class="fm-btn-ai">AI计算</button>
+        </div>
+
+        <!-- 第三行：货源选择框 (淡蓝背景) -->
+        <div class="fm-row-source">
+            <!-- 未选择状态 -->
+            <div data-fm="sourcePlaceholder" class="fm-source-empty">
+                <span class="fm-text-placeholder">未选择货源</span>
+                <button data-fm="chooseBtn" class="fm-btn-choose">选择货源</button>
             </div>
-            <div class="fm-inline-row">
-                <div class="left">
-                    <span class="fm-src-loading" data-fm="sourceLoading" style="display:none">加载中...</span>
-                    <img class="src-img" data-fm="sourceImg" style="display: none;">
-                    <span data-fm="sourceText" style="color: rgb(107, 114, 128);">未选择货源</span>
+
+            <!-- 加载状态 -->
+            <div data-fm="sourceLoading" class="hidden" style="color: #3b82f6; font-size: 12px; padding: 4px;">
+                正在搜索货源...
+            </div>
+
+            <!-- 已选择状态 (结构隐藏，选中后显示) -->
+            <div data-fm="sourceContent" class="hidden fm-source-content">
+                <div class="fm-thumb-wrapper">
+                     <img data-fm="sourceImgThumb" class="fm-img-sm">
+                     <div class="fm-img-hover"><img data-fm="sourceImgLarge"></div>
                 </div>
-                <button class="btn" type="button" data-fm="chooseBtn">选择货源</button>
+                <div class="fm-source-details">
+                    <div data-fm="sourceTitle" class="fm-text-title"></div>
+                    <div data-fm="sourcePrice" class="fm-text-price"></div>
+                </div>
+                <button data-fm="chooseBtn" class="fm-btn-choose">重选</button>
             </div>
         </div>
     `
@@ -30,30 +66,70 @@ export function createProductUI(product) {
 }
 
 export function updateProductData(container, data) {
-    container.querySelector('[data-fm="weight"]').textContent = `${data.weight}kg`
-    container.querySelector('[data-fm="freight"]').textContent = `¥${data.freight}`
-    container.querySelector('[data-fm="brand"]').textContent = data.brand || '否'
+    const setVal = (sel, val, colorClass) => {
+        const el = container.querySelector(sel)
+        if (el) {
+            el.textContent = val
+            // Reset classes
+            el.className = ''
+            if (colorClass) el.classList.add(colorClass)
+        }
+    }
 
-    const profitEl = container.querySelector('[data-fm="profit"]')
-    profitEl.textContent = `¥${data.profit}`
-    profitEl.style.color = data.profit > 0 ? 'rgb(22, 163, 74)' : 'rgb(239, 68, 68)'
+    setVal('[data-fm="weight"]', data.weight ? `${data.weight}kg` : '--', 'fm-val-red')
+    setVal('[data-fm="freight"]', data.freight ? `¥${data.freight}` : '--', 'fm-val-red')
+    setVal('[data-fm="brand"]', data.brand || '否', 'fm-val-red')
 
-    // 更新运费配置显示 (如果有返回)
-    if (data.freight_config) {
-        container.querySelector('[data-fm="unit-price"]').textContent = `${data.freight_config.freight_price_per_kg}/kg`
-        container.querySelector('[data-fm="op-fee"]').textContent = `${data.freight_config.operation_fee}`
+    // Profit logic
+    const pEl = container.querySelector('[data-fm="profit"]')
+    if (pEl) {
+        if (data.profit && data.profit !== '--') {
+            pEl.textContent = `¥${data.profit}`
+            if (Number(data.profit) > 0) {
+                pEl.className = 'fm-val-green' // Green for profit
+            } else {
+                pEl.className = 'fm-val-red'   // Red for loss
+            }
+        } else {
+            pEl.textContent = '--'
+            pEl.className = 'fm-val-green'
+        }
     }
 }
 
 export function updateSourceDisplay(container, source) {
-    const sourceText = container.querySelector('[data-fm="sourceText"]')
-    const sourceImg = container.querySelector('[data-fm="sourceImg"]')
+    const loading = container.querySelector('[data-fm="sourceLoading"]')
+    const placeholder = container.querySelector('[data-fm="sourcePlaceholder"]')
+    const content = container.querySelector('[data-fm="sourceContent"]')
+    const title = container.querySelector('[data-fm="sourceTitle"]')
+    const price = container.querySelector('[data-fm="sourcePrice"]')
+    const thumb = container.querySelector('[data-fm="sourceImgThumb"]')
+    const large = container.querySelector('[data-fm="sourceImgLarge"]')
 
-    sourceText.textContent = '已选择货源'
-    sourceText.style.color = 'rgb(22, 163, 74)'
+    if (loading) loading.classList.add('hidden')
+
+    if (!source) {
+        if (placeholder) placeholder.style.display = 'flex'
+        if (content) content.classList.add('hidden')
+        return
+    }
+
+    if (placeholder) placeholder.style.display = 'none'
+    if (content) {
+        content.classList.remove('hidden')
+        content.style.display = 'flex'
+    }
+
+    if (title) {
+        title.textContent = source.title || '未命名'
+        title.title = source.title || ''
+    }
+
+    if (price) price.textContent = source.price ? `¥${source.price}` : ''
 
     if (source.image) {
-        sourceImg.src = source.image
-        sourceImg.style.display = 'inline-block'
+        let url = source.image.startsWith('http:') ? source.image.replace('http:', 'https:') : (source.image.startsWith('//') ? 'https:' + source.image : source.image)
+        if (thumb) thumb.src = url
+        if (large) large.src = url
     }
 }

@@ -108,6 +108,13 @@ export function useItemScanner() {
                 if (filters.shippment === 'paid' && isFreeShipping) pass = false
             }
 
+            // 品牌筛选
+            const isBrand = cardText.includes('Brand') || cardText.includes('Official') // 简单判断
+            if (filters.brand !== 'all') {
+                if (filters.brand === 'brand' && !isBrand) pass = false
+                if (filters.brand === 'no_brand' && isBrand) pass = false
+            }
+
             if (pass) matchCount++
         })
 
@@ -115,14 +122,6 @@ export function useItemScanner() {
     }
 
     const startScanning = () => {
-        console.log('%c[扫描] 启动扫描器', 'color: #10b981; font-weight: bold')
-        console.log('[扫描] 筛选条件:', {
-            价格筛选: filters.price.checked ? `${filters.price.op}${filters.price.val}` : '关闭',
-            销量筛选: filters.sales.checked ? `${filters.sales.op}${filters.sales.val}` : '关闭',
-            包邮筛选: filters.shippment,
-            品牌筛选: filters.brand
-        })
-
         isScanning.value = true
 
         // 首次扫描
@@ -130,25 +129,19 @@ export function useItemScanner() {
 
         // 监听DOM变化
         observer = new MutationObserver(() => {
-            console.log('[扫描] DOM变化，重新扫描')
             scanItems()
         })
         observer.observe(document.body, { childList: true, subtree: true })
-
-        console.log('[扫描] ✅ 扫描器已启动，监听DOM变化中')
     }
 
     const stopScanning = () => {
-        console.log('[扫描] 停止扫描器')
         isScanning.value = false
         if (observer) {
             observer.disconnect()
-            console.log('[扫描] ✅ 已停止监听DOM')
         }
     }
 
     watch(filters, () => {
-        console.log('[扫描] 筛选条件改变，重新扫描')
         scanItems()
     }, { deep: true })
 

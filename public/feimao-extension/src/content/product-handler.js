@@ -6,16 +6,23 @@ const collectingStates = {}
 
 export async function handleChooseSource(productId, container) {
     const sourceLoading = container.querySelector('[data-fm="sourceLoading"]')
-    const chooseBtn = container.querySelector('[data-fm="chooseBtn"]')
+    const chooseBtns = container.querySelectorAll('[data-fm="chooseBtn"]')
 
     sourceLoading.style.display = 'inline'
-    chooseBtn.disabled = true
+    chooseBtns.forEach(btn => btn.disabled = true)
+
+    // 1. 立即显示加载弹窗
+    showSourceDialog({ product_id: productId }, null)
+
+    // 强制 UI 渲染，防止请求卡顿导致弹窗无法显示
+    await new Promise(resolve => setTimeout(resolve, 20))
 
     try {
         const temuProducts = await apiRequest('/temu/products')
         const temuProduct = temuProducts.data?.data?.find(p => p.product_id === productId)
 
         if (!temuProduct) {
+            document.querySelector('.fm-mask')?.remove()
             alert('请先采集商品数据')
             return
         }
@@ -23,6 +30,7 @@ export async function handleChooseSource(productId, container) {
         const sources = await apiRequest(`/temu/products/${temuProduct.id}/sources`)
 
         if (!sources.data || sources.data.length === 0) {
+            document.querySelector('.fm-mask')?.remove()
             const shouldCollect = confirm('暂无1688货源，是否开始采集？')
             if (shouldCollect) {
                 await handleCollectSources(temuProduct.id, productId, container)
@@ -33,11 +41,12 @@ export async function handleChooseSource(productId, container) {
             })
         }
     } catch (error) {
-        console.error('获取货源失败', error)
+        document.querySelector('.fm-mask')?.remove()
+
         alert('获取货源失败')
     } finally {
         sourceLoading.style.display = 'none'
-        chooseBtn.disabled = false
+        chooseBtns.forEach(btn => btn.disabled = false)
     }
 }
 
@@ -48,9 +57,11 @@ export async function handleCollectSources(temuProductId, productId, container) 
     }
 
     collectingStates[productId] = true
-    const chooseBtn = container.querySelector('[data-fm="chooseBtn"]')
-    chooseBtn.textContent = '采集中...'
-    chooseBtn.disabled = true
+    const chooseBtns = container.querySelectorAll('[data-fm="chooseBtn"]')
+    chooseBtns.forEach(btn => {
+        btn.textContent = '采集中...'
+        btn.disabled = true
+    })
 
     try {
         const result = await apiRequest('/temu/products/collect-similar', {
@@ -72,12 +83,29 @@ export async function handleCollectSources(temuProductId, productId, container) 
             alert(result.message || '采集失败')
         }
     } catch (error) {
-        console.error('采集失败', error)
+
         alert('采集失败')
     } finally {
         collectingStates[productId] = false
-        chooseBtn.textContent = '选择货源'
-        chooseBtn.disabled = false
+        chooseBtns.forEach(btn => {
+            // 这里恢复文本需要根据当前显示的按钮来决定，或者简单统一
+            // 实际上 ui-components.js 会根据是否有 source 重置 UI 结构
+            // 如果采集成功，通常会更新 UI，按钮可能会变成“重选”
+            // 简单起见，这里恢复为初始文本可能不太准确，但 safe bet 是恢复为“选择货源”或“重选”
+            // 由于 updateSourceDisplay 会被调用（在 handleSetPrimarySource 中），UI 可能会被刷新
+            // 但如果仅仅是采集成功但没有选择，UI 状态可能需要保持
+            // 暂且恢复为之前的逻辑，但注意这里有两个不同文案的按钮
+            // 更好的做法是只恢复 disabled 状态，因为文案是固定的（ui-components.js）
+            // 但是上面的代码修改了 textContent，所以必须改回来。
+            // 比较好的做法是重新读取原始文案或者按类区分，或者干脆重新 render
+            // 简单处理：如果是 .fm-source-empty 下的，是“选择货源”，否则是“重选”
+            if (btn.parentElement.classList.contains('fm-source-empty')) {
+                btn.textContent = '选择货源'
+            } else {
+                btn.textContent = '重选'
+            }
+            btn.disabled = false
+        })
     }
 }
 
@@ -100,7 +128,7 @@ export async function handleSetPrimarySource(temuProductId, sourceId, container,
             alert(result.message || '设置失败')
         }
     } catch (error) {
-        console.error('设置主货源失败', error)
+
         alert('设置失败')
     }
 }
@@ -136,7 +164,7 @@ export async function handleCalculateProfit(productIdOrTemuId, container, isTemu
             alert(result.message || '计算失败')
         }
     } catch (error) {
-        console.error('计算利润失败', error)
+
         alert('计算失败')
     } finally {
         aiBtn.disabled = false
