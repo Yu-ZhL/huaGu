@@ -169,25 +169,31 @@ function extractProductNodes() {
 }
 
 // ==================== 3.5. 自动加载第一个1688货源 ====================
-async function autoLoadFirstSource(productId, container) {
+async function autoLoadFirstSource(productId, container, dbId = null) {
     try {
         console.log(`[货源] 加载商品 ${productId} 的1688货源...`)
 
-        const temuProducts = await apiRequest('/temu/products')
-        console.log('[货源] 查询商品API响应:', temuProducts)
+        let targetDbId = dbId
 
-        const productList = temuProducts?.data?.data || temuProducts?.data?.records || temuProducts?.data || []
-        const temuProduct = productList.find(p => p.product_id === productId)
+        // 如果没有提供DB ID，则需要先查询
+        if (!targetDbId) {
+            const temuProducts = await apiRequest('/temu/products')
+            // console.log('[货源] 查询商品API响应:', temuProducts)
 
-        if (!temuProduct) {
-            console.log(`[货源] 商品 ${productId} 未找到`)
-            return
+            const productList = temuProducts?.data?.data || temuProducts?.data?.records || temuProducts?.data || []
+            const temuProduct = productList.find(p => p.product_id === productId)
+
+            if (!temuProduct) {
+                console.log(`[货源] 商品 ${productId} 未找到`)
+                return
+            }
+            targetDbId = temuProduct.id
         }
 
-        console.log(`[货源] 找到商品 ID: ${temuProduct.id}`)
+        // console.log(`[货源] 找到商品 DB_ID: ${targetDbId}`)
 
-        const sourcesResponse = await apiRequest(`/temu/products/${temuProduct.id}/sources`)
-        console.log('[货源] 获取货源API响应:', sourcesResponse)
+        const sourcesResponse = await apiRequest(`/temu/products/${targetDbId}/sources`)
+        // console.log('[货源] 获取货源API响应:', sourcesResponse)
 
         const sources = sourcesResponse?.data || []
 
@@ -291,6 +297,21 @@ async function submitProductsToAPI(products) {
             })
         })
         console.log('[Feimao] ✅ 商品数据已提交:', result)
+
+        // 自动刷新已有货源的UI
+        if (result?.data?.saved_products) {
+            result.data.saved_products.forEach(p => {
+                if (p.sources1688_count > 0) {
+                    console.log(`[Feimao] 商品 ${p.product_id} 已有货源，刷新UI`)
+                    document.dispatchEvent(new CustomEvent('feimao:sources-updated', {
+                        detail: {
+                            productId: p.product_id,
+                            dbId: p.id
+                        }
+                    }))
+                }
+            })
+        }
     } catch (error) {
         console.error('[Feimao] ❌ 提交商品数据失败:', error)
     }
@@ -351,21 +372,31 @@ function init() {
     }
 
     // 监听货源更新事件
-    document.addEventListener('feimao:sources-updated', async () => {
-        console.log('[Feimao] 接收到货源更新事件，开始刷新UI...')
+    document.addEventListener('feimao:sources-updated', async (e) => {
+        const targetId = e.detail?.productId
+        const targetDbId = e.detail?.dbId // 获取DB ID
 
-        // 查找所有已注入的UI
-        const injectedUIs = document.querySelectorAll('[data-fm-host="1"]')
-        console.log(`[Feimao] 找到 ${injectedUIs.length} 个UI，开始刷新货源`)
-
-        for (const ui of injectedUIs) {
-            const productId = ui.getAttribute('data-product-id')
-            if (productId) {
-                await autoLoadFirstSource(productId, ui)
+        if (targetId) {
+            console.log(`[Feimao] 接收到单商品货源更新: ${targetId} (DB_ID: ${targetDbId})`)
+            const ui = document.querySelector(`[data-fm-host="1"][data-product-id="${targetId}"]`)
+            if (ui) {
+                await autoLoadFirstSource(targetId, ui, targetDbId)
             }
-        }
+        } else {
+            console.log('[Feimao] 接收到全量货源更新事件，开始刷新UI...')
 
-        console.log('[Feimao] ✅ 货源UI刷新完成')
+            // 查找所有已注入的UI
+            const injectedUIs = document.querySelectorAll('[data-fm-host="1"]')
+            console.log(`[Feimao] 找到 ${injectedUIs.length} 个UI，开始刷新货源`)
+
+            for (const ui of injectedUIs) {
+                const productId = ui.getAttribute('data-product-id')
+                if (productId) {
+                    await autoLoadFirstSource(productId, ui)
+                }
+            }
+            console.log('[Feimao] ✅ 货源UI刷新完成')
+        }
     })
 
     console.log('%c[Feimao] ✅ 初始化完成', 'color: #10b981; font-weight: bold; font-size: 14px')

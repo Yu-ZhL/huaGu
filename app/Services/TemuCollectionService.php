@@ -45,6 +45,14 @@ class TemuCollectionService
                 ]
             );
 
+            // 加载关联数据供前端使用
+            $product->loadCount('sources1688'); // sources1688_count
+
+            // 获取主图或第一张图
+            $firstSource = $product->sources1688()->orderBy('is_primary', 'desc')->first();
+            $product->setAttribute('first_source_image', $firstSource ? $firstSource->image : null);
+            $product->setAttribute('first_source_price', $firstSource ? $firstSource->price : null);
+
             $savedProducts[] = $product;
         }
 

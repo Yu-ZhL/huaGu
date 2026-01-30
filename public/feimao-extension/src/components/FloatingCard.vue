@@ -274,16 +274,44 @@ const collectSourcesForProducts = async (inputList) => {
     try {
       console.log(`[货源] 正在采集同款: ${product.product_id} (DB_ID: ${product.id})`)
     
+      // 如果已有货源，直接跳过API调用，触发刷新
+      if (product.sources1688_count > 0) {
+          console.log(`[货源] ${product.product_id}: 已有货源，跳过采集`)
+          successCount++
+          
+          document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
+            detail: { 
+                productId: product.product_id,
+                dbId: product.id
+            } 
+          }))
+          
+          await new Promise(resolve => setTimeout(resolve, 50))
+          continue 
+      }
+
       await requestApi('POST', '/temu/products/collect-similar', {
         product_id: product.id,
         search_method: 'image',
         max_count: 20
       })
       successCount++
-      console.log(`[货源] ${productId}: 采集成功 (${successCount}/${productIds.length})`)
+      console.log(`[货源] ${product.product_id}: 采集成功 (${successCount}/${targetProducts.length})`)
+      
+      // 实时刷新该商品的UI (携带TemuID和数据库ID)
+      document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
+        detail: { 
+            productId: product.product_id,
+            dbId: product.id
+        } 
+      }))
+
+      // 稍微延迟一下，避免前端并发请求过多导致 Failed to fetch
+      await new Promise(resolve => setTimeout(resolve, 100))
+
     } catch (error) {
       failCount++
-      console.error(`[货源] ${productId}: 采集失败`, error)
+      console.error(`[货源] ${product.product_id}: 采集失败`, error)
     }
   }
   
