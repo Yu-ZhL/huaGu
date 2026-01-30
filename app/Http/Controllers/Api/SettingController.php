@@ -30,25 +30,21 @@ class SettingController extends Controller
     {
         $setting = SiteSetting::get('customer_service', ['qr_code' => '', 'text' => '']);
 
-        if (!empty($setting['qr_code'])) {
-            $qrCodePath = $setting['qr_code'];
+        // SiteSetting::get 对于 JSON 类型返回解码后的数组
+        // 确保$setting是我们期望的格式
+        if (!isset($setting['qr_code'])) {
+            $setting = ['qr_code' => '', 'text' => ''];
+        }
 
-            // 如果已经是完整URL,直接返回
-            if (filter_var($qrCodePath, FILTER_VALIDATE_URL)) {
-                // 已经是完整URL,不需要处理
-            }
-            // 如果路径以 http:// 或 https:// 开头
-            elseif (str_starts_with($qrCodePath, 'http://') || str_starts_with($qrCodePath, 'https://')) {
-                // 已经是完整URL,不需要处理
-            }
-            // 如果路径以 storage/ 开头,去掉它
-            elseif (str_starts_with($qrCodePath, 'storage/')) {
-                $qrCodePath = substr($qrCodePath, 8); // 去掉 'storage/'
-                $setting['qr_code'] = asset('storage/' . $qrCodePath);
-            }
-            // 其他情况,直接添加 storage/ 前缀
-            else {
-                $setting['qr_code'] = asset('storage/' . $qrCodePath);
+        // 处理二维码URL
+        if (!empty($setting['qr_code'])) {
+            $qrCode = $setting['qr_code'];
+
+            // 如果不是完整URL,则添加storage前缀
+            if (!str_starts_with($qrCode, 'http://') && !str_starts_with($qrCode, 'https://')) {
+                // 移除可能存在的storage/前缀,避免重复
+                $qrCode = preg_replace('#^storage/#', '', $qrCode);
+                $setting['qr_code'] = asset('storage/' . $qrCode);
             }
         }
 

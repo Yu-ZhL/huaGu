@@ -167,7 +167,13 @@ class TemuCollectedProductResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('user_id')
                     ->label('用户')
-                    ->relationship('user', 'phone')
+                    ->options(function () {
+                        return \App\Models\User::query()
+                            ->get()
+                            ->mapWithKeys(fn($user) => [
+                                $user->id => $user->phone ?: $user->email ?: "用户#{$user->id}"
+                            ]);
+                    })
                     ->searchable()
                     ->preload(),
                 Tables\Filters\Filter::make('has_source')
