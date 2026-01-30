@@ -2314,7 +2314,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php162F.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php1148.tmp', 'r')
             ],
         ],
     ]
@@ -2458,7 +2458,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php162F.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php1148.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -5571,6 +5571,7 @@ const headers = {
 };
 
 let body = {
+    "site_url": "https:\/\/www.temu.com\/category",
     "productIds": [
         "601100055961140",
         "601099661205317",
@@ -5578,7 +5579,6 @@ let body = {
     ],
     "pageNum": 1,
     "pageSize": 40,
-    "site_url": "https:\/\/www.temu.com\/category",
     "channel": "temu"
 };
 
@@ -5601,6 +5601,7 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
+            'site_url' =&gt; 'https://www.temu.com/category',
             'productIds' =&gt; [
                 '601100055961140',
                 '601099661205317',
@@ -5608,7 +5609,6 @@ $response = $client-&gt;post(
             ],
             'pageNum' =&gt; 1,
             'pageSize' =&gt; 40,
-            'site_url' =&gt; 'https://www.temu.com/category',
             'channel' =&gt; 'temu',
         ],
     ]
@@ -5722,6 +5722,18 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>site_url</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="site_url"                data-endpoint="POSTapi-feimao-products"
+               value="https://www.temu.com/category"
+               data-component="body">
+    <br>
+<p>采集站点URL Example: <code>https://www.temu.com/category</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>productIds</code></b>&nbsp;&nbsp;
 <small>string[]</small>&nbsp;
  &nbsp;
@@ -5760,18 +5772,6 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                data-component="body">
     <br>
 <p>每页数量 Example: <code>40</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>site_url</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="site_url"                data-endpoint="POSTapi-feimao-products"
-               value="https://www.temu.com/category"
-               data-component="body">
-    <br>
-<p>采集站点URL Example: <code>https://www.temu.com/category</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>channel</code></b>&nbsp;&nbsp;

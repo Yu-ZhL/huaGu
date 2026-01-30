@@ -2252,6 +2252,10 @@ paths:
             schema:
               type: object
               properties:
+                site_url:
+                  type: string
+                  description: 采集站点URL
+                  example: 'https://www.temu.com/category'
                 productIds:
                   type: array
                   description: 商品ID数组
@@ -2269,10 +2273,6 @@ paths:
                   type: integer
                   description: 每页数量
                   example: 40
-                site_url:
-                  type: string
-                  description: 采集站点URL
-                  example: 'https://www.temu.com/category'
                 channel:
                   type: string
                   description: '渠道 (调试用，固定为temu)'
