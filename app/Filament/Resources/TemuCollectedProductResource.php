@@ -36,6 +36,7 @@ class TemuCollectedProductResource extends Resource
                         Forms\Components\Select::make('user_id')
                             ->label('所属用户')
                             ->relationship('user', 'phone')
+                            ->getOptionLabelFromRecordUsing(fn($record) => $record->phone ?: $record->email ?: "用户#{$record->id}")
                             ->searchable()
                             ->preload()
                             ->required(),

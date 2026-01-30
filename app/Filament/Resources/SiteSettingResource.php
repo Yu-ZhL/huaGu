@@ -61,11 +61,38 @@ class SiteSettingResource extends Resource
                                 ->label('专属客服二维码')
                                 ->image()
                                 ->directory('settings')
+                                ->visibility('public')
                                 ->previewable(true)
+                                ->columnSpanFull(),
+                            Forms\Components\Placeholder::make('qr_preview')
+                                ->label('二维码预览')
+                                ->content(function ($record, Get $get) {
+                                    if (!$record || $record->key !== 'customer_service') {
+                                        return '上传图片后可预览';
+                                    }
+
+                                    $value = is_string($record->value) ? json_decode($record->value, true) : $record->value;
+                                    $qrCode = $value['qr_code'] ?? '';
+
+                                    if (empty($qrCode)) {
+                                        return '暂无二维码';
+                                    }
+
+                                    // 构建完整URL
+                                    $imageUrl = asset('storage/' . $qrCode);
+
+                                    return new HtmlString('
+                                        <div style="margin-top: 10px;">
+                                            <img src="' . $imageUrl . '" 
+                                                 style="max-width: 300px; border-radius: 8px; border: 1px solid #ddd;" 
+                                                 alt="客服二维码预览">
+                                        </div>
+                                    ');
+                                })
                                 ->columnSpanFull(),
                             Forms\Components\TextInput::make('value.text')
                                 ->label('底部文字信息')
-                                ->placeholder('如：扫码添加专属客服')
+                                ->placeholder('如:扫码添加专属客服')
                                 ->columnSpanFull(),
                         ])
                             ->hidden(fn(Get $get) => $get('key') !== 'customer_service' || $get('type') !== 'json')

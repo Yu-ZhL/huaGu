@@ -36,12 +36,14 @@ class Product1688SourceResource extends Resource
                         Forms\Components\Select::make('temu_product_id')
                             ->label('TEMU产品')
                             ->relationship('temuProduct', 'title')
+                            ->getOptionLabelFromRecordUsing(fn($record) => $record->title ?: $record->product_id ?: "产品#{$record->id}")
                             ->searchable()
                             ->preload()
                             ->required(),
                         Forms\Components\Select::make('user_id')
                             ->label('用户')
                             ->relationship('user', 'phone')
+                            ->getOptionLabelFromRecordUsing(fn($record) => $record->phone ?: $record->email ?: "用户#{$record->id}")
                             ->searchable()
                             ->preload()
                             ->required(),
