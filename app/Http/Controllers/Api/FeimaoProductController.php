@@ -46,22 +46,37 @@ class FeimaoProductController extends Controller
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'productIds' => 'required|array',
+            'site_url' => 'nullable|url',
+            'productIds' => 'nullable|array',
+            'products' => 'nullable|array', // 支持完整商品对象数组
             'pageNum' => 'integer',
             'pageSize' => 'integer',
-            'site_url' => 'string',
         ]);
 
-        $productIds = $validated['productIds'];
+        $siteUrl = $request->input('site_url');
         $pageNum = $request->input('pageNum', 1);
         $pageSize = $request->input('pageSize', 40);
-        $siteUrl = $request->input('site_url');
+
+        $result = ['code' => 200, 'message' => 'Success', 'data' => []];
 
         try {
-            $result = $this->feimaoService->getProductList($productIds, $pageNum, $pageSize);
+            // 优先使用前端传来的完整数据（包含图片URL）
+            if ($request->has('products') && !empty($request->input('products'))) {
+                $productList = $request->input('products');
+                $result['data']['list'] = $productList;
+                $result['data']['total'] = count($productList);
+                $result['data']['current'] = 1;
+                $result['data']['size'] = count($productList);
+            }
+            // 降级：如果只传了ID，尝试去飞猫后台查
+            else if ($request->has('productIds') && !empty($request->input('productIds'))) {
+                $productIds = $request->input('productIds');
+                $result = $this->feimaoService->getProductList($productIds, $pageNum, $pageSize);
+            }
 
-            if ($result['code'] == 200) {
-                $productList = $result['data']['list'] ?? $result['data']['records'] ?? [];
+            if (isset($result['code']) && $result['code'] == 200) {
+                // 统一获取列表数据
+                $productList = $result['data']['list'] ?? $result['data']['records'] ?? $request->input('products') ?? [];
 
                 if (!empty($productList)) {
                     $user = auth('sanctum')->user();
