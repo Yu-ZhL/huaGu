@@ -19,7 +19,7 @@ class TemuCollectionService
 
     public function saveBatchProducts($userId, array $products, $siteUrl = null)
     {
-        $savedProducts = [];
+        $savedIds = [];
 
         foreach ($products as $productData) {
             // 提取价格并处理空字符串问题
@@ -44,19 +44,27 @@ class TemuCollectionService
                     'collected_at' => now(),
                 ]
             );
-
-            // 加载关联数据供前端使用
-            $product->loadCount('sources1688'); // sources1688_count
-
-            // 获取主图或第一张图
-            $firstSource = $product->sources1688()->orderBy('is_primary', 'desc')->first();
-            $product->setAttribute('first_source_image', $firstSource ? $firstSource->image : null);
-            $product->setAttribute('first_source_price', $firstSource ? $firstSource->price : null);
-
-            $savedProducts[] = $product;
+            $savedIds[] = $product->id;
         }
 
-        return $savedProducts;
+        if (!empty($savedIds)) {
+            return TemuCollectedProduct::whereIn('id', $savedIds)
+                ->withCount('sources1688')
+                ->with([
+                    'sources1688' => function ($query) {
+                        $query->orderBy('is_primary', 'desc');
+                    }
+                ])
+                ->get()
+                ->map(function ($product) {
+                    $firstSource = $product->sources1688->first();
+                    $product->setAttribute('first_source_image', $firstSource ? $firstSource->image : null);
+                    $product->setAttribute('first_source_price', $firstSource ? $firstSource->price : null);
+                    return $product;
+                });
+        }
+
+        return [];
     }
 
     public function collectSimilarProducts($temuProductId, $userId, $searchMethod = 'image', $maxCount = 20)
