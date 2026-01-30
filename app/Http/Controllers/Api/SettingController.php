@@ -30,8 +30,13 @@ class SettingController extends Controller
     {
         $setting = SiteSetting::get('customer_service', ['qr_code' => '', 'text' => '']);
 
-        // SiteSetting::get 对于 JSON 类型返回解码后的数组
-        // 确保$setting是我们期望的格式
+        // Filament 保存时可能会有双层嵌套: {"value": {"qr_code": "...", "text": "..."}}
+        // 需要提取实际的数据
+        if (isset($setting['value']) && is_array($setting['value'])) {
+            $setting = $setting['value'];
+        }
+
+        // 确保$setting有正确的结构
         if (!isset($setting['qr_code'])) {
             $setting = ['qr_code' => '', 'text' => ''];
         }
