@@ -9,6 +9,8 @@ class Product1688Source extends Model
 {
     use HasFactory;
 
+    protected $table = 'product_1688_sources';
+
     protected $fillable = [
         'temu_product_id',
         'user_id',
