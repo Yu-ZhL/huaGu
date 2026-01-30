@@ -206,31 +206,44 @@ const handleStartCollecting = async () => {
     console.log('[采集] API地址: /feimao/products')
     console.log('[采集] 商品ID数量:', productIds.length)
     
-    const result = await requestApi('POST', '/feimao/products', {
-      productIds,
+    const res = await requestApi('POST', '/feimao/products', {
+      productIds: uniqueIds,
       site_url: window.location.href
     })
     
-    console.log('[采集] API返回:', result)
+    console.log('[采集] API完整返回:', res)
+    const productList = res.data?.list || res.data?.records || []
     
-    if (result && (result.success || result.code === 200)) {
+    if (productList.length > 0) {
+        console.log(`[采集] API返回了 ${productList.length} 条商品详情`)
+    } else {
+        console.warn('[采集] API返回的数据中没有 data.list 或 data.records 字段:', res)
+    }
+    
+    if (res && (res.success || res.code === 200)) {
       console.log('%c[采集] ✅ 采集成功！', 'color: #10b981; font-weight: bold')
-      const savedCount = result.data?.total || result.data?.records?.length || productIds.length
-      alert(`采集成功！\n提交: ${productIds.length} 个商品\n保存: ${savedCount} 条记录`)
+      
+      const savedProducts = res.data?.saved_products || []
+      const savedCount = savedProducts.length || productList.length || uniqueIds.length
+      
+      alert(`采集成功！\n提交: ${uniqueIds.length} 个商品\n保存: ${savedCount} 条记录`)
       
       // 刷新已上传数量
       await fetchUploadedCount()
       
-      // 自动采集1688货源
-      console.log('[采集] 开始采集1688同款...')
+      // 延迟一点时间
+      await new Promise(resolve => setTimeout(resolve, 500))
       
-      // 异步采集货源，不阻塞用户
-      collectSourcesForProducts(productIds).catch(err => {
-        console.error('[货源] 批量采集失败:', err)
-      })
+      // 自动开始采集货源 (优先使用后端返回的已保存商品对象，包含数据库ID)
+      if (savedProducts.length > 0) {
+          collectSourcesForProducts(savedProducts)
+      } else {
+          collectSourcesForProducts(uniqueIds)
+      }
+
     } else {
-      console.error('[采集] ❌ API返回失败:', result)
-      alert(result.message || '采集失败')
+      console.error('[采集] ❌ API返回失败:', res)
+      alert(res.message || '采集失败')
     }
   } catch (error) {
     console.error('[采集] ❌ 采集失败:', error)
@@ -241,35 +254,44 @@ const handleStartCollecting = async () => {
 }
 
 // 批量采集1688货源
-const collectSourcesForProducts = async (productIds) => {
-  console.log(`[货源] 开始为 ${productIds.length} 个商品采集货源`)
+// input: 可以是 productId 字符串数组，也可以是包含 id 属性的商品对象数组
+const collectSourcesForProducts = async (inputList) => {
+  console.log(`[货源] 开始为 ${inputList.length} 个商品采集货源`)
   
-  // 先获取商品记录 (获取足够多的记录以匹配刚采集的商品)
-  const temuProducts = await requestApi('GET', '/temu/products?per_page=100')
-  const productList = temuProducts?.data?.data || temuProducts?.data?.records || []
+  let targetProducts = []
   
-  console.log(`[货源] 获取到 ${productList.length} 条Temu商品记录`)
-  if (productList.length > 0) {
-    console.log('[货源] 第一条商品示例:', productList[0])
+  // 判断输入类型
+  if (inputList.length > 0 && typeof inputList[0] === 'object' && inputList[0].id) {
+      console.log('[货源] 使用API直接返回的商品数据 (无需再查询)')
+      targetProducts = inputList
+  } else {
+      // 旧逻辑：先查询商品记录
+      console.log('[货源] 正在查询新采集商品的数据库ID...')
+      const temuProducts = await requestApi('GET', '/temu/products?per_page=100')
+      const dbProductList = temuProducts?.data?.data || temuProducts?.data?.records || temuProducts?.data || []
+      
+      console.log(`[货源] 数据库查询到 ${dbProductList.length} 条记录`)
+      
+      // 匹配
+      targetProducts = inputList.map(pid => {
+          return dbProductList.find(p => p.product_id === pid)
+      }).filter(p => !!p)
   }
   
+  if (targetProducts.length === 0) {
+      console.error('[货源] ❌ 未找到有效的商品记录，无法采集货源')
+      return
+  }
+
   let successCount = 0
   let failCount = 0
   
-  for (const productId of productIds) {
-    const temuProduct = productList.find(p => p.product_id === productId)
-    
-    if (!temuProduct) {
-      console.log(`[货源] ❌ 商品 ${productId} 在数据库中未找到，跳过`)
-      failCount++
-      continue
-    }
-    
-    console.log(`[货源] 找到商品 ${productId}，数据库ID: ${temuProduct.id}`)
-    
+  for (const product of targetProducts) {
     try {
+      console.log(`[货源] 正在采集同款: ${product.product_id} (DB_ID: ${product.id})`)
+    
       await requestApi('POST', '/temu/products/collect-similar', {
-        product_id: temuProduct.id,
+        product_id: product.id,
         search_method: 'image',
         max_count: 20
       })

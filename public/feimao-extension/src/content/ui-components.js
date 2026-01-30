@@ -9,6 +9,8 @@ export function createProductUI(product) {
             <div class="fm-inline-kv">
                 <span class="item"><span class="k">重量:</span> <span class="v" data-fm="weight">0.000kg</span></span>
                 <span class="item"><span class="k">运费:</span> <span class="v" data-fm="freight">¥0.00</span></span>
+                <span class="item"><span class="k">单价:</span> <span class="v" data-fm="unit-price">85/kg</span></span>
+                <span class="item"><span class="k">操作费:</span> <span class="v" data-fm="op-fee">17</span></span>
                 <span class="item"><span class="k">品牌:</span> <span class="v" data-fm="brand">否</span></span>
                 <span class="item"><span class="k">利润:</span> <span class="v" data-fm="profit" style="color: rgb(107, 114, 128);">¥0.00</span></span>
                 <button class="btn-mini" type="button" data-fm="aiBtn">AI计算</button>
@@ -35,6 +37,12 @@ export function updateProductData(container, data) {
     const profitEl = container.querySelector('[data-fm="profit"]')
     profitEl.textContent = `¥${data.profit}`
     profitEl.style.color = data.profit > 0 ? 'rgb(22, 163, 74)' : 'rgb(239, 68, 68)'
+
+    // 更新运费配置显示 (如果有返回)
+    if (data.freight_config) {
+        container.querySelector('[data-fm="unit-price"]').textContent = `${data.freight_config.freight_price_per_kg}/kg`
+        container.querySelector('[data-fm="op-fee"]').textContent = `${data.freight_config.operation_fee}`
+    }
 }
 
 export function updateSourceDisplay(container, source) {
