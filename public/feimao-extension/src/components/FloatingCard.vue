@@ -4,12 +4,12 @@ import { useAuth } from '../composables/useAuth'
 import { useItemScanner } from '../composables/useItemScanner'
 import { useCache } from '../composables/useCache'
 import { useDraggable } from '../composables/useDraggable'
-import { apiRequest } from '../content/api.js'
+import { requestApi } from '../composables/useApi'
 import '../styles/dialog.css'
 
 // 引入组合式函数
 const { isLoggedIn, userInfo, loading, loginForm, checkLoginStatus, handleLogin, handleLogout } = useAuth()
-const { totalCount, filteredCount, filters, startScanning, stopScanning, isScanning } = useItemScanner()
+const { totalCount, filteredCount, filters, startScanning, stopScanning, isScanning, scanItems } = useItemScanner()
 const { handleClearExtensionCache, handleClearTemuCache } = useCache()
 const { position, onMouseDown, headerRef } = useDraggable()
 
@@ -17,6 +17,7 @@ const { position, onMouseDown, headerRef } = useDraggable()
 const isCollapsed = ref(false)
 const collectedProducts = ref([])
 const uploadedCount = ref(0)
+const isUIInjected = ref(false)
 const showDetailDialog = ref(false)
 const selectedProducts = ref([])
 
@@ -29,7 +30,7 @@ const collectingStatusText = computed(() => {
 // 获取已采集上传的数量
 const fetchUploadedCount = async () => {
   try {
-    const result = await apiRequest('/temu/products')
+    const result = await requestApi('GET', '/temu/products')
     if (result.success && result.data) {
       uploadedCount.value = result.data.total || 0
     }
@@ -41,12 +42,15 @@ const fetchUploadedCount = async () => {
 // 获取采集明细
 const fetchCollectedDetails = async () => {
   try {
-    const result = await apiRequest('/temu/products?per_page=100')
-    if (result.success && result.data) {
+    console.log('[Feimao] 正在获取采集明细...')
+    const result = await requestApi('GET', '/temu/products?per_page=100')
+    console.log('[Feimao] 采集明细API返回:', result)
+    if (result && result.success && result.data) {
       collectedProducts.value = result.data.data || []
+      console.log('[Feimao] ✅ 获取到', collectedProducts.value.length, '个商品')
     }
   } catch (error) {
-    console.error('获取采集明细失败', error)
+    console.error('[Feimao] ❌ 获取采集明细失败', error)
   }
 }
 
@@ -92,9 +96,198 @@ const handleExportExcel = () => {
 }
 
 // 开始采集
-const handleStartCollecting = () => {
+const handleStartCollecting = async () => {
+  console.log('%c[采集] 用户点击"开始采集"按钮', 'color: #8b5cf6; font-weight: bold')
+  
+  if (isScanning.value) {
+    alert('正在采集中，请勿重复点击')
+    return
+  }
+  
+  // 启动扫描器统计商品
+  console.log('[采集] 启动扫描器统计商品数量...')
   startScanning()
-  alert('开始采集当前页面商品')
+  
+  // 等待扫描完成
+  await new Promise(resolve => setTimeout(resolve, 500))
+  
+  console.log(`[采集] 扫描完成: 总共${totalCount.value}个商品, 符合筛选${filteredCount.value}个`)
+  
+  if (totalCount.value === 0) {
+    alert('当前页面没有检测到商品')
+    stopScanning()
+    return
+  }
+  
+  // 获取所有商品ID
+  console.log('[采集] 开始提取商品ID...')
+  
+  // 优先从已注入的UI中提取ID
+  const injectedUIs = document.querySelectorAll('[data-fm-host="1"]')
+  const productIds = []
+  
+  if (injectedUIs.length > 0) {
+    console.log(`[采集] 从UI中提取到 ${injectedUIs.length} 个商品`)
+    injectedUIs.forEach(ui => {
+      const pid = ui.getAttribute('data-product-id')
+      if (pid) productIds.push(pid)
+    })
+  } else {
+    // 降级策略（如果还没注入UI）
+    console.log('[采集] 未找到注入UI，尝试直接从DOM扫描...')
+    let priceElements = Array.from(document.querySelectorAll('[data-type="price"]'))
+    if (priceElements.length === 0) {
+      priceElements = Array.from(document.querySelectorAll('[class*="price"], [class*="Price"]'))
+    }
+    
+    if (priceElements.length > 0) {
+      priceElements.forEach((priceEl) => {
+        let card = priceEl.parentElement
+        let productId = null
+        
+        for (let i = 0; i < 5; i++) {
+          if (!card) break
+          const hasImg = card.querySelector('img')
+          if (hasImg) {
+            productId = card.dataset.goodsId || card.getAttribute('data-goods-id') || card.getAttribute('data-product-id')
+            
+            if (!productId) {
+              const link = card.querySelector('a[href]')
+              if (link) {
+                const href = link.href
+                const patterns = [
+                  /goods[_-]id=(\d+)/i,
+                  /goodsId[=:](\d+)/i,
+                  /goods[/-](\d+)/,
+                  /product[/-](\d+)/,
+                  /\/(\d{15,})/
+                ]
+                for (const pattern of patterns) {
+                  const match = href.match(pattern)
+                  if (match) {
+                    productId = match[1]
+                    break
+                  }
+                }
+              }
+            }
+            
+            if (productId) {
+              productIds.push(productId)
+            }
+            break
+          }
+          card = card.parentElement
+        }
+      })
+    }
+  }
+
+  // 去重
+  const uniqueIds = [...new Set(productIds)]
+  
+  if (uniqueIds.length === 0) {
+    alert('未能提取到有效的商品ID')
+    stopScanning()
+    return
+  }
+  
+  console.log(`[采集] 提取到 ${productIds.length} 个商品ID`)
+  
+  if (productIds.length === 0) {
+    alert('无法提取商品ID，请确保在商品列表页')
+    stopScanning()
+    return
+  }
+  
+  // 提交到后端API
+  try {
+    console.log('[采集] 提交商品到后端API...')
+    console.log('[采集] API地址: /feimao/products')
+    console.log('[采集] 商品ID数量:', productIds.length)
+    
+    const result = await requestApi('POST', '/feimao/products', {
+      productIds,
+      site_url: window.location.href
+    })
+    
+    console.log('[采集] API返回:', result)
+    
+    if (result && (result.success || result.code === 200)) {
+      console.log('%c[采集] ✅ 采集成功！', 'color: #10b981; font-weight: bold')
+      const savedCount = result.data?.total || result.data?.records?.length || productIds.length
+      alert(`采集成功！\n提交: ${productIds.length} 个商品\n保存: ${savedCount} 条记录`)
+      
+      // 刷新已上传数量
+      await fetchUploadedCount()
+      
+      // 自动采集1688货源
+      console.log('[采集] 开始采集1688同款...')
+      
+      // 异步采集货源，不阻塞用户
+      collectSourcesForProducts(productIds).catch(err => {
+        console.error('[货源] 批量采集失败:', err)
+      })
+    } else {
+      console.error('[采集] ❌ API返回失败:', result)
+      alert(result.message || '采集失败')
+    }
+  } catch (error) {
+    console.error('[采集] ❌ 采集失败:', error)
+    alert('采集失败: ' + error.message)
+  } finally {
+    stopScanning()
+  }
+}
+
+// 批量采集1688货源
+const collectSourcesForProducts = async (productIds) => {
+  console.log(`[货源] 开始为 ${productIds.length} 个商品采集货源`)
+  
+  // 先获取商品记录 (获取足够多的记录以匹配刚采集的商品)
+  const temuProducts = await requestApi('GET', '/temu/products?per_page=100')
+  const productList = temuProducts?.data?.data || temuProducts?.data?.records || []
+  
+  console.log(`[货源] 获取到 ${productList.length} 条Temu商品记录`)
+  if (productList.length > 0) {
+    console.log('[货源] 第一条商品示例:', productList[0])
+  }
+  
+  let successCount = 0
+  let failCount = 0
+  
+  for (const productId of productIds) {
+    const temuProduct = productList.find(p => p.product_id === productId)
+    
+    if (!temuProduct) {
+      console.log(`[货源] ❌ 商品 ${productId} 在数据库中未找到，跳过`)
+      failCount++
+      continue
+    }
+    
+    console.log(`[货源] 找到商品 ${productId}，数据库ID: ${temuProduct.id}`)
+    
+    try {
+      await requestApi('POST', '/temu/products/collect-similar', {
+        product_id: temuProduct.id,
+        search_method: 'image',
+        max_count: 20
+      })
+      successCount++
+      console.log(`[货源] ${productId}: 采集成功 (${successCount}/${productIds.length})`)
+    } catch (error) {
+      failCount++
+      console.error(`[货源] ${productId}: 采集失败`, error)
+    }
+  }
+  
+  console.log(`[货源] ✅ 批量采集完成: ${successCount}成功, ${failCount}失败`)
+  
+  // 触发页面刷新货源UI
+  if (successCount > 0) {
+    console.log('[货源] 触发页面刷新货源UI...')
+    document.dispatchEvent(new CustomEvent('feimao:sources-updated'))
+  }
 }
 
 // 全选/取消全选
@@ -110,14 +303,32 @@ const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value
 }
 
+// 检查UI注入状态
+const checkUIInjection = () => {
+  const injectedElements = document.querySelectorAll('[data-fm-host="1"]')
+  isUIInjected.value = injectedElements.length > 0
+}
+
 // 生命周期钩子
 onMounted(async () => {
     await checkLoginStatus()
     if (isLoggedIn.value) {
       await fetchUploadedCount()
     }
-    // 进入页面即开始扫描
-    startScanning()
+    
+    // 定时检查UI注入状态
+    setInterval(checkUIInjection, 1000)
+    
+    // 使用MutationObserver监听DOM变化，实时更新计数
+    const observer = new MutationObserver(() => {
+      if (!isScanning.value) {
+        scanItems()
+      }
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+    
+    // 初始扫描一次
+    scanItems()
 })
 
 onUnmounted(() => {
@@ -238,7 +449,7 @@ onUnmounted(() => {
 
         <!-- 按钮组 -->
         <div class="feimao-btn-row">
-          <button class="feimao-btn feimao-btn-primary feimao-btn-small" @click="handleStartCollecting" :disabled="isScanning"> 
+          <button class="feimao-btn feimao-btn-primary feimao-btn-small" @click="handleStartCollecting" :disabled="isScanning || !isUIInjected" :title="!isUIInjected ? 'UI注入中...' : ''"> 
             {{ isScanning ? '采集中...' : '开始采集' }} 
           </button>
           <button class="feimao-btn feimao-btn-ghost feimao-btn-small" @click="stopScanning" :disabled="!isScanning"> 停止 </button>

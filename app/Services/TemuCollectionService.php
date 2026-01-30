@@ -78,12 +78,14 @@ class TemuCollectionService
 
             if (!empty($result['data']) && is_array($result['data'])) {
                 $saved = 0;
+                $isFirstSource = ($existingCount === 0);
+
                 foreach ($result['data'] as $item) {
                     if ($saved >= $remainingCount) {
                         break;
                     }
 
-                    Product1688Source::create([
+                    $source = Product1688Source::create([
                         'temu_product_id' => $temuProductId,
                         'user_id' => $userId,
                         'title' => $item['title'] ?? null,
@@ -93,6 +95,7 @@ class TemuCollectionService
                         'product_data' => $item,
                         'tags' => $item['tags'] ?? null,
                         'search_method' => $searchMethod,
+                        'is_primary' => ($isFirstSource && $saved === 0), // 第一个货源设为主货源
                     ]);
 
                     $saved++;

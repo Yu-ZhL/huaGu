@@ -55,17 +55,18 @@ Route::middleware('auth:sanctum')->group(function () {
     // 运费配置
     Route::get('/freight-config', [FreightConfigController::class, 'show']);
     Route::put('/freight-config', [FreightConfigController::class, 'update']);
+
+    // 飞猫选品 - 采集
+    Route::post('/feimao/products', [App\Http\Controllers\Api\FeimaoProductController::class, 'index']);
 });
 
 // 支付回调 - 不需要认证
 Route::post('/payment/alipay-notify', [PaymentController::class, 'alipayNotify']);
 
-// 飞猫选品
-use App\Http\Controllers\Api\FeimaoProductController;
-Route::post('/feimao/products', [FeimaoProductController::class, 'index']);
-Route::post('/feimao/categories', [FeimaoProductController::class, 'getCategories']);
-Route::post('/feimao/products/list', [FeimaoProductController::class, 'getCategoryProducts']);
-Route::post('/feimao/sales-records', [FeimaoProductController::class, 'getSalesRecord']);
+
+Route::post('/feimao/categories', [App\Http\Controllers\Api\FeimaoProductController::class, 'getCategories']);
+Route::post('/feimao/products/list', [App\Http\Controllers\Api\FeimaoProductController::class, 'getCategoryProducts']);
+Route::post('/feimao/sales-records', [App\Http\Controllers\Api\FeimaoProductController::class, 'getSalesRecord']);
 
 // 系统配置
 Route::get('/settings/customer-service', [SettingController::class, 'getCustomerService']);
