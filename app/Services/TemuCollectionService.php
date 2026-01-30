@@ -79,7 +79,34 @@ class TemuCollectionService
                 return ['success' => false, 'message' => '缺少商品图片信息'];
             }
 
+            // 2. 如果URL搜图没结果，尝试转Base64搜图 (用户明确要求)
+            $hasData = !empty($result['data']) && is_array($result['data']) && count($result['data']) > 0;
+
+            if (!$hasData && !empty($temuProduct->cover_image)) {
+                Log::info('URL搜图无结果，尝试转换为Base64搜图...');
+                try {
+                    // 使用 file_get_contents 下载图片，设置超时
+                    $ctx = stream_context_create(['http' => ['timeout' => 15]]); // 15秒超时
+                    $imageContent = @file_get_contents($temuProduct->cover_image, false, $ctx);
+
+                    if ($imageContent) {
+                        $base64 = base64_encode($imageContent);
+                        // 调用 Platform1688Service 的 Base64 搜图方法
+                        $result = $this->platform1688Service->searchByImage($base64, 1, $remainingCount);
+
+                        if (!empty($result['data'])) {
+                            Log::info('Base64搜图成功，找到结果数量: ' . count($result['data']));
+                        }
+                    } else {
+                        Log::warning('图片下载失败，无法执行Base64搜图');
+                    }
+                } catch (\Exception $e) {
+                    Log::error('Base64搜图异常: ' . $e->getMessage());
+                }
+            }
+
             if (!empty($result['data']) && is_array($result['data'])) {
+                Log::info('搜图成功，结果数量: ' . count($result['data']));
                 $saved = 0;
                 $isFirstSource = ($existingCount === 0);
 
@@ -110,6 +137,8 @@ class TemuCollectionService
                     'count' => $saved,
                     'total' => $existingCount + $saved,
                 ];
+            } else {
+                Log::warning('搜图未找到结果，API返回: ' . json_encode($result, JSON_UNESCAPED_UNICODE));
             }
 
             return [
