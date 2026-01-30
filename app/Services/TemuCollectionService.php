@@ -69,15 +69,11 @@ class TemuCollectionService
         $remainingCount = $maxCount - $existingCount;
 
         try {
-            if ($searchMethod === 'image' && !empty($temuProduct->cover_image)) {
-                $result = $this->platform1688Service->searchByUrl($temuProduct->cover_image, 1, $remainingCount);
-            } elseif ($searchMethod === 'url' && !empty($temuProduct->cover_image)) {
+            // 优先使用 URL 搜图
+            if (!empty($temuProduct->cover_image)) {
                 $result = $this->platform1688Service->searchByUrl($temuProduct->cover_image, 1, $remainingCount);
             } else {
-                return [
-                    'success' => false,
-                    'message' => '缺少商品图片信息',
-                ];
+                return ['success' => false, 'message' => '缺少商品图片信息'];
             }
 
             if (!empty($result['data']) && is_array($result['data'])) {
