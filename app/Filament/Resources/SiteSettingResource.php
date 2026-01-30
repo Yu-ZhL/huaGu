@@ -74,26 +74,47 @@ class SiteSettingResource extends Resource
                                     // 解析value (JSON字符串 -> 数组)
                                     $value = is_string($record->value) ? json_decode($record->value, true) : $record->value;
 
+                                    // 调试信息
+                                    $debug = '';
+                                    if (config('app.debug')) {
+                                        $debug = '<div style="background:#f0f0f0;padding:10px;margin-bottom:10px;font-size:12px;font-family:monospace;">';
+                                        $debug .= '<strong>调试信息:</strong><br>';
+                                        $debug .= '原始value类型: ' . gettype($record->value) . '<br>';
+                                        $debug .= '原始value: ' . htmlspecialchars(substr(json_encode($value), 0, 200)) . '<br>';
+                                    }
+
                                     // 处理双层嵌套: {"value": {"qr_code": "...", "text": "..."}}
                                     if (isset($value['value']) && is_array($value['value'])) {
+                                        if (config('app.debug')) {
+                                            $debug .= '检测到双层嵌套，提取内层数据<br>';
+                                        }
                                         $value = $value['value'];
                                     }
 
                                     $qrCode = $value['qr_code'] ?? '';
 
+                                    if (config('app.debug')) {
+                                        $debug .= 'qr_code值: ' . htmlspecialchars($qrCode) . '<br>';
+                                        $debug .= '</div>';
+                                    }
+
                                     if (empty($qrCode)) {
-                                        return '暂无二维码';
+                                        return $debug . '暂无二维码';
                                     }
 
                                     // 构建完整URL
                                     $imageUrl = asset('storage/' . $qrCode);
 
-                                    return new HtmlString('
+                                    if (config('app.debug')) {
+                                        $debug .= '<div style="background:#fff3cd;padding:5px;margin-bottom:10px;"><strong>图片URL:</strong> ' . htmlspecialchars($imageUrl) . '</div>';
+                                    }
+
+                                    return new HtmlString($debug . '
                                         <div style="margin-top: 10px;">
                                             <img src="' . $imageUrl . '" 
                                                  style="max-width: 300px; border-radius: 8px; border: 1px solid #ddd;" 
                                                  alt="客服二维码预览"
-                                                 onerror="this.parentElement.innerHTML=\'<p style=\\\'color:red;\\\'>图片加载失败: ' . htmlspecialchars($imageUrl) . '</p>\'">
+                                                 onerror="this.parentElement.innerHTML=\'<p style=\\\'color:red;\\\'>图片加载失败:<br>' . htmlspecialchars($imageUrl) . '</p>\'">
                                         </div>
                                     ');
                                 })
