@@ -123,6 +123,12 @@ class TemuCollectionService
 
             if (!empty($result['data']) && is_array($result['data'])) {
                 Log::info('搜图成功，结果数量: ' . count($result['data']));
+
+                // [DEBUG] 打印第一条数据结构，以便排查字段名问题
+                if (isset($result['data'][0])) {
+                    Log::info('API返回的第一条数据结构:', $result['data'][0]);
+                }
+
                 $saved = 0;
                 $isFirstSource = ($existingCount === 0);
 
@@ -134,10 +140,10 @@ class TemuCollectionService
                     $source = Product1688Source::create([
                         'temu_product_id' => $temuProductId,
                         'user_id' => $userId,
-                        'title' => $item['title'] ?? null,
+                        'title' => $item['title'] ?? $item['subject'] ?? null,
                         'price' => $item['price'] ?? null,
-                        'image' => $item['image'] ?? null,
-                        'url' => $item['url'] ?? null,
+                        'image' => $item['image'] ?? $item['imageUrl'] ?? $item['imgUrl'] ?? null,
+                        'url' => $item['url'] ?? $item['detailUrl'] ?? null,
                         'product_data' => $item,
                         'tags' => $item['tags'] ?? null,
                         'search_method' => $searchMethod,

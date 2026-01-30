@@ -198,25 +198,48 @@ async function autoLoadFirstSource(productId, container, dbId = null) {
         const sources = sourcesResponse?.data || []
 
         if (!Array.isArray(sources) || sources.length === 0) {
-            console.log(`[货源] 暂无1688货源`)
+            console.log(`[货源debug] 暂无1688货源`)
             return
         }
 
-        console.log(`[货源] 找到 ${sources.length} 个货源`)
+        console.log(`[货源debug] ✅ 找到 ${sources.length} 个货源，准备更新UI`)
 
         const firstSource = sources[0]
         const sourceText = container.querySelector('[data-fm="sourceText"]')
         const sourceImg = container.querySelector('[data-fm="sourceImg"]')
+        const sourceLoading = container.querySelector('[data-fm="sourceLoading"]')
+
+        console.log('[货源debug] UI元素状态:', {
+            hasText: !!sourceText,
+            hasImg: !!sourceImg,
+            firstSourceTitle: firstSource.title,
+            firstSourceImage: firstSource.image
+        })
+
+        if (sourceLoading) sourceLoading.style.display = 'none'
 
         if (sourceText && sourceImg) {
-            sourceText.textContent = '已选货源'
-            sourceText.style.color = 'rgb(22, 163, 74)'
+            // 显示具体的货源标题和价格
+            const shortTitle = firstSource.title ? (firstSource.title.length > 20 ? firstSource.title.substring(0, 20) + '...' : firstSource.title) : '未命名商品';
+            sourceText.textContent = `${shortTitle} ¥${firstSource.price}`;
+            sourceText.style.color = 'rgb(22, 163, 74)';
+            sourceText.title = firstSource.title || ''; // 鼠标悬停显示全名
 
             if (firstSource.image) {
-                sourceImg.src = firstSource.image
+                // 强制 HTTPS 以避免 Mixed Content 不显示
+                let secureUrl = firstSource.image
+                if (secureUrl.startsWith('http:')) {
+                    secureUrl = secureUrl.replace('http:', 'https:')
+                } else if (secureUrl.startsWith('//')) {
+                    secureUrl = 'https:' + secureUrl
+                }
+
+                sourceImg.src = secureUrl
                 sourceImg.style.display = 'inline-block'
-                console.log('[货源] ✅ 已显示货源')
+                console.log(`[货源debug] 🖼️ 图片已更新: ${secureUrl}`)
             }
+        } else {
+            console.error('[货源debug] ❌ 未找到UI元素 (sourceText/sourceImg)，无法渲染')
         }
 
     } catch (error) {
