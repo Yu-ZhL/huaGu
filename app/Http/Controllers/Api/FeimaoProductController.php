@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Response;
+use Knuckles\Scribe\Attributes\Authenticated;
 
 #[Group("飞猫选品", "第三方选品平台接口")]
+#[Authenticated]
 class FeimaoProductController extends Controller
 {
     protected $feimaoService;

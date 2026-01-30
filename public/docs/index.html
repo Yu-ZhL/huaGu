@@ -2314,7 +2314,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php46.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpA259.tmp', 'r')
             ],
         ],
     ]
@@ -2458,7 +2458,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php46.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpA259.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;
@@ -5550,7 +5550,8 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     <h2 id="363dec5852da80100c17ce0cc78f154b">批量查询商品详情</h2>
 
 <p>
-        </p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
 
 
 
@@ -5564,6 +5565,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 );
 
 const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5594,6 +5596,7 @@ $response = $client-&gt;post(
     $url,
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -5653,7 +5656,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 更多错误详情请查看浏览器控制台。</code></pre>
 </span>
 <form id="form-POSTapi-feimao-products" data-method="POST"
-    data-path="api/feimao/products" data-authed="0"
+    data-path="api/feimao/products" data-authed="1"
     data-hasfiles="0" data-isarraybody="0"
     autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-feimao-products', this);">
     <h3>
@@ -5681,6 +5684,18 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             <b><code>api/feimao/products</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-feimao-products"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5775,7 +5790,8 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     <h2 id="838b3e5d82626d271302d1c309e6b6b1">获取分类列表</h2>
 
 <p>
-        </p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
 
 <p>获取飞猫选品的商品分类。parentId为0时获取一级分类，传入一级分类ID时获取二级分类。</p>
 
@@ -5789,6 +5805,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 );
 
 const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5811,6 +5828,7 @@ $response = $client-&gt;post(
     $url,
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -5891,7 +5909,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 更多错误详情请查看浏览器控制台。</code></pre>
 </span>
 <form id="form-POSTapi-feimao-categories" data-method="POST"
-    data-path="api/feimao/categories" data-authed="0"
+    data-path="api/feimao/categories" data-authed="1"
     data-hasfiles="0" data-isarraybody="0"
     autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-feimao-categories', this);">
     <h3>
@@ -5919,6 +5937,18 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             <b><code>api/feimao/categories</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-feimao-categories"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -5961,7 +5991,8 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     <h2 id="0bb656c07677ab600cdbc1c60551c5ef">获取分类商品列表</h2>
 
 <p>
-        </p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
 
 <p>获取飞猫选品指定分类下的商品列表，支持分页。</p>
 
@@ -5975,6 +6006,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 );
 
 const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -5999,6 +6031,7 @@ $response = $client-&gt;post(
     $url,
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -6068,7 +6101,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 更多错误详情请查看浏览器控制台。</code></pre>
 </span>
 <form id="form-POSTapi-feimao-products-list" data-method="POST"
-    data-path="api/feimao/products/list" data-authed="0"
+    data-path="api/feimao/products/list" data-authed="1"
     data-hasfiles="0" data-isarraybody="0"
     autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-feimao-products-list', this);">
     <h3>
@@ -6096,6 +6129,18 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             <b><code>api/feimao/products/list</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-feimao-products-list"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;
@@ -6162,7 +6207,8 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     <h2 id="996d607cd4d9a6468ce96b2a271bdf3a">获取销量记录</h2>
 
 <p>
-        </p>
+    <small class="badge badge-darkred">需要认证</small>
+    </p>
 
 <p>获取指定商品的销量历史记录。</p>
 
@@ -6176,6 +6222,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 );
 
 const headers = {
+    "Authorization": "Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -6198,6 +6245,7 @@ $response = $client-&gt;post(
     $url,
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -6251,7 +6299,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 更多错误详情请查看浏览器控制台。</code></pre>
 </span>
 <form id="form-POSTapi-feimao-sales-records" data-method="POST"
-    data-path="api/feimao/sales-records" data-authed="0"
+    data-path="api/feimao/sales-records" data-authed="1"
     data-hasfiles="0" data-isarraybody="0"
     autocomplete="off" onsubmit="event.preventDefault(); executeTryOut('POSTapi-feimao-sales-records', this);">
     <h3>
@@ -6279,6 +6327,18 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             <b><code>api/feimao/sales-records</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>请求头 (Headers)</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-feimao-sales-records"
+               value="Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer 1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c</code></p>
+            </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
 &nbsp;

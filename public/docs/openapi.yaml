@@ -2279,7 +2279,6 @@ paths:
                   example: temu
               required:
                 - productIds
-      security: []
   /api/feimao/categories:
     post:
       summary: 获取分类列表
@@ -2410,7 +2409,6 @@ paths:
                   type: integer
                   description: '父级ID (0为一级分类)'
                   example: 0
-      security: []
   /api/feimao/products/list:
     post:
       summary: 获取分类商品列表
@@ -2558,7 +2556,6 @@ paths:
                   type: string
                   description: 分类ID
                   example: '953224'
-      security: []
   /api/feimao/sales-records:
     post:
       summary: 获取销量记录
@@ -2626,4 +2623,3 @@ paths:
                   example: '1732140290455343698'
               required:
                 - productId
-      security: []
