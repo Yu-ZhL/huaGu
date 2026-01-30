@@ -76,31 +76,19 @@ class SiteSettingResource extends Resource
 
                                     // 处理双层嵌套: {"value": {"qr_code": "...", "text": "..."}}
                                     if (isset($value['value']) && is_array($value['value'])) {
-                                        if (config('app.debug')) {
-                                            $debug .= '检测到双层嵌套，提取内层数据<br>';
-                                        }
                                         $value = $value['value'];
                                     }
 
                                     $qrCode = $value['qr_code'] ?? '';
 
-                                    if (config('app.debug')) {
-                                        $debug .= 'qr_code值: ' . htmlspecialchars($qrCode) . '<br>';
-                                        $debug .= '</div>';
-                                    }
-
                                     if (empty($qrCode)) {
-                                        return $debug . '暂无二维码';
+                                        return '暂无二维码';
                                     }
 
                                     // 构建完整URL
                                     $imageUrl = asset('storage/' . $qrCode);
 
-                                    if (config('app.debug')) {
-                                        $debug .= '<div style="background:#fff3cd;padding:5px;margin-bottom:10px;"><strong>图片URL:</strong> ' . htmlspecialchars($imageUrl) . '</div>';
-                                    }
-
-                                    return new HtmlString($debug . '
+                                    return new HtmlString('
                                         <div style="margin-top: 10px;">
                                             <img src="' . $imageUrl . '" 
                                                  style="max-width: 300px; border-radius: 8px; border: 1px solid #ddd;" 
