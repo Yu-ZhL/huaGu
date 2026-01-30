@@ -22,6 +22,10 @@ class TemuCollectionService
         $savedProducts = [];
 
         foreach ($products as $productData) {
+            // 提取价格并处理空字符串问题
+            $rawPrice = $productData['sale_price'] ?? $productData['price'] ?? null;
+            $salePrice = (is_numeric($rawPrice) && $rawPrice !== '') ? $rawPrice : null;
+
             $product = TemuCollectedProduct::updateOrCreate(
                 [
                     'user_id' => $userId,
@@ -31,7 +35,7 @@ class TemuCollectionService
                     'site_url' => $siteUrl ?? ($productData['site_url'] ?? null),
                     'platform' => 'temu',
                     'title' => $productData['title'] ?? $productData['productName'] ?? null,
-                    'sale_price' => $productData['sale_price'] ?? $productData['price'] ?? null,
+                    'sale_price' => $salePrice,
                     'weight' => $productData['weight'] ?? null,
                     'brand' => $productData['brand'] ?? null,
                     'cover_image' => $productData['cover_image'] ?? $productData['coverUrl'] ?? null,

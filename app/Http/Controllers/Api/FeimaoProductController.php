@@ -81,25 +81,23 @@ class FeimaoProductController extends Controller
                 if (!empty($productList)) {
                     $user = auth('sanctum')->user();
 
-                    Log::info('FeimaoProductController: Authenticated user', ['user_id' => $user->id ?? 'null']);
+                    if (!$user) {
+                        $user = $request->user();
+                    }
 
                     if ($user) {
                         try {
                             $temuService = app(\App\Services\TemuCollectionService::class);
                             $savedProducts = $temuService->saveBatchProducts($user->id, $productList, $siteUrl);
 
-                            Log::info('FeimaoProductController: Products saved', ['count' => count($savedProducts)]);
-
                             // 将保存后的商品数据合并到返回结果中
                             $result['data']['saved_products'] = $savedProducts;
                         } catch (\Exception $e) {
-                            Log::error('FeimaoProductController: Save failed', ['error' => $e->getMessage()]);
+                            Log::error('飞猫商品控制器: 保存失败', ['error' => $e->getMessage()]);
                         }
                     } else {
-                        Log::error('FeimaoProductController: User is null despite auth middleware');
+                        Log::error('飞猫商品控制器: 无法保存商品 - 用户未认证');
                     }
-                } else {
-                    Log::warning('FeimaoProductController: productList is empty', ['data_keys' => array_keys($result['data'] ?? [])]);
                 }
             }
 
