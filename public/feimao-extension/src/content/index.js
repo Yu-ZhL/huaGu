@@ -70,10 +70,27 @@ function extractProductNodes() {
     console.log('%c[Feimao] ========== 开始提取商品节点 ==========', 'color: #fb923c; font-weight: bold')
 
     // 步骤1: 查找价格元素
+    // 策略A: 标准属性
     let priceElements = Array.from(document.querySelectorAll('[data-type="price"]'))
 
+    // 策略B: 常用Class和属性模糊匹配
     if (priceElements.length === 0) {
-        priceElements = Array.from(document.querySelectorAll('[class*="price"], [class*="Price"]'))
+        priceElements = Array.from(document.querySelectorAll(
+            '[class*="price"], [class*="Price"], [aria-label*="Price"], [aria-label*="price"]'
+        ))
+    }
+
+    // 策略C: 文本内容嗅探 (仅在列表页尝试)
+    if (priceElements.length === 0 && window.location.href.includes('temu.com')) {
+        const potentialPrices = Array.from(document.querySelectorAll('span, div'))
+            .filter(el => {
+                const txt = el.textContent.trim()
+                // 匹配 $1.99, ¥10.00 等格式，且不包含太多其他字符
+                return /^[\$¥€£]\s*\d+(\.\d+)?$/.test(txt) && el.children.length === 0
+            })
+        if (potentialPrices.length > 0) {
+            priceElements = potentialPrices
+        }
     }
 
     if (priceElements.length === 0) {

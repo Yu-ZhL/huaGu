@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useAuth } from '../composables/useAuth'
 import { useItemScanner } from '../composables/useItemScanner'
 import { useCache } from '../composables/useCache'
@@ -19,11 +19,100 @@ const showDetailDialog = ref(false)
 const selectedProducts = ref([])
 // 模拟AI批量开关
 const isAiBatchEnabled = ref(false)
+// 日志系统状态
+const logs = ref([])
+const activeLogMsg = ref(null)
+const activeLogId = ref(null)
+const logListRef = ref(null) // 日志列表DOM引用
+let clearTimer = null
+// 任务运行状态
+const isTaskRunning = ref(false)
 
 const collectingStatusText = computed(() => {
-  if (isScanning.value) return '采集中...'
+  if (isScanning.value) return '扫描商品ID...'
+  if (isTaskRunning.value) return '批量采集货源...'
   return '空闲'
 })
+
+// 添加日志 (替代 alert)
+const addLog = (msg, type = 'info') => {
+  const id = Date.now()
+  // 插入到历史记录底部 (符合大多日志习惯)
+  logs.value.push({ id, message: msg, type })
+  
+  // 设置顶部醒目提示
+  activeLogMsg.value = msg
+  activeLogId.value = id
+  
+  if (clearTimer) clearTimeout(clearTimer)
+  // 3秒后自动关闭顶部提示
+  clearTimer = setTimeout(() => {
+    if (activeLogId.value === id) {
+      activeLogMsg.value = null
+      activeLogId.value = null
+    }
+  }, 3000)
+
+  // 自动滚动到底部
+  nextTick(() => {
+    if (logListRef.value) {
+      logListRef.value.scrollTop = logListRef.value.scrollHeight
+    }
+  })
+}
+
+// 手动关闭顶部提示
+const removeLog = () => {
+  activeLogMsg.value = null
+  activeLogId.value = null
+}
+
+// 停止任务逻辑
+const handleStop = () => {
+  stopScanning()
+  if (isTaskRunning.value) {
+      isTaskRunning.value = false
+      addLog('已手动停止任务', 'warning')
+  }
+}
+
+// 设置商品高亮 (滚动边框特效)
+const setHighlight = (pid) => {
+  // 移除所有旧高亮
+  try {
+     const old = document.querySelectorAll('.fm-collecting-highlight')
+     old.forEach(el => el.classList.remove('fm-collecting-highlight'))
+  } catch(e) {}
+
+  if (!pid) return
+
+  // 尝试匹配元素
+  const selectors = [
+      `[data-product-id="${pid}"]`,
+      `[data-goods-id="${pid}"]`,
+      `[data-id="${pid}"]`
+  ]
+  
+  let targetEl = null
+  for (const sel of selectors) {
+      targetEl = document.querySelector(sel)
+      if (targetEl) break
+  }
+
+  // 如果找不到，尝试模糊匹配链接
+  if (!targetEl) {
+     const links = document.querySelectorAll('a[href*="' + pid + '"]')
+     if (links.length > 0) {
+         // 往上找父容器
+         targetEl = links[0].closest('[class*="card"]') || links[0].parentElement
+     }
+  }
+
+  if (targetEl) {
+      targetEl.classList.add('fm-collecting-highlight')
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+}
 
 // 获取已采集上传的数量
 const fetchUploadedCount = async () => {
@@ -110,27 +199,32 @@ const handleExportExcel = async () => {
       return
     }
 
-    // 2. 定义详细的字段映射 (只保留 TEMU 信息)
+    // 2. 定义详细的字段映射 (最终精简版：仅 Temu 数据 + Tags)
     const fieldMap = {
       'product_id': '商品ID',
-      'title': 'Temu标题',
-      'sale_price': 'Temu售价',
-      'weight': '重量(kg)',
-      'cover_image': '主图链接',
+      'title': '商品标题',
+      'sale_price': '售价',
+      'product_data.sales': '销量',
+      'product_data.score': '评分',
+      'product_data.commonNum': '评价数',
+      'product_data.shopName': '店铺名称',
+      'product_data.totalWeightMidKg': '重量(kg)',
+      'product_data.category': '分类',
+      'product_data.brandName': '品牌',
+      'product_data.tags': '标签',
+      'cover_image': '图片链接',
       'product_data.link': '商品链接',
-      'site_url': '采集页URL',
-      'collected_at': '采集时间'
+      'site_url': '采集来源'
     }
 
     // 3. 构建 CSV 内容
     const headers = Object.values(fieldMap)
     const keys = Object.keys(fieldMap)
-    
     // 辅助函数：深度获取属性值
     const getDeepValue = (obj, path) => {
       return path.split('.').reduce((acc, part) => {
         if (acc === null || acc === undefined) return undefined
-        if (part.includes('[')) { // 处理数组索引
+        if (part.includes('[')) { 
            const [key, index] = part.replace(']', '').split('[')
            return acc[key] ? acc[key][parseInt(index)] : undefined
         }
@@ -139,15 +233,15 @@ const handleExportExcel = async () => {
     }
 
     // 处理 CSV 转义
-    const formatCell = (val, key) => {
+    const formatCell = (val) => {
       if (val === null || val === undefined) return ''
+      const str = String(val)
       
-      // 特殊处理 ID 防止科学计数法
-      if (key === 'product_id') {
-        return `"\t${val}"`
+      // 修复科学计数法
+      if (/^\d{11,}$/.test(str)) {
+        return `"\t${str}"`
       }
 
-      const str = String(val)
       if (str.includes(',') || str.includes('"') || str.includes('\n')) {
         return `"${str.replace(/"/g, '""')}"`
       }
@@ -155,7 +249,7 @@ const handleExportExcel = async () => {
     }
 
     const csvRows = [headers.join(',')]
-    
+
     targets.forEach(item => {
       const row = keys.map(key => {
         let val = getDeepValue(item, key)
@@ -164,16 +258,30 @@ const handleExportExcel = async () => {
         if (key === 'product_data.link' && !val) {
              val = `https://www.temu.com/goods-${item.product_id}.html`
         }
-        // 尝试从 product_data 中获取重量作为兜底
-        if (key === 'weight' && !val && item.product_data) {
-             val = item.product_data.totalWeightMidKg
+
+
+
+        // 处理分类和标签（仅保留 tags 填充逻辑）
+        if (key === 'product_data.category' || key === 'product_data.tags') {
+            if (!val || key === 'product_data.tags') {
+                const source = item.product_data?.relatedSource?.[0] || item.sources1688?.[0]
+                if (source && source.tags && Array.isArray(source.tags)) {
+                    // 如果本来就是 category 且没值，才去借用 tags
+                    if (key === 'product_data.category' && !val) {
+                         val = source.tags.map(t => (typeof t === 'string' ? t : t.text)).join(', ')
+                    }
+                    if (key === 'product_data.tags') {
+                         val = source.tags.map(t => (typeof t === 'string' ? t : t.text)).join(', ')
+                    }
+                }
+            }
         }
 
-        return formatCell(val, key)
+        return formatCell(val)
       })
       csvRows.push(row.join(','))
     })
-    
+
     // 4. 触发下载
     const blob = new Blob(['\ufeff' + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' })
     const link = document.createElement('a')
@@ -185,6 +293,7 @@ const handleExportExcel = async () => {
     
   } catch (error) {
     // 静默处理错误
+    console.error(error)
     alert('导出过程中发生错误: ' + error.message)
   } finally {
     isExporting.value = false
@@ -192,15 +301,20 @@ const handleExportExcel = async () => {
 }
 
 // 核心采集逻辑保持不变
+// 核心采集逻辑 (重构版：使用日志和高亮)
+// 核心采集逻辑 (重构版：使用日志和高亮)
 const handleStartCollecting = async () => {
-  if (isScanning.value) return
+  if (isScanning.value || isTaskRunning.value) return
+  
   startScanning()
+  addLog('开始扫描页面商品...', 'info')
   await new Promise(resolve => setTimeout(resolve, 500))
   
   const uniqueIds = []
   const seenIds = new Set()
-  const injectedUIs = document.querySelectorAll('[data-fm-host="1"]') // 复用原有逻辑
+  const injectedUIs = document.querySelectorAll('[data-fm-host="1"]') 
   
+  // 提取 ID 逻辑保持不变
   if (injectedUIs.length > 0) {
     injectedUIs.forEach(ui => {
       const pid = ui.getAttribute('data-product-id')
@@ -210,7 +324,6 @@ const handleStartCollecting = async () => {
       }
     })
   } else {
-     // 降级扫描DOM... (保留原有逻辑)
      let priceElements = Array.from(document.querySelectorAll('[data-type="price"]'))
     if (priceElements.length === 0) {
       priceElements = Array.from(document.querySelectorAll('[class*="price"], [class*="Price"]'))
@@ -242,65 +355,148 @@ const handleStartCollecting = async () => {
   }
 
   if (uniqueIds.length === 0) {
-    alert('未能提取到有效的商品ID')
+    addLog('未能提取到有效的商品ID', 'error')
     stopScanning()
     return
   }
+
+  addLog(`扫描到 ${uniqueIds.length} 个商品，正在提交...`, 'success')
   
   try {
     const res = await requestApi('POST', '/feimao/products', {
       productIds: uniqueIds,
-      site_url: window.location.href
+      site_url: window.location.href,
+      pageSize: uniqueIds.length + 10,
+      pageNum: 1
     })
     
     if (res && (res.success || res.code === 200)) {
-      alert(`采集成功！\n提交: ${uniqueIds.length} 个商品`)
-      await fetchUploadedCount()
+      addLog(`商品提交成功！准备采集货源...`, 'success')
+      fetchUploadedCount() // 不阻塞流程
       
       const savedProducts = res.data?.saved_products || []
-      // 复用原有货源采集触发逻辑
-      if (savedProducts.length > 0) {
-          collectSourcesForProducts(savedProducts)
-      } else {
-          collectSourcesForProducts(uniqueIds)
-      }
+      const records = res.data?.records || []
+      
+      // 停止扫描 DOM，开始后台采集流程
+      stopScanning() 
+      
+
+      // 进入货源采集流程 (使用 uniqueIds 以确保处理所有提交的商品，包括已存在的)
+      isTaskRunning.value = true
+      await collectSourcesForProducts(uniqueIds, records, savedProducts)
     } else {
-      alert(res.message || '采集失败')
+      addLog(res.message || '提交失败', 'error')
+      stopScanning()
     }
   } catch (error) {
-    alert('采集失败: ' + error.message)
-  } finally {
+    addLog('采集请求失败: ' + error.message, 'error')
     stopScanning()
+  } finally {
+    isTaskRunning.value = false
   }
 }
 
-// 批量采集1688货源逻辑 (找回了这一块)
-const collectSourcesForProducts = async (inputList) => {
-  let targetProducts = []
-  if (inputList.length > 0 && typeof inputList[0] === 'object' && inputList[0].id) {
-      targetProducts = inputList
-  } else {
-      const temuProducts = await requestApi('GET', '/temu/products?per_page=100')
-      const dbProductList = temuProducts?.data?.data || temuProducts?.data?.records || temuProducts?.data || []
-      targetProducts = inputList.map(pid => dbProductList.find(p => p.product_id === pid)).filter(p => !!p)
+// 批量采集1688货源逻辑 (带高亮和日志)
+// 批量采集1688货源逻辑 (优先使用 API 返回的 records)
+const collectSourcesForProducts = async (allIds, records = [], savedList = []) => {
+  // 构建任务队列：尝试把 allIds 映射为数据库对象或 API 返回对象
+  let dbMap = new Map()
+  
+  // 1. 先用 savedList 填充 (后端刚入库的)
+  savedList.forEach(p => dbMap.set(p.product_id, p))
+  
+  // 3. 尝试同步缺少DB信息的 (找出所有还未匹配到 DB 记录的 IDs)
+  const missingDbIds = allIds.filter(pid => !dbMap.has(pid))
+  
+  if (missingDbIds.length > 0) {
+      try {
+         addLog(`正在同步 ${missingDbIds.length} 个商品的数据库信息...`, 'loading')
+         const dbRes = await requestApi('GET', `/temu/products?per_page=${missingDbIds.length + 50}&product_ids=${missingDbIds.join(',')}`)
+         const dbRecords = dbRes?.data?.data || dbRes?.data?.records || dbRes?.data || []
+         dbRecords.forEach(p => { dbMap.set(p.product_id, p) })
+      } catch(e) {
+         addLog('同步数据库信息部分失败，将尝试直接采集', 'warning')
+      }
+  }
+
+  let processed = 0
+  for (const pid of allIds) {
+    // 检查停止标志
+    if (!isTaskRunning.value) {
+        setHighlight(null)
+        return
+    }
+
+    processed++
+    setHighlight(pid)
+    
+    // 获取当前商品的相关信息对象
+    const record = records.find(r => r.productId === pid || r.product_id === pid) || {}
+    const dbProduct = dbMap.get(pid)
+    
+    // 显示日志
+    const displayTitle = record.title || dbProduct?.title || pid
+    addLog(`正在采集 [${processed}/${allIds.length}]: ...${displayTitle.slice(0, 10)}`, 'loading')
+    
+    // === 回显数据到 UI ===
+    // 只要有 record 信息就尝试更新 UI
+    // 把 dbId 也传过去，确保列表能正确关联
+    if (record.productId) {
+         document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
+             detail: { 
+                 productId: pid, 
+                 data: {
+                    ...record,
+                    cover_image: record.imageUrl,
+                    price: record.price,
+                    id: dbProduct?.id // 重要：回填 DB ID
+                 }
+             } 
+         }))
+    }
+    
+    try {
+      // 判断已有货源 (仅当有明确标志时跳过)
+      if (dbProduct && dbProduct.sources1688_count > 0) {
+          addLog(`商品 ${pid} 已有货源，刷新显示`, 'info')
+          document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: pid, dbId: dbProduct.id } }))
+      } else {
+          // === 执行采集 ===
+          // 优先使用 API 返回的图片链接 (record.imageUrl)，其次是 DB 里的
+          const imgUrl = record.imageUrl || dbProduct?.cover_image || dbProduct?.img_url
+          const targetId = dbProduct?.id // 必须要有 DB ID 才能存关联
+          
+          if (!targetId) {
+              addLog(`商品 ${pid}: 未能获取系统ID，无法关联货源 (请尝试刷新页面重试)`, 'warning')
+              continue
+          }
+
+          if (!imgUrl) {
+              addLog(`商品 ${pid} 缺少图片链接，跳过采集`, 'warning')
+              continue
+          }
+
+          await requestApi('POST', '/temu/products/collect-similar', {
+            product_id: targetId,
+            search_method: 'image',
+            img_url: imgUrl, // 显式传递图片链接，供后端优先使用
+            max_count: 20
+          })
+          
+          addLog(`商品 ${pid} 货源采集完成`, 'success')
+          document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: pid, dbId: targetId } }))
+      }
+    } catch (error) {
+      addLog(`商品 ${pid} 采集失败`, 'error')
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 800))
   }
   
-  for (const product of targetProducts) {
-    try {
-      if (product.sources1688_count > 0) {
-          document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: product.product_id, dbId: product.id } }))
-          continue 
-      }
-      await requestApi('POST', '/temu/products/collect-similar', {
-        product_id: product.id,
-        search_method: 'image',
-        max_count: 20
-      })
-      document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: product.product_id, dbId: product.id } }))
-      await new Promise(resolve => setTimeout(resolve, 100))
-    } catch (error) {
-      // 静默处理错误
-    }
+  setHighlight(null)
+  
+  if (isTaskRunning.value) {
+      addLog('所有采集任务已完成！', 'success')
   }
 }
 
@@ -443,8 +639,8 @@ onUnmounted(() => stopScanning())
 
         <!-- 按钮组 -->
         <div class="fm-actions-grid">
-           <button class="fm-btn fm-btn-md fm-btn-primary" @click="handleStartCollecting" :disabled="isScanning">开始采集</button>
-           <button class="fm-btn fm-btn-md fm-btn-outline" @click="stopScanning">停止</button>
+           <button class="fm-btn fm-btn-md fm-btn-primary" @click="handleStartCollecting" :disabled="isScanning || isTaskRunning">开始采集</button>
+           <button class="fm-btn fm-btn-md fm-btn-outline" @click="handleStop">停止</button>
            <button class="fm-btn fm-btn-md fm-btn-outline-red" @click="handleClearExtensionCache">清空缓存</button>
            <button class="fm-btn fm-btn-md fm-btn-outline" @click="handleExportExcel" :disabled="isExporting">
              {{ isExporting ? '导出中...' : '导出Excel' }}
@@ -457,6 +653,30 @@ onUnmounted(() => stopScanning())
           <a class="fm-link" @click="handleShowDetail">查看采集明细</a>
         </div>
       </div>
+    </div>
+
+    <!-- 底部日志控制台 -->
+    <div class="fm-log-console" v-if="!isCollapsed">
+         <!-- 顶部醒目提示 -->
+         <div class="fm-log-hero" v-if="activeLogMsg">
+             <span style="flex:1;">{{ activeLogMsg }}</span>
+             <span class="fm-log-close-hero" @click="removeLog">×</span>
+         </div>
+         
+         <!-- 历史日志列表 -->
+         <div class="fm-log-list custom-scrollbar" ref="logListRef">
+             <div class="fm-log-item" v-if="logs.length === 0">
+                 <span style="color: #64748b;">等待操作...</span>
+             </div>
+             <div class="fm-log-item" v-for="log in logs" :key="log.id">
+                 <span :style="{
+                     color: log.type === 'error' ? '#ef4444' : (log.type === 'success' ? '#4ade80' : (log.type === 'loading' ? '#fbbf24' : '#94a3b8'))
+                 }">
+                     {{ log.message }}
+                 </span>
+                 <span style="font-size: 10px; color: #475569;">{{ new Date(log.id).toTimeString().slice(0,8) }}</span>
+             </div>
+         </div>
     </div>
   </div>
 
@@ -553,7 +773,12 @@ onUnmounted(() => stopScanning())
            <input type="checkbox" @change="handleSelectAll" style="margin-right: 4px; vertical-align: middle;">
            全选 (已选 {{ selectedProducts.length }})
          </div>
-         <button class="fm-btn fm-btn-sm fm-btn-primary" @click="handleExportExcel">导出所选</button>
+         <button class="fm-btn fm-btn-sm fm-btn-primary" 
+                 :disabled="loading || collectedProducts.length === 0" 
+                 :style="{ opacity: (loading || collectedProducts.length === 0) ? 0.5 : 1, cursor: (loading || collectedProducts.length === 0) ? 'not-allowed' : 'pointer' }"
+                 @click="handleExportExcel">
+             {{ loading ? '加载中...' : '导出所选' }}
+         </button>
       </div>
     </div>
   </div>

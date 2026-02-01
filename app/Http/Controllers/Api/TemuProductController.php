@@ -49,8 +49,14 @@ class TemuProductController extends Controller
     {
         $user = auth()->user();
 
-        $products = TemuCollectedProduct::where('user_id', $user->id)
-            ->with('sources1688')
+        $query = TemuCollectedProduct::where('user_id', $user->id);
+
+        if ($request->filled('product_ids')) {
+            $ids = explode(',', $request->input('product_ids'));
+            $query->whereIn('product_id', $ids);
+        }
+
+        $products = $query->with('sources1688')
             ->withCount('sources1688')
             ->orderBy('collected_at', 'desc')
             ->paginate($request->input('per_page', 15));
