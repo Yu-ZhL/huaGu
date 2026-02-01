@@ -28,7 +28,7 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取采集到的temu商品列表 - 给插件用的
+     * 获取用户采集到的temu商品列表 - 给插件用的
      */
     #[QueryParam("page", "integer", "页码", required: false, example: 1)]
     #[QueryParam("per_page", "integer", "每页数量", required: false, example: 10)]
@@ -85,16 +85,33 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取用户爬取的temu商品列表
+     * 获取用户采集到的temu商品列表 - 给前端侧边栏/管理页用 (支持全部范围筛选)
      */
     #[QueryParam("page", "integer", "页码", required: false, example: 1)]
     #[QueryParam("per_page", "integer", "每页数量", required: false, example: 15)]
     #[QueryParam("title", "string", "模糊搜索标题", required: false, example: "充电器")]
     #[QueryParam("remark", "string", "模糊搜索备注", required: false, example: "待处理")]
     #[QueryParam("shop_name", "string", "模糊搜索名店", required: false, example: "名店")]
-    #[QueryParam("reviews_min", "integer", "最小评价数", required: false, example: 100)]
-    #[QueryParam("sales_min", "integer", "最小销量", required: false, example: 1000)]
-    #[QueryParam("price_min", "number", "最小价格", required: false, example: 5.0)]
+    #[QueryParam("sales_min", "integer", "最小销量", required: false)]
+    #[QueryParam("sales_max", "integer", "最大销量", required: false)]
+    #[QueryParam("price_min", "number", "最小价格", required: false)]
+    #[QueryParam("price_max", "number", "最大价格", required: false)]
+    #[QueryParam("reviews_min", "integer", "最小评价数", required: false)]
+    #[QueryParam("reviews_max", "integer", "最大评价数", required: false)]
+    #[QueryParam("rating_min", "number", "最小评分", required: false)]
+    #[QueryParam("rating_max", "number", "最大评分", required: false)]
+    #[QueryParam("weight_min", "number", "最小重量", required: false)]
+    #[QueryParam("weight_max", "number", "最大重量", required: false)]
+    #[QueryParam("freight_min", "number", "最小运费", required: false)]
+    #[QueryParam("freight_max", "number", "最大运费", required: false)]
+    #[QueryParam("profit_min", "number", "最小利润", required: false)]
+    #[QueryParam("profit_max", "number", "最大利润", required: false)]
+    #[QueryParam("source_price_min", "number", "最小货源价", required: false)]
+    #[QueryParam("source_price_max", "number", "最大货源价", required: false)]
+    #[QueryParam("sources_count_min", "integer", "最小货源数", required: false)]
+    #[QueryParam("sources_count_max", "integer", "最大货源数", required: false)]
+    #[QueryParam("collected_start", "string", "收藏起始时间段", required: false, example: "2024-01-01")]
+    #[QueryParam("collected_end", "string", "收藏截止时间段", required: false, example: "2024-12-31")]
     #[QueryParam("is_brand", "integer", "是否品牌 (1:是, 0:否)", required: false, example: 1)]
     #[Response([
         "success" => true,
@@ -109,7 +126,8 @@ class TemuProductController extends Controller
                     "shop_name" => "示例店铺",
                     "sales" => 500,
                     "rating" => 4.5,
-                    "cover_image" => "http://example.com/img.jpg"
+                    "cover_image" => "http://example.com/img.jpg",
+                    "collected_at" => "2026-02-01 17:00:00"
                 ]
             ]
         ]
@@ -123,27 +141,71 @@ class TemuProductController extends Controller
         if ($request->filled('title')) {
             $query->where('title', 'like', '%' . $request->input('title') . '%');
         }
-
         if ($request->filled('remark')) {
             $query->where('remark', 'like', '%' . $request->input('remark') . '%');
         }
-
         if ($request->filled('shop_name')) {
             $query->where('shop_name', 'like', '%' . $request->input('shop_name') . '%');
         }
 
-        if ($request->filled('reviews_min')) {
-            $query->where('reviews', '>=', $request->input('reviews_min'));
-        }
-
-        if ($request->filled('sales_min')) {
-            $query->where('sales', '>=', $request->input('sales_min'));
-        }
-
-        if ($request->filled('price_min')) {
+        // --- 数值范围筛选 ---
+        // 价格
+        if ($request->filled('price_min'))
             $query->where('sale_price', '>=', $request->input('price_min'));
+        if ($request->filled('price_max'))
+            $query->where('sale_price', '<=', $request->input('price_max'));
+        // 销量
+        if ($request->filled('sales_min'))
+            $query->where('sales', '>=', $request->input('sales_min'));
+        if ($request->filled('sales_max'))
+            $query->where('sales', '<=', $request->input('sales_max'));
+        // 评论
+        if ($request->filled('reviews_min'))
+            $query->where('reviews', '>=', $request->input('reviews_min'));
+        if ($request->filled('reviews_max'))
+            $query->where('reviews', '<=', $request->input('reviews_max'));
+        // 评分
+        if ($request->filled('rating_min'))
+            $query->where('rating', '>=', $request->input('rating_min'));
+        if ($request->filled('rating_max'))
+            $query->where('rating', '<=', $request->input('rating_max'));
+        // 重量
+        if ($request->filled('weight_min'))
+            $query->where('weight', '>=', $request->input('weight_min'));
+        if ($request->filled('weight_max'))
+            $query->where('weight', '<=', $request->input('weight_max'));
+        // 运费
+        if ($request->filled('freight_min'))
+            $query->where('freight', '>=', $request->input('freight_min'));
+        if ($request->filled('freight_max'))
+            $query->where('freight', '<=', $request->input('freight_max'));
+        // 利润
+        if ($request->filled('profit_min'))
+            $query->where('profit', '>=', $request->input('profit_min'));
+        if ($request->filled('profit_max'))
+            $query->where('profit', '<=', $request->input('profit_max'));
+        // 货源价
+        if ($request->filled('source_price_min'))
+            $query->where('source_price_1688', '>=', $request->input('source_price_min'));
+        if ($request->filled('source_price_max'))
+            $query->where('source_price_1688', '<=', $request->input('source_price_max'));
+
+        // --- 关联计数筛选 ---
+        if ($request->filled('sources_count_min') || $request->filled('sources_count_max')) {
+            $query->withCount('sources1688');
+            if ($request->filled('sources_count_min'))
+                $query->having('sources1688_count', '>=', $request->input('sources_count_min'));
+            if ($request->filled('sources_count_max'))
+                $query->having('sources1688_count', '<=', $request->input('sources_count_max'));
         }
 
+        // --- 时间筛选 ---
+        if ($request->filled('collected_start'))
+            $query->where('collected_at', '>=', $request->input('collected_start'));
+        if ($request->filled('collected_end'))
+            $query->where('collected_at', '<=', $request->input('collected_end'));
+
+        // --- 其他筛选 ---
         if ($request->filled('is_brand')) {
             $query->where('is_brand', $request->input('is_brand'));
         }

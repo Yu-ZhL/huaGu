@@ -78,11 +78,11 @@
                     <a href="#7c1d13ca0a141b106f1a94650b1c5679">Temu 商品管理</a>
                 </li>
                                     <ul id="tocify-subheader-7c1d13ca0a141b106f1a94650b1c5679" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="94967da59d3a2c371221331432890559">
-                                <a href="#94967da59d3a2c371221331432890559">获取采集到的temu商品列表 - 给插件用的</a>
+                                                    <li class="tocify-item level-2" data-unique="663871c89ff487585e620a8ca48f574a">
+                                <a href="#663871c89ff487585e620a8ca48f574a">获取用户采集到的temu商品列表 - 给插件用的</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="8023bcbe0871a8cf8ff6cce05fcd7006">
-                                <a href="#8023bcbe0871a8cf8ff6cce05fcd7006">获取用户爬取的temu商品列表</a>
+                                                                                <li class="tocify-item level-2" data-unique="bde4b227f7e8fa9faa913dcdc4aad9cc">
+                                <a href="#bde4b227f7e8fa9faa913dcdc4aad9cc">获取用户采集到的temu商品列表 - 给前端侧边栏/管理页用 (支持全部范围筛选)</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="bee0e7dfd035d1b5636dd5abd7c39dfb">
                                 <a href="#bee0e7dfd035d1b5636dd5abd7c39dfb">获取商品详情 - 给插件用的</a>
@@ -289,7 +289,7 @@
 
 <p>Temu 商品采集和同款管理</p>
 
-    <h2 id="94967da59d3a2c371221331432890559">获取采集到的temu商品列表 - 给插件用的</h2>
+    <h2 id="663871c89ff487585e620a8ca48f574a">获取用户采集到的temu商品列表 - 给插件用的</h2>
 
 <p>
     <small class="badge badge-darkred">需要认证</small>
@@ -496,7 +496,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             </div>
                 </form>
 
-    <h2 id="8023bcbe0871a8cf8ff6cce05fcd7006">获取用户爬取的temu商品列表</h2>
+    <h2 id="bde4b227f7e8fa9faa913dcdc4aad9cc">获取用户采集到的temu商品列表 - 给前端侧边栏/管理页用 (支持全部范围筛选)</h2>
 
 <p>
     <small class="badge badge-darkred">需要认证</small>
@@ -519,9 +519,26 @@ const params = {
     "title": "充电器",
     "remark": "待处理",
     "shop_name": "名店",
-    "reviews_min": "100",
-    "sales_min": "1000",
-    "price_min": "5",
+    "sales_min": "17",
+    "sales_max": "17",
+    "price_min": "11613.31890586",
+    "price_max": "11613.31890586",
+    "reviews_min": "17",
+    "reviews_max": "17",
+    "rating_min": "11613.31890586",
+    "rating_max": "11613.31890586",
+    "weight_min": "11613.31890586",
+    "weight_max": "11613.31890586",
+    "freight_min": "11613.31890586",
+    "freight_max": "11613.31890586",
+    "profit_min": "11613.31890586",
+    "profit_max": "11613.31890586",
+    "source_price_min": "11613.31890586",
+    "source_price_max": "11613.31890586",
+    "sources_count_min": "17",
+    "sources_count_max": "17",
+    "collected_start": "2024-01-01",
+    "collected_end": "2024-12-31",
     "is_brand": "1",
 };
 Object.keys(params)
@@ -556,9 +573,26 @@ $response = $client-&gt;get(
             'title' =&gt; '充电器',
             'remark' =&gt; '待处理',
             'shop_name' =&gt; '名店',
-            'reviews_min' =&gt; '100',
-            'sales_min' =&gt; '1000',
-            'price_min' =&gt; '5',
+            'sales_min' =&gt; '17',
+            'sales_max' =&gt; '17',
+            'price_min' =&gt; '11613.31890586',
+            'price_max' =&gt; '11613.31890586',
+            'reviews_min' =&gt; '17',
+            'reviews_max' =&gt; '17',
+            'rating_min' =&gt; '11613.31890586',
+            'rating_max' =&gt; '11613.31890586',
+            'weight_min' =&gt; '11613.31890586',
+            'weight_max' =&gt; '11613.31890586',
+            'freight_min' =&gt; '11613.31890586',
+            'freight_max' =&gt; '11613.31890586',
+            'profit_min' =&gt; '11613.31890586',
+            'profit_max' =&gt; '11613.31890586',
+            'source_price_min' =&gt; '11613.31890586',
+            'source_price_max' =&gt; '11613.31890586',
+            'sources_count_min' =&gt; '17',
+            'sources_count_max' =&gt; '17',
+            'collected_start' =&gt; '2024-01-01',
+            'collected_end' =&gt; '2024-12-31',
             'is_brand' =&gt; '1',
         ],
     ]
@@ -587,7 +621,8 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                 &quot;shop_name&quot;: &quot;示例店铺&quot;,
                 &quot;sales&quot;: 500,
                 &quot;rating&quot;: 4.5,
-                &quot;cover_image&quot;: &quot;http://example.com/img.jpg&quot;
+                &quot;cover_image&quot;: &quot;http://example.com/img.jpg&quot;,
+                &quot;collected_at&quot;: &quot;2026-02-01 17:00:00&quot;
             }
         ]
     }
@@ -737,28 +772,28 @@ print_r(json_decode((string) $body));</code></pre>        </div>
 <p>模糊搜索名店 Example: <code>名店</code></p>
             </div>
                                 <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>reviews_min</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="reviews_min"                data-endpoint="GETapi-temu-products-simple"
-               value="100"
-               data-component="query">
-    <br>
-<p>最小评价数 Example: <code>100</code></p>
-            </div>
-                                <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>sales_min</code></b>&nbsp;&nbsp;
 <small>integer</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="sales_min"                data-endpoint="GETapi-temu-products-simple"
-               value="1000"
+               value="17"
                data-component="query">
     <br>
-<p>最小销量 Example: <code>1000</code></p>
+<p>最小销量 Example: <code>17</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sales_max</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sales_max"                data-endpoint="GETapi-temu-products-simple"
+               value="17"
+               data-component="query">
+    <br>
+<p>最大销量 Example: <code>17</code></p>
             </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>price_min</code></b>&nbsp;&nbsp;
@@ -767,10 +802,214 @@ print_r(json_decode((string) $body));</code></pre>        </div>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="price_min"                data-endpoint="GETapi-temu-products-simple"
-               value="5"
+               value="11613.31890586"
                data-component="query">
     <br>
-<p>最小价格 Example: <code>5</code></p>
+<p>最小价格 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>price_max</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="price_max"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最大价格 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>reviews_min</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="reviews_min"                data-endpoint="GETapi-temu-products-simple"
+               value="17"
+               data-component="query">
+    <br>
+<p>最小评价数 Example: <code>17</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>reviews_max</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="reviews_max"                data-endpoint="GETapi-temu-products-simple"
+               value="17"
+               data-component="query">
+    <br>
+<p>最大评价数 Example: <code>17</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>rating_min</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="rating_min"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最小评分 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>rating_max</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="rating_max"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最大评分 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>weight_min</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="weight_min"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最小重量 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>weight_max</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="weight_max"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最大重量 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freight_min</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freight_min"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最小运费 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>freight_max</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="freight_max"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最大运费 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>profit_min</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="profit_min"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最小利润 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>profit_max</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="profit_max"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最大利润 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>source_price_min</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="source_price_min"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最小货源价 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>source_price_max</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="source_price_max"                data-endpoint="GETapi-temu-products-simple"
+               value="11613.31890586"
+               data-component="query">
+    <br>
+<p>最大货源价 Example: <code>11613.31890586</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sources_count_min</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sources_count_min"                data-endpoint="GETapi-temu-products-simple"
+               value="17"
+               data-component="query">
+    <br>
+<p>最小货源数 Example: <code>17</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sources_count_max</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sources_count_max"                data-endpoint="GETapi-temu-products-simple"
+               value="17"
+               data-component="query">
+    <br>
+<p>最大货源数 Example: <code>17</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>collected_start</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="collected_start"                data-endpoint="GETapi-temu-products-simple"
+               value="2024-01-01"
+               data-component="query">
+    <br>
+<p>收藏起始时间段 Example: <code>2024-01-01</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>collected_end</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="collected_end"                data-endpoint="GETapi-temu-products-simple"
+               value="2024-12-31"
+               data-component="query">
+    <br>
+<p>收藏截止时间段 Example: <code>2024-12-31</code></p>
             </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>is_brand</code></b>&nbsp;&nbsp;
@@ -2965,7 +3204,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php7252.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpC738.tmp', 'r')
             ],
         ],
     ]
@@ -3109,7 +3348,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php7252.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpC738.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;

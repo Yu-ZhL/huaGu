@@ -49,7 +49,7 @@ security:
 paths:
   /api/temu/products:
     get:
-      summary: '获取采集到的temu商品列表 - 给插件用的'
+      summary: '获取用户采集到的temu商品列表 - 给插件用的'
       operationId: temu
       description: ''
       parameters:
@@ -157,7 +157,7 @@ paths:
         - 'Temu 商品管理'
   /api/temu/products/simple:
     get:
-      summary: 获取用户爬取的temu商品列表
+      summary: '获取用户采集到的temu商品列表 - 给前端侧边栏/管理页用 (支持全部范围筛选)'
       operationId: temu
       description: ''
       parameters:
@@ -213,34 +213,204 @@ paths:
             example: 名店
         -
           in: query
-          name: reviews_min
-          description: 最小评价数
-          example: 100
-          required: false
-          schema:
-            type: integer
-            description: 最小评价数
-            example: 100
-        -
-          in: query
           name: sales_min
           description: 最小销量
-          example: 1000
+          example: 17
           required: false
           schema:
             type: integer
             description: 最小销量
-            example: 1000
+            example: 17
+        -
+          in: query
+          name: sales_max
+          description: 最大销量
+          example: 17
+          required: false
+          schema:
+            type: integer
+            description: 最大销量
+            example: 17
         -
           in: query
           name: price_min
           description: 最小价格
-          example: 5.0
+          example: 11613.31890586
           required: false
           schema:
             type: number
             description: 最小价格
-            example: 5.0
+            example: 11613.31890586
+        -
+          in: query
+          name: price_max
+          description: 最大价格
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最大价格
+            example: 11613.31890586
+        -
+          in: query
+          name: reviews_min
+          description: 最小评价数
+          example: 17
+          required: false
+          schema:
+            type: integer
+            description: 最小评价数
+            example: 17
+        -
+          in: query
+          name: reviews_max
+          description: 最大评价数
+          example: 17
+          required: false
+          schema:
+            type: integer
+            description: 最大评价数
+            example: 17
+        -
+          in: query
+          name: rating_min
+          description: 最小评分
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最小评分
+            example: 11613.31890586
+        -
+          in: query
+          name: rating_max
+          description: 最大评分
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最大评分
+            example: 11613.31890586
+        -
+          in: query
+          name: weight_min
+          description: 最小重量
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最小重量
+            example: 11613.31890586
+        -
+          in: query
+          name: weight_max
+          description: 最大重量
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最大重量
+            example: 11613.31890586
+        -
+          in: query
+          name: freight_min
+          description: 最小运费
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最小运费
+            example: 11613.31890586
+        -
+          in: query
+          name: freight_max
+          description: 最大运费
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最大运费
+            example: 11613.31890586
+        -
+          in: query
+          name: profit_min
+          description: 最小利润
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最小利润
+            example: 11613.31890586
+        -
+          in: query
+          name: profit_max
+          description: 最大利润
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最大利润
+            example: 11613.31890586
+        -
+          in: query
+          name: source_price_min
+          description: 最小货源价
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最小货源价
+            example: 11613.31890586
+        -
+          in: query
+          name: source_price_max
+          description: 最大货源价
+          example: 11613.31890586
+          required: false
+          schema:
+            type: number
+            description: 最大货源价
+            example: 11613.31890586
+        -
+          in: query
+          name: sources_count_min
+          description: 最小货源数
+          example: 17
+          required: false
+          schema:
+            type: integer
+            description: 最小货源数
+            example: 17
+        -
+          in: query
+          name: sources_count_max
+          description: 最大货源数
+          example: 17
+          required: false
+          schema:
+            type: integer
+            description: 最大货源数
+            example: 17
+        -
+          in: query
+          name: collected_start
+          description: 收藏起始时间段
+          example: '2024-01-01'
+          required: false
+          schema:
+            type: string
+            description: 收藏起始时间段
+            example: '2024-01-01'
+        -
+          in: query
+          name: collected_end
+          description: 收藏截止时间段
+          example: '2024-12-31'
+          required: false
+          schema:
+            type: string
+            description: 收藏截止时间段
+            example: '2024-12-31'
         -
           in: query
           name: is_brand
@@ -272,6 +442,7 @@ paths:
                         sales: 500
                         rating: 4.5
                         cover_image: 'http://example.com/img.jpg'
+                        collected_at: '2026-02-01 17:00:00'
                 properties:
                   success:
                     type: boolean
@@ -294,6 +465,7 @@ paths:
                             sales: 500
                             rating: 4.5
                             cover_image: 'http://example.com/img.jpg'
+                            collected_at: '2026-02-01 17:00:00'
                         items:
                           type: object
                           properties:
@@ -321,6 +493,9 @@ paths:
                             cover_image:
                               type: string
                               example: 'http://example.com/img.jpg'
+                            collected_at:
+                              type: string
+                              example: '2026-02-01 17:00:00'
       tags:
         - 'Temu 商品管理'
   '/api/temu/products/{id}':

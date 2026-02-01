@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "515ce4aa-597a-4c42-935b-61e37de9ac7f",
+        "_postman_id": "2c10d021-e124-44fe-bab1-5a5a66720a55",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -20,7 +20,7 @@
             "description": "Temu \u5546\u54c1\u91c7\u96c6\u548c\u540c\u6b3e\u7ba1\u7406",
             "item": [
                 {
-                    "name": "\u83b7\u53d6\u91c7\u96c6\u5230\u7684temu\u5546\u54c1\u5217\u8868 - \u7ed9\u63d2\u4ef6\u7528\u7684",
+                    "name": "\u83b7\u53d6\u7528\u6237\u91c7\u96c6\u5230\u7684temu\u5546\u54c1\u5217\u8868 - \u7ed9\u63d2\u4ef6\u7528\u7684",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -71,7 +71,7 @@
                     ]
                 },
                 {
-                    "name": "\u83b7\u53d6\u7528\u6237\u722c\u53d6\u7684temu\u5546\u54c1\u5217\u8868",
+                    "name": "\u83b7\u53d6\u7528\u6237\u91c7\u96c6\u5230\u7684temu\u5546\u54c1\u5217\u8868 - \u7ed9\u524d\u7aef\u4fa7\u8fb9\u680f\/\u7ba1\u7406\u9875\u7528 (\u652f\u6301\u5168\u90e8\u8303\u56f4\u7b5b\u9009)",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -108,21 +108,123 @@
                                     "disabled": false
                                 },
                                 {
-                                    "key": "reviews_min",
-                                    "value": "100",
-                                    "description": "\u6700\u5c0f\u8bc4\u4ef7\u6570",
-                                    "disabled": false
-                                },
-                                {
                                     "key": "sales_min",
-                                    "value": "1000",
+                                    "value": "17",
                                     "description": "\u6700\u5c0f\u9500\u91cf",
                                     "disabled": false
                                 },
                                 {
+                                    "key": "sales_max",
+                                    "value": "17",
+                                    "description": "\u6700\u5927\u9500\u91cf",
+                                    "disabled": false
+                                },
+                                {
                                     "key": "price_min",
-                                    "value": "5",
+                                    "value": "11613.31890586",
                                     "description": "\u6700\u5c0f\u4ef7\u683c",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "price_max",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5927\u4ef7\u683c",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "reviews_min",
+                                    "value": "17",
+                                    "description": "\u6700\u5c0f\u8bc4\u4ef7\u6570",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "reviews_max",
+                                    "value": "17",
+                                    "description": "\u6700\u5927\u8bc4\u4ef7\u6570",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "rating_min",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5c0f\u8bc4\u5206",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "rating_max",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5927\u8bc4\u5206",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "weight_min",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5c0f\u91cd\u91cf",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "weight_max",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5927\u91cd\u91cf",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "freight_min",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5c0f\u8fd0\u8d39",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "freight_max",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5927\u8fd0\u8d39",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "profit_min",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5c0f\u5229\u6da6",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "profit_max",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5927\u5229\u6da6",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "source_price_min",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5c0f\u8d27\u6e90\u4ef7",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "source_price_max",
+                                    "value": "11613.31890586",
+                                    "description": "\u6700\u5927\u8d27\u6e90\u4ef7",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sources_count_min",
+                                    "value": "17",
+                                    "description": "\u6700\u5c0f\u8d27\u6e90\u6570",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sources_count_max",
+                                    "value": "17",
+                                    "description": "\u6700\u5927\u8d27\u6e90\u6570",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "collected_start",
+                                    "value": "2024-01-01",
+                                    "description": "\u6536\u85cf\u8d77\u59cb\u65f6\u95f4\u6bb5",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "collected_end",
+                                    "value": "2024-12-31",
+                                    "description": "\u6536\u85cf\u622a\u6b62\u65f6\u95f4\u6bb5",
                                     "disabled": false
                                 },
                                 {
@@ -132,7 +234,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/temu\/products\/simple?page=1&per_page=15&title=%E5%85%85%E7%94%B5%E5%99%A8&remark=%E5%BE%85%E5%A4%84%E7%90%86&shop_name=%E5%90%8D%E5%BA%97&reviews_min=100&sales_min=1000&price_min=5&is_brand=1"
+                            "raw": "{{baseUrl}}\/api\/temu\/products\/simple?page=1&per_page=15&title=%E5%85%85%E7%94%B5%E5%99%A8&remark=%E5%BE%85%E5%A4%84%E7%90%86&shop_name=%E5%90%8D%E5%BA%97&sales_min=17&sales_max=17&price_min=11613.31890586&price_max=11613.31890586&reviews_min=17&reviews_max=17&rating_min=11613.31890586&rating_max=11613.31890586&weight_min=11613.31890586&weight_max=11613.31890586&freight_min=11613.31890586&freight_max=11613.31890586&profit_min=11613.31890586&profit_max=11613.31890586&source_price_min=11613.31890586&source_price_max=11613.31890586&sources_count_min=17&sources_count_max=17&collected_start=2024-01-01&collected_end=2024-12-31&is_brand=1"
                         },
                         "method": "GET",
                         "header": [
@@ -152,7 +254,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"product_id\":\"601099661205317\",\"title\":\"\\u7cbe\\u7b80\\u7248\\u793a\\u4f8b\",\"sale_price\":99.99,\"shop_name\":\"\\u793a\\u4f8b\\u5e97\\u94fa\",\"sales\":500,\"rating\":4.5,\"cover_image\":\"http:\\\/\\\/example.com\\\/img.jpg\"}]}}",
+                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"product_id\":\"601099661205317\",\"title\":\"\\u7cbe\\u7b80\\u7248\\u793a\\u4f8b\",\"sale_price\":99.99,\"shop_name\":\"\\u793a\\u4f8b\\u5e97\\u94fa\",\"sales\":500,\"rating\":4.5,\"cover_image\":\"http:\\\/\\\/example.com\\\/img.jpg\",\"collected_at\":\"2026-02-01 17:00:00\"}]}}",
                             "name": ""
                         }
                     ]
