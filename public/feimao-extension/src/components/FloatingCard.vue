@@ -111,7 +111,7 @@ const setHighlight = (pid) => {
 
   if (targetEl) {
       targetEl.classList.add('fm-collecting-highlight')
-      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      targetEl.scrollIntoView({ behavior: 'auto', block: 'center' })
   }
 }
 
@@ -319,7 +319,7 @@ const handleStartCollecting = async () => {
   // 提取 ID 逻辑
   if (injectedUIs.length > 0) {
     injectedUIs.forEach(ui => {
-      const pid = ui.getAttribute('data-product-id')
+      const pid = ui.getAttribute('data-fm-product-id')
       if (pid && !seenIds.has(pid)) {
           seenIds.add(pid)
           uniqueIds.push(pid)
@@ -504,45 +504,80 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           
           // 如果没有图片链接，尝试使用截图
           if (!imgUrl) {
-               addLog(`商品 ${pid} 正在截取封面...`, 'loading')
-               const scannedInfo = scannedMap.get(pid)
-               
-               if (scannedInfo && scannedInfo.element) {
-                                       try {
-                        // 预处理：解决跨域图片全白问题
-                        scannedInfo.element.querySelectorAll('img').forEach(img => {
-                            if (!img.getAttribute('crossOrigin')) {
-                                img.setAttribute('crossOrigin', 'anonymous')
-                                var src = img.src
-                                img.src = ''
-                                img.src = src
+               addLog(`商品 ${pid} 正在嗅探高清主图...`, 'loading')
+               try {
+                    console.log('[Feimao] 启动深度图像嗅探逻辑:', pid);
+                    
+                    // 1. 构造多维选择器寻找“锚点”
+                    // 有时 PID 藏在 data-tooltip 里，例如 goodsImage-601099998926720
+                    const possibleContainers = [
+                        `[data-product-id="${pid}"]:not(.fm-ui)`,
+                        `[data-goods-id="${pid}"]:not(.fm-ui)`,
+                        `[data-tooltip*="${pid}"]:not(.fm-ui)`,
+                        `.goods-image-container-external` // 保底类名
+                    ];
+                    
+                    let bestImageNode = null;
+                    
+                    // 尝试从各个可能的容器里精准定位主图
+                    for (const selector of possibleContainers) {
+                        const containers = document.querySelectorAll(selector);
+                        for (const container of containers) {
+                            // 优先找带有官方主图标记的 (500规格)
+                            const mainImg = container.querySelector('img[data-js-main-img="true"]');
+                            if (mainImg) {
+                                bestImageNode = mainImg;
+                                console.log('[Feimao] 通过容器匹配找到主图标记:', selector);
+                                break;
                             }
-                        })
-                        
-                        await new Promise(r => setTimeout(r, 200))
+                        }
+                        if (bestImageNode) break;
+                    }
 
-                        const canvas = await html2canvas(scannedInfo.element, {
-                            ignoreElements: (el) => el.classList.contains('fm-ui'), 
-                            useCORS: true, 
-                            allowTaint: false,
-                            backgroundColor: '#ffffff',
-                            scale: 1,
-                            logging: false
-                        })
-                        imgUrl = canvas.toDataURL('image/jpeg', 0.8)
-                        searchMethod = 'image'
+                    // 2. 如果容器匹配失败，执行全页面“地毯式扫描”
+                    if (!bestImageNode) {
+                        console.log('[Feimao] 容器匹配失败，尝试全局标识匹配...');
+                        const allMainImgs = document.querySelectorAll('img[data-js-main-img="true"]');
+                        for (const img of allMainImgs) {
+                            // 检查图片的父级或邻近节点是否包含 PID 信息 (哪怕是文本或属性)
+                            const context = img.closest('div, a')?.innerHTML || '';
+                            if (context.includes(pid)) {
+                                bestImageNode = img;
+                                console.log('[Feimao] 通过全局语境匹配找到主图');
+                                break;
+                            }
+                        }
+                    }
 
-                        console.log('%c [Feimao] 商品 ' + pid + ' 截图预览:', 'color: #fbbf24; font-weight: bold;');
-                        console.log('%c ', 'background-image: url(' + imgUrl + '); background-size: contain; background-repeat: no-repeat; padding: 75px;');
+                    // 3. 实在不行，取常规图片
+                    if (!bestImageNode) {
+                         const scannedInfo = scannedMap.get(pid);
+                         const backupEl = scannedInfo?.element || document.querySelector(`[data-product-id="${pid}"]`);
+                         bestImageNode = backupEl?.querySelector('img') || backupEl;
+                    }
 
-                        addLog('商品 ' + pid + ' 封面截取成功', 'success')
-} catch(e) {
-                       console.error('Screenshot failed for', pid, e)
-                       addLog(`商品 ${pid} 截图失败: ${e.message}`, 'error')
-                   }
-               } else {
-                   console.log('ScannedInfo for', pid, ':', scannedInfo)
-                   addLog(`商品 ${pid} 截图跳过: 未找到DOM元素引用`, 'warning')
+                    if (bestImageNode && bestImageNode.tagName === 'IMG') {
+                        const src = bestImageNode.currentSrc || bestImageNode.src || bestImageNode.getAttribute('data-src');
+                        if (src) {
+                            console.log('[Feimao] 确定最终图像地址:', src);
+                            const proxyRes = await new Promise(r => chrome.runtime.sendMessage({ action: 'FETCH_IMAGE_BASE64', url: src }, r));
+                            if (proxyRes && proxyRes.success) {
+                                imgUrl = proxyRes.data;
+                            }
+                        }
+                    } else if (bestImageNode && bestImageNode.tagName === 'CANVAS') {
+                        imgUrl = bestImageNode.toDataURL('image/jpeg', 0.9);
+                    }
+
+                    if (imgUrl) {
+                        searchMethod = 'image';
+                        addLog(`商品 ${pid} 封面提取成功`, 'success');
+                    } else {
+                        throw new Error('无法从 DOM 中嗅探到该商品的有效主图节点');
+                    }
+               } catch(e) {
+                    console.error('Advanced image capture failed:', pid, e);
+                    addLog(`商品 ${pid} 获取失败: ${e.message}`, 'error');
                }
           }
           

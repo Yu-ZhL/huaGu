@@ -70,8 +70,6 @@ class TemuCollectionService
 
     public function collectSimilarProducts($temuProductId, $userId, $searchMethod = 'image', $maxCount = 20, $forcedImgUrl = null)
     {
-        // 修正：尝试通过 id (自增主键) OR product_id (Temu字符串ID) 查找商品
-        // 因为前端传来的可能是 "6011..." (TemuID)
         $temuProduct = TemuCollectedProduct::where('user_id', $userId)
             ->where(function ($q) use ($temuProductId) {
                 $q->where('id', $temuProductId)
@@ -79,11 +77,6 @@ class TemuCollectionService
             })
             ->first();
 
-        // 如果没找到商品记录，但有图片URL，为了不中断采集，我们尝试"宽容处理"
-        // 或者直接报错。按照用户需求，必须能采集。
-        // 如果没找到记录，说明 Step 1 入库延迟了。这里我们必须拿到一个 id 来存 1688 货源
-        // 如果没找到商品记录，说明前面的入库操作可能还在异步队列或事务中，或者前端先发了采集。
-        // 为了不中断流程，我们直接在这里动态创建一个基础记录
         if (!$temuProduct) {
             Log::info("采集同款时动态补全商品记录: {$temuProductId}");
             $temuProduct = TemuCollectedProduct::updateOrCreate(
@@ -114,7 +107,7 @@ class TemuCollectionService
         $remainingCount = $maxCount - $existingCount;
 
         try {
-            // 1. 优先尝试使用 URL 搜图
+            // 优先尝试使用 URL 搜图
             // 优先使用前端传来的 forcedImgUrl，其次使用数据库里的 cover_image
             $targetImgUrl = $forcedImgUrl ?? $temuProduct->cover_image;
 
@@ -135,7 +128,7 @@ class TemuCollectionService
                 return ['success' => false, 'message' => '缺少商品图片信息'];
             }
 
-            // 2. 如果URL搜图没结果，尝试转Base64搜图 (用户明确要求)
+            // 如果URL搜图没结果，尝试转Base64搜图 (用户明确要求)
             $hasData = !empty($result['data']) && is_array($result['data']) && count($result['data']) > 0;
 
             if (!$hasData && !empty($temuProduct->cover_image)) {
@@ -193,13 +186,11 @@ class TemuCollectionService
                         'temu_product_id' => $temuProductId,
                         'user_id' => $userId,
                         'title' => $item['title'] ?? $item['subject'] ?? null,
-                        // 修正：API返回的是 picture / ori_picture
                         'image' => $item['picture'] ?? $item['ori_picture'] ?? $item['image'] ?? $item['imageUrl'] ?? $item['imgUrl'] ?? null,
                         'price' => $item['price'] ?? null,
-                        // 修正：API返回的是 real_url
                         'url' => $item['real_url'] ?? $item['url'] ?? $item['detailUrl'] ?? null,
                         'product_data' => $item,
-                        'tags' => !empty($tags) ? $tags : null, // 假设模型里有 cast 为 array
+                        'tags' => !empty($tags) ? $tags : null,
                         'search_method' => $searchMethod,
                         'is_primary' => ($isFirstSource && $saved === 0), // 第一个货源设为主货源
                     ]);

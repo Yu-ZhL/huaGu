@@ -173,7 +173,7 @@ async function autoLoadFirstSource(productId, container, dbId = null) {
 
         // 如果没有提供DB ID，或者提供的 ID 看起来像 Temu ID（长字符串/无法被转为有效数字），则需要通过接口查询真实 DB ID
         if (!targetDbId || String(targetDbId).length > 12) {
-            console.log(`[Feimao] UI更新: 商品 ${productId} 缺少或无效 DB_ID (${targetDbId})，尝试检索...`)
+            // console.log(`[Feimao] 正在获取商品 ${productId} 的 ID...`)
             const temuProducts = await apiRequest('/temu/products?product_ids=' + productId)
 
             const productList = temuProducts?.data?.data || temuProducts?.data || []

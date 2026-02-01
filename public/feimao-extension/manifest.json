@@ -9,6 +9,7 @@
         "scripting"
     ],
     "host_permissions": [
+        "<all_urls>",
         "http://103.214.173.247:3019/*",
         "https://*.temu.com/*",
         "https://*.temu.net/*"

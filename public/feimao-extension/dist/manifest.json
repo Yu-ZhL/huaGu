@@ -9,6 +9,7 @@
     "scripting"
   ],
   "host_permissions": [
+    "<all_urls>",
     "http://103.214.173.247:3019/*",
     "https://*.temu.com/*",
     "https://*.temu.net/*"
@@ -16,7 +17,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/index.js-Y1j6VwQE.js"
+        "assets/index.js-CPM-3Dbh.js"
       ],
       "matches": [
         "https://*.temu.com/*",
@@ -39,7 +40,7 @@
         "https://*.temu.net/*"
       ],
       "resources": [
-        "assets/index.js-Y1j6VwQE.js"
+        "assets/index.js-CPM-3Dbh.js"
       ],
       "use_dynamic_url": false
     }
