@@ -58,8 +58,9 @@ class TemuCollectionService
                 ->get()
                 ->map(function ($product) {
                     $firstSource = $product->sources1688->first();
-                    $product->setAttribute('first_source_image', $firstSource ? $firstSource->image : null);
-                    $product->setAttribute('first_source_price', $firstSource ? $firstSource->price : null);
+                    // 这里不需要 setAttribute, 只是临时用
+                    $product->first_source_image = $firstSource ? $firstSource->image : null;
+                    $product->first_source_price = $firstSource ? $firstSource->price : null;
                     return $product;
                 });
         }
@@ -69,9 +70,26 @@ class TemuCollectionService
 
     public function collectSimilarProducts($temuProductId, $userId, $searchMethod = 'image', $maxCount = 20, $forcedImgUrl = null)
     {
-        $temuProduct = TemuCollectedProduct::where('id', $temuProductId)
-            ->where('user_id', $userId)
-            ->firstOrFail();
+        // 修正：尝试通过 id (自增主键) OR product_id (Temu字符串ID) 查找商品
+        // 因为前端传来的可能是 "6011..." (TemuID)
+        $temuProduct = TemuCollectedProduct::where('user_id', $userId)
+            ->where(function ($q) use ($temuProductId) {
+                $q->where('id', $temuProductId)
+                    ->orWhere('product_id', $temuProductId);
+            })
+            ->first();
+
+        // 如果没找到商品记录，但有图片URL，为了不中断采集，我们尝试"宽容处理"
+        // 或者直接报错。按照用户需求，必须能采集。
+        // 如果没找到记录，说明 Step 1 入库延迟了。这里我们必须拿到一个 id 来存 1688 货源
+        if (!$temuProduct) {
+            Log::warning("采集同款时未找到商品记录: {$temuProductId} (User: $userId)");
+            return ['success' => false, 'message' => "系统未找到该商品记录 ({$temuProductId})，请刷新重试"];
+        }
+
+        // 使用查到的真实数据库ID
+        $dbId = $temuProduct->id;
+        $temuProductId = $dbId; // 修正为数据库ID，用于后续查询 sources
 
         $existingCount = Product1688Source::where('temu_product_id', $temuProductId)->count();
 

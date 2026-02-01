@@ -98,7 +98,7 @@ class TemuProductController extends Controller
     /**
      * 开始采集1688同款
      */
-    #[BodyParam("product_id", "integer", "Temu商品ID", required: true, example: 1)]
+    #[BodyParam("product_id", "string", "Temu商品ID (支持数据库ID或Temu原只读ID)", required: true, example: "6011xxx")]
     #[BodyParam("search_method", "string", "搜索方式 (image/url)", required: false, example: "image")]
     #[BodyParam("max_count", "integer", "最大采集数量", required: false, example: 20)]
     #[Response([
@@ -112,7 +112,7 @@ class TemuProductController extends Controller
     public function collectSimilar(Request $request)
     {
         $validated = $request->validate([
-            'product_id' => 'required|integer',
+            'product_id' => 'required', // 移除 integer 限制，支持 string
             'search_method' => 'string|in:image,url',
             'max_count' => 'integer|min:1|max:20',
         ]);

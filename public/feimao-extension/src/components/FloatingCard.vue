@@ -375,7 +375,8 @@ const handleStartCollecting = async () => {
       fetchUploadedCount() // 不阻塞流程
       
       const savedProducts = res.data?.saved_products || []
-      const records = res.data?.records || []
+      // 兼容 list 和 records 字段
+      const records = res.data?.list || res.data?.data?.list || res.data?.records || []
       
       // 停止扫描 DOM，开始后台采集流程
       stopScanning() 
@@ -403,7 +404,10 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = []) =
   let dbMap = new Map()
   
   // 1. 先用 savedList 填充 (后端刚入库的)
-  savedList.forEach(p => dbMap.set(p.product_id, p))
+  // 1. 先用 savedList 填充 (后端刚入库的)
+  savedList.forEach(p => dbMap.set(String(p.product_id), p))
+  
+  console.log('Task Debug - Saved Products:', savedList.length, 'Mapped:', dbMap.size)
   
   // 3. 尝试同步缺少DB信息的 (找出所有还未匹配到 DB 记录的 IDs)
   const missingDbIds = allIds.filter(pid => !dbMap.has(pid))
@@ -413,7 +417,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = []) =
          addLog(`正在同步 ${missingDbIds.length} 个商品的数据库信息...`, 'loading')
          const dbRes = await requestApi('GET', `/temu/products?per_page=${missingDbIds.length + 50}&product_ids=${missingDbIds.join(',')}`)
          const dbRecords = dbRes?.data?.data || dbRes?.data?.records || dbRes?.data || []
-         dbRecords.forEach(p => { dbMap.set(p.product_id, p) })
+         dbRecords.forEach(p => { dbMap.set(String(p.product_id), p) })
       } catch(e) {
          addLog('同步数据库信息部分失败，将尝试直接采集', 'warning')
       }
@@ -431,8 +435,8 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = []) =
     setHighlight(pid)
     
     // 获取当前商品的相关信息对象
-    const record = records.find(r => r.productId === pid || r.product_id === pid) || {}
-    const dbProduct = dbMap.get(pid)
+    const record = records.find(r => String(r.productId) === String(pid) || String(r.product_id) === String(pid)) || {}
+    const dbProduct = dbMap.get(String(pid))
     
     // 显示日志
     const displayTitle = record.title || dbProduct?.title || pid
@@ -464,10 +468,13 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = []) =
           // === 执行采集 ===
           // 优先使用 API 返回的图片链接 (record.imageUrl)，其次是 DB 里的
           const imgUrl = record.imageUrl || dbProduct?.cover_image || dbProduct?.img_url
-          const targetId = dbProduct?.id // 必须要有 DB ID 才能存关联
+          
+          // 直接使用当前遍历的 ID (Temu Product ID) 作为目标ID发给后端
+          // 后端会自动处理它是 TemuID 还是 DatabaseID
+          const targetId = pid
           
           if (!targetId) {
-              addLog(`商品 ${pid}: 未能获取系统ID，无法关联货源 (请尝试刷新页面重试)`, 'warning')
+              addLog(`商品 ${pid}: ID无效，跳过`, 'warning')
               continue
           }
 
