@@ -451,7 +451,7 @@ const handleStartCollecting = async () => {
     })
     
     if (res && (res.success || res.code === 200)) {
-      addLog(`商品提交成功！准备采集货源...`, 'success')
+      addLog(`商品提交成功！准备采集货源(过程可能较慢,请耐心等待)...`, 'success')
       fetchUploadedCount()
       
       const savedProducts = res.data?.saved_products || []
@@ -509,6 +509,12 @@ const handleStartCollecting = async () => {
 // 批量采集1688货源逻辑 (带高亮和日志)
 // 批量采集1688货源逻辑 (优先使用 API 返回的 records)
 const collectSourcesForProducts = async (allIds, records = [], savedList = [], scannedMap = new Map()) => {
+  // 统计变量
+  let successCount = 0
+  let failCount = 0
+  let totalPoints = 0
+  let skippedCount = 0
+
   // 构建任务队列：尝试把 allIds 映射为数据库对象或 API 返回对象
   let dbMap = new Map()
   
@@ -535,7 +541,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
     // 检查停止标志
     if (!isTaskRunning.value) {
         setHighlight(null)
-        return
+        break // 使用 break 而不是 return，确保能执行到下方的总结逻辑
     }
 
     processed++
@@ -570,6 +576,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
       // 判断已有货源 (仅当有明确标志时跳过)
       if (dbProduct && dbProduct.sources1688_count > 0) {
           addLog(`商品 ${pid} 已有货源，刷新显示`, 'info')
+          skippedCount++
           document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: pid, dbId: dbProduct.id } }))
       } else {
           // === 执行采集 ===
@@ -704,12 +711,14 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           // 处理点数消耗信息
           if (apiRes?.ai_points_used) {
             addLog(`消耗 ${apiRes.ai_points_used} 点AI点数`, 'info')
+            totalPoints += apiRes.ai_points_used
             // 刷新用户信息以更新点数显示
             await checkLoginStatus()
           }
           
           if (apiRes && apiRes.success) {
               addLog(`商品 ${pid} 货源采集完成: ${apiRes.message || ''}`, 'success')
+              successCount++
               
               // 获取后端返回的数据库主键 ID
               const realDbId = apiRes.product_id
@@ -723,6 +732,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           } else {
               const msg = apiRes?.message || '未知错误'
               addLog(`商品 ${pid} 采集未成功: ${msg}`, 'warning')
+              failCount++
 
               document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
                   detail: { productId: pid, dbId: null, error: msg } 
@@ -731,18 +741,29 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
       }
     } catch (error) {
       addLog(`商品 ${pid} 系统报错: ${error.message || error}`, 'error')
+      failCount++
       document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
           detail: { productId: pid, dbId: null, error: '系统异常' } 
       }))
     }
     
     await new Promise(resolve => setTimeout(resolve, 800))
-  }
+  } // end for loop
   
   setHighlight(null)
   
+  // 采集任务完成总结
   if (isTaskRunning.value) {
-      addLog('所有采集任务已完成！', 'success')
+      const summary = `所有采集任务已完成！\n共采集: ${allIds.length} 个\n成功: ${successCount} 个\n跳过: ${skippedCount} 个\n失败: ${failCount} 个\n总消耗点数: ${totalPoints} 点`
+      addLog(summary, 'success')
+      // 稍微延迟关闭 loading 状态，让用户看清
+      setTimeout(() => {
+          isTaskRunning.value = false
+      }, 2000)
+  } else {
+      // 手动停止的情况
+      const summary = `采集任务已停止\n当前已完成: ${successCount + failCount + skippedCount} 个\n成功: ${successCount} 个\n跳过: ${skippedCount} 个\n失败: ${failCount} 个\n总消耗点数: ${totalPoints} 点`
+      addLog(summary, 'warning')
   }
 }
 
