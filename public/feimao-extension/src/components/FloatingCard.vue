@@ -559,11 +559,38 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
                     if (bestImageNode && bestImageNode.tagName === 'IMG') {
                         const src = bestImageNode.currentSrc || bestImageNode.src || bestImageNode.getAttribute('data-src');
                         if (src) {
-                            console.log('[Feimao] 确定最终图像地址:', src);
-                            const proxyRes = await new Promise(r => chrome.runtime.sendMessage({ action: 'FETCH_IMAGE_BASE64', url: src }, r));
-                            if (proxyRes && proxyRes.success) {
-                                imgUrl = proxyRes.data;
-                            }
+                                console.log('[Feimao] 获取到原始图像源:', src);
+                                const proxyRes = await new Promise(r => chrome.runtime.sendMessage({ action: 'FETCH_IMAGE_BASE64', url: src }, r));
+                                if (proxyRes && proxyRes.success) {
+                                    // 核心改进：由于 Temu 常返回 AVIF 格式，许多搜图 API 不支持。
+                                    // 我们在此处增加一个 Canvas 中转，强制转换为标准 JPEG。
+                                    try {
+                                        const originalDataUrl = proxyRes.data;
+                                        const img = new Image();
+                                        img.crossOrigin = "anonymous";
+                                        img.src = originalDataUrl;
+                                        await new Promise((res, rej) => {
+                                            img.onload = res;
+                                            img.onerror = rej;
+                                            setTimeout(() => rej(new Error('图片加载超时')), 5000);
+                                        });
+
+                                        const canvas = document.createElement('canvas');
+                                        canvas.width = img.naturalWidth;
+                                        canvas.height = img.naturalHeight;
+                                        const ctx = canvas.getContext('2d');
+                                        ctx.fillStyle = '#FFFFFF'; // 防止透明背景变黑
+                                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                        ctx.drawImage(img, 0, 0);
+
+                                        // 转换为标准 JPEG，质量 0.9
+                                        imgUrl = canvas.toDataURL('image/jpeg', 0.9);
+                                        console.log('[Feimao] 已将图像强制转换为标准 JPEG 格式');
+                                    } catch (convErr) {
+                                        console.warn('[Feimao] 图像格式转换失败，回退到原始数据:', convErr);
+                                        imgUrl = proxyRes.data;
+                                    }
+                                }
                         }
                     } else if (bestImageNode && bestImageNode.tagName === 'CANVAS') {
                         imgUrl = bestImageNode.toDataURL('image/jpeg', 0.9);

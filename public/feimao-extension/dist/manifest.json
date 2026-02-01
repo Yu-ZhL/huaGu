@@ -17,7 +17,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/index.js-CPM-3Dbh.js"
+        "assets/index.js-Dve2R0CU.js"
       ],
       "matches": [
         "https://*.temu.com/*",
@@ -40,7 +40,7 @@
         "https://*.temu.net/*"
       ],
       "resources": [
-        "assets/index.js-CPM-3Dbh.js"
+        "assets/index.js-Dve2R0CU.js"
       ],
       "use_dynamic_url": false
     }

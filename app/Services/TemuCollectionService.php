@@ -116,6 +116,10 @@ class TemuCollectionService
             Log::info('开始搜图，产品ID: ' . $temuProductId . '，使用图片: ' . $logImg);
 
             if (!empty($targetImgUrl)) {
+                // 审计图片来源和类型
+                $imgPreview = substr($targetImgUrl, 0, 80);
+                Log::info("[Feimao] 最终搜图参数审计: " . $imgPreview . (strlen($targetImgUrl) > 80 ? '...' : ''));
+
                 // 判断是否是 Base64
                 if (strpos($targetImgUrl, 'data:image') === 0) {
                     // 提取 Base64 内容
