@@ -28,16 +28,11 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取采集到的temu商品列表
+     * 获取采集到的temu商品列表 - 给插件用的
      */
     #[QueryParam("page", "integer", "页码", required: false, example: 1)]
-    #[QueryParam("per_page", "integer", "每页数量", required: false, example: 15)]
-    #[QueryParam("title", "string", "模糊搜索标题", required: false, example: "充电器")]
-    #[QueryParam("reviews_min", "integer", "最小评价数", required: false, example: 100)]
-    #[QueryParam("sales_min", "integer", "最小销量", required: false, example: 1000)]
-    #[QueryParam("price_min", "number", "最小价格", required: false, example: 5.0)]
-    #[QueryParam("is_brand", "integer", "是否品牌 (1:是, 0:否)", required: false, example: 1)]
-    #[QueryParam("product_ids", "string", "指定商品ID列表(逗号分隔)", required: false, example: "601105,601106")]
+    #[QueryParam("per_page", "integer", "每页数量", required: false, example: 10)]
+    #[QueryParam("product_ids", "string", "针对性返回当前页面商品状态 (逗号分隔)", required: false, example: "601105,601106")]
     #[Response([
         "success" => true,
         "data" => [
@@ -48,21 +43,11 @@ class TemuProductController extends Controller
                     "product_id" => "601099661205317",
                     "title" => "示例商品标题",
                     "sale_price" => 99.99,
-                    "weight" => 0.530,
-                    "remark" => "这是备注信息",
-                    "sales" => 500,
-                    "reviews" => 120,
-                    "rating" => 4.5,
-                    "freight" => 32.50,
-                    "profit" => 15.80,
-                    "source_price_1688" => 25.00,
-                    "is_brand" => true,
+                    "product_data" => ["...全量数据"],
                     "sources_count" => 5,
                     "collected_at" => "2026-02-01 17:00:00"
                 ]
-            ],
-            "total" => 50,
-            "per_page" => 15
+            ]
         ]
     ])]
     public function index(Request $request)
@@ -71,9 +56,80 @@ class TemuProductController extends Controller
 
         $query = TemuCollectedProduct::where('user_id', $user->id);
 
-        // 筛选功能
+        // 插件侧：针对性请求当前页面商品的采集状态
+        if ($request->filled('product_ids')) {
+            $ids = explode(',', $request->input('product_ids'));
+            $query->whereIn('product_id', $ids);
+
+            // 针对性请求时默认给大一点，确保全返回
+            $perPage = $request->input('per_page', 100);
+        } else {
+            $perPage = $request->input('per_page', 10);
+        }
+
+        $products = $query->with('sources1688')
+            ->withCount('sources1688')
+            ->orderBy('collected_at', 'desc')
+            ->paginate($perPage);
+
+        // 映射字段名以保持向后兼容
+        $products->getCollection()->transform(function ($product) {
+            $product->sources_count = $product->sources1688_count;
+            return $product;
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $products,
+        ]);
+    }
+
+    /**
+     * 获取用户爬取的temu商品列表
+     */
+    #[QueryParam("page", "integer", "页码", required: false, example: 1)]
+    #[QueryParam("per_page", "integer", "每页数量", required: false, example: 15)]
+    #[QueryParam("title", "string", "模糊搜索标题", required: false, example: "充电器")]
+    #[QueryParam("remark", "string", "模糊搜索备注", required: false, example: "待处理")]
+    #[QueryParam("shop_name", "string", "模糊搜索名店", required: false, example: "名店")]
+    #[QueryParam("reviews_min", "integer", "最小评价数", required: false, example: 100)]
+    #[QueryParam("sales_min", "integer", "最小销量", required: false, example: 1000)]
+    #[QueryParam("price_min", "number", "最小价格", required: false, example: 5.0)]
+    #[QueryParam("is_brand", "integer", "是否品牌 (1:是, 0:否)", required: false, example: 1)]
+    #[Response([
+        "success" => true,
+        "data" => [
+            "current_page" => 1,
+            "data" => [
+                [
+                    "id" => 1,
+                    "product_id" => "601099661205317",
+                    "title" => "精简版示例",
+                    "sale_price" => 99.99,
+                    "shop_name" => "示例店铺",
+                    "sales" => 500,
+                    "rating" => 4.5,
+                    "cover_image" => "http://example.com/img.jpg"
+                ]
+            ]
+        ]
+    ])]
+    public function indexSimple(Request $request)
+    {
+        $user = auth()->user();
+
+        $query = TemuCollectedProduct::where('user_id', $user->id);
+
         if ($request->filled('title')) {
             $query->where('title', 'like', '%' . $request->input('title') . '%');
+        }
+
+        if ($request->filled('remark')) {
+            $query->where('remark', 'like', '%' . $request->input('remark') . '%');
+        }
+
+        if ($request->filled('shop_name')) {
+            $query->where('shop_name', 'like', '%' . $request->input('shop_name') . '%');
         }
 
         if ($request->filled('reviews_min')) {
@@ -92,21 +148,31 @@ class TemuProductController extends Controller
             $query->where('is_brand', $request->input('is_brand'));
         }
 
-        if ($request->filled('product_ids')) {
-            $ids = explode(',', $request->input('product_ids'));
-            $query->whereIn('product_id', $ids);
-        }
-
-        $products = $query->with('sources1688')
+        $products = $query->select([
+            'id',
+            'user_id',
+            'product_id',
+            'site_url',
+            'platform',
+            'title',
+            'sale_price',
+            'weight',
+            'brand',
+            'cover_image',
+            'collected_at',
+            'remark',
+            'sales',
+            'reviews',
+            'rating',
+            'freight',
+            'profit',
+            'source_price_1688',
+            'is_brand',
+            'shop_name'
+        ])
             ->withCount('sources1688')
             ->orderBy('collected_at', 'desc')
             ->paginate($request->input('per_page', 15));
-
-        // 映射字段名以保持向后兼容和清晰
-        $products->getCollection()->transform(function ($product) {
-            $product->sources_count = $product->sources1688_count;
-            return $product;
-        });
 
         return response()->json([
             'success' => true,
@@ -216,7 +282,7 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取商品的1688货源列表 - 给插件用的
+     * 获取商品的1688货源列表
      */
     #[Response([
         "success" => true,
@@ -399,7 +465,7 @@ class TemuProductController extends Controller
 
     /**
      * 删除采集商品
-     * 
+     *
      * 删除指定的 Temu 采集商品，并级联删除其名下所有 1688 同款货源数据。
      */
     #[Response([

@@ -45,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Temu 商品管理
     Route::prefix('temu/products')->group(function () {
         Route::get('/', [TemuProductController::class, 'index']);
+        Route::get('/simple', [TemuProductController::class, 'indexSimple']);
         Route::get('/{id}', [TemuProductController::class, 'show']);
         Route::post('/collect-similar', [TemuProductController::class, 'collectSimilar']);
         Route::get('/{productId}/sources', [TemuProductController::class, 'getSources']);

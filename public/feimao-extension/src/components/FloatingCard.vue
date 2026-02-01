@@ -29,6 +29,10 @@ const logListRef = ref(null)
 let clearTimer = null
 const isTaskRunning = ref(false)
 const isRefreshing = ref(false) // AI点数刷新节流状态
+const currentPage = ref(1)
+const hasMore = ref(true)
+const isLoadingMore = ref(false)
+const listScrollRef = ref(null)
 
 const collectingStatusText = computed(() => {
   if (isScanning.value) return '扫描商品ID...'
@@ -146,37 +150,68 @@ const fetchUploadedCount = async () => {
   }
 }
 
-const fetchCollectedDetails = async () => {
+const fetchCollectedDetails = async (isLoadMore = false) => {
+  if (isLoadMore) {
+    if (!hasMore.value || isLoadingMore.value) return
+    isLoadingMore.value = true
+    currentPage.value++
+  } else {
+    isLoadingDetail.value = true
+    currentPage.value = 1
+    collectedProducts.value = []
+    hasMore.value = true
+  }
+
   try {
-    const result = await requestApi('GET', '/temu/products?per_page=100')
+    const result = await requestApi('GET', `/temu/products?page=${currentPage.value}&per_page=10`)
     if (result && (result.success || result.code === 200) && result.data) {
-      // 兼容直接数组或分页对象的 list/records/data
-      let list = Array.isArray(result.data) ? result.data : (result.data.data || result.data.records || result.data.list || [])
+      const respData = result.data
+      let list = Array.isArray(respData.data) ? respData.data : (respData.records || respData.list || [])
       
-      // 数据清洗：防止 null 或 JSON 字符串导致的渲染崩溃
-      collectedProducts.value = list.filter(p => p && p.id).map(p => {
-          // 如果 product_data 是字符串，尝试解析
+      const newItems = list.filter(p => p && p.id).map(p => {
           if (typeof p.product_data === 'string') {
               try { p.product_data = JSON.parse(p.product_data) } catch(e) {}
           }
-          // 兜底保证 product_data 是对象
           if (!p.product_data || typeof p.product_data !== 'object') {
               p.product_data = {}
           }
           return p
       })
+
+      if (isLoadMore) {
+        collectedProducts.value = [...collectedProducts.value, ...newItems]
+      } else {
+        collectedProducts.value = newItems
+      }
+
+      // 判断是否还有更多
+      if (respData.current_page >= respData.last_page || newItems.length === 0) {
+        hasMore.value = false
+      }
+    } else {
+      hasMore.value = false
     }
   } catch (error) {
     console.error('Fetch details error:', error)
+    hasMore.value = false
+  } finally {
+    isLoadingDetail.value = false
+    isLoadingMore.value = false
+  }
+}
+
+const handleScroll = (e) => {
+  const { scrollTop, scrollHeight, clientHeight } = e.target
+  // 距离底部 50px 时触发加载
+  if (scrollTop + clientHeight >= scrollHeight - 50) {
+    fetchCollectedDetails(true)
   }
 }
 
 const handleShowDetail = async () => {
   showDetailDialog.value = true
-  isLoadingDetail.value = true
   addLog('正在加载采集明细...', 'loading')
   await fetchCollectedDetails()
-  isLoadingDetail.value = false
 }
 
 const closeDetailDialog = () => {
@@ -254,7 +289,9 @@ const handleExportExcel = async () => {
       'product_data.tags': '标签',
       'cover_image': '图片链接',
       'product_data.link': '商品链接',
-      'site_url': '采集来源'
+      'site_url': '采集来源',
+      'remark': '备注',
+      'collected_at': '采集时间'
     }
 
     // 3. 构建 CSV 内容
@@ -340,9 +377,7 @@ const handleExportExcel = async () => {
   }
 }
 
-// 核心采集逻辑保持不变
-// 核心采集逻辑 (重构版：使用日志和高亮)
-// 核心采集逻辑 (重构版：使用日志和高亮)
+// 核心采集逻辑
 const handleStartCollecting = async () => {
   if (isScanning.value || isTaskRunning.value) return
   
@@ -371,7 +406,7 @@ const handleStartCollecting = async () => {
           
           // 查找该注入点关联的图片元素
           // 注入点通常在卡片内部，我们向上找卡片，再向下找图片
-          const card = ui.closest('[class*="card"], [class*="item"], .Ois68FAW') || ui.parentElement
+          const card = ui.closest('[class*="card"], [class*="item"]') || ui.parentElement
           if (card) {
                // 别截整个卡片了，不然会截到我们自己的按钮。尝试找专门存图片的容器
                const imgBox = card.querySelector('.goods-image-container-external, [class*="image-container"], [class*="img-container"], .goods-img-external') || 
@@ -986,11 +1021,13 @@ onUnmounted(() => stopScanning())
       </div>
 
       <!-- 抽屉内容 -->
-      <div class="fm-drawer-content custom-scrollbar">
+      <div class="fm-drawer-content custom-scrollbar" @scroll="handleScroll">
          <div v-if="isLoadingDetail" style="padding: 40px; text-align: center; color: #94a3b8;">
             加载中...
          </div>
-         <div v-else class="fm-list-item" v-for="product in collectedProducts" :key="product.id">
+         <template v-else>
+            <div class="fm-list-item" v-for="product in collectedProducts" :key="product.id">
+
             <div class="fm-item-checkbox">
               <input type="checkbox" class="fm-checkbox" :value="product" v-model="selectedProducts">
             </div>
@@ -1025,10 +1062,10 @@ onUnmounted(() => stopScanning())
                       </div>
                   </div>
                   
-                  <!-- 利润只显示一次，基于主图/选定图 -->
-                  <div v-if="product.product_data.forecastProfits" style="text-align: right; font-size: 11px; padding-top: 2px; border-top: 1px solid #374151; margin-top: 2px;">
-                        <span :style="{color: Number(product.product_data.forecastProfits) >= 0 ? '#4ade80' : '#ef4444', fontWeight: '700'}">
-                            预估利润: {{ product.product_data.forecastProfits }}
+                  <!-- 利润展示 -->
+                  <div v-if="product.profit" style="text-align: right; font-size: 11px; padding-top: 2px; border-top: 1px solid #374151; margin-top: 2px;">
+                        <span :style="{color: Number(product.profit) >= 0 ? '#4ade80' : '#ef4444', fontWeight: '700'}">
+                            预估利润: ¥ {{ product.profit }}
                         </span>
                    </div>
               </div>
@@ -1039,21 +1076,31 @@ onUnmounted(() => stopScanning())
               </div>
               
               <div class="fm-item-actions">
-                <a class="fm-link" style="font-size: 10px;" 
-                   :href="product.product_data?.link || `https://www.temu.com/goods-${product.product_id}.html`" 
-                   target="_blank">Temu详情</a>
-                
-                <a v-if="product.product_data?.relatedSource?.[0]?.detailUrl" 
+              <a class="fm-link" style="font-size: 10px;" 
+              :href="product.product_data?.link || `https://www.temu.com/goods-${product.product_id}.html`" 
+              target="_blank">Temu详情</a>
+              
+              <a v-if="product.product_data?.relatedSource?.[0]?.detailUrl" 
                    class="fm-link" style="font-size: 10px; margin-left: auto;" 
                    :href="product.product_data.relatedSource[0].detailUrl" 
                    target="_blank">1688详情</a>
+
+                <span v-if="product.remark" style="font-size: 10px; color: #fbbf24; margin-left: 8px;">备注: {{ product.remark }}</span>
               </div>
             </div>
          </div>
+         
+         <div v-if="isLoadingMore" style="padding: 10px; text-align: center; color: #94a3b8; font-size: 12px;">
+            更多加载中...
+         </div>
+         <div v-if="!hasMore && collectedProducts.length > 0" style="padding: 10px; text-align: center; color: #64748b; font-size: 12px;">
+            没有更多了
+         </div>
+      </template>
 
-        <div v-if="collectedProducts.length === 0" style="padding: 40px; text-align: center; color: #64748b;">
-           暂无数据
-        </div>
+      <div v-if="collectedProducts.length === 0 && !isLoadingDetail" style="padding: 40px; text-align: center; color: #64748b;">
+         暂无数据
+      </div>
       </div>
 
       <!-- 抽屉底部 -->

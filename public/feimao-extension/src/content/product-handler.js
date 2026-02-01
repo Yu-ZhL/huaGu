@@ -18,8 +18,10 @@ export async function handleChooseSource(productId, container) {
     await new Promise(resolve => setTimeout(resolve, 20))
 
     try {
-        const temuProducts = await apiRequest('/temu/products')
-        const temuProduct = temuProducts.data?.data?.find(p => p.product_id === productId)
+        // 优化：针对性请求当前商品，不再拉取全量列表
+        const temuProducts = await apiRequest(`/temu/products?product_ids=${productId}`)
+        const list = temuProducts.data?.data || []
+        const temuProduct = Array.isArray(list) ? list.find(p => p.product_id === productId) : null
 
         if (!temuProduct) {
             document.querySelector('.fm-mask')?.remove()

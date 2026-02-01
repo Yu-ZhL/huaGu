@@ -83,10 +83,10 @@ class FeimaoProductController extends Controller
                             // 将保存后的商品数据合并到返回结果中
                             $result['data']['saved_products'] = $savedProducts;
                         } catch (\Exception $e) {
-                            Log::error('飞猫商品控制器: 保存失败', ['error' => $e->getMessage()]);
+                            // Log::error('飞猫商品控制器: 保存失败', ['error' => $e->getMessage()]);
                         }
                     } else {
-                        Log::error('飞猫商品控制器: 无法保存商品 - 用户未认证');
+                        // Log::error('飞猫商品控制器: 无法保存商品 - 用户未认证');
                     }
                 }
             }

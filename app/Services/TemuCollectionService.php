@@ -49,6 +49,7 @@ class TemuCollectionService
                     'profit' => $productData['forecastProfits'] ?? 0,
                     'source_price_1688' => $productData['sourcePrice'] ?? 0,
                     'is_brand' => $productData['isBrand'] ?? false,
+                    'shop_name' => $productData['shopName'] ?? null,
                     'collected_at' => now(),
                 ]
             );
@@ -150,15 +151,15 @@ class TemuCollectionService
                         // 调用 Platform1688Service 的 Base64 搜图方法
                         $result = $this->platform1688Service->searchByImage($base64, 1, $remainingCount);
                     } else {
-                        Log::warning('图片下载失败，无法执行Base64搜图');
+                        // Log::warning('图片下载失败，无法执行Base64搜图');
                     }
                 } catch (\Exception $e) {
-                    Log::error('Base64搜图异常: ' . $e->getMessage());
+                    // Log::error('Base64搜图异常: ' . $e->getMessage());
                 }
             }
 
             if (!empty($result['data']) && is_array($result['data'])) {
-                Log::info('搜图成功，结果数量: ' . count($result['data']));
+                // Log::info('搜图成功，结果数量: ' . count($result['data']));
 
                 // [DEBUG] 打印第一条数据结构，以便排查字段名问题
                 if (isset($result['data'][0])) {
@@ -208,7 +209,7 @@ class TemuCollectionService
                     'total' => $existingCount + $saved,
                 ];
             } else {
-                Log::warning('搜图未找到结果，API返回: ' . json_encode($result, JSON_UNESCAPED_UNICODE));
+                // Log::warning('搜图未找到结果，API返回: ' . json_encode($result, JSON_UNESCAPED_UNICODE));
             }
 
             return [
@@ -217,7 +218,7 @@ class TemuCollectionService
             ];
 
         } catch (\Exception $e) {
-            Log::error('采集1688同款失败: ' . $e->getMessage());
+            // Log::error('采集1688同款失败: ' . $e->getMessage());
             return [
                 'success' => false,
                 'message' => '采集失败: ' . $e->getMessage(),

@@ -390,7 +390,7 @@ paths:
                 - product_id
   '/api/temu/products/{productId}/sources':
     get:
-      summary: '获取商品的1688货源列表 - 给插件用的'
+      summary: 获取商品的1688货源列表
       operationId: '1688'
       description: ''
       parameters: []

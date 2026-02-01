@@ -29,6 +29,7 @@ class TemuCollectedProduct extends Model
         'profit',
         'source_price_1688',
         'is_brand',
+        'shop_name',
     ];
 
     protected $casts = [

@@ -68,7 +68,7 @@ class IpLocationService
                 }
             }
         } catch (\Exception $e) {
-            Log::warning('IP查询失败 (ip.sb): ' . $e->getMessage());
+            // Log::warning('IP查询失败 (ip.sb): ' . $e->getMessage());
         }
 
         // 尝试接口 2: ip-api.com (备选，中文支持好)
@@ -90,7 +90,7 @@ class IpLocationService
                 }
             }
         } catch (\Exception $e) {
-            Log::warning('IP查询失败 (ip-api): ' . $e->getMessage());
+            // Log::warning('IP查询失败 (ip-api): ' . $e->getMessage());
         }
 
         return '未知归属地';
