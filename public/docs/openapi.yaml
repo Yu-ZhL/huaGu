@@ -157,7 +157,7 @@ paths:
         - 'Temu 商品管理'
   /api/temu/products/simple:
     get:
-      summary: '获取用户采集到的temu商品列表 - 给前端侧边栏/管理页用 (支持全部范围筛选)'
+      summary: 获取用户采集到的temu商品列表
       operationId: temu
       description: ''
       parameters:

@@ -85,7 +85,7 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取用户采集到的temu商品列表 - 给前端侧边栏/管理页用 (支持全部范围筛选)
+     * 获取用户采集到的temu商品列表 
      */
     #[QueryParam("page", "integer", "页码", required: false, example: 1)]
     #[QueryParam("per_page", "integer", "每页数量", required: false, example: 15)]
