@@ -440,24 +440,7 @@ const handleStartCollecting = async () => {
     return
   }
 
-  // 预估点数消耗并确认
-  const estimatedPoints = uniqueIds.length * 2
-  const currentPoints = userInfo.value?.ai_points || 0
-  
-  if (estimatedPoints > currentPoints) {
-    addLog(`点数不足!预计消耗${estimatedPoints}点,当前仅有${currentPoints}点`, 'error')
-    stopScanning()
-    return
-  }
-  
-  const confirmMsg = `扫描到 ${uniqueIds.length} 个商品\n预计消耗约 ${estimatedPoints} 点AI点数\n当前剩余 ${currentPoints} 点\n\n是否继续采集?`
-  if (!confirm(confirmMsg)) {
-    addLog('用户取消采集', 'warning')
-    stopScanning()
-    return
-  }
-
-  addLog(`开始采集 ${uniqueIds.length} 个商品...`, 'success')
+  addLog(`扫描到 ${uniqueIds.length} 个商品,正在提交...`, 'success')
   
   try {
     const res = await requestApi('POST', '/feimao/products', {
@@ -469,24 +452,50 @@ const handleStartCollecting = async () => {
     
     if (res && (res.success || res.code === 200)) {
       addLog(`商品提交成功！准备采集货源...`, 'success')
-      fetchUploadedCount() // 不阻塞流程
+      fetchUploadedCount()
       
       const savedProducts = res.data?.saved_products || []
-      // 兼容 list 和 records 字段
       const records = res.data?.list || res.data?.data?.list || res.data?.records || []
       
-      // 停止扫描 DOM，开始后台采集流程
-      stopScanning() 
+      // 计算实际需要采集的商品数量(排除已有货源的)
+      const needsCollection = savedProducts.filter(p => {
+        const sources = p.product_data?.relatedSource || p.related_sources || []
+        return sources.length === 0
+      })
       
-      // 进入货源采集流程 (使用 uniqueIds 以确保处理所有提交的商品，包括已存在的)
+      // 点数预估和确认
+      if (needsCollection.length > 0) {
+        const estimatedPoints = needsCollection.length * 2
+        const currentPoints = userInfo.value?.ai_points || 0
+        
+        let confirmMsg = `共${uniqueIds.length}个商品,其中${needsCollection.length}个需要采集货源\n预计消耗约 ${estimatedPoints} 点AI点数\n当前剩余 ${currentPoints} 点`
+        
+        // 点数不足时提醒但不阻止
+        if (estimatedPoints > currentPoints) {
+          confirmMsg += `\n\n⚠️ 警告:点数可能不足,采集过程中可能因点数耗尽而中断`
+        }
+        
+        confirmMsg += `\n\n是否继续采集?`
+        
+        if (!confirm(confirmMsg)) {
+          addLog('用户取消采集', 'warning')
+          stopScanning()
+          isTaskRunning.value = false
+          return
+        }
+      } else {
+        addLog('所有商品已有货源,无需采集', 'info')
+      }
+      
+      stopScanning()
       isTaskRunning.value = true
       await collectSourcesForProducts(uniqueIds, records, savedProducts, uniqueProductsMap)
     } else {
-      addLog(res.message || '提交失败', 'error')
+      addLog(res?.message || '提交失败', 'error')
       stopScanning()
     }
   } catch (error) {
-    addLog('采集请求失败: ' + error.message, 'error')
+    addLog('采集请求失败: ' + (error?.message || error || 'Unknown error'), 'error')
     stopScanning()
   } finally {
     isTaskRunning.value = false
@@ -681,20 +690,19 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           // 通知 UI 进入正在搜索状态
           document.dispatchEvent(new CustomEvent('feimao:sources-collecting', { detail: { productId: pid } }))
 
-      // 调用后端采集接口
-      const apiRes = await requestApi('POST', '/temu/products/collect-similar', {
-          product_id: targetId,
-          search_method: searchMethod,
-          img_url: imgUrl, // 传递链接或Base64
-          max_count: 20
-      })
-      
-      // 处理点数消耗信息
-      if (apiRes?.ai_points_used) {
-        addLog(`消耗 ${apiRes.ai_points_used} 点AI点数`, 'info')
-        // 刷新用户信息以更新点数显示
-        await checkLoginStatus()
-      }
+          // 调用后端采集接口
+          const apiRes = await requestApi('POST', '/temu/products/collect-similar', {
+              product_id: targetId,
+              site_url: window.location.href,
+              img_url: imgUrl || undefined
+          })
+          
+          // 处理点数消耗信息
+          if (apiRes?.ai_points_used) {
+            addLog(`消耗 ${apiRes.ai_points_used} 点AI点数`, 'info')
+            // 刷新用户信息以更新点数显示
+            await checkLoginStatus()
+          }
           
           if (apiRes && apiRes.success) {
               addLog(`商品 ${pid} 货源采集完成: ${apiRes.message || ''}`, 'success')
@@ -885,14 +893,14 @@ onUnmounted(() => stopScanning())
         </div>
 
         <!-- 操作按钮 -->
-        <div class="fm-btn-group">
-          <button
-            class="fm-btn fm-btn-md fm-btn-primary"
-            @click="handleStartCollecting"
-            :disabled="isScanning || isTaskRunning || !isUIInjected || (userInfo?.ai_points || 0) <= 0"
-          >
-            {{ isScanning ? '扫描中...' : '开始采集' }}
-          </button>
+        <div class="fm-actions-grid">
+           <button 
+             class="fm-btn fm-btn-md fm-btn-primary" 
+             @click="handleStartCollecting" 
+             :disabled="isScanning || isTaskRunning || !isUIInjected || (userInfo?.ai_points || 0) <= 0"
+           >
+             {{ isScanning ? '扫描中...' : '开始采集' }}
+           </button>
            <button class="fm-btn fm-btn-md fm-btn-outline" @click="handleStop">停止</button>
            <button class="fm-btn fm-btn-md fm-btn-outline-red" @click="handleClearExtensionCache">清空缓存</button>
            <button class="fm-btn fm-btn-md fm-btn-outline" @click="handleExportExcel" :disabled="isExporting">

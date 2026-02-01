@@ -115,7 +115,7 @@ class TemuProductController extends Controller
     public function collectSimilar(Request $request)
     {
         $validated = $request->validate([
-            'product_id' => 'required', // 移除 integer 限制，支持 string
+            'product_id' => 'required',
             'search_method' => 'string|in:image,url',
             'max_count' => 'integer|min:1|max:20',
         ]);
@@ -125,6 +125,18 @@ class TemuProductController extends Controller
         $searchMethod = $validated['search_method'] ?? 'image';
         $maxCount = $validated['max_count'] ?? 20;
 
+        // 获取AI点数配置
+        $pointsCost = SiteSetting::getAiPoints1688Search();
+
+        // 检查点数是否足够
+        if ($user->ai_points < $pointsCost) {
+            return response()->json([
+                'success' => false,
+                'code' => 400,
+                'message' => 'AI点数不足,当前点数:' . $user->ai_points . ',需要:' . $pointsCost,
+            ], 400);
+        }
+
         // 修正：支持接收前端显式传来的图片链接
         $imgUrl = $request->input('img_url');
 
@@ -133,8 +145,28 @@ class TemuProductController extends Controller
             $user->id,
             $searchMethod,
             $maxCount,
-            $imgUrl // 传递图片链接
+            $imgUrl
         );
+
+        // 扣除点数(仅在成功时)
+        if ($result['success'] ?? false) {
+            UserAiPoint::deductPoints(
+                $user->id,
+                $pointsCost,
+                UserAiPoint::TYPE_CONSUME,
+                '1688货源采集',
+                $productId
+            );
+
+            Log::info('1688货源采集消耗AI点数', [
+                'user_id' => $user->id,
+                'product_id' => $productId,
+                'points' => $pointsCost,
+                'remaining' => $user->fresh()->ai_points
+            ]);
+
+            $result['ai_points_used'] = $pointsCost;
+        }
 
         return response()->json($result);
     }
