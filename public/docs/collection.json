@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "cde548f2-758b-4b2f-9545-f1dcb9474039",
+        "_postman_id": "0ba4c2ba-27d9-4e41-9757-3cf6dc73ae8b",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -20,7 +20,7 @@
             "description": "Temu \u5546\u54c1\u91c7\u96c6\u548c\u540c\u6b3e\u7ba1\u7406",
             "item": [
                 {
-                    "name": "\u83b7\u53d6\u91c7\u96c6\u5546\u54c1\u5217\u8868",
+                    "name": "\u83b7\u53d6\u91c7\u96c6\u5546\u54c1\u5217\u8868 - \u7ed9\u63d2\u4ef6\u7528\u7684",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -55,7 +55,7 @@
                     ]
                 },
                 {
-                    "name": "\u83b7\u53d6\u5546\u54c1\u8be6\u60c5",
+                    "name": "\u83b7\u53d6\u5546\u54c1\u8be6\u60c5 - \u7ed9\u63d2\u4ef6\u7528\u7684",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -95,7 +95,7 @@
                     ]
                 },
                 {
-                    "name": "\u5f00\u59cb\u91c7\u96c61688\u540c\u6b3e",
+                    "name": "\u5f00\u59cb\u91c7\u96c61688\u540c\u6b3e - \u7ed9\u63d2\u4ef6\u7528\u7684",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -130,7 +130,7 @@
                     ]
                 },
                 {
-                    "name": "\u83b7\u53d6\u5546\u54c1\u76841688\u8d27\u6e90\u5217\u8868",
+                    "name": "\u83b7\u53d6\u5546\u54c1\u76841688\u8d27\u6e90\u5217\u8868 - \u7ed9\u63d2\u4ef6\u7528\u7684",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -205,7 +205,7 @@
                     ]
                 },
                 {
-                    "name": "\u8ba1\u7b97\u5546\u54c1\u5229\u6da6",
+                    "name": "\u8ba1\u7b97\u5546\u54c1\u5229\u6da6 - \u7f3a\u5c11[\u91cd\u91cf] \u63a5\u53e3\u6682\u4e0d\u53ef\u7528",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -1293,7 +1293,7 @@
             "description": "\u7b2c\u4e09\u65b9\u9009\u54c1\u5e73\u53f0\u63a5\u53e3",
             "item": [
                 {
-                    "name": "\u6279\u91cf\u67e5\u8be2\u5546\u54c1\u8be6\u60c5",
+                    "name": "\u6279\u91cf\u67e5\u8be2\u5546\u54c1\u8be6\u60c5 - \u7ed9\u63d2\u4ef6\u7528\u7684",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",

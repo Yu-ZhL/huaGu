@@ -49,7 +49,7 @@ security:
 paths:
   /api/temu/products:
     get:
-      summary: 获取采集商品列表
+      summary: '获取采集商品列表 - 给插件用的'
       operationId: ''
       description: ''
       parameters: []
@@ -136,7 +136,7 @@ paths:
                   example: 15
   '/api/temu/products/{id}':
     get:
-      summary: 获取商品详情
+      summary: '获取商品详情 - 给插件用的'
       operationId: ''
       description: ''
       parameters: []
@@ -194,7 +194,7 @@ paths:
           type: string
   /api/temu/products/collect-similar:
     post:
-      summary: 开始采集1688同款
+      summary: '开始采集1688同款 - 给插件用的'
       operationId: '1688'
       description: ''
       parameters: []
@@ -252,7 +252,7 @@ paths:
                 - product_id
   '/api/temu/products/{productId}/sources':
     get:
-      summary: 获取商品的1688货源列表
+      summary: '获取商品的1688货源列表 - 给插件用的'
       operationId: '1688'
       description: ''
       parameters: []
@@ -389,7 +389,7 @@ paths:
                 - product_id
   /api/temu/products/calculate-profit:
     post:
-      summary: 计算商品利润
+      summary: '计算商品利润 - 缺少[重量] 接口暂不可用'
       operationId: ''
       description: ''
       parameters: []
@@ -2194,7 +2194,7 @@ paths:
                 - operation_fee
   /api/feimao/products:
     post:
-      summary: 批量查询商品详情
+      summary: '批量查询商品详情 - 给插件用的'
       operationId: ''
       description: ''
       parameters: []

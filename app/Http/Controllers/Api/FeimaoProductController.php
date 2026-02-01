@@ -23,7 +23,7 @@ class FeimaoProductController extends Controller
     }
 
     /**
-     * 批量查询商品详情
+     * 批量查询商品详情 - 给插件用的
      */
     #[BodyParam("channel", "string", "渠道 (调试用，固定为temu)", required: false, example: "temu")]
     #[BodyParam("productIds", "array", "商品ID数组", required: true, example: ["601100055961140", "601099661205317", "601105314564080"])]
@@ -110,7 +110,7 @@ class FeimaoProductController extends Controller
     }
     /**
      * 获取分类列表
-     * 
+     *
      * 获取飞猫选品的商品分类。parentId为0时获取一级分类，传入一级分类ID时获取二级分类。
      */
     #[BodyParam("parentId", "integer", "父级ID (0为一级分类)", required: false, example: 0)]
@@ -159,7 +159,7 @@ class FeimaoProductController extends Controller
 
     /**
      * 获取分类商品列表
-     * 
+     *
      * 获取飞猫选品指定分类下的商品列表，支持分页。
      */
     #[BodyParam("pageNum", "integer", "页码", required: false, example: 1)]
@@ -206,7 +206,7 @@ class FeimaoProductController extends Controller
 
     /**
      * 获取销量记录
-     * 
+     *
      * 获取指定商品的销量历史记录。
      */
     #[BodyParam("productId", "string", "商品ID", required: true, example: "1732140290455343698")]

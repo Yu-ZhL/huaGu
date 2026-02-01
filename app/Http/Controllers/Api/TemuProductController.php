@@ -27,7 +27,7 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取采集商品列表
+     * 获取采集商品列表 - 给插件用的
      */
     #[BodyParam("page", "integer", "页码", required: false, example: 1)]
     #[BodyParam("per_page", "integer", "每页数量", required: false, example: 15)]
@@ -71,7 +71,7 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取商品详情
+     * 获取商品详情 - 给插件用的
      */
     #[Response([
         "success" => true,
@@ -99,7 +99,7 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 开始采集1688同款
+     * 开始采集1688同款 - 给插件用的
      */
     #[BodyParam("product_id", "string", "Temu商品ID (支持数据库ID或Temu原只读ID)", required: true, example: "6011xxx")]
     #[BodyParam("search_method", "string", "搜索方式 (image/url)", required: false, example: "image")]
@@ -172,7 +172,7 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取商品的1688货源列表
+     * 获取商品的1688货源列表 - 给插件用的
      */
     #[Response([
         "success" => true,
@@ -251,7 +251,7 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 计算商品利润
+     * 计算商品利润 - 缺少[重量] 接口暂不可用
      */
     #[BodyParam("product_id", "integer", "Temu商品ID", required: true, example: 1)]
     #[Response([
@@ -301,14 +301,14 @@ class TemuProductController extends Controller
             //         'AI计算利润',
             //         $validated['product_id']
             //     );
-            //     
+            //
             //     Log::info('AI计算利润消耗点数', [
             //         'user_id' => $user->id,
             //         'product_id' => $validated['product_id'],
             //         'points' => $pointsCost,
             //         'remaining' => $user->fresh()->ai_points
             //     ]);
-            //     
+            //
             //     $result['ai_points_used'] = $pointsCost;
             // }
 
