@@ -5,10 +5,10 @@ export function createProductUI(product) {
 
     // 容器类名 (CSS中定义样式)
     container.className = 'fm-ui fm-card-injected'
-    container.setAttribute('data-fm-product-id', product.productId)
+    container.setAttribute('data-product-id', product.productId)
     container.setAttribute('data-fm-host', '1')
 
-    // 关键修复：阻止事件冒泡，防止点击插件误触商品详情跳转
+    // 阻止事件冒泡，防止点击插件误触商品详情跳转
     container.addEventListener('click', (e) => {
         e.preventDefault()
         e.stopPropagation()

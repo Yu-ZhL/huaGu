@@ -656,7 +656,7 @@ const headers = {
 };
 
 let body = {
-    "product_id": 1,
+    "product_id": "6011xxx",
     "search_method": "image",
     "max_count": 20
 };
@@ -680,7 +680,7 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'product_id' =&gt; 1,
+            'product_id' =&gt; '6011xxx',
             'search_method' =&gt; 'image',
             'max_count' =&gt; 20,
         ],
@@ -791,15 +791,15 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                                 <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>product_id</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
+<small>string</small>&nbsp;
  &nbsp;
  &nbsp;
-                <input type="number" style="display: none"
-               step="any"               name="product_id"                data-endpoint="POSTapi-temu-products-collect-similar"
-               value="1"
+                <input type="text" style="display: none"
+                              name="product_id"                data-endpoint="POSTapi-temu-products-collect-similar"
+               value="6011xxx"
                data-component="body">
     <br>
-<p>Temu商品ID Example: <code>1</code></p>
+<p>Temu商品ID (支持数据库ID或Temu原只读ID) Example: <code>6011xxx</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>search_method</code></b>&nbsp;&nbsp;
@@ -2314,7 +2314,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpE3DF.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpB4DD.tmp', 'r')
             ],
         ],
     ]
@@ -2458,7 +2458,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpE3DF.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpB4DD.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;

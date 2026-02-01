@@ -111,16 +111,7 @@ class TemuCollectionService
             // 优先使用前端传来的 forcedImgUrl，其次使用数据库里的 cover_image
             $targetImgUrl = $forcedImgUrl ?? $temuProduct->cover_image;
 
-            // 避免日志打印过长的Base64
-            $logImg = (strpos($targetImgUrl ?? '', 'data:image') === 0) ? 'Base64Image[' . strlen($targetImgUrl) . ']' : $targetImgUrl;
-            Log::info('开始搜图，产品ID: ' . $temuProductId . '，使用图片: ' . $logImg);
-
             if (!empty($targetImgUrl)) {
-                // 审计图片来源和类型
-                $imgPreview = substr($targetImgUrl, 0, 80);
-                Log::info("[Feimao] 最终搜图参数审计: " . $imgPreview . (strlen($targetImgUrl) > 80 ? '...' : ''));
-
-                // 判断是否是 Base64
                 if (strpos($targetImgUrl, 'data:image') === 0) {
                     // 提取纯净的 Base64 内容 (去掉 data:image/xxx;base64, 前缀)
                     $parts = explode(',', $targetImgUrl);
@@ -128,8 +119,6 @@ class TemuCollectionService
 
                     // 彻底移除可能存在的换行符或空格
                     $base64Data = str_replace(["\r", "\n", " "], '', $base64Data);
-
-                    Log::info("[Feimao] 发送给1688的纯净Base64前缀: " . substr($base64Data, 0, 20));
 
                     $result = $this->platform1688Service->searchByImage($base64Data, 1, $remainingCount);
                 } else {
@@ -143,7 +132,6 @@ class TemuCollectionService
             $hasData = !empty($result['data']) && is_array($result['data']) && count($result['data']) > 0;
 
             if (!$hasData && !empty($temuProduct->cover_image)) {
-                Log::info('URL搜图无结果，尝试转换为Base64搜图...');
                 try {
                     // 使用 file_get_contents 下载图片，设置超时
                     $ctx = stream_context_create(['http' => ['timeout' => 15]]); // 15秒超时
@@ -153,10 +141,6 @@ class TemuCollectionService
                         $base64 = base64_encode($imageContent);
                         // 调用 Platform1688Service 的 Base64 搜图方法
                         $result = $this->platform1688Service->searchByImage($base64, 1, $remainingCount);
-
-                        if (!empty($result['data'])) {
-                            Log::info('Base64搜图成功，找到结果数量: ' . count($result['data']));
-                        }
                     } else {
                         Log::warning('图片下载失败，无法执行Base64搜图');
                     }
@@ -170,7 +154,6 @@ class TemuCollectionService
 
                 // [DEBUG] 打印第一条数据结构，以便排查字段名问题
                 if (isset($result['data'][0])) {
-                    Log::info('API返回的第一条数据结构:', $result['data'][0]);
                 }
 
                 $saved = 0;

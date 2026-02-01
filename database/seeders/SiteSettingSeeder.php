@@ -24,6 +24,20 @@ class SiteSettingSeeder extends Seeder
                 'label' => '赠送点数有效期（天）',
                 'description' => '新用户注册赠送的AI点数的有效期，单位为天',
             ],
+            [
+                'key' => 'ai_points_1688_search',
+                'value' => '2',
+                'type' => 'integer',
+                'label' => '1688同款查询消耗点数',
+                'description' => '每次调用1688图搜API消耗的AI点数',
+            ],
+            [
+                'key' => 'ai_points_profit_calc',
+                'value' => '1',
+                'type' => 'integer',
+                'label' => 'AI利润计算消耗点数',
+                'description' => '每次AI计算利润消耗的点数(暂未启用)',
+            ],
         ];
 
         foreach ($settings as $setting) {

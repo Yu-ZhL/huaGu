@@ -1,4 +1,4 @@
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 
 export function useDraggable(initialPos = { top: 200, left: 300 }) {
     const position = reactive(initialPos)
@@ -45,6 +45,31 @@ export function useDraggable(initialPos = { top: 200, left: 300 }) {
         document.removeEventListener('mousemove', onMouseMove)
         document.removeEventListener('mouseup', onMouseUp)
     }
+
+
+
+    const adjustPosition = () => {
+        const { innerWidth, innerHeight } = window
+        const cardWidth = 320 // 预估宽度
+        const cardHeight = 600 // 预估最大高度
+
+        if (position.left + cardWidth > innerWidth) {
+            position.left = Math.max(0, innerWidth - cardWidth - 20)
+        }
+        if (position.top + cardHeight > innerHeight) {
+            position.top = Math.max(0, innerHeight - cardHeight - 20)
+        }
+    }
+
+    onMounted(() => {
+        window.addEventListener('resize', adjustPosition)
+        // 初始也检查一次
+        adjustPosition()
+    })
+
+    onUnmounted(() => {
+        window.removeEventListener('resize', adjustPosition)
+    })
 
     return {
         position,

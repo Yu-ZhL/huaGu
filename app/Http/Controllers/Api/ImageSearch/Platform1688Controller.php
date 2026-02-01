@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Api\ImageSearch;
 use App\Http\Controllers\Controller;
 use App\Services\ImageSearch\Platform1688Service;
 use App\Utils\ImageSearch\ImageUtil;
+use App\Models\SiteSetting;
+use App\Models\UserAiPoint;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 /**
  * 1688 平台搜同款控制器
@@ -65,6 +68,19 @@ class Platform1688Controller extends Controller
     public function searchByImage(Request $request): JsonResponse
     {
         try {
+            $user = auth()->user();
+            $pointsCost = SiteSetting::getAiPoints1688Search();
+
+            // 检查点数是否足够
+            if ($user->ai_points < $pointsCost) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 400,
+                    'data' => null,
+                    'message' => 'AI点数不足,当前点数:' . $user->ai_points . ',需要:' . $pointsCost,
+                ], 400);
+            }
+
             $imageBase64 = null;
 
             // 优先处理上传的文件
@@ -112,6 +128,25 @@ class Platform1688Controller extends Controller
             $size = $request->input('size', 20);
 
             $result = $this->service->searchByImage($imageBase64, $page, $size);
+
+            // 扣除点数
+            if ($result['success']) {
+                UserAiPoint::deductPoints(
+                    $user->id,
+                    $pointsCost,
+                    UserAiPoint::TYPE_CONSUME,
+                    '1688图搜查询',
+                    null
+                );
+
+                Log::info('1688图搜消耗AI点数', [
+                    'user_id' => $user->id,
+                    'points' => $pointsCost,
+                    'remaining' => $user->fresh()->ai_points
+                ]);
+
+                $result['ai_points_used'] = $pointsCost;
+            }
 
             return response()->json($result, $result['code']);
 
@@ -167,6 +202,19 @@ class Platform1688Controller extends Controller
     public function searchByUrl(Request $request): JsonResponse
     {
         try {
+            $user = auth()->user();
+            $pointsCost = SiteSetting::getAiPoints1688Search();
+
+            // 检查点数是否足够
+            if ($user->ai_points < $pointsCost) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 400,
+                    'data' => null,
+                    'message' => 'AI点数不足,当前点数:' . $user->ai_points . ',需要:' . $pointsCost,
+                ], 400);
+            }
+
             $url = $request->input('url');
 
             if (empty($url)) {
@@ -182,6 +230,25 @@ class Platform1688Controller extends Controller
             $size = $request->input('size', 20);
 
             $result = $this->service->searchByUrl($url, $page, $size);
+
+            // 扣除点数
+            if ($result['success']) {
+                UserAiPoint::deductPoints(
+                    $user->id,
+                    $pointsCost,
+                    UserAiPoint::TYPE_CONSUME,
+                    '1688图搜查询(URL)',
+                    null
+                );
+
+                Log::info('1688图搜(URL)消耗AI点数', [
+                    'user_id' => $user->id,
+                    'points' => $pointsCost,
+                    'remaining' => $user->fresh()->ai_points
+                ]);
+
+                $result['ai_points_used'] = $pointsCost;
+            }
 
             return response()->json($result, $result['code']);
 

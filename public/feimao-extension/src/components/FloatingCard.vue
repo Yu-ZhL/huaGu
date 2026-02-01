@@ -17,6 +17,7 @@ const collectedProducts = ref([])
 const uploadedCount = ref(0)
 const isUIInjected = ref(false)
 const showDetailDialog = ref(false)
+const isLoadingDetail = ref(false)
 const selectedProducts = ref([])
 // 模拟AI批量开关
 const isAiBatchEnabled = ref(false)
@@ -24,10 +25,10 @@ const isAiBatchEnabled = ref(false)
 const logs = ref([])
 const activeLogMsg = ref(null)
 const activeLogId = ref(null)
-const logListRef = ref(null) // 日志列表DOM引用
+const logListRef = ref(null)
 let clearTimer = null
-// 任务运行状态
 const isTaskRunning = ref(false)
+const isRefreshing = ref(false) // AI点数刷新节流状态
 
 const collectingStatusText = computed(() => {
   if (isScanning.value) return '扫描商品ID...'
@@ -46,13 +47,13 @@ const addLog = (msg, type = 'info') => {
   activeLogId.value = id
   
   if (clearTimer) clearTimeout(clearTimer)
-  // 3秒后自动关闭顶部提示
+  // 1秒后自动关闭顶部提示
   clearTimer = setTimeout(() => {
     if (activeLogId.value === id) {
       activeLogMsg.value = null
       activeLogId.value = null
     }
-  }, 3000)
+  }, 1000)
 
   // 自动滚动到底部
   nextTick(() => {
@@ -60,6 +61,23 @@ const addLog = (msg, type = 'info') => {
       logListRef.value.scrollTop = logListRef.value.scrollHeight
     }
   })
+}
+
+// AI点数刷新功能(带节流)
+const handleRefreshPoints = async () => {
+  if (isRefreshing.value) return
+  
+  isRefreshing.value = true
+  try {
+    await checkLoginStatus()
+    addLog('AI点数已刷新', 'success')
+  } catch (error) {
+    addLog('刷新失败', 'error')
+  } finally {
+    setTimeout(() => {
+      isRefreshing.value = false
+    }, 3000)
+  }
 }
 
 // 手动关闭顶部提示
@@ -131,18 +149,34 @@ const fetchUploadedCount = async () => {
 const fetchCollectedDetails = async () => {
   try {
     const result = await requestApi('GET', '/temu/products?per_page=100')
-    if (result && result.success && result.data) {
-      // 兼容直接数组或分页对象结构
-      collectedProducts.value = Array.isArray(result.data) ? result.data : (result.data.data || [])
+    if (result && (result.success || result.code === 200) && result.data) {
+      // 兼容直接数组或分页对象的 list/records/data
+      let list = Array.isArray(result.data) ? result.data : (result.data.data || result.data.records || result.data.list || [])
+      
+      // 数据清洗：防止 null 或 JSON 字符串导致的渲染崩溃
+      collectedProducts.value = list.filter(p => p && p.id).map(p => {
+          // 如果 product_data 是字符串，尝试解析
+          if (typeof p.product_data === 'string') {
+              try { p.product_data = JSON.parse(p.product_data) } catch(e) {}
+          }
+          // 兜底保证 product_data 是对象
+          if (!p.product_data || typeof p.product_data !== 'object') {
+              p.product_data = {}
+          }
+          return p
+      })
     }
   } catch (error) {
-    // 静默处理错误
+    console.error('Fetch details error:', error)
   }
 }
 
 const handleShowDetail = async () => {
-  await fetchCollectedDetails()
   showDetailDialog.value = true
+  isLoadingDetail.value = true
+  addLog('正在加载采集明细...', 'loading')
+  await fetchCollectedDetails()
+  isLoadingDetail.value = false
 }
 
 const closeDetailDialog = () => {
@@ -152,26 +186,31 @@ const closeDetailDialog = () => {
 // 新增导出状态
 const isExporting = ref(false)
 
-// 辅助函数：统一获取货源列表 (优先使用后端返回的全量 sources1688)
 const getUnifiedSources = (product) => {
-  // 优先使用从数据库关联查询出来的全量列表
-  if (product.sources1688 && product.sources1688.length > 0) {
-    return product.sources1688.map(s => ({
-      subject: s.title,
-      price: s.price,
-      image: s.image,
-      detailUrl: s.url,
-      // 数据库里 is_primary 是 1/0 或 true/false
-      isPrimary: s.is_primary == 1 || s.is_primary === true
-    }))
-  }
-  
-  // 降级使用 product_data 中的数据 - 通常只包含主图或少量信息 
-  if (product.product_data && product.product_data.relatedSource) {
-     return product.product_data.relatedSource.map((s, idx) => ({
-        ...s,
-        isPrimary: idx === 0 // 假设第一个为主
-     }))
+  try {
+      // 优先使用从数据库关联查询出来的全量列表
+      // 严格检查是否为数组，防止 .map 崩溃
+      if (Array.isArray(product.sources1688) && product.sources1688.length > 0) {
+        return product.sources1688.map(s => ({
+          subject: s.title || '无标题',
+          price: s.price || '--',
+          image: s.image,
+          detailUrl: s.url,
+          // 数据库里 is_primary 是 1/0 或 true/false
+          isPrimary: s.is_primary == 1 || s.is_primary === true
+        }))
+      }
+      
+      // 降级使用 product_data 中的数据
+      if (product.product_data && Array.isArray(product.product_data.relatedSource)) {
+         return product.product_data.relatedSource.map((s, idx) => ({
+            ...s,
+            isPrimary: idx === 0 
+         }))
+      }
+  } catch (e) {
+      console.error('[Feimao] Source parsing error:', e)
+      return []
   }
   
   return []
@@ -307,19 +346,25 @@ const handleExportExcel = async () => {
 const handleStartCollecting = async () => {
   if (isScanning.value || isTaskRunning.value) return
   
+  // 检查AI点数
+  if (!userInfo.value || userInfo.value.ai_points <= 0) {
+    addLog('AI点数不足,无法采集', 'error')
+    return
+  }
+  
   startScanning()
   addLog('开始扫描页面商品...', 'info')
   await new Promise(resolve => setTimeout(resolve, 500))
   
   const uniqueIds = []
-  const uniqueProductsMap = new Map() // 存储DOM引用用于截图
+  const uniqueProductsMap = new Map()
   const seenIds = new Set()
   const injectedUIs = document.querySelectorAll('[data-fm-host="1"]') 
   
   // 提取 ID 逻辑
   if (injectedUIs.length > 0) {
     injectedUIs.forEach(ui => {
-      const pid = ui.getAttribute('data-fm-product-id')
+      const pid = ui.getAttribute('data-product-id')
       if (pid && !seenIds.has(pid)) {
           seenIds.add(pid)
           uniqueIds.push(pid)
@@ -395,7 +440,24 @@ const handleStartCollecting = async () => {
     return
   }
 
-  addLog(`扫描到 ${uniqueIds.length} 个商品，正在提交...`, 'success')
+  // 预估点数消耗并确认
+  const estimatedPoints = uniqueIds.length * 2
+  const currentPoints = userInfo.value?.ai_points || 0
+  
+  if (estimatedPoints > currentPoints) {
+    addLog(`点数不足!预计消耗${estimatedPoints}点,当前仅有${currentPoints}点`, 'error')
+    stopScanning()
+    return
+  }
+  
+  const confirmMsg = `扫描到 ${uniqueIds.length} 个商品\n预计消耗约 ${estimatedPoints} 点AI点数\n当前剩余 ${currentPoints} 点\n\n是否继续采集?`
+  if (!confirm(confirmMsg)) {
+    addLog('用户取消采集', 'warning')
+    stopScanning()
+    return
+  }
+
+  addLog(`开始采集 ${uniqueIds.length} 个商品...`, 'success')
   
   try {
     const res = await requestApi('POST', '/feimao/products', {
@@ -504,7 +566,6 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           
           // 如果已有图片，但格式是 AVIF (API不认)，强行重置，触发下方的重构逻辑
           if (imgUrl && (imgUrl.includes('avif') || imgUrl.includes('image/avif'))) {
-              console.log('%c [Feimao] 检测到旧数据为 AVIF 格式，正在强制重构为 JPEG...', 'color: #f59e0b; font-weight: bold;');
               imgUrl = null;
           }
 
@@ -512,7 +573,6 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           if (!imgUrl) {
                addLog(`商品 ${pid} 正在嗅探高清主图...`, 'loading')
                try {
-                    console.log('[Feimao] 启动深度图像嗅探逻辑:', pid);
                     
                     // 1. 构造多维选择器寻找“锚点”
                     // 有时 PID 藏在 data-tooltip 里，例如 goodsImage-601099998926720
@@ -533,7 +593,6 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
                             const mainImg = container.querySelector('img[data-js-main-img="true"]');
                             if (mainImg) {
                                 bestImageNode = mainImg;
-                                console.log('[Feimao] 通过容器匹配找到主图标记:', selector);
                                 break;
                             }
                         }
@@ -542,14 +601,12 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
 
                     // 2. 如果容器匹配失败，执行全页面“地毯式扫描”
                     if (!bestImageNode) {
-                        console.log('[Feimao] 容器匹配失败，尝试全局标识匹配...');
                         const allMainImgs = document.querySelectorAll('img[data-js-main-img="true"]');
                         for (const img of allMainImgs) {
                             // 检查图片的父级或邻近节点是否包含 PID 信息 (哪怕是文本或属性)
                             const context = img.closest('div, a')?.innerHTML || '';
                             if (context.includes(pid)) {
                                 bestImageNode = img;
-                                console.log('[Feimao] 通过全局语境匹配找到主图');
                                 break;
                             }
                         }
@@ -565,7 +622,6 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
                     if (bestImageNode && bestImageNode.tagName === 'IMG') {
                         const src = bestImageNode.currentSrc || bestImageNode.src || bestImageNode.getAttribute('data-src');
                         if (src) {
-                            console.log('[Feimao] 获取到原始图像源:', src);
                             const proxyRes = await new Promise(r => chrome.runtime.sendMessage({ action: 'FETCH_IMAGE_BASE64', url: src }, r));
                             if (proxyRes && proxyRes.success) {
                                 try {
@@ -587,9 +643,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
                                     ctx.drawImage(img, 0, 0);
 
                                     imgUrl = canvas.toDataURL('image/jpeg', 0.9);
-                                    console.log('%c [Feimao] 图像成功转换为标准 JPEG 格式', 'color: #10b981; font-weight: bold;');
                                 } catch (convErr) {
-                                    console.warn('[Feimao] 转换失败，回退原格式:', convErr.message);
                                     imgUrl = proxyRes.data;
                                 }
                             }
@@ -627,12 +681,20 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           // 通知 UI 进入正在搜索状态
           document.dispatchEvent(new CustomEvent('feimao:sources-collecting', { detail: { productId: pid } }))
 
-          const apiRes = await requestApi('POST', '/temu/products/collect-similar', {
-            product_id: targetId,
-            search_method: searchMethod,
-            img_url: imgUrl, // 传递链接或Base64
-            max_count: 20
-          })
+      // 调用后端采集接口
+      const apiRes = await requestApi('POST', '/temu/products/collect-similar', {
+          product_id: targetId,
+          search_method: searchMethod,
+          img_url: imgUrl, // 传递链接或Base64
+          max_count: 20
+      })
+      
+      // 处理点数消耗信息
+      if (apiRes?.ai_points_used) {
+        addLog(`消耗 ${apiRes.ai_points_used} 点AI点数`, 'info')
+        // 刷新用户信息以更新点数显示
+        await checkLoginStatus()
+      }
           
           if (apiRes && apiRes.success) {
               addLog(`商品 ${pid} 货源采集完成: ${apiRes.message || ''}`, 'success')
@@ -649,17 +711,6 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           } else {
               const msg = apiRes?.message || '未知错误'
               addLog(`商品 ${pid} 采集未成功: ${msg}`, 'warning')
-              
-              // 调试信息：打印导致失败的图片数据
-              console.group(`[Feimao] 搜图失败审计: ${pid}`);
-              console.log('失败信息:', msg);
-              console.log('图片数据预览 (头):', imgUrl ? imgUrl.substring(0, 100) : 'null');
-              if (imgUrl) {
-                  // 在控制台打印一个小预览图（如果浏览器支持）
-                  console.log('%c ', `padding: 40px; background: url(${imgUrl}) no-repeat; background-size: contain;`);
-                  console.log('完整图片数据:', imgUrl);
-              }
-              console.groupEnd();
 
               document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
                   detail: { productId: pid, dbId: null, error: msg } 
@@ -766,9 +817,21 @@ onUnmounted(() => stopScanning())
         </div>
         <div class="fm-user-row">
           <span class="fm-label">AI点数</span>
-          <!-- 恢复原有逻辑，有多少显示多少，只在点数<=0时提示 -->
-          <span class="fm-val red" v-if="(userInfo?.ai_points || 0) <= 0">{{ userInfo?.ai_points || 0 }} 点数不足，已暂停预估</span>
-          <span class="fm-val white" v-else>{{ userInfo?.ai_points }}</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="fm-val red" v-if="(userInfo?.ai_points || 0) <= 0">{{ userInfo?.ai_points || 0 }} 点数不足</span>
+            <span class="fm-val white" v-else>{{ userInfo?.ai_points }}</span>
+            <button 
+              class="fm-btn-icon" 
+              @click="handleRefreshPoints" 
+              :disabled="isRefreshing"
+              :style="{ opacity: isRefreshing ? 0.5 : 1, cursor: isRefreshing ? 'not-allowed' : 'pointer' }"
+              title="刷新AI点数"
+            >
+              <svg :class="{ 'rotating': isRefreshing }" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+              </svg>
+            </button>
+          </div>
         </div>
         <div class="fm-user-row">
           <span class="fm-label">采集状态</span>
@@ -821,9 +884,15 @@ onUnmounted(() => stopScanning())
           </div>
         </div>
 
-        <!-- 按钮组 -->
-        <div class="fm-actions-grid">
-           <button class="fm-btn fm-btn-md fm-btn-primary" @click="handleStartCollecting" :disabled="isScanning || isTaskRunning">开始采集</button>
+        <!-- 操作按钮 -->
+        <div class="fm-btn-group">
+          <button
+            class="fm-btn fm-btn-md fm-btn-primary"
+            @click="handleStartCollecting"
+            :disabled="isScanning || isTaskRunning || !isUIInjected || (userInfo?.ai_points || 0) <= 0"
+          >
+            {{ isScanning ? '扫描中...' : '开始采集' }}
+          </button>
            <button class="fm-btn fm-btn-md fm-btn-outline" @click="handleStop">停止</button>
            <button class="fm-btn fm-btn-md fm-btn-outline-red" @click="handleClearExtensionCache">清空缓存</button>
            <button class="fm-btn fm-btn-md fm-btn-outline" @click="handleExportExcel" :disabled="isExporting">
@@ -885,7 +954,10 @@ onUnmounted(() => stopScanning())
 
       <!-- 抽屉内容 -->
       <div class="fm-drawer-content custom-scrollbar">
-         <div class="fm-list-item" v-for="product in collectedProducts" :key="product.id">
+         <div v-if="isLoadingDetail" style="padding: 40px; text-align: center; color: #94a3b8;">
+            加载中...
+         </div>
+         <div v-else class="fm-list-item" v-for="product in collectedProducts" :key="product.id">
             <div class="fm-item-checkbox">
               <input type="checkbox" class="fm-checkbox" :value="product" v-model="selectedProducts">
             </div>
@@ -969,4 +1041,32 @@ onUnmounted(() => stopScanning())
 </template>
 
 <style scoped>
+.fm-btn-icon {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fm-btn-icon:hover:not(:disabled) {
+  color: #3b82f6;
+}
+
+.rotating {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>

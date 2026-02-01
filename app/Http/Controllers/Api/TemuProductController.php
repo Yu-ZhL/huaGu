@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\TemuCollectedProduct;
 use App\Models\Product1688Source;
+use App\Models\SiteSetting;
+use App\Models\UserAiPoint;
 use App\Services\TemuCollectionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\Response;
@@ -242,11 +245,40 @@ class TemuProductController extends Controller
 
         $user = auth()->user();
 
+        // 预留功能:检查点数(暂不启用)
+        // $pointsCost = SiteSetting::getAiPointsProfitCalc();
+        // if ($user->ai_points < $pointsCost) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'AI点数不足,当前点数:' . $user->ai_points . ',需要:' . $pointsCost,
+        //     ], 400);
+        // }
+
         try {
             $result = $this->temuService->calculateProductProfit(
                 $validated['product_id'],
                 $user->id
             );
+
+            // 预留功能:扣除点数(暂不启用)
+            // if ($result['success']) {
+            //     UserAiPoint::deductPoints(
+            //         $user->id,
+            //         $pointsCost,
+            //         UserAiPoint::TYPE_CONSUME,
+            //         'AI计算利润',
+            //         $validated['product_id']
+            //     );
+            //     
+            //     Log::info('AI计算利润消耗点数', [
+            //         'user_id' => $user->id,
+            //         'product_id' => $validated['product_id'],
+            //         'points' => $pointsCost,
+            //         'remaining' => $user->fresh()->ai_points
+            //     ]);
+            //     
+            //     $result['ai_points_used'] = $pointsCost;
+            // }
 
             return response()->json($result);
         } catch (\Exception $e) {

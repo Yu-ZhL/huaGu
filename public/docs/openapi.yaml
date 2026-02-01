@@ -237,9 +237,9 @@ paths:
               type: object
               properties:
                 product_id:
-                  type: integer
-                  description: Temu商品ID
-                  example: 1
+                  type: string
+                  description: 'Temu商品ID (支持数据库ID或Temu原只读ID)'
+                  example: 6011xxx
                 search_method:
                   type: string
                   description: '搜索方式 (image/url)'

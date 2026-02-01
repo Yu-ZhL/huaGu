@@ -70,4 +70,19 @@ class SiteSetting extends Model
     {
         return self::get('max_register_per_ip', 3);
     }
+
+    public static function getAiPoints1688Search(): int
+    {
+        return self::get('ai_points_1688_search', 2);
+    }
+
+    public static function getAiPointsProfitCalc(): int
+    {
+        return self::get('ai_points_profit_calc', 1);
+    }
+
+    public static function getAiPointsTaobaoSearch(): int
+    {
+        return self::get('ai_points_taobao_search', 2);
+    }
 }

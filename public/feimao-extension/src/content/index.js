@@ -205,11 +205,17 @@ async function autoLoadFirstSource(productId, container, dbId = null) {
             return
         }
 
-        // 重要：将数据库 ID 存入 DOM，方便后续操作
+        // 将数据库 ID 存入 DOM，方便后续操作
         container.setAttribute('data-db-id', targetDbId)
 
         // 直接委派给 ui-components 处理显示逻辑
         updateSourceDisplay(container, sources[0])
+
+        // 采集货源后，立即触发利润计算，完成正常业务闭环
+        // 使用 targetDbId 并传入 true，避免内部重新请求列表导致“找不到商品”的错误弹窗
+        if (targetDbId) {
+            handleCalculateProfit(targetDbId, container, true)
+        }
 
     } catch (error) {
         console.error(`[货源debug] ❌ 加载异常:`, error)
