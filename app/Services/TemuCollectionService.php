@@ -38,7 +38,7 @@ class TemuCollectionService
                     'sale_price' => $salePrice,
                     'weight' => $productData['weight'] ?? null,
                     'brand' => $productData['brand'] ?? null,
-                    // 修复：API返回的是 imageUrl，这里必须映射
+                    // API返回的是 imageUrl，这里必须映射
                     'cover_image' => $productData['imageUrl'] ?? $productData['cover_image'] ?? $productData['coverUrl'] ?? null,
                     'product_data' => $productData,
                     'remark' => $productData['remark'] ?? null,

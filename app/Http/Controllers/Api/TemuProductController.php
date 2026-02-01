@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\BodyParam;
+use Knuckles\Scribe\Attributes\QueryParam;
 use Knuckles\Scribe\Attributes\Response;
 use Knuckles\Scribe\Attributes\Authenticated;
 
@@ -27,10 +28,16 @@ class TemuProductController extends Controller
     }
 
     /**
-     * 获取采集商品列表 - 给插件用的
+     * 获取采集到的temu商品列表
      */
-    #[BodyParam("page", "integer", "页码", required: false, example: 1)]
-    #[BodyParam("per_page", "integer", "每页数量", required: false, example: 15)]
+    #[QueryParam("page", "integer", "页码", required: false, example: 1)]
+    #[QueryParam("per_page", "integer", "每页数量", required: false, example: 15)]
+    #[QueryParam("title", "string", "模糊搜索标题", required: false, example: "充电器")]
+    #[QueryParam("reviews_min", "integer", "最小评价数", required: false, example: 100)]
+    #[QueryParam("sales_min", "integer", "最小销量", required: false, example: 1000)]
+    #[QueryParam("price_min", "number", "最小价格", required: false, example: 5.0)]
+    #[QueryParam("is_brand", "integer", "是否品牌 (1:是, 0:否)", required: false, example: 1)]
+    #[QueryParam("product_ids", "string", "指定商品ID列表(逗号分隔)", required: false, example: "601105,601106")]
     #[Response([
         "success" => true,
         "data" => [
@@ -39,13 +46,23 @@ class TemuProductController extends Controller
                 [
                     "id" => 1,
                     "product_id" => "601099661205317",
-                    "title" => "示例商品",
+                    "title" => "示例商品标题",
                     "sale_price" => 99.99,
-                    "weight" => 0.5,
-                    "sources_count" => 5
+                    "weight" => 0.530,
+                    "remark" => "这是备注信息",
+                    "sales" => 500,
+                    "reviews" => 120,
+                    "rating" => 4.5,
+                    "freight" => 32.50,
+                    "profit" => 15.80,
+                    "source_price_1688" => 25.00,
+                    "is_brand" => true,
+                    "sources_count" => 5,
+                    "collected_at" => "2026-02-01 17:00:00"
                 ]
             ],
-            "total" => 50
+            "total" => 50,
+            "per_page" => 15
         ]
     ])]
     public function index(Request $request)

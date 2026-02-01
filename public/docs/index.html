@@ -78,8 +78,8 @@
                     <a href="#7c1d13ca0a141b106f1a94650b1c5679">Temu 商品管理</a>
                 </li>
                                     <ul id="tocify-subheader-7c1d13ca0a141b106f1a94650b1c5679" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="7f431e0484f092cd9da7829eb6cb6922">
-                                <a href="#7f431e0484f092cd9da7829eb6cb6922">获取采集商品列表 - 给插件用的</a>
+                                                    <li class="tocify-item level-2" data-unique="1908178aee78f39b904bb47b3cd22aef">
+                                <a href="#1908178aee78f39b904bb47b3cd22aef">获取采集到的temu商品列表</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="bee0e7dfd035d1b5636dd5abd7c39dfb">
                                 <a href="#bee0e7dfd035d1b5636dd5abd7c39dfb">获取商品详情 - 给插件用的</a>
@@ -286,7 +286,7 @@
 
 <p>Temu 商品采集和同款管理</p>
 
-    <h2 id="7f431e0484f092cd9da7829eb6cb6922">获取采集商品列表 - 给插件用的</h2>
+    <h2 id="1908178aee78f39b904bb47b3cd22aef">获取采集到的temu商品列表</h2>
 
 <p>
     <small class="badge badge-darkred">需要认证</small>
@@ -303,21 +303,28 @@
     "http://103.214.173.247:3019/api/temu/products"
 );
 
+const params = {
+    "page": "1",
+    "per_page": "15",
+    "title": "充电器",
+    "reviews_min": "100",
+    "sales_min": "1000",
+    "price_min": "5",
+    "is_brand": "1",
+    "product_ids": "601105,601106",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
 const headers = {
     "Authorization": "Bearer 33|wWvOFkjTqTjQheccN3kWx3Z66uL1hAnx5hFWLvfZ7722fd12",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
-let body = {
-    "page": 1,
-    "per_page": 15
-};
-
 fetch(url, {
     method: "GET",
     headers,
-    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre>        </div>
 
     
@@ -332,9 +339,15 @@ $response = $client-&gt;get(
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
-        'json' =&gt; [
-            'page' =&gt; 1,
-            'per_page' =&gt; 15,
+        'query' =&gt; [
+            'page' =&gt; '1',
+            'per_page' =&gt; '15',
+            'title' =&gt; '充电器',
+            'reviews_min' =&gt; '100',
+            'sales_min' =&gt; '1000',
+            'price_min' =&gt; '5',
+            'is_brand' =&gt; '1',
+            'product_ids' =&gt; '601105,601106',
         ],
     ]
 );
@@ -357,13 +370,23 @@ print_r(json_decode((string) $body));</code></pre>        </div>
             {
                 &quot;id&quot;: 1,
                 &quot;product_id&quot;: &quot;601099661205317&quot;,
-                &quot;title&quot;: &quot;示例商品&quot;,
+                &quot;title&quot;: &quot;示例商品标题&quot;,
                 &quot;sale_price&quot;: 99.99,
-                &quot;weight&quot;: 0.5,
-                &quot;sources_count&quot;: 5
+                &quot;weight&quot;: 0.53,
+                &quot;remark&quot;: &quot;这是备注信息&quot;,
+                &quot;sales&quot;: 500,
+                &quot;reviews&quot;: 120,
+                &quot;rating&quot;: 4.5,
+                &quot;freight&quot;: 32.5,
+                &quot;profit&quot;: 15.8,
+                &quot;source_price_1688&quot;: 25,
+                &quot;is_brand&quot;: true,
+                &quot;sources_count&quot;: 5,
+                &quot;collected_at&quot;: &quot;2026-02-01 17:00:00&quot;
             }
         ],
-        &quot;total&quot;: 50
+        &quot;total&quot;: 50,
+        &quot;per_page&quot;: 15
     }
 }</code>
  </pre>
@@ -449,32 +472,104 @@ print_r(json_decode((string) $body));</code></pre>        </div>
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
-                                <h4 class="fancy-heading-panel"><b>Body 参数</b></h4>
-        <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+                            <h4 class="fancy-heading-panel"><b>Query 参数</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
 <small>integer</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="page"                data-endpoint="GETapi-temu-products"
                value="1"
-               data-component="body">
+               data-component="query">
     <br>
 <p>页码 Example: <code>1</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
 <small>integer</small>&nbsp;
 <i>optional</i> &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="per_page"                data-endpoint="GETapi-temu-products"
                value="15"
-               data-component="body">
+               data-component="query">
     <br>
 <p>每页数量 Example: <code>15</code></p>
-        </div>
-        </form>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="title"                data-endpoint="GETapi-temu-products"
+               value="充电器"
+               data-component="query">
+    <br>
+<p>模糊搜索标题 Example: <code>充电器</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>reviews_min</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="reviews_min"                data-endpoint="GETapi-temu-products"
+               value="100"
+               data-component="query">
+    <br>
+<p>最小评价数 Example: <code>100</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>sales_min</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="sales_min"                data-endpoint="GETapi-temu-products"
+               value="1000"
+               data-component="query">
+    <br>
+<p>最小销量 Example: <code>1000</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>price_min</code></b>&nbsp;&nbsp;
+<small>number</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="price_min"                data-endpoint="GETapi-temu-products"
+               value="5"
+               data-component="query">
+    <br>
+<p>最小价格 Example: <code>5</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>is_brand</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="is_brand"                data-endpoint="GETapi-temu-products"
+               value="1"
+               data-component="query">
+    <br>
+<p>是否品牌 (1:是, 0:否) Example: <code>1</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>product_ids</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="product_ids"                data-endpoint="GETapi-temu-products"
+               value="601105,601106"
+               data-component="query">
+    <br>
+<p>指定商品ID列表(逗号分隔) Example: <code>601105,601106</code></p>
+            </div>
+                </form>
 
     <h2 id="bee0e7dfd035d1b5636dd5abd7c39dfb">获取商品详情 - 给插件用的</h2>
 
@@ -2655,7 +2750,7 @@ $response = $client-&gt;post(
             ],
             [
                 'name' =&gt; 'image',
-                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\phpCF79.tmp', 'r')
+                'contents' =&gt; fopen('C:\Users\admin\AppData\Local\Temp\php721A.tmp', 'r')
             ],
         ],
     ]
@@ -2799,7 +2894,7 @@ print_r(json_decode((string) $body));</code></pre>        </div>
                value=""
                data-component="body">
     <br>
-<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\phpCF79.tmp</code></p>
+<p>图片文件（与 image_base64 二选一） Example: <code>C:\Users\admin\AppData\Local\Temp\php721A.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>image_base64</code></b>&nbsp;&nbsp;

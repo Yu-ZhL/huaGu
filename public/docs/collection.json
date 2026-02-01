@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "0f1d0f1d-d41b-46ef-b0b6-3ad3660c8101",
+        "_postman_id": "f69d02c1-b2b0-4865-85f2-db810f0c73e5",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -20,13 +20,62 @@
             "description": "Temu \u5546\u54c1\u91c7\u96c6\u548c\u540c\u6b3e\u7ba1\u7406",
             "item": [
                 {
-                    "name": "\u83b7\u53d6\u91c7\u96c6\u5546\u54c1\u5217\u8868 - \u7ed9\u63d2\u4ef6\u7528\u7684",
+                    "name": "\u83b7\u53d6\u91c7\u96c6\u5230\u7684temu\u5546\u54c1\u5217\u8868",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/temu\/products",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/temu\/products"
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "\u9875\u7801",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "per_page",
+                                    "value": "15",
+                                    "description": "\u6bcf\u9875\u6570\u91cf",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "title",
+                                    "value": "%E5%85%85%E7%94%B5%E5%99%A8",
+                                    "description": "\u6a21\u7cca\u641c\u7d22\u6807\u9898",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "reviews_min",
+                                    "value": "100",
+                                    "description": "\u6700\u5c0f\u8bc4\u4ef7\u6570",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "sales_min",
+                                    "value": "1000",
+                                    "description": "\u6700\u5c0f\u9500\u91cf",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "price_min",
+                                    "value": "5",
+                                    "description": "\u6700\u5c0f\u4ef7\u683c",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "is_brand",
+                                    "value": "1",
+                                    "description": "\u662f\u5426\u54c1\u724c (1:\u662f, 0:\u5426)",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "product_ids",
+                                    "value": "601105%2C601106",
+                                    "description": "\u6307\u5b9a\u5546\u54c1ID\u5217\u8868(\u9017\u53f7\u5206\u9694)",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/temu\/products?page=1&per_page=15&title=%E5%85%85%E7%94%B5%E5%99%A8&reviews_min=100&sales_min=1000&price_min=5&is_brand=1&product_ids=601105%2C601106"
                         },
                         "method": "GET",
                         "header": [
@@ -39,17 +88,14 @@
                                 "value": "application\/json"
                             }
                         ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"page\":1,\"per_page\":15}"
-                        },
+                        "body": null,
                         "description": ""
                     },
                     "response": [
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"product_id\":\"601099661205317\",\"title\":\"\\u793a\\u4f8b\\u5546\\u54c1\",\"sale_price\":99.99,\"weight\":0.5,\"sources_count\":5}],\"total\":50}}",
+                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"product_id\":\"601099661205317\",\"title\":\"\\u793a\\u4f8b\\u5546\\u54c1\\u6807\\u9898\",\"sale_price\":99.99,\"weight\":0.53,\"remark\":\"\\u8fd9\\u662f\\u5907\\u6ce8\\u4fe1\\u606f\",\"sales\":500,\"reviews\":120,\"rating\":4.5,\"freight\":32.5,\"profit\":15.8,\"source_price_1688\":25,\"is_brand\":true,\"sources_count\":5,\"collected_at\":\"2026-02-01 17:00:00\"}],\"total\":50,\"per_page\":15}}",
                             "name": ""
                         }
                     ]
