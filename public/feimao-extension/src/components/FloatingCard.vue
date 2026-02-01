@@ -502,7 +502,13 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           let imgUrl = record.imageUrl || dbProduct?.cover_image || dbProduct?.img_url
           let searchMethod = 'url'
           
-          // 如果没有图片链接，尝试使用截图
+          // 如果已有图片，但格式是 AVIF (API不认)，强行重置，触发下方的重构逻辑
+          if (imgUrl && (imgUrl.includes('avif') || imgUrl.includes('image/avif'))) {
+              console.log('%c [Feimao] 检测到旧数据为 AVIF 格式，正在强制重构为 JPEG...', 'color: #f59e0b; font-weight: bold;');
+              imgUrl = null;
+          }
+
+          // 如果没有图片链接，尝试使用截图 / DOM 提取
           if (!imgUrl) {
                addLog(`商品 ${pid} 正在嗅探高清主图...`, 'loading')
                try {
@@ -643,7 +649,18 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           } else {
               const msg = apiRes?.message || '未知错误'
               addLog(`商品 ${pid} 采集未成功: ${msg}`, 'warning')
-              // 通知 UI 重置状态，避免一直显示调查中
+              
+              // 调试信息：打印导致失败的图片数据
+              console.group(`[Feimao] 搜图失败审计: ${pid}`);
+              console.log('失败信息:', msg);
+              console.log('图片数据预览 (头):', imgUrl ? imgUrl.substring(0, 100) : 'null');
+              if (imgUrl) {
+                  // 在控制台打印一个小预览图（如果浏览器支持）
+                  console.log('%c ', `padding: 40px; background: url(${imgUrl}) no-repeat; background-size: contain;`);
+                  console.log('完整图片数据:', imgUrl);
+              }
+              console.groupEnd();
+
               document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
                   detail: { productId: pid, dbId: null, error: msg } 
               }))
