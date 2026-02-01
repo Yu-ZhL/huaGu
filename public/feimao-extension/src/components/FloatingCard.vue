@@ -5,6 +5,7 @@ import { useItemScanner } from '../composables/useItemScanner'
 import { useCache } from '../composables/useCache'
 import { useDraggable } from '../composables/useDraggable'
 import { requestApi } from '../composables/useApi'
+import html2canvas from 'html2canvas'
 
 const { isLoggedIn, userInfo, loading, loginForm, checkLoginStatus, handleLogin, handleLogout } = useAuth()
 const { totalCount, filteredCount, filters, startScanning, stopScanning, isScanning, scanItems } = useItemScanner()
@@ -37,7 +38,7 @@ const collectingStatusText = computed(() => {
 // 添加日志 (替代 alert)
 const addLog = (msg, type = 'info') => {
   const id = Date.now()
-  // 插入到历史记录底部 (符合大多日志习惯)
+  // 插入到历史记录底部 
   logs.value.push({ id, message: msg, type })
   
   // 设置顶部醒目提示
@@ -76,7 +77,7 @@ const handleStop = () => {
   }
 }
 
-// 设置商品高亮 (滚动边框特效)
+// 设置商品高亮 - 滚动边框特效 
 const setHighlight = (pid) => {
   // 移除所有旧高亮
   try {
@@ -153,19 +154,19 @@ const isExporting = ref(false)
 
 // 辅助函数：统一获取货源列表 (优先使用后端返回的全量 sources1688)
 const getUnifiedSources = (product) => {
-  // 1. 优先使用从数据库关联查询出来的全量列表
+  // 优先使用从数据库关联查询出来的全量列表
   if (product.sources1688 && product.sources1688.length > 0) {
     return product.sources1688.map(s => ({
       subject: s.title,
       price: s.price,
       image: s.image,
       detailUrl: s.url,
-      // 注意：数据库里 is_primary 是 1/0 或 true/false
+      // 数据库里 is_primary 是 1/0 或 true/false
       isPrimary: s.is_primary == 1 || s.is_primary === true
     }))
   }
   
-  // 2. 降级使用 product_data 中的数据 (通常只包含主图或少量信息)
+  // 降级使用 product_data 中的数据 - 通常只包含主图或少量信息 
   if (product.product_data && product.product_data.relatedSource) {
      return product.product_data.relatedSource.map((s, idx) => ({
         ...s,
@@ -183,7 +184,7 @@ const handleExportExcel = async () => {
   try {
     let targets = []
     
-    // 1. 确定导出数据源
+    // 确定导出数据源
     if (selectedProducts.value.length > 0) {
       targets = selectedProducts.value
     } else {
@@ -199,7 +200,7 @@ const handleExportExcel = async () => {
       return
     }
 
-    // 2. 定义详细的字段映射 (最终精简版：仅 Temu 数据 + Tags)
+    // 定义详细的字段映射 
     const fieldMap = {
       'product_id': '商品ID',
       'title': '商品标题',
@@ -311,41 +312,64 @@ const handleStartCollecting = async () => {
   await new Promise(resolve => setTimeout(resolve, 500))
   
   const uniqueIds = []
+  const uniqueProductsMap = new Map() // 存储DOM引用用于截图
   const seenIds = new Set()
   const injectedUIs = document.querySelectorAll('[data-fm-host="1"]') 
   
-  // 提取 ID 逻辑保持不变
+  // 提取 ID 逻辑
   if (injectedUIs.length > 0) {
     injectedUIs.forEach(ui => {
       const pid = ui.getAttribute('data-product-id')
       if (pid && !seenIds.has(pid)) {
           seenIds.add(pid)
           uniqueIds.push(pid)
+          // 已经注入 UI 的通常不需要重新扫描图片，或者可以尝试获取
       }
     })
   } else {
-     let priceElements = Array.from(document.querySelectorAll('[data-type="price"]'))
+    // 自动扫描页面
+    let priceElements = Array.from(document.querySelectorAll('[data-type="price"]'))
     if (priceElements.length === 0) {
       priceElements = Array.from(document.querySelectorAll('[class*="price"], [class*="Price"]'))
     }
+
     if (priceElements.length > 0) {
       priceElements.forEach((priceEl) => {
         let card = priceEl.parentElement
         let productId = null
+        let imgUrl = null
+        
         for (let i = 0; i < 5; i++) {
           if (!card) break
-          productId = card.dataset.goodsId || card.getAttribute('data-goods-id') || card.getAttribute('data-product-id')
+          
           if (!productId) {
-               const link = card.querySelector('a[href]')
-               if (link) {
-                 const href = link.href
-                 const match = href.match(/goods_id=(\d+)/) || href.match(/goodsId=(\d+)/) || href.match(/\/(\d{15,})/)
-                 if (match) productId = match[1]
+               productId = card.dataset.goodsId || card.getAttribute('data-goods-id') || card.getAttribute('data-product-id')
+               if (!productId) {
+                   const link = card.querySelector('a[href]')
+                   if (link) {
+                     const href = link.href
+                     const match = href.match(/goods_id=(\d+)/) || href.match(/goodsId=(\d+)/) || href.match(/\/(\d{15,})/)
+                     if (match) productId = match[1]
+                   }
                }
           }
+          
+          // 查找图片容器：优先找直接的 img，没有的话找 div 容器用截图
+          let imgContainer = card.querySelector('img')
+          if (!imgContainer) {
+              // Temu 有时图片是在 div 的 background 或者 mask 里
+              imgContainer = card.querySelector('[class*="img"], [class*="Img"]') || card
+          }
+          
           if (productId && !seenIds.has(productId)) {
               seenIds.add(productId)
               uniqueIds.push(productId)
+              
+              // 存储待截图元素引用，稍后统一处理或者在采集时按需处理
+              // 为了不阻塞主线程，我们先把 DOM 引用存起来
+              if (imgContainer) {
+                  uniqueProductsMap.set(productId, { id: productId, element: imgContainer })
+              }
               break
           }
           card = card.parentElement
@@ -381,10 +405,9 @@ const handleStartCollecting = async () => {
       // 停止扫描 DOM，开始后台采集流程
       stopScanning() 
       
-
       // 进入货源采集流程 (使用 uniqueIds 以确保处理所有提交的商品，包括已存在的)
       isTaskRunning.value = true
-      await collectSourcesForProducts(uniqueIds, records, savedProducts)
+      await collectSourcesForProducts(uniqueIds, records, savedProducts, uniqueProductsMap)
     } else {
       addLog(res.message || '提交失败', 'error')
       stopScanning()
@@ -399,15 +422,13 @@ const handleStartCollecting = async () => {
 
 // 批量采集1688货源逻辑 (带高亮和日志)
 // 批量采集1688货源逻辑 (优先使用 API 返回的 records)
-const collectSourcesForProducts = async (allIds, records = [], savedList = []) => {
+const collectSourcesForProducts = async (allIds, records = [], savedList = [], scannedMap = new Map()) => {
   // 构建任务队列：尝试把 allIds 映射为数据库对象或 API 返回对象
   let dbMap = new Map()
   
   // 1. 先用 savedList 填充 (后端刚入库的)
   // 1. 先用 savedList 填充 (后端刚入库的)
   savedList.forEach(p => dbMap.set(String(p.product_id), p))
-  
-  console.log('Task Debug - Saved Products:', savedList.length, 'Mapped:', dbMap.size)
   
   // 3. 尝试同步缺少DB信息的 (找出所有还未匹配到 DB 记录的 IDs)
   const missingDbIds = allIds.filter(pid => !dbMap.has(pid))
@@ -467,7 +488,29 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = []) =
       } else {
           // === 执行采集 ===
           // 优先使用 API 返回的图片链接 (record.imageUrl)，其次是 DB 里的
-          const imgUrl = record.imageUrl || dbProduct?.cover_image || dbProduct?.img_url
+          let imgUrl = record.imageUrl || dbProduct?.cover_image || dbProduct?.img_url
+          let searchMethod = 'url'
+          
+          // 如果没有图片链接，尝试使用截图
+          if (!imgUrl) {
+               addLog(`商品 ${pid} 正在截取封面...`, 'loading')
+               const scannedInfo = scannedMap.get(pid)
+               if (scannedInfo && scannedInfo.element) {
+                   try {
+                       const canvas = await html2canvas(scannedInfo.element, { 
+                           useCORS: true, 
+                           logging: false,
+                           width: 200, // 限制尺寸以加快速度
+                           height: 200
+                       })
+                       imgUrl = canvas.toDataURL('image/jpeg', 0.8)
+                       searchMethod = 'image' // 标记为 Base64 图片上传搜图
+                       addLog(`商品 ${pid} 封面截取成功`, 'success')
+                   } catch(e) {
+                       console.error('Screenshot failed for', pid, e)
+                   }
+               }
+          }
           
           // 直接使用当前遍历的 ID (Temu Product ID) 作为目标ID发给后端
           // 后端会自动处理它是 TemuID 还是 DatabaseID
@@ -479,19 +522,21 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = []) =
           }
 
           if (!imgUrl) {
-              addLog(`商品 ${pid} 缺少图片链接，跳过采集`, 'warning')
+              addLog(`商品 ${pid} 缺少图片信息，跳过采集`, 'warning')
               continue
           }
 
-          await requestApi('POST', '/temu/products/collect-similar', {
+          const apiRes = await requestApi('POST', '/temu/products/collect-similar', {
             product_id: targetId,
-            search_method: 'image',
-            img_url: imgUrl, // 显式传递图片链接，供后端优先使用
+            search_method: searchMethod,
+            img_url: imgUrl, // 传递链接或Base64
             max_count: 20
           })
           
           addLog(`商品 ${pid} 货源采集完成`, 'success')
-          document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: pid, dbId: targetId } }))
+          // 使用后端返回的真实 DB ID (如果有)，否则使用 targetId
+          const realDbId = apiRes?.data?.product_id || targetId
+          document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: pid, dbId: realDbId } }))
       }
     } catch (error) {
       addLog(`商品 ${pid} 采集失败`, 'error')

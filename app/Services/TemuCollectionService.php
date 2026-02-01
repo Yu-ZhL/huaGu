@@ -97,6 +97,7 @@ class TemuCollectionService
             return [
                 'success' => true,
                 'message' => '已达到最大采集数量',
+                'product_id' => $temuProductId, // 返回 DB ID
                 'count' => $existingCount,
             ];
         }
@@ -108,10 +109,19 @@ class TemuCollectionService
             // 优先使用前端传来的 forcedImgUrl，其次使用数据库里的 cover_image
             $targetImgUrl = $forcedImgUrl ?? $temuProduct->cover_image;
 
-            Log::info('开始搜图，产品ID: ' . $temuProductId . '，使用图片: ' . $targetImgUrl);
+            // 避免日志打印过长的Base64
+            $logImg = (strpos($targetImgUrl ?? '', 'data:image') === 0) ? 'Base64Image[' . strlen($targetImgUrl) . ']' : $targetImgUrl;
+            Log::info('开始搜图，产品ID: ' . $temuProductId . '，使用图片: ' . $logImg);
 
             if (!empty($targetImgUrl)) {
-                $result = $this->platform1688Service->searchByUrl($targetImgUrl, 1, $remainingCount);
+                // 判断是否是 Base64
+                if (strpos($targetImgUrl, 'data:image') === 0) {
+                    // 提取 Base64 内容
+                    $base64Data = substr($targetImgUrl, strpos($targetImgUrl, ',') + 1);
+                    $result = $this->platform1688Service->searchByImage($base64Data, 1, $remainingCount);
+                } else {
+                    $result = $this->platform1688Service->searchByUrl($targetImgUrl, 1, $remainingCount);
+                }
             } else {
                 return ['success' => false, 'message' => '缺少商品图片信息'];
             }
@@ -191,6 +201,7 @@ class TemuCollectionService
                 return [
                     'success' => true,
                     'message' => "成功采集 {$saved} 条1688同款",
+                    'product_id' => $temuProductId, // 返回 DB ID
                     'count' => $saved,
                     'total' => $existingCount + $saved,
                 ];
