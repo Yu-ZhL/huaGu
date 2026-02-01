@@ -122,8 +122,15 @@ class TemuCollectionService
 
                 // 判断是否是 Base64
                 if (strpos($targetImgUrl, 'data:image') === 0) {
-                    // 提取 Base64 内容
-                    $base64Data = substr($targetImgUrl, strpos($targetImgUrl, ',') + 1);
+                    // 提取纯净的 Base64 内容 (去掉 data:image/xxx;base64, 前缀)
+                    $parts = explode(',', $targetImgUrl);
+                    $base64Data = count($parts) > 1 ? $parts[1] : $parts[0];
+
+                    // 彻底移除可能存在的换行符或空格
+                    $base64Data = str_replace(["\r", "\n", " "], '', $base64Data);
+
+                    Log::info("[Feimao] 发送给1688的纯净Base64前缀: " . substr($base64Data, 0, 20));
+
                     $result = $this->platform1688Service->searchByImage($base64Data, 1, $remainingCount);
                 } else {
                     $result = $this->platform1688Service->searchByUrl($targetImgUrl, 1, $remainingCount);
