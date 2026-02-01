@@ -155,7 +155,7 @@ class TemuProductController extends Controller
                 $pointsCost,
                 UserAiPoint::TYPE_CONSUME,
                 '1688货源采集',
-                $productId
+                isset($result['product_id']) && is_numeric($result['product_id']) ? (int) $result['product_id'] : null
             );
 
             Log::info('1688货源采集消耗AI点数', [

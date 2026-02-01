@@ -464,27 +464,31 @@ const handleStartCollecting = async () => {
       })
       
       // 点数预估和确认
+      const countToCollect = needsCollection.length > 0 ? needsCollection.length : uniqueIds.length
+      const estimatedPoints = countToCollect * 2
+      const currentPoints = userInfo.value?.ai_points || 0
+      
+      let confirmMsg = `共扫描到 ${uniqueIds.length} 个商品\n`
       if (needsCollection.length > 0) {
-        const estimatedPoints = needsCollection.length * 2
-        const currentPoints = userInfo.value?.ai_points || 0
-        
-        let confirmMsg = `共${uniqueIds.length}个商品,其中${needsCollection.length}个需要采集货源\n预计消耗约 ${estimatedPoints} 点AI点数\n当前剩余 ${currentPoints} 点`
-        
-        // 点数不足时提醒但不阻止
-        if (estimatedPoints > currentPoints) {
-          confirmMsg += `\n\n⚠️ 警告:点数可能不足,采集过程中可能因点数耗尽而中断`
-        }
-        
-        confirmMsg += `\n\n是否继续采集?`
-        
-        if (!confirm(confirmMsg)) {
-          addLog('用户取消采集', 'warning')
-          stopScanning()
-          isTaskRunning.value = false
-          return
-        }
+        confirmMsg += `检测到 ${needsCollection.length} 个商品需要采集货源\n`
       } else {
-        addLog('所有商品已有货源,无需采集', 'info')
+        confirmMsg += `(未检测到明确缺货源的商品,将对所有商品进行检查)\n`
+      }
+      
+      confirmMsg += `预计最大消耗约 ${estimatedPoints} 点AI点数\n当前剩余 ${currentPoints} 点`
+      
+      // 点数不足时提醒但不阻止
+      if (estimatedPoints > currentPoints) {
+        confirmMsg += `\n\n⚠️ 警告:点数可能不足,采集过程中可能因点数耗尽而中断`
+      }
+      
+      confirmMsg += `\n\n是否继续采集?`
+      
+      if (!confirm(confirmMsg)) {
+        addLog('用户取消采集', 'warning')
+        stopScanning()
+        isTaskRunning.value = false
+        return
       }
       
       stopScanning()
