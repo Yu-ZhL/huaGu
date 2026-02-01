@@ -50,6 +50,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{productId}/sources', [TemuProductController::class, 'getSources']);
         Route::post('/set-primary-source', [TemuProductController::class, 'setPrimarySource']);
         Route::post('/calculate-profit', [TemuProductController::class, 'calculateProfit']);
+        Route::post('/{id}/remark', [TemuProductController::class, 'updateRemark']);
+        Route::delete('/{id}', [TemuProductController::class, 'destroy']);
     });
 
     // 运费配置

@@ -54,6 +54,27 @@ class TemuProductController extends Controller
 
         $query = TemuCollectedProduct::where('user_id', $user->id);
 
+        // 筛选功能
+        if ($request->filled('title')) {
+            $query->where('title', 'like', '%' . $request->input('title') . '%');
+        }
+
+        if ($request->filled('reviews_min')) {
+            $query->where('reviews', '>=', $request->input('reviews_min'));
+        }
+
+        if ($request->filled('sales_min')) {
+            $query->where('sales', '>=', $request->input('sales_min'));
+        }
+
+        if ($request->filled('price_min')) {
+            $query->where('sale_price', '>=', $request->input('price_min'));
+        }
+
+        if ($request->filled('is_brand')) {
+            $query->where('is_brand', $request->input('is_brand'));
+        }
+
         if ($request->filled('product_ids')) {
             $ids = explode(',', $request->input('product_ids'));
             $query->whereIn('product_id', $ids);
@@ -63,6 +84,12 @@ class TemuProductController extends Controller
             ->withCount('sources1688')
             ->orderBy('collected_at', 'desc')
             ->paginate($request->input('per_page', 15));
+
+        // 映射字段名以保持向后兼容和清晰
+        $products->getCollection()->transform(function ($product) {
+            $product->sources_count = $product->sources1688_count;
+            return $product;
+        });
 
         return response()->json([
             'success' => true,
@@ -319,5 +346,60 @@ class TemuProductController extends Controller
                 'message' => $e->getMessage(),
             ], 400);
         }
+    }
+
+    /**
+     * 修改商品备注
+     */
+    #[BodyParam("remark", "string", "备注内容", required: false, example: "重要商品，需加急处理")]
+    #[Response([
+        "success" => true,
+        "message" => "备注已更新",
+        "data" => [
+            "id" => 1,
+            "remark" => "重要商品"
+        ]
+    ])]
+    public function updateRemark(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'remark' => 'nullable|string',
+        ]);
+
+        $user = auth()->user();
+        $product = TemuCollectedProduct::where('user_id', $user->id)->findOrFail($id);
+
+        $product->update([
+            'remark' => $validated['remark']
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '备注已更新',
+            'data' => $product
+        ]);
+    }
+
+    /**
+     * 删除采集商品
+     * 
+     * 删除指定的 Temu 采集商品，并级联删除其名下所有 1688 同款货源数据。
+     */
+    #[Response([
+        "success" => true,
+        "message" => "商品已删除"
+    ])]
+    public function destroy($id)
+    {
+        $user = auth()->user();
+        $product = TemuCollectedProduct::where('user_id', $user->id)->findOrFail($id);
+
+        // 数据库已有 ON DELETE CASCADE，关联的 1688 货源会自动删除
+        $product->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => '商品已删除',
+        ]);
     }
 }

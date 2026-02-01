@@ -21,6 +21,14 @@ class TemuCollectedProduct extends Model
         'cover_image',
         'product_data',
         'collected_at',
+        'remark',
+        'sales',
+        'reviews',
+        'rating',
+        'freight',
+        'profit',
+        'source_price_1688',
+        'is_brand',
     ];
 
     protected $casts = [
@@ -28,6 +36,13 @@ class TemuCollectedProduct extends Model
         'sale_price' => 'decimal:2',
         'weight' => 'decimal:3',
         'collected_at' => 'datetime',
+        'sales' => 'integer',
+        'reviews' => 'integer',
+        'rating' => 'decimal:2',
+        'freight' => 'decimal:2',
+        'profit' => 'decimal:2',
+        'source_price_1688' => 'decimal:2',
+        'is_brand' => 'boolean',
     ];
 
     public function user()

@@ -41,6 +41,14 @@ class TemuCollectionService
                     // 修复：API返回的是 imageUrl，这里必须映射
                     'cover_image' => $productData['imageUrl'] ?? $productData['cover_image'] ?? $productData['coverUrl'] ?? null,
                     'product_data' => $productData,
+                    'remark' => $productData['remark'] ?? null,
+                    'sales' => $productData['sales'] ?? 0,
+                    'reviews' => $productData['commonNum'] ?? $productData['reviews'] ?? 0,
+                    'rating' => $productData['score'] ?? $productData['rating'] ?? 0,
+                    'freight' => $productData['freightCharges'] ?? 0,
+                    'profit' => $productData['forecastProfits'] ?? 0,
+                    'source_price_1688' => $productData['sourcePrice'] ?? 0,
+                    'is_brand' => $productData['isBrand'] ?? false,
                     'collected_at' => now(),
                 ]
             );

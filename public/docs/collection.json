@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API \u6587\u6863",
-        "_postman_id": "0ba4c2ba-27d9-4e41-9757-3cf6dc73ae8b",
+        "_postman_id": "0f1d0f1d-d41b-46ef-b0b6-3ad3660c8101",
         "description": "\u5df2\u7ecf\u5b9e\u73b0\u4e86\u6807\u51c6\u5316\u7684\u641c\u540c\u6b3e(\u4ee5\u56fe\u641c\u56fe)\u63a5\u53e3\u7cfb\u7edf\uff0c\u652f\u6301\u591a\u5e73\u53f0\u5546\u54c1\u641c\u7d22\u529f\u80fd\u3002\u5f53\u524d\u5df2\u5b8c\u6210 1688 \u5e73\u53f0\u7684\u63a5\u53e3\u5b9e\u73b0\uff0c\u5e76\u4e3a\u5176\u4ed6 24 \u4e2a\u5e73\u53f0\u9884\u7559\u4e86\u6807\u51c6\u5316\u7684\u63a5\u53e3\u6846\u67b6\u3002",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -235,6 +235,89 @@
                             "header": [],
                             "code": 200,
                             "body": "{\"success\":true,\"data\":{\"sale_price\":99.99,\"purchase_price\":29.9,\"weight\":0.5,\"freight\":59.5,\"platform_fee\":5,\"profit\":4.59,\"freight_config\":{\"freight_price_per_kg\":85,\"operation_fee\":17}}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u4fee\u6539\u5546\u54c1\u5907\u6ce8",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/temu\/products\/:id\/remark",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/temu\/products\/:id\/remark",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "consequatur",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"remark\":\"\u91cd\u8981\u5546\u54c1\uff0c\u9700\u52a0\u6025\u5904\u7406\"}"
+                        },
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"message\":\"\\u5907\\u6ce8\\u5df2\\u66f4\\u65b0\",\"data\":{\"id\":1,\"remark\":\"\\u91cd\\u8981\\u5546\\u54c1\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "\u5220\u9664\u91c7\u96c6\u5546\u54c1",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/temu\/products\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/temu\/products\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "consequatur",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "\u5220\u9664\u6307\u5b9a\u7684 Temu \u91c7\u96c6\u5546\u54c1\uff0c\u5e76\u7ea7\u8054\u5220\u9664\u5176\u540d\u4e0b\u6240\u6709 1688 \u540c\u6b3e\u8d27\u6e90\u6570\u636e\u3002"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"success\":true,\"message\":\"\\u5546\\u54c1\\u5df2\\u5220\\u9664\"}",
                             "name": ""
                         }
                     ]
