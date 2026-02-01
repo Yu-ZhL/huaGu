@@ -49,7 +49,115 @@ security:
 paths:
   /api/temu/products:
     get:
-      summary: 获取采集到的temu商品列表
+      summary: '获取采集到的temu商品列表 - 给插件用的'
+      operationId: temu
+      description: ''
+      parameters:
+        -
+          in: query
+          name: page
+          description: 页码
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 页码
+            example: 1
+        -
+          in: query
+          name: per_page
+          description: 每页数量
+          example: 10
+          required: false
+          schema:
+            type: integer
+            description: 每页数量
+            example: 10
+        -
+          in: query
+          name: product_ids
+          description: '针对性返回当前页面商品状态 (逗号分隔)'
+          example: '601105,601106'
+          required: false
+          schema:
+            type: string
+            description: '针对性返回当前页面商品状态 (逗号分隔)'
+            example: '601105,601106'
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    current_page: 1
+                    data:
+                      -
+                        id: 1
+                        product_id: '601099661205317'
+                        title: 示例商品标题
+                        sale_price: 99.99
+                        product_data:
+                          - ...全量数据
+                        sources_count: 5
+                        collected_at: '2026-02-01 17:00:00'
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      current_page:
+                        type: integer
+                        example: 1
+                      data:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            product_id: '601099661205317'
+                            title: 示例商品标题
+                            sale_price: 99.99
+                            product_data:
+                              - ...全量数据
+                            sources_count: 5
+                            collected_at: '2026-02-01 17:00:00'
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            product_id:
+                              type: string
+                              example: '601099661205317'
+                            title:
+                              type: string
+                              example: 示例商品标题
+                            sale_price:
+                              type: number
+                              example: 99.99
+                            product_data:
+                              type: array
+                              example:
+                                - ...全量数据
+                              items:
+                                type: string
+                            sources_count:
+                              type: integer
+                              example: 5
+                            collected_at:
+                              type: string
+                              example: '2026-02-01 17:00:00'
+      tags:
+        - 'Temu 商品管理'
+  /api/temu/products/simple:
+    get:
+      summary: 获取用户爬取的temu商品列表
       operationId: temu
       description: ''
       parameters:
@@ -83,6 +191,26 @@ paths:
             type: string
             description: 模糊搜索标题
             example: 充电器
+        -
+          in: query
+          name: remark
+          description: 模糊搜索备注
+          example: 待处理
+          required: false
+          schema:
+            type: string
+            description: 模糊搜索备注
+            example: 待处理
+        -
+          in: query
+          name: shop_name
+          description: 模糊搜索名店
+          example: 名店
+          required: false
+          schema:
+            type: string
+            description: 模糊搜索名店
+            example: 名店
         -
           in: query
           name: reviews_min
@@ -123,16 +251,6 @@ paths:
             type: integer
             description: '是否品牌 (1:是, 0:否)'
             example: 1
-        -
-          in: query
-          name: product_ids
-          description: 指定商品ID列表(逗号分隔)
-          example: '601105,601106'
-          required: false
-          schema:
-            type: string
-            description: 指定商品ID列表(逗号分隔)
-            example: '601105,601106'
       responses:
         200:
           description: ''
@@ -148,21 +266,12 @@ paths:
                       -
                         id: 1
                         product_id: '601099661205317'
-                        title: 示例商品标题
+                        title: 精简版示例
                         sale_price: 99.99
-                        weight: 0.53
-                        remark: 这是备注信息
+                        shop_name: 示例店铺
                         sales: 500
-                        reviews: 120
                         rating: 4.5
-                        freight: 32.5
-                        profit: 15.8
-                        source_price_1688: 25
-                        is_brand: true
-                        sources_count: 5
-                        collected_at: '2026-02-01 17:00:00'
-                    total: 50
-                    per_page: 15
+                        cover_image: 'http://example.com/img.jpg'
                 properties:
                   success:
                     type: boolean
@@ -179,19 +288,12 @@ paths:
                           -
                             id: 1
                             product_id: '601099661205317'
-                            title: 示例商品标题
+                            title: 精简版示例
                             sale_price: 99.99
-                            weight: 0.53
-                            remark: 这是备注信息
+                            shop_name: 示例店铺
                             sales: 500
-                            reviews: 120
                             rating: 4.5
-                            freight: 32.5
-                            profit: 15.8
-                            source_price_1688: 25
-                            is_brand: true
-                            sources_count: 5
-                            collected_at: '2026-02-01 17:00:00'
+                            cover_image: 'http://example.com/img.jpg'
                         items:
                           type: object
                           properties:
@@ -203,49 +305,22 @@ paths:
                               example: '601099661205317'
                             title:
                               type: string
-                              example: 示例商品标题
+                              example: 精简版示例
                             sale_price:
                               type: number
                               example: 99.99
-                            weight:
-                              type: number
-                              example: 0.53
-                            remark:
+                            shop_name:
                               type: string
-                              example: 这是备注信息
+                              example: 示例店铺
                             sales:
                               type: integer
                               example: 500
-                            reviews:
-                              type: integer
-                              example: 120
                             rating:
                               type: number
                               example: 4.5
-                            freight:
-                              type: number
-                              example: 32.5
-                            profit:
-                              type: number
-                              example: 15.8
-                            source_price_1688:
-                              type: integer
-                              example: 25
-                            is_brand:
-                              type: boolean
-                              example: true
-                            sources_count:
-                              type: integer
-                              example: 5
-                            collected_at:
+                            cover_image:
                               type: string
-                              example: '2026-02-01 17:00:00'
-                      total:
-                        type: integer
-                        example: 50
-                      per_page:
-                        type: integer
-                        example: 15
+                              example: 'http://example.com/img.jpg'
       tags:
         - 'Temu 商品管理'
   '/api/temu/products/{id}':

@@ -486,35 +486,34 @@ const handleStartCollecting = async () => {
     })
     
     if (res && (res.success || res.code === 200)) {
-      addLog(`商品提交成功！准备采集货源(过程可能较慢,请耐心等待)...`, 'success')
+      addLog(`商品提交成功！正在同步详细状态...`, 'success')
       fetchUploadedCount()
       
       const savedProducts = res.data?.saved_products || []
       const records = res.data?.list || res.data?.data?.list || res.data?.records || []
       
       // 计算实际需要采集的商品数量(排除已有货源的)
-      const needsCollection = savedProducts.filter(p => {
-        const sources = p.product_data?.relatedSource || p.related_sources || []
-        return sources.length === 0
-      })
+      // 后端 saveBatchProducts 返回了 sources1688_count
+      const needsCollection = savedProducts.filter(p => (p.sources1688_count || 0) === 0)
       
       // 点数预估和确认
-      const countToCollect = needsCollection.length > 0 ? needsCollection.length : uniqueIds.length
+      const countToCollect = needsCollection.length
       const estimatedPoints = countToCollect * 2
       const currentPoints = userInfo.value?.ai_points || 0
       
       let confirmMsg = `共扫描到 ${uniqueIds.length} 个商品\n`
-      if (needsCollection.length > 0) {
-        confirmMsg += `检测到 ${needsCollection.length} 个商品需要采集货源\n`
+      if (countToCollect < uniqueIds.length) {
+        confirmMsg += `检测到 ${uniqueIds.length - countToCollect} 个商品已有货源(不耗点)\n`
+        confirmMsg += `本次需采集 ${countToCollect} 个新商品\n`
       } else {
-        confirmMsg += `(未检测到明确缺货源的商品,将对所有商品进行检查)\n`
+        confirmMsg += `全部 ${countToCollect} 个商品均需采集货源\n`
       }
       
       confirmMsg += `预计最大消耗约 ${estimatedPoints} 点AI点数\n当前剩余 ${currentPoints} 点`
       
       // 点数不足时提醒但不阻止
       if (estimatedPoints > currentPoints) {
-        confirmMsg += `\n\n⚠️ 警告:点数可能不足,采集过程中可能因点数耗尽而中断`
+        confirmMsg += `\n\n⚠️ 警告:点数不足,采集过程中可能会中断（预估仅供参考）`
       }
       
       confirmMsg += `\n\n是否继续采集?`
@@ -562,7 +561,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
   
   if (missingDbIds.length > 0) {
       try {
-         addLog(`正在同步 ${missingDbIds.length} 个商品的数据库信息...`, 'loading')
+         addLog(`正在同步 ${missingDbIds.length} 个商品的数据库信息(过程可能较慢,请耐心等待)...`, 'loading')
          const dbRes = await requestApi('GET', `/temu/products?per_page=${missingDbIds.length + 50}&product_ids=${missingDbIds.join(',')}`)
          const dbRecords = dbRes?.data?.data || dbRes?.data?.records || dbRes?.data || []
          dbRecords.forEach(p => { dbMap.set(String(p.product_id), p) })
