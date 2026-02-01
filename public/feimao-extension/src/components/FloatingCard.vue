@@ -256,67 +256,68 @@ const handleExportExcel = async () => {
   isExporting.value = true
 
   try {
-    let targets = []
-    
-    // 确定导出数据源
+    let ids = []
     if (selectedProducts.value.length > 0) {
-      targets = selectedProducts.value
+      ids = selectedProducts.value.map(p => p.product_id || p.productId)
     } else {
-      // 如果未选择，拉取最新全量数据
+      // 没选就导全部，先拿 ID 列表
       const res = await requestApi('GET', '/temu/products?per_page=2000')
-      if (res && res.success && res.data) {
-        targets = Array.isArray(res.data) ? res.data : (res.data.data || res.data.records || [])
-      }
+      const list = Array.isArray(res?.data) ? res.data : (res?.data?.data || res?.data?.records || [])
+      ids = list.map(p => p.product_id).filter(id => !!id)
     }
-    
+
+    if (ids.length === 0) {
+      alert('暂无导出数据')
+      return 
+    }
+
+    // 统一请求飞猫接口拿最新的干净数据
+    const res = await requestApi('POST', '/feimao/products', {
+      productIds: ids,
+      pageSize: ids.length + 10
+    })
+
+    const targets = res?.data?.list || res?.data?.records || []
     if (targets.length === 0) {
-      alert('没有可导出的数据')
+      alert('未能获取到有效的商品信息')
       return
     }
 
-    // 定义详细的字段映射 
+    // 字段映射 (对应接口根节点)
     const fieldMap = {
-      'product_id': '商品ID',
+      'productId': '商品ID',
       'title': '商品标题',
-      'sale_price': '售价',
-      'product_data.sales': '销量',
-      'product_data.score': '评分',
-      'product_data.commonNum': '评价数',
-      'product_data.shopName': '店铺名称',
-      'product_data.totalWeightMidKg': '重量(kg)',
-      'product_data.category': '分类',
-      'product_data.brandName': '品牌',
-      'product_data.tags': '标签',
-      'cover_image': '图片链接',
-      'product_data.link': '商品链接',
-      'site_url': '采集来源',
+      'price': '售价',
+      'sales': '销量',
+      'score': '评分',
+      'commonNum': '评价数',
+      'shopName': '店铺名称',
+      'totalWeightMidKg': '重量(kg)',
+      'category': '分类',
+      'brandName': '品牌',
+      'imageUrl': '图片链接',
+      'link': '商品链接',
       'remark': '备注',
-      'collected_at': '采集时间'
+      'createTime': '采集时间'
     }
 
-    // 3. 构建 CSV 内容
     const headers = Object.values(fieldMap)
     const keys = Object.keys(fieldMap)
-    // 辅助函数：深度获取属性值
-    const getDeepValue = (obj, path) => {
-      return path.split('.').reduce((acc, part) => {
-        if (acc === null || acc === undefined) return undefined
-        if (part.includes('[')) { 
-           const [key, index] = part.replace(']', '').split('[')
-           return acc[key] ? acc[key][parseInt(index)] : undefined
-        }
-        return acc[part]
-      }, obj)
-    }
 
-    // 处理 CSV 转义
     const formatCell = (val) => {
       if (val === null || val === undefined) return ''
-      const str = String(val)
+      let str = String(val)
       
-      // 修复科学计数法
+      // 保护长 ID，防止被 Excel 缩位
       if (/^\d{11,}$/.test(str)) {
         return `"\t${str}"`
+      }
+
+      // 简单处理下接口返回的 10 位时间戳
+      if (str.length === 10 && !isNaN(str) && /1[67]\d{7}/.test(str)) {
+        try {
+          str = new Date(parseInt(str) * 1000).toLocaleString()
+        } catch(e) {}
       }
 
       if (str.includes(',') || str.includes('"') || str.includes('\n')) {
@@ -326,58 +327,29 @@ const handleExportExcel = async () => {
     }
 
     const csvRows = [headers.join(',')]
-
     targets.forEach(item => {
-      const row = keys.map(key => {
-        let val = getDeepValue(item, key)
-        
-        // 特殊兜底逻辑
-        if (key === 'product_data.link' && !val) {
-             val = `https://www.temu.com/goods-${item.product_id}.html`
-        }
-
-
-
-        // 处理分类和标签（仅保留 tags 填充逻辑）
-        if (key === 'product_data.category' || key === 'product_data.tags') {
-            if (!val || key === 'product_data.tags') {
-                const source = item.product_data?.relatedSource?.[0] || item.sources1688?.[0]
-                if (source && source.tags && Array.isArray(source.tags)) {
-                    // 如果本来就是 category 且没值，才去借用 tags
-                    if (key === 'product_data.category' && !val) {
-                         val = source.tags.map(t => (typeof t === 'string' ? t : t.text)).join(', ')
-                    }
-                    if (key === 'product_data.tags') {
-                         val = source.tags.map(t => (typeof t === 'string' ? t : t.text)).join(', ')
-                    }
-                }
-            }
-        }
-
-        return formatCell(val)
-      })
+      const row = keys.map(key => formatCell(item[key]))
       csvRows.push(row.join(','))
     })
 
-    // 4. 触发下载
+    // 触发浏览器下载
     const blob = new Blob(['\ufeff' + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' })
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
-    link.download = `feimao_temu_export_${new Date().toISOString().slice(0,10)}.csv`
+    link.download = `feimao_export_${new Date().toISOString().slice(0,10)}.csv`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
     
   } catch (error) {
-    // 静默处理错误
-    console.error(error)
-    alert('导出过程中发生错误: ' + error.message)
+    console.error('Export failed:', error)
+    alert('导出异常: ' + (error.message || error))
   } finally {
     isExporting.value = false
   }
 }
 
-// 核心采集逻辑
+// 开始采集
 const handleStartCollecting = async () => {
   if (isScanning.value || isTaskRunning.value) return
   
@@ -540,8 +512,7 @@ const handleStartCollecting = async () => {
   }
 }
 
-// 批量采集1688货源逻辑 (带高亮和日志)
-// 批量采集1688货源逻辑 (优先使用 API 返回的 records)
+// 批量采集1688货源
 const collectSourcesForProducts = async (allIds, records = [], savedList = [], scannedMap = new Map()) => {
   // 统计变量
   let successCount = 0
@@ -552,8 +523,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
   // 构建任务队列：尝试把 allIds 映射为数据库对象或 API 返回对象
   let dbMap = new Map()
   
-  // 1. 先用 savedList 填充 (后端刚入库的)
-  // 1. 先用 savedList 填充 (后端刚入库的)
+  // 先用刚入库的填充
   savedList.forEach(p => dbMap.set(String(p.product_id), p))
   
   // 3. 尝试同步缺少DB信息的 (找出所有还未匹配到 DB 记录的 IDs)
@@ -609,7 +579,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
     try {
       // 判断已有货源 (仅当有明确标志时跳过)
       if (dbProduct && dbProduct.sources1688_count > 0) {
-          addLog(`商品 ${pid} 已有货源，刷新显示`, 'info')
+          addLog(`商品 ${pid} 已有货源`, 'info')
           skippedCount++
           document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: pid, dbId: dbProduct.id } }))
       } else {
@@ -629,7 +599,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
                try {
                     
                     // 1. 构造多维选择器寻找“锚点”
-                    // 有时 PID 藏在 data-tooltip 里，例如 goodsImage-601099998926720
+                    // 定位主图容器
                     const possibleContainers = [
                         `[data-product-id="${pid}"]:not(.fm-ui)`,
                         `[data-goods-id="${pid}"]:not(.fm-ui)`,
@@ -653,7 +623,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
                         if (bestImageNode) break;
                     }
 
-                    // 2. 如果容器匹配失败，执行全页面“地毯式扫描”
+                    // 容器匹配失败，全页面扫描
                     if (!bestImageNode) {
                         const allMainImgs = document.querySelectorAll('img[data-js-main-img="true"]');
                         for (const img of allMainImgs) {
@@ -786,7 +756,7 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
   
   setHighlight(null)
   
-  // 采集任务完成总结
+  // 采集完成总结
   if (isTaskRunning.value) {
       const summary = `所有采集任务已完成！\n共采集: ${allIds.length} 个\n成功: ${successCount} 个\n跳过: ${skippedCount} 个\n失败: ${failCount} 个\n总消耗点数: ${totalPoints} 点`
       addLog(summary, 'success')
