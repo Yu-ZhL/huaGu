@@ -82,9 +82,18 @@ class TemuCollectionService
         // 如果没找到商品记录，但有图片URL，为了不中断采集，我们尝试"宽容处理"
         // 或者直接报错。按照用户需求，必须能采集。
         // 如果没找到记录，说明 Step 1 入库延迟了。这里我们必须拿到一个 id 来存 1688 货源
+        // 如果没找到商品记录，说明前面的入库操作可能还在异步队列或事务中，或者前端先发了采集。
+        // 为了不中断流程，我们直接在这里动态创建一个基础记录
         if (!$temuProduct) {
-            Log::warning("采集同款时未找到商品记录: {$temuProductId} (User: $userId)");
-            return ['success' => false, 'message' => "系统未找到该商品记录 ({$temuProductId})，请刷新重试"];
+            Log::info("采集同款时动态补全商品记录: {$temuProductId}");
+            $temuProduct = TemuCollectedProduct::updateOrCreate(
+                ['user_id' => $userId, 'product_id' => $temuProductId],
+                [
+                    'platform' => 'temu',
+                    'cover_image' => $forcedImgUrl,
+                    'collected_at' => now(),
+                ]
+            );
         }
 
         // 使用查到的真实数据库ID

@@ -171,33 +171,49 @@ async function autoLoadFirstSource(productId, container, dbId = null) {
     try {
         let targetDbId = dbId
 
-        // 如果没有提供DB ID，则需要先查询
-        if (!targetDbId) {
-            const temuProducts = await apiRequest('/temu/products')
+        // 如果没有提供DB ID，或者提供的 ID 看起来像 Temu ID（长字符串/无法被转为有效数字），则需要通过接口查询真实 DB ID
+        if (!targetDbId || String(targetDbId).length > 12) {
+            console.log(`[Feimao] UI更新: 商品 ${productId} 缺少或无效 DB_ID (${targetDbId})，尝试检索...`)
+            const temuProducts = await apiRequest('/temu/products?product_ids=' + productId)
 
-            const productList = temuProducts?.data?.data || temuProducts?.data?.records || temuProducts?.data || []
-            const temuProduct = productList.find(p => p.product_id === productId)
+            const productList = temuProducts?.data?.data || temuProducts?.data || []
+            const temuProduct = productList.find(p => String(p.product_id) === String(productId))
 
             if (!temuProduct) {
+                // 如果是刚扫描到的商品，后端可能还没同步完，这里就不打报警日志了，免得控制台太乱
+                updateSourceDisplay(container, null)
                 return
             }
             targetDbId = temuProduct.id
         }
 
+        console.log(`[Feimao] UI更新: 正在为商品 ${productId} (DB_ID: ${targetDbId}) 加载货源...`)
         const sourcesResponse = await apiRequest(`/temu/products/${targetDbId}/sources`)
 
         const sources = sourcesResponse?.data || []
 
         if (!Array.isArray(sources) || sources.length === 0) {
-            updateSourceDisplay(container, null) // 确保重置为“未选择”
+            console.log(`[Feimao] UI更新: 商品 ${productId} 暂无1688货源`)
+            updateSourceDisplay(container, null)
+
+            // 额外修正：即使没找到货源，也要把 ID 存到 UI 上，方便手动点“重选”
+            if (targetDbId) container.setAttribute('data-db-id', targetDbId)
+
+            // 修改提示文字（可选，但需要操作 DOM）
+            const placeholderText = container.querySelector('.fm-text-placeholder')
+            if (placeholderText) placeholderText.textContent = '未找到匹配货源'
             return
         }
+
+        // 重要：将数据库 ID 存入 DOM，方便后续操作
+        container.setAttribute('data-db-id', targetDbId)
 
         // 直接委派给 ui-components 处理显示逻辑
         updateSourceDisplay(container, sources[0])
 
     } catch (error) {
         console.error(`[货源debug] ❌ 加载异常:`, error)
+        updateSourceDisplay(container, null) // 发生任何异常都尝试切回初始状态
     }
 }
 
@@ -323,6 +339,22 @@ function init() {
         observePageChanges()
     } else {
     }
+
+    // 监听正在采集事件
+    document.addEventListener('feimao:sources-collecting', (e) => {
+        const productId = e.detail?.productId
+        if (productId) {
+            const ui = document.querySelector(`[data-fm-host="1"][data-product-id="${productId}"]`)
+            if (ui) {
+                const loading = ui.querySelector('[data-fm="sourceLoading"]')
+                const placeholder = ui.querySelector('[data-fm="sourcePlaceholder"]')
+                const content = ui.querySelector('[data-fm="sourceContent"]')
+                if (loading) loading.classList.remove('hidden')
+                if (placeholder) placeholder.style.display = 'none'
+                if (content) content.classList.add('hidden')
+            }
+        }
+    })
 
     // 监听货源更新事件
     document.addEventListener('feimao:sources-updated', async (e) => {

@@ -323,7 +323,16 @@ const handleStartCollecting = async () => {
       if (pid && !seenIds.has(pid)) {
           seenIds.add(pid)
           uniqueIds.push(pid)
-          // 已经注入 UI 的通常不需要重新扫描图片，或者可以尝试获取
+          
+          // 查找该注入点关联的图片元素
+          // 注入点通常在卡片内部，我们向上找卡片，再向下找图片
+          const card = ui.closest('[class*="card"], [class*="item"], .Ois68FAW') || ui.parentElement
+          if (card) {
+               // 别截整个卡片了，不然会截到我们自己的按钮。尝试找专门存图片的容器
+               const imgBox = card.querySelector('.goods-image-container-external, [class*="image-container"], [class*="img-container"], .goods-img-external') || 
+                              card.querySelector('img')?.parentElement || card;
+               uniqueProductsMap.set(pid, { id: pid, element: imgBox })
+          }
       }
     })
   } else {
@@ -367,8 +376,10 @@ const handleStartCollecting = async () => {
               
               // 存储待截图元素引用，稍后统一处理或者在采集时按需处理
               // 为了不阻塞主线程，我们先把 DOM 引用存起来
-              if (imgContainer) {
-                  uniqueProductsMap.set(productId, { id: productId, element: imgContainer })
+              if (card) {
+                  const imgBox = card.querySelector('.goods-image-container-external, [class*="image-container"], [class*="img-container"], .goods-img-external') || 
+                                 card.querySelector('img')?.parentElement || card;
+                  uniqueProductsMap.set(productId, { id: productId, element: imgBox })
               }
               break
           }
@@ -495,20 +506,43 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
           if (!imgUrl) {
                addLog(`商品 ${pid} 正在截取封面...`, 'loading')
                const scannedInfo = scannedMap.get(pid)
+               
                if (scannedInfo && scannedInfo.element) {
-                   try {
-                       const canvas = await html2canvas(scannedInfo.element, { 
-                           useCORS: true, 
-                           logging: false,
-                           width: 200, // 限制尺寸以加快速度
-                           height: 200
-                       })
-                       imgUrl = canvas.toDataURL('image/jpeg', 0.8)
-                       searchMethod = 'image' // 标记为 Base64 图片上传搜图
-                       addLog(`商品 ${pid} 封面截取成功`, 'success')
-                   } catch(e) {
+                                       try {
+                        // 预处理：解决跨域图片全白问题
+                        scannedInfo.element.querySelectorAll('img').forEach(img => {
+                            if (!img.getAttribute('crossOrigin')) {
+                                img.setAttribute('crossOrigin', 'anonymous')
+                                var src = img.src
+                                img.src = ''
+                                img.src = src
+                            }
+                        })
+                        
+                        await new Promise(r => setTimeout(r, 200))
+
+                        const canvas = await html2canvas(scannedInfo.element, {
+                            ignoreElements: (el) => el.classList.contains('fm-ui'), 
+                            useCORS: true, 
+                            allowTaint: false,
+                            backgroundColor: '#ffffff',
+                            scale: 1,
+                            logging: false
+                        })
+                        imgUrl = canvas.toDataURL('image/jpeg', 0.8)
+                        searchMethod = 'image'
+
+                        console.log('%c [Feimao] 商品 ' + pid + ' 截图预览:', 'color: #fbbf24; font-weight: bold;');
+                        console.log('%c ', 'background-image: url(' + imgUrl + '); background-size: contain; background-repeat: no-repeat; padding: 75px;');
+
+                        addLog('商品 ' + pid + ' 封面截取成功', 'success')
+} catch(e) {
                        console.error('Screenshot failed for', pid, e)
+                       addLog(`商品 ${pid} 截图失败: ${e.message}`, 'error')
                    }
+               } else {
+                   console.log('ScannedInfo for', pid, ':', scannedInfo)
+                   addLog(`商品 ${pid} 截图跳过: 未找到DOM元素引用`, 'warning')
                }
           }
           
@@ -526,6 +560,9 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
               continue
           }
 
+          // 通知 UI 进入正在搜索状态
+          document.dispatchEvent(new CustomEvent('feimao:sources-collecting', { detail: { productId: pid } }))
+
           const apiRes = await requestApi('POST', '/temu/products/collect-similar', {
             product_id: targetId,
             search_method: searchMethod,
@@ -533,13 +570,32 @@ const collectSourcesForProducts = async (allIds, records = [], savedList = [], s
             max_count: 20
           })
           
-          addLog(`商品 ${pid} 货源采集完成`, 'success')
-          // 使用后端返回的真实 DB ID (如果有)，否则使用 targetId
-          const realDbId = apiRes?.data?.product_id || targetId
-          document.dispatchEvent(new CustomEvent('feimao:sources-updated', { detail: { productId: pid, dbId: realDbId } }))
+          if (apiRes && apiRes.success) {
+              addLog(`商品 ${pid} 货源采集完成: ${apiRes.message || ''}`, 'success')
+              
+              // 获取后端返回的数据库主键 ID
+              const realDbId = apiRes.product_id
+              
+              document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
+                  detail: { 
+                      productId: pid, 
+                      dbId: realDbId 
+                  } 
+              }))
+          } else {
+              const msg = apiRes?.message || '未知错误'
+              addLog(`商品 ${pid} 采集未成功: ${msg}`, 'warning')
+              // 通知 UI 重置状态，避免一直显示调查中
+              document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
+                  detail: { productId: pid, dbId: null, error: msg } 
+              }))
+          }
       }
     } catch (error) {
-      addLog(`商品 ${pid} 采集失败`, 'error')
+      addLog(`商品 ${pid} 系统报错: ${error.message || error}`, 'error')
+      document.dispatchEvent(new CustomEvent('feimao:sources-updated', { 
+          detail: { productId: pid, dbId: null, error: '系统异常' } 
+      }))
     }
     
     await new Promise(resolve => setTimeout(resolve, 800))
@@ -586,6 +642,7 @@ onMounted(async () => {
 
     await checkLoginStatus()
     if (isLoggedIn.value) await fetchUploadedCount()
+    
     setInterval(checkUIInjection, 1000)
     const observer = new MutationObserver(() => { if (!isScanning.value) scanItems() })
     observer.observe(document.body, { childList: true, subtree: true })
