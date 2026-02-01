@@ -110,20 +110,14 @@ const handleExportExcel = async () => {
       return
     }
 
-    // 2. 定义详细的字段映射 (基于真实 JSON 结构)
+    // 2. 定义详细的字段映射 (只保留 TEMU 信息)
     const fieldMap = {
       'product_id': '商品ID',
       'title': 'Temu标题',
       'sale_price': 'Temu售价',
-      'product_data.sourcePrice': '1688进货价',
-      'product_data.freightCharges': '预估运费',
-      'product_data.forecastProfits': '预估利润',
-      'product_data.totalWeightMidKg': '重量(kg)',
+      'weight': '重量(kg)',
       'cover_image': '主图链接',
       'product_data.link': '商品链接',
-      'sources1688_count': '1688货源数',
-      'product_data.relatedSource[0].detailUrl': '1688链接',
-      'product_data.relatedSource[0].subject': '1688标题',
       'site_url': '采集页URL',
       'collected_at': '采集时间'
     }
@@ -136,7 +130,7 @@ const handleExportExcel = async () => {
     const getDeepValue = (obj, path) => {
       return path.split('.').reduce((acc, part) => {
         if (acc === null || acc === undefined) return undefined
-        if (part.includes('[')) { // 处理数组索引 specific logic for relatedSource[0]
+        if (part.includes('[')) { // 处理数组索引
            const [key, index] = part.replace(']', '').split('[')
            return acc[key] ? acc[key][parseInt(index)] : undefined
         }
@@ -145,8 +139,14 @@ const handleExportExcel = async () => {
     }
 
     // 处理 CSV 转义
-    const formatCell = (val) => {
+    const formatCell = (val, key) => {
       if (val === null || val === undefined) return ''
+      
+      // 特殊处理 ID 防止科学计数法
+      if (key === 'product_id') {
+        return `"\t${val}"`
+      }
+
       const str = String(val)
       if (str.includes(',') || str.includes('"') || str.includes('\n')) {
         return `"${str.replace(/"/g, '""')}"`
@@ -164,7 +164,12 @@ const handleExportExcel = async () => {
         if (key === 'product_data.link' && !val) {
              val = `https://www.temu.com/goods-${item.product_id}.html`
         }
-        return formatCell(val)
+        // 尝试从 product_data 中获取重量作为兜底
+        if (key === 'weight' && !val && item.product_data) {
+             val = item.product_data.totalWeightMidKg
+        }
+
+        return formatCell(val, key)
       })
       csvRows.push(row.join(','))
     })

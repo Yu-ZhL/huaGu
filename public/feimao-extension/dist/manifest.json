@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/index.js-CH3aHjqJ.js"
+        "assets/index.js-DtLIJvgt.js"
       ],
       "matches": [
         "https://*.temu.com/*",
@@ -39,7 +39,7 @@
         "https://*.temu.net/*"
       ],
       "resources": [
-        "assets/index.js-CH3aHjqJ.js"
+        "assets/index.js-DtLIJvgt.js"
       ],
       "use_dynamic_url": false
     }

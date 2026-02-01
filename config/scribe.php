@@ -121,11 +121,11 @@ return [
 
         // Scribe 用于验证响应调用的参数值。
         // 这不会包含在生成的文档中。如果为空，Scribe 将使用随机值。
-        'use_value' => '1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+        'use_value' => '33|wWvOFkjTqTjQheccN3kWx3Z66uL1hAnx5hFWLvfZ7722fd12',
 
         // 用户将在示例请求中看到的身份验证参数的占位符。
         // 如果您希望 Scribe 使用随机值作为占位符，请将其设置为 null。
-        'placeholder' => '1|yIrZyW0P4ozq3B0GVIQnykSgyJLgSaJ1Rq4TbNjX894d116c',
+        'placeholder' => '33|wWvOFkjTqTjQheccN3kWx3Z66uL1hAnx5hFWLvfZ7722fd12',
 
         // 为用户提供的任何额外身份验证相关信息。支持 Markdown 和 HTML。
         'extra_info' => '您可以通过注册或登录接口获取访问令牌。在请求头中添加 <code>Authorization: Bearer {token}</code> 来进行认证。',
