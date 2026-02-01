@@ -122,11 +122,15 @@ class TemuProductController extends Controller
         $searchMethod = $validated['search_method'] ?? 'image';
         $maxCount = $validated['max_count'] ?? 20;
 
+        // 修正：支持接收前端显式传来的图片链接
+        $imgUrl = $request->input('img_url');
+
         $result = $this->temuService->collectSimilarProducts(
             $productId,
             $user->id,
             $searchMethod,
-            $maxCount
+            $maxCount,
+            $imgUrl // 传递图片链接
         );
 
         return response()->json($result);

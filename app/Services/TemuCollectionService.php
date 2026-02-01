@@ -67,7 +67,7 @@ class TemuCollectionService
         return [];
     }
 
-    public function collectSimilarProducts($temuProductId, $userId, $searchMethod = 'image', $maxCount = 20)
+    public function collectSimilarProducts($temuProductId, $userId, $searchMethod = 'image', $maxCount = 20, $forcedImgUrl = null)
     {
         $temuProduct = TemuCollectedProduct::where('id', $temuProductId)
             ->where('user_id', $userId)
@@ -86,11 +86,14 @@ class TemuCollectionService
         $remainingCount = $maxCount - $existingCount;
 
         try {
-            Log::info('开始搜图，产品ID: ' . $temuProductId . '，图片URL: ' . $temuProduct->cover_image);
-
             // 1. 优先尝试使用 URL 搜图
-            if (!empty($temuProduct->cover_image)) {
-                $result = $this->platform1688Service->searchByUrl($temuProduct->cover_image, 1, $remainingCount);
+            // 优先使用前端传来的 forcedImgUrl，其次使用数据库里的 cover_image
+            $targetImgUrl = $forcedImgUrl ?? $temuProduct->cover_image;
+
+            Log::info('开始搜图，产品ID: ' . $temuProductId . '，使用图片: ' . $targetImgUrl);
+
+            if (!empty($targetImgUrl)) {
+                $result = $this->platform1688Service->searchByUrl($targetImgUrl, 1, $remainingCount);
             } else {
                 return ['success' => false, 'message' => '缺少商品图片信息'];
             }
